@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://www.marqcleanai.vertexsg.co.za/sitemap.xml
