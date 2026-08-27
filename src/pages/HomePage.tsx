@@ -10,7 +10,6 @@ import {
   Activity,
   Zap,
 } from "lucide-react";
-import { LiveMarketHub } from "../components/LiveMarketHub";
 import { NavPageKey } from "../components/Navbar";
 
 interface HomePageProps {
@@ -477,16 +476,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onRequestAudit }
       </section>
 
       {/* ----------------------------------------------------------------------- */}
-      {/* 5. LIVE GLOBAL MARKET & RESEARCH CONNECTORS SECTION */}
-      {/* ----------------------------------------------------------------------- */}
-      <section className="relative py-20 lg:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <LiveMarketHub />
-        </div>
-      </section>
-
-      {/* ----------------------------------------------------------------------- */}
-      {/* 6. SECURE YOUR DATA PIPELINE TODAY (Matches DESIGN UI layout) */}
+      {/* 5. SECURE YOUR DATA PIPELINE TODAY (Matches DESIGN UI layout) */}
       {/* ----------------------------------------------------------------------- */}
       <section className="relative overflow-hidden border-t border-slate-800/80 bg-gradient-to-b from-[#060c1d] to-[#02040a] py-20 lg:py-24">
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-64 bg-cyan-500/5 blur-3xl" />

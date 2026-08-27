@@ -16,6 +16,7 @@ import {
 import Papa from "papaparse";
 import * as XLSX from "xlsx";
 import ClientFunds from "../reconciliation/ClientFunds";
+import { CopyDataButton } from "../components/CopyDataButton";
 
 export interface ProductsPageProps {
   initialSubTab?: string;
@@ -312,15 +313,25 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ initialSubTab = "cle
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-semibold text-slate-300">Sanitized Output Preview</span>
-                    <button
-                      onClick={downloadCleanedXlsx}
-                      className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-600 px-4 py-2 text-xs font-bold text-slate-950 hover:brightness-110 transition shadow-md shadow-cyan-500/25"
-                    >
-                      <Download className="h-3.5 w-3.5" />
-                      Download Clean Excel (.xlsx)
-                    </button>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <span className="text-xs font-semibold text-slate-300">Sanitized Output Preview ({cleanedRows.length} items)</span>
+                    <div className="flex items-center flex-wrap gap-2">
+                      <CopyDataButton
+                        payload={{ type: "records", data: cleanedRows }}
+                        showCsv={true}
+                        showTsv={true}
+                        showJson={true}
+                        size="xs"
+                        buttonTheme="dark"
+                      />
+                      <button
+                        onClick={downloadCleanedXlsx}
+                        className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-600 px-3.5 py-1.5 text-xs font-bold text-slate-950 hover:brightness-110 transition shadow-md shadow-cyan-500/25"
+                      >
+                        <Download className="h-3.5 w-3.5" />
+                        <span>Download Excel (.xlsx)</span>
+                      </button>
+                    </div>
                   </div>
 
                   {/* Cleaned Table Preview */}
@@ -405,18 +416,28 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ initialSubTab = "cle
 
                 {parsedMatrix && (
                   <div className="mt-6 space-y-4">
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                       <span className="text-xs font-semibold text-emerald-400 flex items-center gap-1.5">
                         <CheckCircle className="h-4 w-4" />
                         Converted {parsedMatrix.length} rows successfully
                       </span>
-                      <button
-                        onClick={downloadConvertedWorkbook}
-                        className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 px-4 py-2 text-xs font-bold text-slate-950 hover:brightness-110 transition"
-                      >
-                        <Download className="h-3.5 w-3.5" />
-                        Export Excel (.xlsx)
-                      </button>
+                      <div className="flex items-center flex-wrap gap-2">
+                        <CopyDataButton
+                          payload={{ type: "matrix", data: parsedMatrix }}
+                          showCsv={true}
+                          showTsv={true}
+                          showJson={true}
+                          size="xs"
+                          buttonTheme="dark"
+                        />
+                        <button
+                          onClick={downloadConvertedWorkbook}
+                          className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 px-3.5 py-1.5 text-xs font-bold text-slate-950 hover:brightness-110 transition"
+                        >
+                          <Download className="h-3.5 w-3.5" />
+                          <span>Export Excel (.xlsx)</span>
+                        </button>
+                      </div>
                     </div>
 
                     <div className="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-900/60 font-mono text-xs">
@@ -479,7 +500,15 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ initialSubTab = "cle
                 </div>
 
                 <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5 space-y-4">
-                  <h3 className="text-sm font-bold text-white">Generated Formula &amp; Syntax</h3>
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-sm font-bold text-white">Generated Formula &amp; Syntax</h3>
+                    <CopyDataButton
+                      payload={{ type: "text", text: generatedFormula }}
+                      buttonTheme="cyan"
+                      size="xs"
+                      titlePrefix="Formula:"
+                    />
+                  </div>
                   <div className="rounded-xl border border-slate-800 bg-slate-950 p-4 font-mono text-xs text-emerald-300">
                     {generatedFormula}
                   </div>
@@ -505,18 +534,28 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ initialSubTab = "cle
                     Extract transactional lines from bank statements, standardize credit/debit figures, and export directly to QIF or Excel.
                   </p>
                 </div>
-                <button
-                  onClick={() => {
-                    const ws = XLSX.utils.json_to_sheet(bankParsedRows);
-                    const wb = XLSX.utils.book_new();
-                    XLSX.utils.book_append_sheet(wb, ws, "Bank Ledger");
-                    XLSX.writeFile(wb, "MarqClean_Bank_Ledger.xlsx");
-                  }}
-                  className="flex items-center gap-2 rounded-xl bg-amber-500 px-4 py-2 text-xs font-bold text-slate-950 hover:bg-amber-400 transition"
-                >
-                  <Download className="h-3.5 w-3.5" />
-                  Export Ledger Excel
-                </button>
+                <div className="flex items-center flex-wrap gap-2">
+                  <CopyDataButton
+                    payload={{ type: "records", data: bankParsedRows }}
+                    showCsv={true}
+                    showTsv={true}
+                    showJson={true}
+                    size="xs"
+                    buttonTheme="dark"
+                  />
+                  <button
+                    onClick={() => {
+                      const ws = XLSX.utils.json_to_sheet(bankParsedRows);
+                      const wb = XLSX.utils.book_new();
+                      XLSX.utils.book_append_sheet(wb, ws, "Bank Ledger");
+                      XLSX.writeFile(wb, "MarqClean_Bank_Ledger.xlsx");
+                    }}
+                    className="flex items-center gap-2 rounded-xl bg-amber-500 px-3.5 py-1.5 text-xs font-bold text-slate-950 hover:bg-amber-400 transition"
+                  >
+                    <Download className="h-3.5 w-3.5" />
+                    <span>Export Excel (.xlsx)</span>
+                  </button>
+                </div>
               </div>
 
               <div className="mt-6 overflow-x-auto rounded-2xl border border-slate-800 bg-slate-900/60 font-mono text-xs">

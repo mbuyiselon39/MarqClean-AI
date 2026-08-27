@@ -340,7 +340,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate, onReque
                 onClick={() => handleLinkClick("free-data-tools")}
                 className="block w-full text-left py-2 px-3 rounded-lg hover:bg-slate-800 text-cyan-300 font-bold"
               >
-                Free Data Tools & Live Market APIs
+                Free Data Tools
               </button>
               <button
                 onClick={() => handleLinkClick("excel-academy")}

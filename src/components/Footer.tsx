@@ -154,16 +154,16 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onRequestAudit }) =>
             </ul>
           </div>
 
-          {/* Col 4: Live Global APIs & Contact */}
+          {/* Col 4: Free Data Tools & Audit */}
           <div>
-            <h3 className="text-xs font-extrabold uppercase tracking-wider text-white">Live Data &amp; Audit</h3>
+            <h3 className="text-xs font-extrabold uppercase tracking-wider text-white">Free Data Tools</h3>
             <ul className="mt-4 space-y-2.5 text-xs">
               <li>
                 <button
                   onClick={() => onNavigate("free-data-tools")}
                   className="hover:text-cyan-300 transition text-left"
                 >
-                  Alpha Vantage Stock Tickers
+                  Text &amp; RFC Email Filter
                 </button>
               </li>
               <li>
@@ -171,7 +171,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onRequestAudit }) =>
                   onClick={() => onNavigate("free-data-tools")}
                   className="hover:text-cyan-300 transition text-left"
                 >
-                  Our World in Data CSVs
+                  CSV &bull; JSON &bull; TSV Converter
                 </button>
               </li>
               <li>
@@ -179,7 +179,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onRequestAudit }) =>
                   onClick={() => onNavigate("free-data-tools")}
                   className="hover:text-cyan-300 transition text-left"
                 >
-                  EODHD Financial Models
+                  Column Header Sanitizer
                 </button>
               </li>
               <li>
@@ -187,7 +187,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onRequestAudit }) =>
                   onClick={() => onNavigate("free-data-tools")}
                   className="hover:text-cyan-300 transition text-left"
                 >
-                  Open Exchange Rates Matrix
+                  Financial Accounting Cleaner
                 </button>
               </li>
               <li className="pt-2">
