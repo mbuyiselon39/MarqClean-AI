@@ -180,7 +180,7 @@ export default function ReconciliationHub({ onExit }: { onExit: () => void }) {
         const result = runMailingVerification(mailingRecords, mailingExcel, mailingMapping, usableFields, effectiveKey, mailingPdfName);
         setMailingResult(result);
         setHistory((prev) => [
-          { time: new Date().toLocaleString(), source: mailingPdfName, target: mailingExcel.sourceName, records: result.summary.pdfRecords, exceptions: result.summary.exceptions, matchPct: result.summary.matchPercentage },
+          { time: new Date().toLocaleString(), source: mailingPdfName || "Mailing PDF", target: mailingExcel.sourceName || "Excel Master", records: result.summary.pdfRecords, exceptions: result.summary.exceptions, matchPct: result.summary.matchPercentage },
           ...prev,
         ].slice(0, 20));
       } catch (caughtError) {
@@ -294,8 +294,8 @@ export default function ReconciliationHub({ onExit }: { onExit: () => void }) {
         setHistory((prev) => [
           {
             time: new Date().toLocaleString(),
-            source: sourceTable.sourceName,
-            target: targetTable.sourceName,
+            source: sourceTable.sourceName || "Source File",
+            target: targetTable.sourceName || "Target File",
             records: reconResult.summary.totalRecords,
             exceptions: reconResult.summary.exceptions,
             matchPct: reconResult.summary.matchPercentage,

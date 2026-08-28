@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
   Wand2,
@@ -6,17 +6,15 @@ import {
   Calculator,
   Landmark,
   Layers,
-  Upload,
   Download,
   CheckCircle,
-  AlertCircle,
   Sparkles,
   ArrowRight,
 } from "lucide-react";
-import Papa from "papaparse";
 import * as XLSX from "xlsx";
 import ClientFunds from "../reconciliation/ClientFunds";
 import { CopyDataButton } from "../components/CopyDataButton";
+import { BulkDataCleaner } from "../components/BulkDataCleaner";
 
 export interface ProductsPageProps {
   initialSubTab?: string;
@@ -27,13 +25,6 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ initialSubTab = "cle
   const [activeTab, setActiveTab] = useState<"cleaner" | "converter" | "formulas" | "bank" | "client-funds">(
     (initialSubTab as any) || "cleaner"
   );
-
-  // Quick Cleaner State
-  const [cleanedRows, setCleanedRows] = useState<Record<string, string>[] | null>(null);
-  const [cleanStats, setCleanStats] = useState<{ total: number; duplicates: number; fieldsFixed: number } | null>(null);
-  const [isCleaning, setIsCleaning] = useState(false);
-  const [cleanError, setCleanError] = useState("");
-  const cleanerInputRef = useRef<HTMLInputElement>(null);
 
   // CSV to Excel Converter State
   const [rawCsvText, setRawCsvText] = useState("");
@@ -50,91 +41,6 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ initialSubTab = "cle
     { date: "2026-08-03", desc: "MONTHLY AUDIT RETAINER", amount: -2850.0, balance: 112570.0 },
     { date: "2026-08-05", desc: "WIRE TRANSFER INWARD ZAR", amount: 48900.0, balance: 161470.0 },
   ];
-
-  // Handle cleaner file
-  const handleCleanFile = (file: File) => {
-    setIsCleaning(true);
-    setCleanError("");
-    Papa.parse(file, {
-      header: true,
-      skipEmptyLines: true,
-      complete: (results) => {
-        try {
-          const raw = results.data as Record<string, string>[];
-          if (!raw.length) {
-            setCleanError("No data rows found in uploaded file.");
-            setIsCleaning(false);
-            return;
-          }
-
-          // Cleaning logic: standardize keys, capitalize proper words, remove exact duplicates
-          const seen = new Set<string>();
-          const cleaned: Record<string, string>[] = [];
-          let dupes = 0;
-          let fixes = 0;
-
-          raw.forEach((row) => {
-            const rowStr = JSON.stringify(row);
-            if (seen.has(rowStr)) {
-              dupes++;
-              return;
-            }
-            seen.add(rowStr);
-
-            const newRow: Record<string, string> = {};
-            Object.entries(row).forEach(([key, val]) => {
-              const cleanKey = key.trim().replace(/[_-\s]+/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-              let cleanVal = String(val ?? "").trim();
-
-              // Auto-fix title casing on string names
-              if (cleanVal && !cleanVal.includes("@") && isNaN(Number(cleanVal))) {
-                cleanVal = cleanVal.replace(/\b\w+/g, (txt) => txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase());
-                fixes++;
-              } else if (cleanVal.includes("@")) {
-                cleanVal = cleanVal.toLowerCase();
-                fixes++;
-              }
-              newRow[cleanKey] = cleanVal;
-            });
-            cleaned.push(newRow);
-          });
-
-          setCleanedRows(cleaned);
-          setCleanStats({
-            total: cleaned.length,
-            duplicates: dupes,
-            fieldsFixed: fixes,
-          });
-        } catch (err: any) {
-          setCleanError(err.message || "Failed to process file.");
-        } finally {
-          setIsCleaning(false);
-        }
-      },
-      error: (err) => {
-        setCleanError(err.message);
-        setIsCleaning(false);
-      },
-    });
-  };
-
-  const downloadCleanedXlsx = () => {
-    if (!cleanedRows) return;
-    const ws = XLSX.utils.json_to_sheet(cleanedRows);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Sanitized Data");
-    XLSX.writeFile(wb, "MarqClean_Sanitized_Output.xlsx");
-  };
-
-  const loadSampleCleaner = () => {
-    const cleaned = [
-      { "Full Name": "Alex Johnson", Email: "alex@acme.com", Company: "Acme Corp", "Deal Value": "45000", Status: "Open" },
-      { "Full Name": "Maria De La Cruz", Email: "maria@health.org", Company: "Health Center", "Deal Value": "12500", Status: "Closed" },
-      { "Full Name": "Jordan Smith", Email: "jordan@agency.io", Company: "Market Nest", "Deal Value": "78000", Status: "In-Progress" },
-    ];
-    setCleanedRows(cleaned);
-    setCleanStats({ total: 3, duplicates: 1, fieldsFixed: 8 });
-  };
 
   const handleConvertCsv = () => {
     if (!rawCsvText.trim()) return;
@@ -189,7 +95,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ initialSubTab = "cle
             }`}
           >
             <Wand2 className="h-4 w-4 text-cyan-400" />
-            <span>Quick Data &amp; CSV Cleaner</span>
+            <span>Bulk Data &amp; CSV Cleaner</span>
           </button>
 
           <button
@@ -242,122 +148,11 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ initialSubTab = "cle
         </div>
 
         {/* ------------------------------------------------------------- */}
-        {/* PRODUCT 1: Quick Data & CSV Cleaner */}
+        {/* PRODUCT 1: Bulk Data & CSV Cleaner */}
         {/* ------------------------------------------------------------- */}
         {activeTab === "cleaner" && (
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-8 space-y-6">
-            <div className="rounded-3xl border border-cyan-500/20 bg-slate-950/80 p-6 sm:p-8 backdrop-blur-xl">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                  <h2 className="text-xl font-bold text-white">Quick Data &amp; CSV Cleaner</h2>
-                  <p className="text-xs text-slate-400 mt-1">
-                    Upload messy CSVs or Excel spreadsheets to automatically purge duplicate rows, fix bad column headers, normalize names &amp; emails, and export clean Microsoft Excel (.xlsx) workbooks.
-                  </p>
-                </div>
-
-                <button
-                  onClick={loadSampleCleaner}
-                  className="rounded-xl border border-cyan-500/40 bg-cyan-950/30 px-3.5 py-2 text-xs font-semibold text-cyan-300 hover:bg-cyan-900/40 transition"
-                >
-                  Load Sample Dataset
-                </button>
-              </div>
-
-              {/* Upload Dropzone */}
-              <div
-                onClick={() => cleanerInputRef.current?.click()}
-                className="mt-6 cursor-pointer rounded-2xl border-2 border-dashed border-cyan-500/30 bg-slate-900/40 p-8 text-center transition hover:border-cyan-400 hover:bg-slate-900/70"
-              >
-                <input
-                  type="file"
-                  ref={cleanerInputRef}
-                  accept=".csv,.xlsx"
-                  className="hidden"
-                  onChange={(e) => {
-                    if (e.target.files?.[0]) handleCleanFile(e.target.files[0]);
-                  }}
-                />
-                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-500/10 text-cyan-400">
-                  <Upload className="h-6 w-6" />
-                </div>
-                <h3 className="mt-3 text-sm font-bold text-white">
-                  {isCleaning ? "Processing cleanroom protocols..." : "Click or drag & drop CSV / Excel file"}
-                </h3>
-                <p className="mt-1 text-xs text-slate-500">
-                  Zero server upload. Data remains encrypted in local browser memory.
-                </p>
-              </div>
-
-              {cleanError && (
-                <div className="mt-4 flex items-center gap-2 rounded-xl border border-rose-500/40 bg-rose-950/50 p-3 text-xs text-rose-300">
-                  <AlertCircle className="h-4 w-4" />
-                  {cleanError}
-                </div>
-              )}
-
-              {/* Results & Stats */}
-              {cleanStats && cleanedRows && (
-                <div className="mt-6 space-y-4">
-                  <div className="grid gap-3 sm:grid-cols-3 font-mono text-xs">
-                    <div className="rounded-xl border border-slate-800 bg-slate-900/80 p-3">
-                      <span className="text-slate-400 text-[10px] uppercase">Clean Records Output</span>
-                      <p className="text-lg font-bold text-cyan-400 mt-0.5">{cleanStats.total}</p>
-                    </div>
-                    <div className="rounded-xl border border-slate-800 bg-slate-900/80 p-3">
-                      <span className="text-slate-400 text-[10px] uppercase">Duplicates Purged</span>
-                      <p className="text-lg font-bold text-rose-400 mt-0.5">{cleanStats.duplicates}</p>
-                    </div>
-                    <div className="rounded-xl border border-slate-800 bg-slate-900/80 p-3">
-                      <span className="text-slate-400 text-[10px] uppercase">Format Normalizations</span>
-                      <p className="text-lg font-bold text-emerald-400 mt-0.5">{cleanStats.fieldsFixed}</p>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <span className="text-xs font-semibold text-slate-300">Sanitized Output Preview ({cleanedRows.length} items)</span>
-                    <div className="flex items-center flex-wrap gap-2">
-                      <CopyDataButton
-                        payload={{ type: "records", data: cleanedRows }}
-                        showCsv={true}
-                        showTsv={true}
-                        showJson={true}
-                        size="xs"
-                        buttonTheme="dark"
-                      />
-                      <button
-                        onClick={downloadCleanedXlsx}
-                        className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-600 px-3.5 py-1.5 text-xs font-bold text-slate-950 hover:brightness-110 transition shadow-md shadow-cyan-500/25"
-                      >
-                        <Download className="h-3.5 w-3.5" />
-                        <span>Download Excel (.xlsx)</span>
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Cleaned Table Preview */}
-                  <div className="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-900/60">
-                    <table className="min-w-full text-left text-xs font-mono">
-                      <thead className="border-b border-slate-800 bg-slate-900/90 text-cyan-300">
-                        <tr>
-                          {Object.keys(cleanedRows[0] || {}).map((head) => (
-                            <th key={head} className="px-4 py-3 font-semibold">{head}</th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-slate-800/60 text-slate-200">
-                        {cleanedRows.slice(0, 8).map((row, idx) => (
-                          <tr key={idx} className="hover:bg-slate-800/40">
-                            {Object.values(row).map((v, cIdx) => (
-                              <td key={cIdx} className="px-4 py-2.5">{v}</td>
-                            ))}
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              )}
-            </div>
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-8">
+            <BulkDataCleaner onRequestAudit={onRequestAudit} />
           </motion.div>
         )}
 

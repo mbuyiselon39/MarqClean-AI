@@ -4,7 +4,7 @@ import { Copy, Check, FileJson, FileSpreadsheet, ClipboardCopy } from "lucide-re
 export type DataPayload =
   | { type: "records"; data: Record<string, any>[] }
   | { type: "matrix"; data: string[][] }
-  | { type: "dataTable"; headers: string[]; rows: string[][] }
+  | { type: "dataTable"; headers: string[]; rows: string[][] | Record<string, any>[] }
   | { type: "text"; text: string };
 
 interface CopyDataButtonProps {
@@ -55,7 +55,12 @@ export function formatDataAsCsv(payload: DataPayload): string {
         : s;
     };
     const headerLine = payload.headers.map(escape).join(",");
-    const rowLines = payload.rows.map((row) => row.map(escape).join(","));
+    const rowLines = payload.rows.map((row) => {
+      if (Array.isArray(row)) {
+        return row.map(escape).join(",");
+      }
+      return payload.headers.map((h) => escape(row[h])).join(",");
+    });
     return [headerLine, ...rowLines].join("\n");
   }
 
@@ -83,9 +88,12 @@ export function formatDataAsTsv(payload: DataPayload): string {
 
   if (payload.type === "dataTable") {
     const headerLine = payload.headers.join("\t");
-    const rowLines = payload.rows.map((row) =>
-      row.map((c) => String(c ?? "").replace(/\t/g, " ")).join("\t")
-    );
+    const rowLines = payload.rows.map((row) => {
+      if (Array.isArray(row)) {
+        return row.map((c) => String(c ?? "").replace(/\t/g, " ")).join("\t");
+      }
+      return payload.headers.map((h) => String(row[h] ?? "").replace(/\t/g, " ")).join("\t");
+    });
     return [headerLine, ...rowLines].join("\n");
   }
 
@@ -115,11 +123,14 @@ export function formatDataAsJson(payload: DataPayload): string {
 
   if (payload.type === "dataTable") {
     const objects = payload.rows.map((row) => {
-      const obj: Record<string, string> = {};
-      payload.headers.forEach((h, i) => {
-        obj[h || `Col_${i + 1}`] = row[i] ?? "";
-      });
-      return obj;
+      if (Array.isArray(row)) {
+        const obj: Record<string, string> = {};
+        payload.headers.forEach((h, i) => {
+          obj[h || `Col_${i + 1}`] = row[i] ?? "";
+        });
+        return obj;
+      }
+      return row;
     });
     return JSON.stringify(objects, null, 2);
   }
