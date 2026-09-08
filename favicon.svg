@@ -1,10 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="MarqClean AI">
-  <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0D9488"/>
-      <stop offset="1" stop-color="#14B8A6"/>
-    </linearGradient>
-  </defs>
-  <rect width="64" height="64" fill="url(#g)"/>
-  <path d="M16 42 V22 h5 l6 12 6-12 h5 v20 h-5 V31 l-6 11 -6-11 v11 z" fill="#04121a"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="18" fill="#001f54"/><path d="M16 42 32 18l16 24" fill="none" stroke="#56cfe1" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 49h32" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/><circle cx="32" cy="18" r="4" fill="#fff"/></svg>
