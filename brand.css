@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+
+:root{--brand-cyan:#56cfe1;--brand-navy:#001f54;--brand-ink:#07111f;--brand-muted:#617086;--brand-line:rgba(0,31,84,.11);--brand-soft:#f5fbfd;--brand-white:#fff;--brand-radius:24px;--brand-shadow:0 18px 55px rgba(0,31,84,.10)}
+html{font-family:Ubuntu,Arial,sans-serif!important;background:#fff;color:var(--brand-ink);text-rendering:optimizeLegibility}
+body{font-family:Ubuntu,Arial,sans-serif!important;background:#fff!important;color:var(--brand-ink)!important;overflow-x:hidden}
+*,button,input,select,textarea{font-family:inherit}
+::selection{background:var(--brand-cyan);color:var(--brand-navy)}
+
+/* Ellipsus-inspired editorial rhythm: generous whitespace, oversized type, quiet surfaces. */
+.mc-display,.ws-root,.mc-hero-root{font-family:Ubuntu,Arial,sans-serif!important}
+.mc-hero-root,.ws-root{background:#fff!important;color:var(--brand-ink)!important}
+.mc-grid-overlay,.ws-grid{opacity:.45;background-image:linear-gradient(to right,rgba(0,31,84,.045) 1px,transparent 1px),linear-gradient(to bottom,rgba(0,31,84,.045) 1px,transparent 1px)!important;background-size:48px 48px!important}
+.mc-glass,.ws-surface{background:rgba(255,255,255,.82)!important;border:1px solid var(--brand-line)!important;box-shadow:0 14px 45px rgba(0,31,84,.06);backdrop-filter:blur(18px)}
+.mc-text-cyan,.mc-text-mixed{background:linear-gradient(100deg,var(--brand-navy),var(--brand-cyan))!important;background-clip:text!important;-webkit-background-clip:text!important;color:transparent!important}
+.mc-text-violet{background:linear-gradient(100deg,var(--brand-cyan),var(--brand-navy))!important;background-clip:text!important;-webkit-background-clip:text!important;color:transparent!important}
+.mc-cta-cyan,.ws-btn-primary{background:var(--brand-navy)!important;color:#fff!important;border:1px solid var(--brand-navy)!important;border-radius:999px!important;box-shadow:none!important}
+.mc-cta-cyan:hover,.ws-btn-primary:hover{background:var(--brand-cyan)!important;color:var(--brand-navy)!important;box-shadow:0 14px 35px rgba(86,207,225,.30)!important;transform:translateY(-2px)}
+.ws-btn-secondary{background:#fff!important;color:var(--brand-navy)!important;border:1px solid rgba(0,31,84,.18)!important;border-radius:999px!important}
+.ws-btn-secondary:hover{border-color:var(--brand-cyan)!important;background:#f5fbfd!important;box-shadow:0 10px 28px rgba(0,31,84,.08)!important}
+.mc-tab-active{background:rgba(86,207,225,.12)!important;border-color:rgba(86,207,225,.65)!important;color:var(--brand-navy)!important;box-shadow:none!important}
+.ws-badge{background:#f5fbfd!important;border-color:rgba(0,31,84,.10)!important;color:var(--brand-navy)!important}
+
+/* Replace legacy dark utility palette with an organisational-grade light system. */
+.ws-scope{background:#fff!important;color:var(--brand-ink)!important}
+.ws-scope .bg-white{background:#fff!important}
+.ws-scope .bg-slate-50{background:#f7fafc!important}
+.ws-scope .bg-slate-100{background:#eef5f8!important}
+.ws-scope .bg-slate-950{background:var(--brand-navy)!important}
+.ws-scope .border-slate-200,.ws-scope .border-slate-300{border-color:var(--brand-line)!important}
+.ws-scope .text-slate-950,.ws-scope .text-slate-900,.ws-scope .text-slate-800{color:var(--brand-navy)!important}
+.ws-scope .text-slate-700,.ws-scope .text-slate-600{color:#42536b!important}
+.ws-scope .text-slate-500,.ws-scope .text-slate-400{color:#718096!important}
+.ws-scope .text-cyan-700{color:#078ba2!important}
+.ws-scope input,.ws-scope select,.ws-scope textarea{background:#fff!important;color:var(--brand-ink)!important;border:1px solid rgba(0,31,84,.14)!important;border-radius:14px!important}
+.ws-scope input:focus,.ws-scope select:focus,.ws-scope textarea:focus{outline:3px solid rgba(86,207,225,.20)!important;border-color:var(--brand-cyan)!important}
+
+/* Premium cards / sections */
+.mc-card-interactive{border-color:var(--brand-line)!important;box-shadow:0 12px 38px rgba(0,31,84,.055);border-radius:var(--brand-radius)!important}
+.mc-card-interactive:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(0,31,84,.11)!important;border-color:rgba(86,207,225,.55)!important}
+.mc-prose{color:#42536b;line-height:1.8}
+h1,h2,h3,h4{font-family:Ubuntu,Arial,sans-serif!important;color:var(--brand-navy);letter-spacing:-.035em}
+h1{font-weight:700;line-height:1.02}
+h2{font-weight:700;line-height:1.08}
+a{transition:color .2s ease,opacity .2s ease}
+
+/* Image treatment: high-resolution editorial photography without overpowering the product. */
+img{max-width:100%;height:auto}
+img[src*="unsplash"],.mc-editorial-image{border-radius:28px;box-shadow:var(--brand-shadow);object-fit:cover}
+.mc-image-frame{position:relative;overflow:hidden;border-radius:28px;border:1px solid var(--brand-line);background:#f5fbfd}
+.mc-image-frame img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.mc-image-frame:hover img{transform:scale(1.025)}
+
+/* Mobile-first navigation and dense-data safeguards. */
+button{min-height:40px}
+@media(max-width:900px){.mc-prose{max-width:none}.mc-grid-overlay,.ws-grid{background-size:32px 32px!important}.mc-glass,.ws-surface{backdrop-filter:blur(12px)}table{min-width:720px}.overflow-x-auto{-webkit-overflow-scrolling:touch}}
+@media(max-width:640px){h1{font-size:clamp(2.4rem,13vw,4rem)!important}h2{font-size:clamp(1.8rem,9vw,3rem)!important}.mc-glass,.ws-surface{border-radius:18px!important}.mc-card-interactive{border-radius:18px!important}.mc-image-frame{border-radius:20px}.mc-mono{letter-spacing:.12em}.ws-scope{font-size:15px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* Subtle brand signal used by the new visual language. */
+.mc-brand-rule{height:3px;width:72px;border-radius:999px;background:linear-gradient(90deg,var(--brand-cyan),var(--brand-navy))}
+.mc-eyebrow{font-size:.75rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#078ba2}
+
+/* Unsplash / Freepik attribution-ready utility. */
+.mc-asset-credit{font-size:11px;color:#7a8798;line-height:1.4}.mc-asset-credit a{color:#52647b;text-decoration:underline;text-underline-offset:3px}
