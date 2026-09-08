@@ -1,6 +1,0 @@
-{
-  "name": "MarqClean AI",
-  "description": "AI-powered data automation platform for Excel, CSV, PDF and financial datasets cleaning, validation, and reconciliation.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
