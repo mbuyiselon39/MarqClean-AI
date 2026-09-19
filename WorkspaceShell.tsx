@@ -14,12 +14,13 @@ function go(path: string) {
 
 const SIMPLE_NAV: Array<{ label: string; path: string }> = [
   { label: "Home", path: "/#top" },
-  { label: "Features", path: "/#features" },
-  { label: "Workflow", path: "/#workflow" },
+  { label: "Platform", path: "/#features" },
+  { label: "How it works", path: "/#workflow" },
 ];
 
 const PRODUCTS_MENU: Array<{ label: string; path: string }> = [
   { label: "Quick Data & CSV Cleaner", path: "/data-cleaner" },
+  { label: "Local Data Engine", path: "/data-engine" },
   { label: "Excel Automation", path: "/excel-automation" },
   { label: "Reconciliation Hub", path: "/reconciliation-hub" },
   { label: "Data Toolbox", path: "/data-toolbox" },
@@ -64,8 +65,7 @@ export function GlobalHeader() {
           className="mc-display flex items-center gap-2 text-lg font-extrabold tracking-tight text-white"
           onClick={(e) => { e.preventDefault(); go("/"); }}
         >
-          <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-gradient-to-br from-[#0D9488] to-[#14B8A6] text-xs font-black text-[#04121a]">M</span>
-          MarqClean AI
+          <img src="/brand-logo.svg" alt="MarqClean AI" className="h-9 w-auto" />
         </a>
         <div className="hidden items-center gap-6 text-[13px] font-medium text-[#b0bacb] xl:flex">
           <a href={SIMPLE_NAV[0].path} className="transition hover:text-[#0D9488]" onClick={(e) => { e.preventDefault(); go(SIMPLE_NAV[0].path); }}>{SIMPLE_NAV[0].label}</a>
@@ -86,14 +86,14 @@ export function GlobalHeader() {
                 id="ws-workspaces-menu"
                 role="menu"
                 aria-label="Workspaces"
-                className="absolute left-1/2 top-full mt-3 w-72 -translate-x-1/2 rounded-2xl border border-white/10 bg-[#0a0b16] p-2 text-sm shadow-2xl"
+                className="absolute left-1/2 top-full mt-3 w-80 -translate-x-1/2 rounded-2xl border border-slate-200 bg-white p-2 text-sm shadow-2xl"
               >
                 {PRODUCTS_MENU.map((item) => (
                   <a
                     key={item.label}
                     role="menuitem"
                     href={item.path}
-                    className="block rounded-lg px-3 py-2.5 font-medium text-white/80 transition hover:bg-white/5 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0D9488]/50"
+                    className="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 transition hover:bg-sky-50 hover:text-[#0877e8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0877e8]/30"
                     onClick={(e) => { e.preventDefault(); setIsWorkspacesOpen(false); go(item.path); }}
                   >
                     {item.label}
@@ -113,7 +113,7 @@ export function GlobalHeader() {
           </button>
           <button
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white transition hover:border-[#0D9488]/60 hover:text-[#0D9488] xl:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-700 transition hover:border-[#0877e8]/60 hover:text-[#0877e8] xl:hidden"
             aria-label={isMobileNavOpen ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={isMobileNavOpen}
             aria-controls="ws-mobile-nav-panel"
@@ -132,13 +132,13 @@ export function GlobalHeader() {
         </div>
       </nav>
       {isMobileNavOpen ? (
-        <div id="ws-mobile-nav-panel" className="border-t border-white/10 bg-[#0a0b16]/98 px-5 py-4 xl:hidden">
-          <div className="flex flex-col gap-1 text-[15px] font-medium text-[#b0bacb]">
+        <div id="ws-mobile-nav-panel" className="border-t border-slate-200 bg-white px-5 py-4 xl:hidden">
+          <div className="flex flex-col gap-1 text-[15px] font-medium text-slate-600">
             {SIMPLE_NAV.map((item) => (
               <a
                 key={item.label}
                 href={item.path}
-                className="rounded-lg px-3 py-2.5 transition hover:bg-white/5 hover:text-[#0D9488]"
+                className="rounded-xl px-3 py-2.5 transition hover:bg-sky-50 hover:text-[#0877e8]"
                 onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); go(item.path); }}
               >
                 {item.label}
@@ -153,12 +153,12 @@ export function GlobalHeader() {
             >Workspaces<svg className={`h-4 w-4 transition ${isMobileWorkspacesOpen ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
             </button>
             {isMobileWorkspacesOpen ? (
-              <div id="ws-mobile-products-menu" className="ml-3 flex flex-col gap-1 border-l border-white/10 pl-3">
+              <div id="ws-mobile-products-menu" className="ml-3 flex flex-col gap-1 border-l border-slate-200 pl-3">
                 {PRODUCTS_MENU.map((item) => (
                   <a
                     key={item.label}
                     href={item.path}
-                    className="rounded-lg px-3 py-2 text-sm text-white/70 transition hover:bg-white/5 hover:text-white"
+                    className="rounded-xl px-3 py-2 text-sm text-slate-600 transition hover:bg-sky-50 hover:text-[#0877e8]"
                     onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); setIsMobileWorkspacesOpen(false); go(item.path); }}
                   >
                     {item.label}
