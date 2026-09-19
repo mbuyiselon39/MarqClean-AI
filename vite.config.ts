@@ -24,6 +24,7 @@ export default defineConfig({
         manualChunks: {
           vendor: ["react", "react-dom"],
           sheets: ["papaparse", "fflate"],
+          engine: ["@duckdb/duckdb-wasm", "zod", "libphonenumber-js"],
         },
       },
     },
