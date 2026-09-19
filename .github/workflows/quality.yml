@@ -1,4 +1,4 @@
-name: MarqClean AI quality gate
+name: MarqClean AI quality gate + local engines
 
 on:
   push:
