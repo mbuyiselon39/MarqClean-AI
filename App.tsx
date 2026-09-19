@@ -8,6 +8,7 @@ const DataToolbox = lazy(() => import("./reconciliation/DataToolbox"));
 const ClientFunds = lazy(() => import("./reconciliation/ClientFunds"));
 const AcademyHub = lazy(() => import("./academy/AcademyHub"));
 const HeroCarousel = lazy(() => import("./HeroCarousel"));
+const DataEngineStudio = lazy(() => import("./DataEngineStudio"));
 
 type RawRow = Record<string, unknown>;
 type CleanRow = Record<string, string>;
@@ -70,7 +71,7 @@ type ToolPageKey =
   | "advanced-excel-functions"
   | "xlookup-online"
   | "sumifs-countifs-tool";
-type AppPageKey = "home" | "reconciliation-hub" | "data-toolbox" | "excel-automation" | "excel-academy" | FooterPageKey | ToolPageKey;
+type AppPageKey = "home" | "data-engine" | "reconciliation-hub" | "data-toolbox" | "excel-automation" | "excel-academy" | FooterPageKey | ToolPageKey;
 
 type FooterPage = {
   title: string;
@@ -2300,6 +2301,7 @@ function getCurrentPage(): AppPageKey {
     return target;
   }
 
+  if (route === "data-engine") return "data-engine";
   if (route === "reconciliation-hub") return "reconciliation-hub";
   if (route === "data-toolbox") return "data-toolbox";
   if (route === "excel-automation") return "excel-automation";
@@ -2318,11 +2320,14 @@ function updateMetaTag(selector: string, attribute: "content" | "href", value: s
 function updatePageMetadata(page: AppPageKey) {
   const toolPage = isToolPageKey(page) ? SEO_TOOL_PAGES[page] : null;
   const footerPage = isFooterPageKey(page) ? FOOTER_PAGES[page] : null;
+  const isDataEngine = page === "data-engine";
   const isHub = page === "reconciliation-hub";
   const isToolbox = page === "data-toolbox";
   const isExcelAuto = page === "excel-automation";
   const isAcademy = page === "excel-academy";
-  const title = isHub
+  const title = isDataEngine
+    ? "Local Data Engine | DuckDB-WASM, Validation, Phone Intelligence and Web Enrichment"
+    : isHub
     ? "Reconciliation Hub | Data Matching, Verification and Exception Reporting"
     : isToolbox
     ? "Data Toolbox | Excel, CSV, Validation and Data Quality Tools"
@@ -2331,7 +2336,9 @@ function updatePageMetadata(page: AppPageKey) {
     : isAcademy
     ? "Free Excel Academy | Learn Excel Formulas, Functions and Shortcuts"
     : toolPage?.title ?? (footerPage ? `${footerPage.title} | ${PRODUCT_NAME}` : "MarqClean AI | AI Data, Excel, CSV and Reconciliation Automation Platform");
-  const description = isHub
+  const description = isDataEngine
+    ? "Browser-native performance and enrichment tools using DuckDB-WASM, Papa Parse workers, Zod and libphonenumber-js — with no API keys or server uploads."
+    : isHub
     ? "AI-powered reconciliation, record matching and validation platform. Reconcile client, investor, account and banking datasets across Excel, CSV and PDF files, including the Bank Ledger X bank statement and ledger reconciliation module, with exception reporting."
     : isToolbox
     ? "Use advanced Excel, CSV and data utilities for validation, formatting, conversion, cleansing and data quality checks across structured datasets."
@@ -3010,6 +3017,17 @@ export default function App() {
     );
   }
 
+  if (currentPage === "data-engine") {
+    return (
+      <>
+        <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-[#f7fafc] text-slate-500">Loading Local Data Engine...</div>}>
+          <DataEngineStudio onExit={() => navigateToPage("home")} />
+        </Suspense>
+        {renderBackToTop()}
+      </>
+    );
+  }
+
   if (currentPage === "reconciliation-hub") {
     return (
       <>
@@ -3058,6 +3076,7 @@ export default function App() {
     { label: "Quick Data & CSV Cleaner", href: "/data-cleaner", onClick: () => openWorkspaceTab("leads") },
     { label: "Excel Automation", href: "/excel-automation", onClick: () => navigateToPage("excel-automation") },
     { label: "Reconciliation Hub", href: "/reconciliation-hub", onClick: () => navigateToPage("reconciliation-hub") },
+    { label: "Local Data Engine", href: "/data-engine", onClick: () => navigateToPage("data-engine") },
     { label: "Data Toolbox", href: "/data-toolbox", onClick: () => navigateToPage("data-toolbox") },
   ];
 
