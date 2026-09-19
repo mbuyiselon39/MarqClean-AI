@@ -446,3 +446,155 @@ body {
   .amzigo-row { grid-template-columns:1.3fr .8fr; }
   .amzigo-row small { display:none; }
 }
+
+
+/* ==========================================================================
+   PLATFORM-WIDE CLEAN REVAMP
+   One visual system for marketing, tool, reconciliation and academy screens.
+   ========================================================================== */
+.amzigo-revamp,
+.ws-scope {
+  --ui-primary:#0877e8;
+  --ui-primary-dark:#0759b5;
+  --ui-accent:#18b7d6;
+  --ui-ink:#10233f;
+  --ui-muted:#64758b;
+  --ui-line:#e3eaf2;
+  --ui-bg:#f7fafc;
+  --ui-card:#ffffff;
+  color:var(--ui-ink);
+}
+.ws-root.ws-scope {
+  min-height:100vh !important;
+  background:
+    radial-gradient(circle at 85% 5%,rgba(24,183,214,.07),transparent 28rem),
+    linear-gradient(180deg,#fff 0%,#f7fafc 100%) !important;
+  color:var(--ui-ink) !important;
+}
+.ws-scope .ws-surface {
+  background:rgba(255,255,255,.96) !important;
+  border-color:var(--ui-line) !important;
+  box-shadow:0 5px 24px rgba(16,35,63,.07);
+  backdrop-filter:blur(16px);
+}
+.ws-scope .ws-surface .text-white,
+.ws-scope .ws-surface .text-\[\#b0bacb\] { color:var(--ui-ink) !important; }
+.ws-scope .ws-surface a:hover,
+.ws-scope .ws-surface button:hover { color:var(--ui-primary) !important; }
+.ws-scope .ws-btn-primary,
+.ws-scope .ws-btn-secondary {
+  border-radius:999px !important;
+  font-weight:800 !important;
+}
+.ws-scope .ws-btn-primary {
+  background:var(--ui-primary) !important;
+  color:#fff !important;
+  border:0 !important;
+  box-shadow:0 10px 24px rgba(8,119,232,.18);
+}
+.ws-scope .ws-btn-primary:hover { background:var(--ui-primary-dark) !important;color:#fff !important; }
+.ws-scope .ws-btn-secondary {
+  background:#fff !important;
+  color:var(--ui-ink) !important;
+  border:1px solid #d9e4ef !important;
+}
+.ws-scope .ws-btn-secondary:hover { border-color:#a9c8e4 !important;background:#f8fbfe !important; }
+.ws-scope .ws-grid { opacity:.35; background-image:linear-gradient(#dfe7ef 1px,transparent 1px),linear-gradient(90deg,#dfe7ef 1px,transparent 1px) !important; }
+.ws-scope .text-white { color:var(--ui-ink) !important; }
+.ws-scope .text-slate-300,.ws-scope .text-slate-400,.ws-scope .text-\[\#b0bacb\],.ws-scope .text-white\/70,.ws-scope .text-white\/65,.ws-scope .text-white\/55 { color:var(--ui-muted) !important; }
+.ws-scope .border-white\/10,.ws-scope .border-white\/12,.ws-scope .border-white\/15 { border-color:var(--ui-line) !important; }
+.ws-scope .bg-white\/\[0\.02\],.ws-scope .bg-white\/\[0\.03\],.ws-scope .bg-white\/\[0\.04\],.ws-scope .bg-white\/5 { background:#fff !important; }
+.ws-scope .mc-glass {
+  background:rgba(255,255,255,.98) !important;
+  border:1px solid var(--ui-line) !important;
+  box-shadow:0 15px 45px rgba(16,35,63,.07) !important;
+  backdrop-filter:none !important;
+}
+.ws-scope .mc-glass h1,.ws-scope .mc-glass h2,.ws-scope .mc-glass h3 { color:var(--ui-ink) !important; }
+.ws-scope input,.ws-scope textarea,.ws-scope select {
+  background:#fff !important;
+  color:var(--ui-ink) !important;
+  border-color:#d7e2ed !important;
+}
+.ws-scope input::placeholder,.ws-scope textarea::placeholder { color:#91a0b1 !important; }
+.ws-scope input:focus,.ws-scope textarea:focus,.ws-scope select:focus {
+  border-color:var(--ui-primary) !important;
+  box-shadow:0 0 0 3px rgba(8,119,232,.10) !important;
+}
+.ws-scope table { background:#fff !important;color:var(--ui-ink) !important;border-color:var(--ui-line) !important; }
+.ws-scope th { background:#f2f7fb !important;color:#49627e !important; }
+.ws-scope td { border-color:#edf1f5 !important;color:#52657c !important; }
+.ws-scope button:not(.ws-btn-primary):not(.ws-btn-secondary) { color:inherit; }
+.ws-scope [class*="bg-\[#0D9488\]"] { background-color:#eaf7fb !important; }
+.ws-scope [class*="text-\[#5EEAD4\]"],.ws-scope [class*="text-\[#0D9488\]"] { color:var(--ui-primary) !important; }
+.ws-scope [class*="border-\[#0D9488\]"] { border-color:#b9dcef !important; }
+
+/* Internal page headers: consistent Amzigo-style information hierarchy. */
+.ws-scope > div.relative.mx-auto {
+  padding-top:6.8rem !important;
+  padding-bottom:1rem !important;
+}
+.ws-scope > div.relative.mx-auto h2 { font-size:1.5rem !important;letter-spacing:-.03em; }
+.ws-scope > div.relative.mx-auto p { color:var(--ui-muted) !important;line-height:1.6; }
+.ws-scope .mc-card-interactive {
+  background:#fff !important;
+  border-color:var(--ui-line) !important;
+  box-shadow:0 8px 25px rgba(16,35,63,.04);
+}
+.ws-scope .mc-card-interactive:hover {
+  border-color:#b9d8ef !important;
+  box-shadow:0 18px 45px rgba(8,119,232,.10) !important;
+  transform:translateY(-2px);
+}
+.ws-scope .ws-btn-primary + * { color:var(--ui-muted); }
+
+/* Tool launchpads become simple, readable cards rather than dense dark panels. */
+.ws-scope .rounded-2xl { border-radius:16px; }
+.ws-scope .rounded-xl { border-radius:12px; }
+
+/* Content pages generated for SEO/tool discovery use the same clean shell. */
+.amzigo-revamp > main > article {
+  color:var(--ui-ink);
+}
+.amzigo-revamp > main > article h1,
+.amzigo-revamp > main > article h2,
+.amzigo-revamp > main > article h3 { color:var(--ui-ink) !important; }
+.amzigo-revamp > main > article p,
+.amzigo-revamp > main > article li { color:var(--ui-muted) !important; }
+.amzigo-revamp > main > article .text-\[\#0D9488\],
+.amzigo-revamp > main > article .text-\[\#5EEAD4\] { color:var(--ui-primary) !important; }
+.amzigo-revamp > main > article .border-white\/10 { border-color:var(--ui-line) !important; }
+.amzigo-revamp > main > article .mc-glass { background:#fff !important;border-color:var(--ui-line) !important; }
+
+/* Make the home content sections coherent instead of alternating unrelated dark themes. */
+.amzigo-revamp main > section {
+  color:var(--ui-ink);
+}
+.amzigo-revamp main > section:not(.amzigo-hero) {
+  background:#fff !important;
+  border-color:var(--ui-line) !important;
+}
+.amzigo-revamp main > section:nth-of-type(even) { background:#f7fafc !important; }
+.amzigo-revamp main > section h2,
+.amzigo-revamp main > section h3 { color:var(--ui-ink) !important; }
+.amzigo-revamp main > section p,
+.amzigo-revamp main > section span { }
+.amzigo-revamp main > section .text-white,
+.amzigo-revamp main > section .text-white\/70,
+.amzigo-revamp main > section .text-white\/65,
+.amzigo-revamp main > section .text-white\/55 { color:var(--ui-muted) !important; }
+.amzigo-revamp main > section .mc-glass { background:#fff !important;border-color:var(--ui-line) !important; }
+.amzigo-revamp main > section .mc-cta-cyan { background:var(--ui-primary) !important;color:#fff !important; }
+.amzigo-revamp footer { color:#dbe7f2 !important; }
+.amzigo-revamp footer .text-white { color:#fff !important; }
+
+/* Clear, visible semantic status colours. */
+.ws-scope .text-emerald-300,.ws-scope .text-emerald-400 { color:#0b8f68 !important; }
+.ws-scope .text-amber-300,.ws-scope .text-amber-400 { color:#a66a00 !important; }
+.ws-scope .text-red-300,.ws-scope .text-red-400 { color:#c53b3b !important; }
+.ws-scope .text-blue-300,.ws-scope .text-blue-400 { color:#086bc9 !important; }
+
+@media (max-width:640px) {
+  .ws-scope > div.relative.mx-auto { padding-top:5.8rem !important; }
+  .ws-scope .ws-surface nav { padding-left:14px !important;padding-right:14px !important; }
+}
