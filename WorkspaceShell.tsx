@@ -27,19 +27,19 @@ const PRODUCTS_MENU: Array<{ label: string; path: string }> = [
 
 export function GlobalHeader() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
-  const [isProductsOpen, setIsProductsOpen] = useState(false);
-  const [isMobileProductsOpen, setIsMobileProductsOpen] = useState(false);
+  const [isWorkspacesOpen, setIsWorkspacesOpen] = useState(false);
+  const [isMobileWorkspacesOpen, setIsMobileWorkspacesOpen] = useState(false);
   const productsMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!isProductsOpen) return;
+    if (!isWorkspacesOpen) return;
     function handleOutside(event: MouseEvent) {
       if (productsMenuRef.current && !productsMenuRef.current.contains(event.target as Node)) {
-        setIsProductsOpen(false);
+        setIsWorkspacesOpen(false);
       }
     }
     function handleKey(event: KeyboardEvent) {
-      if (event.key === "Escape") setIsProductsOpen(false);
+      if (event.key === "Escape") setIsWorkspacesOpen(false);
     }
     document.addEventListener("mousedown", handleOutside);
     document.addEventListener("keydown", handleKey);
@@ -47,7 +47,7 @@ export function GlobalHeader() {
       document.removeEventListener("mousedown", handleOutside);
       document.removeEventListener("keydown", handleKey);
     };
-  }, [isProductsOpen]);
+  }, [isWorkspacesOpen]);
 
   return (
     <>
@@ -76,18 +76,16 @@ export function GlobalHeader() {
               type="button"
               className="flex items-center gap-1 transition hover:text-[#0D9488] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0D9488]/50"
               aria-haspopup="true"
-              aria-expanded={isProductsOpen}
+              aria-expanded={isWorkspacesOpen}
               aria-controls="ws-products-menu"
-              onClick={() => setIsProductsOpen((open) => !open)}
-            >
-              Products
-              <svg className={`h-3.5 w-3.5 transition ${isProductsOpen ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+              onClick={() => setIsWorkspacesOpen((open) => !open)}
+            >Workspaces<svg className={`h-3.5 w-3.5 transition ${isWorkspacesOpen ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
             </button>
-            {isProductsOpen ? (
+            {isWorkspacesOpen ? (
               <div
-                id="ws-products-menu"
+                id="ws-workspaces-menu"
                 role="menu"
-                aria-label="Products"
+                aria-label="Workspaces"
                 className="absolute left-1/2 top-full mt-3 w-72 -translate-x-1/2 rounded-2xl border border-white/10 bg-[#0a0b16] p-2 text-sm shadow-2xl"
               >
                 {PRODUCTS_MENU.map((item) => (
@@ -96,7 +94,7 @@ export function GlobalHeader() {
                     role="menuitem"
                     href={item.path}
                     className="block rounded-lg px-3 py-2.5 font-medium text-white/80 transition hover:bg-white/5 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0D9488]/50"
-                    onClick={(e) => { e.preventDefault(); setIsProductsOpen(false); go(item.path); }}
+                    onClick={(e) => { e.preventDefault(); setIsWorkspacesOpen(false); go(item.path); }}
                   >
                     {item.label}
                   </a>
@@ -149,21 +147,19 @@ export function GlobalHeader() {
             <button
               type="button"
               className="flex items-center justify-between rounded-lg px-3 py-2.5 text-left transition hover:bg-white/5 hover:text-[#0D9488]"
-              aria-expanded={isMobileProductsOpen}
+              aria-expanded={isMobileWorkspacesOpen}
               aria-controls="ws-mobile-products-menu"
-              onClick={() => setIsMobileProductsOpen((open) => !open)}
-            >
-              Products
-              <svg className={`h-4 w-4 transition ${isMobileProductsOpen ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+              onClick={() => setIsMobileWorkspacesOpen((open) => !open)}
+            >Workspaces<svg className={`h-4 w-4 transition ${isMobileWorkspacesOpen ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
             </button>
-            {isMobileProductsOpen ? (
+            {isMobileWorkspacesOpen ? (
               <div id="ws-mobile-products-menu" className="ml-3 flex flex-col gap-1 border-l border-white/10 pl-3">
                 {PRODUCTS_MENU.map((item) => (
                   <a
                     key={item.label}
                     href={item.path}
                     className="rounded-lg px-3 py-2 text-sm text-white/70 transition hover:bg-white/5 hover:text-white"
-                    onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); setIsMobileProductsOpen(false); go(item.path); }}
+                    onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); setIsMobileWorkspacesOpen(false); go(item.path); }}
                   >
                     {item.label}
                   </a>
