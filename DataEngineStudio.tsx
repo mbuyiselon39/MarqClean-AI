@@ -3,9 +3,10 @@ import Papa from "papaparse";
 import { WorkspaceShell } from "./WorkspaceShell";
 import { auditPhone, extractWebSignals, validateLeadRow } from "./localDataEngines";
 import type { CountryCode } from "libphonenumber-js";
+import { inspectSpreadsheetInWorker, type SpreadsheetWorkerResult } from "./spreadsheetWorkerClient";
 import { queryCsv } from "./duckdbEngine";
 
-type EngineTab = "engine" | "validate" | "phone" | "enrich";
+type EngineTab = "engine" | "spreadsheet" | "validate" | "phone" | "enrich";
 
 const SAMPLE_SQL = `SELECT COUNT(*) AS records,
        COUNT(DISTINCT lower(trim(COALESCE("Email", '')))) AS unique_emails
@@ -23,6 +24,7 @@ function download(name: string, body: string, type = "text/csv;charset=utf-8") {
 export default function DataEngineStudio({ onExit }: { onExit: () => void }) {
   const [tab, setTab] = useState<EngineTab>("engine");
   const [file, setFile] = useState<File | null>(null);
+  const [spreadsheetResult, setSpreadsheetResult] = useState<SpreadsheetWorkerResult | null>(null);
   const [sql, setSql] = useState(SAMPLE_SQL);
   const [queryRows, setQueryRows] = useState<Record<string, unknown>[]>([]);
   const [busy, setBusy] = useState(false);
@@ -37,6 +39,7 @@ export default function DataEngineStudio({ onExit }: { onExit: () => void }) {
 
   const tabs = useMemo(() => [
     { key: "engine" as const, label: "SQL Data Engine", blurb: "DuckDB-WASM joins, grouping and deduplication" },
+    { key: "spreadsheet" as const, label: "Excel Worker", blurb: "SheetJS parsing off the main UI thread" },
     { key: "validate" as const, label: "Schema Guard", blurb: "Zod-powered row validation and error reports" },
     { key: "phone" as const, label: "Phone Intelligence", blurb: "Country detection and international formatting" },
     { key: "enrich" as const, label: "Web Enrichment", blurb: "Extract signals from permitted local HTML" },
@@ -147,6 +150,16 @@ export default function DataEngineStudio({ onExit }: { onExit: () => void }) {
             <textarea className="mt-3 min-h-36 w-full rounded-xl border p-4 font-mono text-xs" value={sql} onChange={(e) => setSql(e.target.value)} />
             <p className="mt-3 text-xs text-slate-500">Use <code>__CSV__</code> as the registered local file. Example: GROUP BY, JOIN, DISTINCT, window functions and other DuckDB SQL can run without a server.</p>
             {queryRows.length ? <pre className="mt-4 max-h-72 overflow-auto rounded-xl bg-slate-950 p-4 text-xs text-slate-100">{JSON.stringify(queryRows, null, 2)}</pre> : null}
+          </div>
+        ) : null}
+
+        {tab === "spreadsheet" ? (
+          <div className="ws-surface rounded-2xl p-6">
+            <div className="flex items-center justify-between gap-3">
+              <div><h2 className="text-lg font-bold">Excel Worker</h2><p className="text-sm text-slate-500">SheetJS parses XLSX in a dedicated Web Worker so workbook inspection does not block the interface.</p></div>
+              <label className="ws-btn-primary cursor-pointer rounded-full px-5 py-2 text-sm">Inspect XLSX<input type="file" accept=".xlsx,.xls" className="hidden" onChange={async (event) => { const selected=event.target.files?.[0]; if(!selected)return; setBusy(true); try { setSpreadsheetResult(await inspectSpreadsheetInWorker(selected)); setMessage("Workbook inspected in a background worker."); } catch (error) { setMessage(error instanceof Error ? error.message : "Workbook worker failed."); } finally { setBusy(false); } }} /></label>
+            </div>
+            {spreadsheetResult ? <div className="mt-5 space-y-4"><div className="flex flex-wrap gap-2">{spreadsheetResult.sheetNames.map((name)=><span key={name} className="rounded-full bg-sky-50 px-3 py-1 text-xs font-semibold text-sky-700">{name}</span>)}</div><div><p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Detected columns</p><div className="mt-2 flex flex-wrap gap-2">{spreadsheetResult.headers.map((header,index)=><span key={index} className="rounded-lg border bg-white px-2.5 py-1 text-xs text-slate-700">{header || `Column ${index+1}`}</span>)}</div></div><pre className="max-h-64 overflow-auto rounded-xl bg-slate-950 p-4 text-xs text-slate-100">{JSON.stringify(spreadsheetResult.preview, null, 2)}</pre></div> : null}
           </div>
         ) : null}
 
