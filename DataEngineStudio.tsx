@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import Papa from "papaparse";
 import { WorkspaceShell } from "./WorkspaceShell";
 import { auditPhone, extractWebSignals, validateLeadRow } from "./localDataEngines";
-import { queryCsv, safeIdentifier } from "./duckdbEngine";
+import { queryCsv } from "./duckdbEngine";
 
 type EngineTab = "engine" | "validate" | "phone" | "enrich";
 
@@ -29,7 +29,6 @@ export default function DataEngineStudio({ onExit }: { onExit: () => void }) {
   const [phoneValue, setPhoneValue] = useState("");
   const [phoneCountry, setPhoneCountry] = useState("ZA");
   const [phoneResult, setPhoneResult] = useState<ReturnType<typeof auditPhone> | null>(null);
-  const [schemaRows, setSchemaRows] = useState<Record<string, unknown>[]>([]);
   const [schemaIssues, setSchemaIssues] = useState<string[]>([]);
   const [htmlInput, setHtmlInput] = useState("");
   const [urlInput, setUrlInput] = useState("");
@@ -58,7 +57,6 @@ export default function DataEngineStudio({ onExit }: { onExit: () => void }) {
   function validateCsv() {
     if (!file) { setMessage("Choose a CSV first."); return; }
     setBusy(true);
-    setSchemaRows([]);
     setSchemaIssues([]);
     Papa.parse<Record<string, unknown>>(file, {
       header: true,
