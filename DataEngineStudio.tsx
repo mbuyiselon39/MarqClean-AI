@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import Papa from "papaparse";
 import { WorkspaceShell } from "./WorkspaceShell";
 import { auditPhone, extractWebSignals, validateLeadRow } from "./localDataEngines";
+import type { CountryCode } from "libphonenumber-js";
 import { queryCsv } from "./duckdbEngine";
 
 type EngineTab = "engine" | "validate" | "phone" | "enrich";
@@ -83,7 +84,7 @@ export default function DataEngineStudio({ onExit }: { onExit: () => void }) {
   }
 
   function auditCurrentPhone() {
-    setPhoneResult(auditPhone(phoneValue, phoneCountry as never));
+    setPhoneResult(auditPhone(phoneValue, phoneCountry as CountryCode));
   }
 
   async function enrichUrl() {
