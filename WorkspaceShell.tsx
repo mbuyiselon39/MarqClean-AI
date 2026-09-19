@@ -23,7 +23,6 @@ const PRODUCTS_MENU: Array<{ label: string; path: string }> = [
   { label: "Excel Automation", path: "/excel-automation" },
   { label: "Reconciliation Hub", path: "/reconciliation-hub" },
   { label: "Data Toolbox", path: "/data-toolbox" },
-  { label: "Free Excel Academy", path: "/excel-academy" },
 ];
 
 export function GlobalHeader() {
