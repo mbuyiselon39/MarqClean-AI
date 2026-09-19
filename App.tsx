@@ -3059,7 +3059,6 @@ export default function App() {
     { label: "Excel Automation", href: "/excel-automation", onClick: () => navigateToPage("excel-automation") },
     { label: "Reconciliation Hub", href: "/reconciliation-hub", onClick: () => navigateToPage("reconciliation-hub") },
     { label: "Data Toolbox", href: "/data-toolbox", onClick: () => navigateToPage("data-toolbox") },
-    { label: "Free Excel Academy", href: "/excel-academy", onClick: () => navigateToPage("excel-academy") },
   ];
 
   return (
