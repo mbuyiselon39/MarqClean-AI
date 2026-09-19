@@ -3088,7 +3088,7 @@ export default function App() {
       >
         Skip to content
       </a>
-      <header className="mc-glass fixed left-0 right-0 top-0 z-30 border-b border-white/10 text-white">
+      <header className="mc-glass fixed left-0 right-0 top-0 z-30 border-b border-slate-200/80 bg-white/95 text-slate-900 shadow-sm backdrop-blur-xl">
         <nav className="mx-auto flex max-w-[100rem] items-center justify-between gap-4 px-5 py-3.5 lg:px-8" aria-label="Primary navigation">
           <a
             href="/#top"
@@ -3100,7 +3100,7 @@ export default function App() {
           >
             <img src="/brand-logo.svg" alt="MarqClean AI" className="h-9 w-auto" />
           </a>
-          <div className="hidden items-center gap-6 text-[13px] font-medium text-white/65 xl:flex">
+          <div className="hidden items-center gap-6 text-[13px] font-semibold text-slate-600 xl:flex">
             <a href="/#top" className="transition hover:text-[#0D9488]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("top"); }}>Home</a>
             <a href="/#features" className="transition hover:text-[#0D9488]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("features"); }}>Platform</a>
             <a href="/#services" className="transition hover:text-[#0D9488]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("services"); }}>Services</a>
@@ -3166,26 +3166,26 @@ export default function App() {
           </div>
         </nav>
         {isMobileNavOpen ? (
-          <div id="mobile-nav-panel" className="border-t border-white/10 bg-[#0a0b16]/98 px-5 py-4 xl:hidden">
-            <div className="flex flex-col gap-1 text-[15px] font-medium text-white/80">
-              <a className="rounded-lg px-3 py-2.5 transition hover:bg-white/5 hover:text-[#0D9488]" href="/#top" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("top"); }}>Home</a>
-              <a className="rounded-lg px-3 py-2.5 transition hover:bg-white/5 hover:text-[#0D9488]" href="/#features" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("features"); }}>Features</a>
-              <a className="rounded-lg px-3 py-2.5 transition hover:bg-white/5 hover:text-[#0D9488]" href="/#workflow" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("workflow"); }}>Workflow</a>
+          <div id="mobile-nav-panel" className="border-t border-slate-200 bg-white px-5 py-4 xl:hidden">
+            <div className="flex flex-col gap-1 text-[15px] font-medium text-slate-600">
+              <a className="rounded-xl px-3 py-2.5 transition hover:bg-sky-50 hover:text-[#0877e8]" href="/#top" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("top"); }}>Home</a>
+              <a className="rounded-lg px-3 py-2.5 transition hover:bg-white/5 hover:text-[#0D9488]" href="/#features" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("features"); }}>Platform</a>
+              <a className="rounded-xl px-3 py-2.5 transition hover:bg-sky-50 hover:text-[#0877e8]" href="/#services" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("services"); }}>Services</a>\n              <a className="rounded-xl px-3 py-2.5 transition hover:bg-sky-50 hover:text-[#0877e8]" href="/#workflow" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("workflow"); }}>How it works</a>
               <button
                 type="button"
-                className="flex items-center justify-between rounded-lg px-3 py-2.5 text-left transition hover:bg-white/5 hover:text-[#0D9488]"
+                className="flex items-center justify-between rounded-xl px-3 py-2.5 text-left transition hover:bg-sky-50 hover:text-[#0877e8]"
                 aria-expanded={isMobileWorkspacesOpen}
                 aria-controls="mobile-workspaces-menu"
                 onClick={() => setIsMobileWorkspacesOpen((open) => !open)}
               >Workspaces<svg className={`h-4 w-4 transition ${isMobileWorkspacesOpen ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
               </button>
               {isMobileWorkspacesOpen ? (
-                <div id="mobile-workspaces-menu" className="ml-3 flex flex-col gap-1 border-l border-white/10 pl-3">
+                <div id="mobile-workspaces-menu" className="ml-3 flex flex-col gap-1 border-l border-slate-200 pl-3">
                   {productsMenu.map((item) => (
                     <a
                       key={item.label}
                       href={item.href}
-                      className="rounded-lg px-3 py-2 text-sm text-white/70 transition hover:bg-white/5 hover:text-white"
+                      className="rounded-xl px-3 py-2 text-sm text-slate-600 transition hover:bg-sky-50 hover:text-[#0877e8]"
                       onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); setIsMobileWorkspacesOpen(false); item.onClick(); }}
                     >
                       {item.label}
