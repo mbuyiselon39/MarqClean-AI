@@ -20,7 +20,7 @@
     "react-dom": "19.2.6",
     "tailwind-merge": "3.4.0",
     "xlsx": "^0.18.5",
-    "@duckdb/duckdb-wasm": "^1.33.1-dev57.0",
+    "@duckdb/duckdb-wasm": "1.33.1-dev64.0",
     "libphonenumber-js": "^1.13.13",
     "zod": "^4.6.5"
   },
