@@ -3098,13 +3098,13 @@ export default function App() {
               navigateToHomeSection("top");
             }}
           >
-            <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-gradient-to-br from-[#0D9488] to-[#14B8A6] text-xs font-black text-[#04121a]">M</span>
-            MarqClean AI
+            <img src="/brand-logo.svg" alt="MarqClean AI" className="h-9 w-auto" />
           </a>
           <div className="hidden items-center gap-6 text-[13px] font-medium text-white/65 xl:flex">
             <a href="/#top" className="transition hover:text-[#0D9488]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("top"); }}>Home</a>
-            <a href="/#features" className="transition hover:text-[#0D9488]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("features"); }}>Features</a>
-            <a href="/#workflow" className="transition hover:text-[#0D9488]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("workflow"); }}>Workflow</a>
+            <a href="/#features" className="transition hover:text-[#0D9488]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("features"); }}>Platform</a>
+            <a href="/#services" className="transition hover:text-[#0D9488]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("services"); }}>Services</a>
+            <a href="/#workflow" className="transition hover:text-[#0D9488]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("workflow"); }}>How it works</a>
             <div className="relative" ref={productsMenuRef}>
               <button
                 type="button"
@@ -4087,6 +4087,31 @@ export default function App() {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="services" className="relative overflow-hidden bg-white py-20 text-slate-950">
+          <div className="mx-auto max-w-7xl px-5 lg:px-8">
+            <div className="max-w-3xl">
+              <p className="mc-mono text-sm font-semibold uppercase tracking-[0.28em] text-[#0877e8]">New platform services</p>
+              <h2 className="mc-display mt-4 text-4xl font-semibold tracking-[-0.04em] sm:text-5xl">A faster local engine for the work behind every clean dataset.</h2>
+              <p className="mt-5 text-lg leading-8 text-slate-500">MarqClean now separates heavy data work from the interface: WebAssembly for analytics, workers for CSV parsing, specialist validation libraries for data quality, and a CORS-aware enrichment layer that never requires a scraping API.</p>
+            </div>
+            <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+              {[
+                { icon: "⚡", title: "Local Data Engine", text: "Run joins, deduplication, grouping and aggregations in DuckDB-WASM without uploading rows.", action: "Open Data Engine", page: "data-engine" as AppPageKey },
+                { icon: "🌐", title: "Web Enrichment", text: "Extract company signals from permitted pages or saved HTML: emails, phones, schema.org, social links and metadata.", action: "Enrich locally", page: "data-engine" as AppPageKey },
+                { icon: "✓", title: "Schema Guard", text: "Define and enforce browser-local validation rules with Zod and produce a reviewable Error Report.", action: "Validate data", page: "data-engine" as AppPageKey },
+                { icon: "☎", title: "Phone Intelligence", text: "Detect country, validate numbers and format international or national output using libphonenumber-js.", action: "Fix phone data", page: "data-engine" as AppPageKey },
+              ].map((item) => (
+                <button key={item.title} type="button" onClick={() => navigateToPage(item.page)} className="group rounded-2xl border border-slate-200 bg-slate-50 p-6 text-left shadow-sm transition hover:-translate-y-1 hover:border-sky-200 hover:bg-white hover:shadow-xl">
+                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-sky-50 text-xl">{item.icon}</span>
+                  <h3 className="mc-display mt-5 text-xl font-semibold">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-slate-500">{item.text}</p>
+                  <span className="mt-5 inline-flex text-sm font-bold text-[#0877e8]">{item.action} →</span>
+                </button>
+              ))}
             </div>
           </div>
         </section>
