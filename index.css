@@ -323,7 +323,7 @@ body {
 .amzigo-revamp header .text-white,
 .amzigo-revamp header .text-white\/65,
 .amzigo-revamp header .text-white\/80 { color: var(--az-ink) !important; }
-.amzigo-revamp header .hover\\:text-\\[\\#0D9488\\] { color: var(--az-muted); }
+
 .amzigo-revamp header .border-white\/10,
 .amzigo-revamp header .border-white\/15 { border-color: var(--az-line) !important; }
 .amzigo-revamp .mc-cta-cyan {
