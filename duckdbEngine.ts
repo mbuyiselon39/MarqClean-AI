@@ -1,22 +1,21 @@
 import * as duckdb from "@duckdb/duckdb-wasm";
-import duckdbMvp from "@duckdb/duckdb-wasm/dist/duckdb-mvp.wasm?url";
-import mvpWorker from "@duckdb/duckdb-wasm/dist/duckdb-browser-mvp.worker.js?url";
-import duckdbEh from "@duckdb/duckdb-wasm/dist/duckdb-eh.wasm?url";
-import ehWorker from "@duckdb/duckdb-wasm/dist/duckdb-browser-eh.worker.js?url";
 
 let databasePromise: Promise<duckdb.AsyncDuckDB> | null = null;
 
 async function getDatabase() {
   if (!databasePromise) {
     databasePromise = (async () => {
-      const bundles: duckdb.DuckDBBundles = {
-        mvp: { mainModule: duckdbMvp, mainWorker: mvpWorker },
-        eh: { mainModule: duckdbEh, mainWorker: ehWorker },
-      };
-      const bundle = await duckdb.selectBundle(bundles);
-      const worker = new Worker(bundle.mainWorker!);
+      // Keep the static app under Cloudflare Pages' 25 MiB asset limit.
+      // DuckDB's official CDN bundles are selected at runtime, while the application
+      // remains fully serverless and user data still stays in the browser.
+      const bundle = await duckdb.selectBundle(duckdb.getJsDelivrBundles());
+      const workerUrl = URL.createObjectURL(
+        new Blob([`importScripts("${bundle.mainWorker!}");`], { type: "text/javascript" }),
+      );
+      const worker = new Worker(workerUrl);
       const db = new duckdb.AsyncDuckDB(new duckdb.ConsoleLogger(), worker);
       await db.instantiate(bundle.mainModule, bundle.pthreadWorker);
+      URL.revokeObjectURL(workerUrl);
       return db;
     })();
   }
