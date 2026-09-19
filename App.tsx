@@ -2579,8 +2579,8 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState<AppPageKey>("home");
   const [workspaceTab, setWorkspaceTab] = useState<"leads" | "converter" | "formulas" | "bank">("leads");
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
-  const [isProductsOpen, setIsProductsOpen] = useState(false);
-  const [isMobileProductsOpen, setIsMobileProductsOpen] = useState(false);
+  const [isWorkspacesOpen, setIsWorkspacesOpen] = useState(false);
+  const [isMobileWorkspacesOpen, setIsMobileWorkspacesOpen] = useState(false);
   const productsMenuRef = useRef<HTMLDivElement>(null);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -2652,14 +2652,14 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (!isProductsOpen) return;
+    if (!isWorkspacesOpen) return;
     function handleOutside(event: MouseEvent) {
       if (productsMenuRef.current && !productsMenuRef.current.contains(event.target as Node)) {
-        setIsProductsOpen(false);
+        setIsWorkspacesOpen(false);
       }
     }
     function handleKey(event: KeyboardEvent) {
-      if (event.key === "Escape") setIsProductsOpen(false);
+      if (event.key === "Escape") setIsWorkspacesOpen(false);
     }
     document.addEventListener("mousedown", handleOutside);
     document.addEventListener("keydown", handleKey);
@@ -2667,7 +2667,7 @@ export default function App() {
       document.removeEventListener("mousedown", handleOutside);
       document.removeEventListener("keydown", handleKey);
     };
-  }, [isProductsOpen]);
+  }, [isWorkspacesOpen]);
 
   useEffect(() => {
     let ticking = false;
@@ -2687,8 +2687,8 @@ export default function App() {
   useEffect(() => {
     updatePageMetadata(currentPage);
     setIsMobileNavOpen(false);
-    setIsProductsOpen(false);
-    setIsMobileProductsOpen(false);
+    setIsWorkspacesOpen(false);
+    setIsMobileWorkspacesOpen(false);
   }, [currentPage]);
 
   useEffect(() => {
@@ -3091,18 +3091,16 @@ export default function App() {
                 type="button"
                 className="flex items-center gap-1 transition hover:text-[#0D9488] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0D9488]/50"
                 aria-haspopup="true"
-                aria-expanded={isProductsOpen}
-                aria-controls="products-menu"
-                onClick={() => setIsProductsOpen((open) => !open)}
-              >
-                Products
-                <svg className={`h-3.5 w-3.5 transition ${isProductsOpen ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+                aria-expanded={isWorkspacesOpen}
+                aria-controls="workspaces-menu"
+                onClick={() => setIsWorkspacesOpen((open) => !open)}
+              >Workspaces<svg className={`h-3.5 w-3.5 transition ${isWorkspacesOpen ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
               </button>
-              {isProductsOpen ? (
+              {isWorkspacesOpen ? (
                 <div
-                  id="products-menu"
+                  id="workspaces-menu"
                   role="menu"
-                  aria-label="Products"
+                  aria-label="Workspaces"
                   className="absolute left-1/2 top-full mt-3 w-72 -translate-x-1/2 rounded-2xl border border-white/10 bg-[#0a0b16] p-2 text-sm shadow-2xl"
                 >
                   {productsMenu.map((item) => (
@@ -3111,7 +3109,7 @@ export default function App() {
                       role="menuitem"
                       href={item.href}
                       className="block rounded-lg px-3 py-2.5 font-medium text-white/80 transition hover:bg-white/5 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0D9488]/50"
-                      onClick={(e) => { e.preventDefault(); setIsProductsOpen(false); item.onClick(); }}
+                      onClick={(e) => { e.preventDefault(); setIsWorkspacesOpen(false); item.onClick(); }}
                     >
                       {item.label}
                     </a>
@@ -3157,21 +3155,19 @@ export default function App() {
               <button
                 type="button"
                 className="flex items-center justify-between rounded-lg px-3 py-2.5 text-left transition hover:bg-white/5 hover:text-[#0D9488]"
-                aria-expanded={isMobileProductsOpen}
-                aria-controls="mobile-products-menu"
-                onClick={() => setIsMobileProductsOpen((open) => !open)}
-              >
-                Products
-                <svg className={`h-4 w-4 transition ${isMobileProductsOpen ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+                aria-expanded={isMobileWorkspacesOpen}
+                aria-controls="mobile-workspaces-menu"
+                onClick={() => setIsMobileWorkspacesOpen((open) => !open)}
+              >Workspaces<svg className={`h-4 w-4 transition ${isMobileWorkspacesOpen ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
               </button>
-              {isMobileProductsOpen ? (
-                <div id="mobile-products-menu" className="ml-3 flex flex-col gap-1 border-l border-white/10 pl-3">
+              {isMobileWorkspacesOpen ? (
+                <div id="mobile-workspaces-menu" className="ml-3 flex flex-col gap-1 border-l border-white/10 pl-3">
                   {productsMenu.map((item) => (
                     <a
                       key={item.label}
                       href={item.href}
                       className="rounded-lg px-3 py-2 text-sm text-white/70 transition hover:bg-white/5 hover:text-white"
-                      onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); setIsMobileProductsOpen(false); item.onClick(); }}
+                      onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); setIsMobileWorkspacesOpen(false); item.onClick(); }}
                     >
                       {item.label}
                     </a>
