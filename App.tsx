@@ -2421,7 +2421,7 @@ function ToolsDirectory() {
     <div>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="relative w-full sm:max-w-sm">
-          <svg className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/35" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <svg className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink/35" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" />
           </svg>
           <input
@@ -2430,10 +2430,10 @@ function ToolsDirectory() {
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search data and Excel tools..."
             aria-label="Search data and Excel tools"
-            className="w-full rounded-md border border-white/12 bg-canvas/[0.04] py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-white/35 outline-none transition focus-visible:border-[rgb(var(--accent))] focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/40"
+            className="w-full rounded-md border border-white/12 bg-canvas/[0.04] py-2.5 pl-10 pr-4 text-sm text-ink placeholder:text-ink/35 outline-none transition focus-visible:border-[rgb(var(--accent))] focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/40"
           />
         </div>
-        <p className="text-xs text-white/45">{filtered.length} of {allTools.length} tools</p>
+        <p className="text-xs text-ink/45">{filtered.length} of {allTools.length} tools</p>
       </div>
 
       <div className="mt-4 flex flex-wrap gap-2" role="group" aria-label="Filter tools by category">
@@ -2445,8 +2445,8 @@ function ToolsDirectory() {
             onClick={() => setCategory(c)}
             className={`rounded-md border px-3.5 py-1.5 text-xs font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/50 ${
               category === c
-                ? "border-[rgb(var(--accent))] bg-[rgb(var(--accent))]/20 text-white"
-                : "border-white/12 text-white/55 hover:border-white/30 hover:text-white"
+                ? "border-[rgb(var(--accent))] bg-[rgb(var(--accent))]/20 text-ink"
+                : "border-white/12 text-ink-3 hover:border-white/30 hover:text-ink"
             }`}
           >
             {c}
@@ -2455,12 +2455,12 @@ function ToolsDirectory() {
       </div>
 
       {filtered.length === 0 ? (
-        <div className="mt-10 rounded-lg border border-dashed border-white/15 bg-canvas/[0.02] p-10 text-center">
-          <p className="text-sm font-medium text-white">No tools match "{query}"{category !== "All" ? ` in ${category}` : ""}.</p>
-          <p className="mt-2 text-sm text-white/50">Try a different search term, or clear the category filter.</p>
+        <div className="mt-10 rounded-lg border border-dashed border-line bg-canvas/[0.02] p-10 text-center">
+          <p className="text-sm font-medium text-ink">No tools match "{query}"{category !== "All" ? ` in ${category}` : ""}.</p>
+          <p className="mt-2 text-sm text-ink-3">Try a different search term, or clear the category filter.</p>
           <button
             onClick={() => { setQuery(""); setCategory("All"); }}
-            className="mt-4 rounded-md border border-white/20 px-4 py-2 text-xs font-medium text-white hover:border-white/50"
+            className="mt-4 rounded-md border border-white/20 px-4 py-2 text-xs font-medium text-ink hover:border-white/50"
           >
             Clear search and filters
           </button>
@@ -2471,16 +2471,16 @@ function ToolsDirectory() {
             <PageLink
               key={tool.slug}
               page={tool.slug}
-              className="group mc-card-interactive flex flex-col rounded-lg border border-white/10 bg-canvas/[0.03] p-5 text-sm hover:border-[rgb(var(--accent))]/50 hover:bg-canvas/[0.05] hover:shadow-[0_20px_40px_-20px_rgba(13,148,136,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/50"
+              className="group mc-card-interactive flex flex-col rounded-lg border border-line bg-canvas p-5 text-sm hover:border-[rgb(var(--accent))]/50 hover:bg-surface  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/50"
             >
               <div className="flex items-center justify-between gap-2">
                 <span className="text-2xl" aria-hidden="true">{tool.icon}</span>
-                <span className="rounded-md border border-emerald-400/30 bg-emerald-400/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-emerald-300">Free Tool</span>
+                <span className="rounded-md border border-line bg-surface px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-ink-2">Free Tool</span>
               </div>
               <span className="mc-mono mt-3 block text-[10px] uppercase tracking-[0.18em] text-[rgb(var(--accent))]/80">{tool.category}</span>
-              <span className="mt-1.5 block text-lg font-medium leading-snug tracking-[-0.01em] text-white">{tool.cardTitle}</span>
-              <span className="mt-2 flex-1 text-white/55">{tool.description.replace(/^Free /, "").slice(0, 96)}...</span>
-              <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[rgb(var(--accent-hover))] transition group-hover:gap-2.5 group-hover:text-white">
+              <span className="mt-1.5 block text-lg font-medium leading-snug tracking-[-0.01em] text-ink">{tool.cardTitle}</span>
+              <span className="mt-2 flex-1 text-ink-3">{tool.description.replace(/^Free /, "").slice(0, 96)}...</span>
+              <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[rgb(var(--accent-hover))] transition group-hover:gap-2.5 group-hover:text-ink">
                 Open Tool
                 <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </span>
@@ -2494,28 +2494,28 @@ function ToolsDirectory() {
 
 function FooterContentPage({ page }: { page: FooterPage }) {
   return (
-    <main id="main-content" className="min-h-screen bg-[rgb(var(--canvas))] px-5 pb-20 pt-32 text-white lg:px-8">
+    <main id="main-content" className="min-h-screen bg-[rgb(var(--canvas))] px-5 pb-20 pt-32 text-ink lg:px-8">
       <motion.article
         className="mx-auto max-w-4xl"
         initial={{ opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
-        <PageLink className="text-sm font-medium text-[rgb(var(--accent-hover))] transition hover:text-white" page="home">
+        <PageLink className="text-sm font-medium text-[rgb(var(--accent-hover))] transition hover:text-ink" page="home">
           Back to product
         </PageLink>
         <p className="mt-8 text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">{COMPANY_NAME}</p>
-        <h1 className="mt-4 text-5xl font-medium tracking-[-0.05em] text-white sm:text-6xl">{page.title}</h1>
-        <p className="mt-6 text-lg leading-8 text-white/70">{page.description}</p>
-        <p className="mt-4 text-sm text-white/40">Last updated: June 29, 2026</p>
+        <h1 className="mt-4 text-5xl font-medium tracking-[-0.05em] text-ink sm:text-6xl">{page.title}</h1>
+        <p className="mt-6 text-lg leading-8 text-ink-2">{page.description}</p>
+        <p className="mt-4 text-sm text-ink/40">Last updated: June 29, 2026</p>
 
         <div className="mt-12 space-y-10">
           {page.sections.map((section) => (
-            <section key={section.heading} className="border-t border-white/10 pt-8">
-              <h2 className="text-3xl font-medium tracking-[-0.04em] text-white">{section.heading}</h2>
+            <section key={section.heading} className="border-t border-line pt-8">
+              <h2 className="text-3xl font-medium tracking-[-0.04em] text-ink">{section.heading}</h2>
               <div className="mt-4 space-y-4">
                 {section.body.map((paragraph) => (
-                  <p className="text-justify leading-7 text-white/65 [hyphens:auto]" key={paragraph}>
+                  <p className="text-justify leading-7 text-ink-2 [hyphens:auto]" key={paragraph}>
                     {paragraph}
                   </p>
                 ))}
@@ -2530,19 +2530,19 @@ function FooterContentPage({ page }: { page: FooterPage }) {
 
 function ToolContentPage({ page }: { page: SeoToolPage }) {
   return (
-    <main id="main-content" className="min-h-screen bg-[rgb(var(--canvas))] px-5 pb-20 pt-32 text-white lg:px-8">
+    <main id="main-content" className="min-h-screen bg-[rgb(var(--canvas))] px-5 pb-20 pt-32 text-ink lg:px-8">
       <motion.article
         className="mx-auto max-w-5xl"
         initial={{ opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
-        <PageLink className="text-sm font-medium text-[rgb(var(--accent-hover))] transition hover:text-white" page="home">
+        <PageLink className="text-sm font-medium text-[rgb(var(--accent-hover))] transition hover:text-ink" page="home">
           Back to free CSV cleaner
         </PageLink>
         <p className="mt-8 text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">Free browser-based tool</p>
-        <h1 className="mt-4 max-w-4xl text-5xl font-medium tracking-[-0.05em] text-white sm:text-6xl">{page.h1}</h1>
-        <p className="mt-6 max-w-3xl text-lg leading-8 text-white/70">{page.description}</p>
+        <h1 className="mt-4 max-w-4xl text-5xl font-medium tracking-[-0.05em] text-ink sm:text-6xl">{page.h1}</h1>
+        <p className="mt-6 max-w-3xl text-lg leading-8 text-ink-2">{page.description}</p>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <a
             className="mc-cta-cyan rounded-md px-6 py-3 text-center text-sm font-medium"
@@ -2555,15 +2555,15 @@ function ToolContentPage({ page }: { page: SeoToolPage }) {
           >
             Use the free cleaner
           </a>
-          <PageLink className="rounded-md border border-white/20 px-6 py-3 text-center text-sm font-medium text-white transition hover:border-white/50" page="lead-list-cleaner">
+          <PageLink className="rounded-md border border-white/20 px-6 py-3 text-center text-sm font-medium text-ink transition hover:border-white/50" page="lead-list-cleaner">
             Explore lead list cleanup
           </PageLink>
         </div>
 
-        <section className="mt-16 border-t border-white/10 pt-10">
+        <section className="mt-16 border-t border-line pt-10">
           <p className="text-sm font-medium uppercase tracking-[0.24em] text-[rgb(var(--accent))]">{page.keyword}</p>
-          <h2 className="mt-4 text-4xl font-medium tracking-[-0.04em] text-white">{page.h2}</h2>
-          <p className="mt-5 max-w-3xl text-justify leading-7 text-white/65 [hyphens:auto]">
+          <h2 className="mt-4 text-4xl font-medium tracking-[-0.04em] text-ink">{page.h2}</h2>
+          <p className="mt-5 max-w-3xl text-justify leading-7 text-ink-2 [hyphens:auto]">
             This page is powered by the same modular MarqClean AI cleaning engine used across every free CSV cleaner,
             Excel converter, lead list cleaner, CRM data cleanup tool, duplicate checker, and spreadsheet formatting workflow.
           </p>
@@ -2572,8 +2572,8 @@ function ToolContentPage({ page }: { page: SeoToolPage }) {
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {page.sections.map((section) => (
             <section key={section.h3} className="mc-glass rounded-lg p-6">
-              <h3 className="text-xl font-medium tracking-[-0.02em] text-white">{section.h3}</h3>
-              <p className="mt-3 text-[15px] leading-6 text-white/65">{section.body}</p>
+              <h3 className="text-xl font-medium tracking-[-0.02em] text-ink">{section.h3}</h3>
+              <p className="mt-3 text-[15px] leading-6 text-ink-2">{section.body}</p>
             </section>
           ))}
         </div>
@@ -3070,9 +3070,9 @@ export default function App() {
         }}
         aria-label="Back to top"
         className={`fixed bottom-5 right-4 z-40 inline-flex h-11 w-11 items-center justify-center rounded-md
-          border border-white/15 bg-gradient-to-br from-[rgb(var(--accent))] to-[rgb(var(--accent))] text-white
-          backdrop-blur transition-all duration-300 hover:shadow-[0_14px_36px_-6px_rgba(13,148,136,0.8)] hover:brightness-110
-          focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(var(--canvas))]
+          border border-line bg-accent text-ink
+           transition-all duration-300  
+          focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas
           sm:bottom-7 sm:right-6 sm:h-12 sm:w-12
           ${showBackToTop ? "translate-y-0 scale-100 opacity-100" : "pointer-events-none translate-y-3 scale-90 opacity-0"}`}
       >
@@ -3097,7 +3097,7 @@ export default function App() {
   if (currentPage === "reconciliation-hub") {
     return (
       <>
-        <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-[rgb(var(--canvas))] text-white/60">Loading Reconciliation Hub...</div>}>
+        <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-[rgb(var(--canvas))] text-ink/60">Loading Reconciliation Hub...</div>}>
           <ReconciliationHub onExit={() => navigateToPage("home")} />
         </Suspense>
         {renderBackToTop()}
@@ -3108,7 +3108,7 @@ export default function App() {
   if (currentPage === "data-toolbox") {
     return (
       <>
-        <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-[rgb(var(--canvas))] text-white/60">Loading Data Toolbox...</div>}>
+        <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-[rgb(var(--canvas))] text-ink/60">Loading Data Toolbox...</div>}>
           <DataToolbox onExit={() => navigateToPage("home")} />
         </Suspense>
         {renderBackToTop()}
@@ -3154,7 +3154,7 @@ export default function App() {
       >
         Skip to content
       </a>
-      <header className="mc-glass fixed left-0 right-0 top-0 z-30 border-b border-line/80 bg-canvas/95 text-ink backdrop-blur-xl">
+      <header className="mc-glass fixed left-0 right-0 top-0 z-30 border-b border-line/80 bg-canvas/95 text-ink -xl">
         <nav className="mx-auto flex max-w-[100rem] items-center justify-between gap-4 px-5 py-3.5 lg:px-8" aria-label="Primary navigation">
           <a
             href="/#top"
@@ -3186,14 +3186,14 @@ export default function App() {
                   id="workspaces-menu"
                   role="menu"
                   aria-label="Workspaces"
-                  className="absolute left-1/2 top-full mt-3 w-72 -translate-x-1/2 rounded-lg border border-white/10 bg-[rgb(var(--surface))] p-2 text-sm"
+                  className="absolute left-1/2 top-full mt-3 w-72 -translate-x-1/2 rounded-lg border border-line bg-[rgb(var(--surface))] p-2 text-sm"
                 >
                   {productsMenu.map((item) => (
                     <a
                       key={item.label}
                       role="menuitem"
                       href={item.href}
-                      className="block rounded-lg px-3 py-2.5 font-medium text-white/80 transition hover:bg-canvas/5 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/50"
+                      className="block rounded-lg px-3 py-2.5 font-medium text-ink-2 transition hover:bg-canvas/5 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/50"
                       onClick={(e) => { e.preventDefault(); setIsWorkspacesOpen(false); item.onClick(); }}
                     >
                       {item.label}
@@ -3214,7 +3214,7 @@ export default function App() {
             </button>
             <button
               type="button"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/15 text-white transition hover:border-[rgb(var(--accent))]/60 hover:text-[rgb(var(--accent))] xl:hidden"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-line text-ink transition hover:border-[rgb(var(--accent))]/60 hover:text-[rgb(var(--accent))] xl:hidden"
               aria-label={isMobileNavOpen ? "Close navigation menu" : "Open navigation menu"}
               aria-expanded={isMobileNavOpen}
               aria-controls="mobile-nav-panel"
@@ -3235,12 +3235,12 @@ export default function App() {
         {isMobileNavOpen ? (
           <div id="mobile-nav-panel" className="border-t border-line bg-canvas px-5 py-4 xl:hidden">
             <div className="flex flex-col gap-1 text-[15px] font-medium text-ink-2">
-              <a className="rounded-lg px-3 py-2.5 transition hover:bg-sky-50 hover:text-[rgb(var(--accent))]" href="/#top" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("top"); }}>Home</a>
+              <a className="rounded-lg px-3 py-2.5 transition hover:bg-surface hover:text-[rgb(var(--accent))]" href="/#top" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("top"); }}>Home</a>
               <a className="rounded-lg px-3 py-2.5 transition hover:bg-canvas/5 hover:text-[rgb(var(--accent))]" href="/#features" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("features"); }}>Platform</a>
-              <a className="rounded-lg px-3 py-2.5 transition hover:bg-sky-50 hover:text-[rgb(var(--accent))]" href="/#services" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("services"); }}>Services</a>\n              <a className="rounded-lg px-3 py-2.5 transition hover:bg-sky-50 hover:text-[rgb(var(--accent))]" href="/#workflow" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("workflow"); }}>How it works</a>
+              <a className="rounded-lg px-3 py-2.5 transition hover:bg-surface hover:text-[rgb(var(--accent))]" href="/#services" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("services"); }}>Services</a>\n              <a className="rounded-lg px-3 py-2.5 transition hover:bg-surface hover:text-[rgb(var(--accent))]" href="/#workflow" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("workflow"); }}>How it works</a>
               <button
                 type="button"
-                className="flex items-center justify-between rounded-lg px-3 py-2.5 text-left transition hover:bg-sky-50 hover:text-[rgb(var(--accent))]"
+                className="flex items-center justify-between rounded-lg px-3 py-2.5 text-left transition hover:bg-surface hover:text-[rgb(var(--accent))]"
                 aria-expanded={isMobileWorkspacesOpen}
                 aria-controls="mobile-workspaces-menu"
                 onClick={() => setIsMobileWorkspacesOpen((open) => !open)}
@@ -3252,7 +3252,7 @@ export default function App() {
                     <a
                       key={item.label}
                       href={item.href}
-                      className="rounded-lg px-3 py-2 text-sm text-ink-2 transition hover:bg-sky-50 hover:text-[rgb(var(--accent))]"
+                      className="rounded-lg px-3 py-2 text-sm text-ink-2 transition hover:bg-surface hover:text-[rgb(var(--accent))]"
                       onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); setIsMobileWorkspacesOpen(false); item.onClick(); }}
                     >
                       {item.label}
@@ -3293,8 +3293,8 @@ export default function App() {
           />
         </Suspense>
 
-        <section className="border-y border-white/10 bg-[rgb(var(--canvas))] py-10 text-white">
-          <div className="mx-auto flex max-w-6xl items-center justify-center gap-2 px-5 pb-6 text-xs text-white/40 lg:px-8">
+        <section className="border-y border-line bg-[rgb(var(--canvas))] py-10 text-ink">
+          <div className="mx-auto flex max-w-6xl items-center justify-center gap-2 px-5 pb-6 text-xs text-ink/40 lg:px-8">
             <span className="relative flex h-2 w-2">
               <span className="mc-anim-glow-pulse absolute inline-flex h-full w-full rounded-md bg-[rgb(var(--accent))]" />
               <span className="relative inline-flex h-2 w-2 rounded-md bg-[rgb(var(--accent))]" />
@@ -3320,8 +3320,8 @@ export default function App() {
                 transition={{ duration: 0.4, ease: "easeOut" }}
                 className="text-center"
               >
-                <p className="mc-display bg-gradient-to-r from-[rgb(var(--accent-hover))] to-[rgb(var(--accent))] bg-clip-text text-3xl font-medium tracking-tight text-transparent sm:text-4xl">{stat.value}</p>
-                <p className="mt-1 text-xs text-white/50 sm:text-sm">{stat.label}</p>
+                <p className="mc-display bg-canvas from-[rgb(var(--accent-hover))] to-[rgb(var(--accent))] bg-clip-text text-3xl font-medium tracking-tight text-transparent sm:text-4xl">{stat.value}</p>
+                <p className="mt-1 text-xs text-ink-3 sm:text-sm">{stat.label}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -3338,9 +3338,9 @@ export default function App() {
             {/* Module header card (matches Excel Automation / Reconciliation Hub / Data Toolbox) */}
             <div className="ws-surface mb-8 flex flex-wrap items-start justify-between gap-4 rounded-lg p-6">
               <div className="flex items-start gap-4">
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[rgb(var(--accent))]/20 to-[rgb(var(--accent))]/20 text-2xl ring-1 ring-inset ring-white/10">{WORKSPACE_MODULES[workspaceTab].icon}</span>
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-canvas from-[rgb(var(--accent))]/20 to-[rgb(var(--accent))]/20 text-2xl ring-1 ring-inset ring-line">{WORKSPACE_MODULES[workspaceTab].icon}</span>
                 <div>
-                  <h2 className="mc-display text-2xl font-medium tracking-tight text-white sm:text-3xl">{WORKSPACE_MODULES[workspaceTab].title}</h2>
+                  <h2 className="mc-display text-2xl font-medium tracking-tight text-ink sm:text-3xl">{WORKSPACE_MODULES[workspaceTab].title}</h2>
                   <p className="mc-prose mt-1 text-justify text-sm leading-relaxed text-[rgb(var(--ink-2))] [hyphens:auto]">{WORKSPACE_MODULES[workspaceTab].description}</p>
                   <div className="mt-3 flex flex-wrap items-center gap-2">
                     {WORKSPACE_MODULES[workspaceTab].formats.map((f) => (
@@ -3365,7 +3365,7 @@ export default function App() {
                   type="button"
                   role="tab"
                   aria-selected={workspaceTab === key}
-                  className={`rounded-md border px-5 py-2.5 text-sm font-medium transition ${workspaceTab === key ? "border-[rgb(var(--accent))]/60 bg-[rgb(var(--accent))]/10 text-white" : "border-white/12 bg-canvas/[0.03] text-[rgb(var(--ink-2))] hover:border-white/30 hover:text-white"}`}
+                  className={`rounded-md border px-5 py-2.5 text-sm font-medium transition ${workspaceTab === key ? "border-[rgb(var(--accent))]/60 bg-[rgb(var(--accent))]/10 text-ink" : "border-white/12 bg-canvas text-[rgb(var(--ink-2))] hover:border-white/30 hover:text-ink"}`}
                   onClick={() => setWorkspaceTab(key)}
                 >
                   {label}
@@ -3382,7 +3382,7 @@ export default function App() {
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
             <div>
-              <p className="text-sm font-medium uppercase tracking-[0.28em] text-teal-700">Automated CSV cleaner</p>
+              <p className="text-sm font-medium uppercase tracking-[0.28em] text-accent">Automated CSV cleaner</p>
               <h3 className="mt-4 text-3xl font-medium tracking-[-0.03em] text-ink">
                 Upload messy marketing data for free. Download a clean Excel workbook.
               </h3>
@@ -3394,7 +3394,7 @@ export default function App() {
 
             <div className="rounded-[2rem] border border-line bg-canvas p-4 shadow-slate-900/10 sm:p-6" aria-busy={isProcessing}>
               <div
-                className="rounded-[1.5rem] border border-dashed border-line bg-surface p-6 text-center transition hover:border-teal-500 hover:bg-teal-50/40"
+                className="rounded-[1.5rem] border border-dashed border-line bg-surface p-6 text-center transition hover:border-accent hover:bg-accent-tint"
                 onDragOver={(event) => event.preventDefault()}
                 onDrop={(event) => {
                   event.preventDefault();
@@ -3409,7 +3409,7 @@ export default function App() {
                   aria-label="Upload CSV or Excel file for cleaning"
                   onChange={(event) => handleFileInput(event.target.files)}
                 />
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-md bg-slate-950 text-white">
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-md bg-ink text-ink">
                   <svg className="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                     <path d="M12 16V4" strokeLinecap="round" />
                     <path d="m7 9 5-5 5 5" strokeLinecap="round" strokeLinejoin="round" />
@@ -3423,14 +3423,14 @@ export default function App() {
                 </p>
                 <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
                   <button
-                    className="rounded-md bg-slate-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-teal-700"
+                    className="rounded-md bg-ink px-5 py-3 text-sm font-medium text-ink transition hover:bg-accent"
                     onClick={() => fileInputRef.current?.click()}
                     disabled={isProcessing}
                   >
                     {isProcessing ? "Processing" : "Choose File"}
                   </button>
                   <button
-                    className="rounded-md border border-line px-5 py-3 text-sm font-medium text-ink transition hover:border-slate-950"
+                    className="rounded-md border border-line px-5 py-3 text-sm font-medium text-ink transition hover:border-ink"
                     onClick={loadSampleData}
                     disabled={isProcessing}
                   >
@@ -3449,7 +3449,7 @@ export default function App() {
                   >
                     <div className="p-4 text-sm font-medium text-ink-2" role="status">Cleaning fields and preparing exports...</div>
                     <motion.div
-                      className="h-1 bg-teal-500"
+                      className="h-1 bg-accent"
                       initial={{ width: "12%" }}
                       animate={{ width: "100%" }}
                       transition={{ duration: 1.1, repeat: Infinity, repeatType: "reverse" }}
@@ -3458,7 +3458,7 @@ export default function App() {
                 ) : null}
               </AnimatePresence>
 
-              {error ? <p className="mt-4 rounded-lg bg-red-50 p-4 text-sm font-medium text-red-700" role="alert">{error}</p> : null}
+              {error ? <p className="mt-4 rounded-lg bg-surface p-4 text-sm font-medium text-error" role="alert">{error}</p> : null}
 
               <AnimatePresence>
                 {result ? (
@@ -3470,15 +3470,15 @@ export default function App() {
                     transition={{ duration: 0.45 }}
                   >
                     <div className="grid gap-3 sm:grid-cols-3">
-                      <div className="rounded-lg bg-slate-950 p-4 text-white">
+                      <div className="rounded-lg bg-ink p-4 text-ink">
                         <p className="text-3xl font-medium">{result.stats.cleanedRows}</p>
-                        <p className="mt-1 text-xs uppercase tracking-[0.18em] text-white/60">Rows cleaned</p>
+                        <p className="mt-1 text-xs uppercase tracking-[0.18em] text-ink/60">Rows cleaned</p>
                       </div>
-                      <div className="rounded-lg bg-teal-100 p-4 text-ink">
+                      <div className="rounded-lg bg-accent-tint p-4 text-ink">
                         <p className="text-3xl font-medium">{result.stats.fieldRepairs + result.stats.headerFixes}</p>
                         <p className="mt-1 text-xs uppercase tracking-[0.18em] text-ink-2">Fixes applied</p>
                       </div>
-                      <div className="rounded-lg bg-amber-100 p-4 text-ink">
+                      <div className="rounded-lg bg-surface p-4 text-ink">
                         <p className="text-3xl font-medium">{result.stats.industriesAdded}</p>
                         <p className="mt-1 text-xs uppercase tracking-[0.18em] text-ink-2">Industries added</p>
                       </div>
@@ -3486,14 +3486,14 @@ export default function App() {
 
                     <div className="mt-5 flex flex-col gap-3 sm:flex-row">
                       <motion.button
-                        className="rounded-md bg-teal-500 px-5 py-3 text-sm font-medium text-ink transition hover:bg-teal-300"
+                        className="rounded-md bg-accent px-5 py-3 text-sm font-medium text-ink transition hover:bg-accent-tint"
                         onClick={downloadXlsx}
                         whileTap={{ scale: 0.98 }}
                       >
                         Download Clean Excel
                       </motion.button>
                       <motion.button
-                        className="rounded-md border border-line px-5 py-3 text-sm font-medium text-ink transition hover:border-slate-950"
+                        className="rounded-md border border-line px-5 py-3 text-sm font-medium text-ink transition hover:border-ink"
                         onClick={downloadCsv}
                         whileTap={{ scale: 0.98 }}
                       >
@@ -3554,7 +3554,7 @@ export default function App() {
               transition={{ duration: 0.5, ease: "easeOut" }}
             >
               <div>
-                <p className="text-sm font-medium uppercase tracking-[0.28em] text-teal-700">CSV to Excel converter</p>
+                <p className="text-sm font-medium uppercase tracking-[0.28em] text-accent">CSV to Excel converter</p>
                 <h3 className="mt-4 text-3xl font-medium tracking-[-0.03em] text-ink">
                   Split delimited text into columns, just like the Excel wizard.
                 </h3>
@@ -3568,7 +3568,7 @@ export default function App() {
 
               <div className="rounded-[2rem] border border-line bg-canvas p-4 shadow-slate-900/10 sm:p-6" aria-busy={converterProcessing}>
                 <div
-                  className="rounded-[1.5rem] border border-dashed border-line bg-surface p-6 text-center transition hover:border-teal-500 hover:bg-teal-50/40"
+                  className="rounded-[1.5rem] border border-dashed border-line bg-surface p-6 text-center transition hover:border-accent hover:bg-accent-tint"
                   onDragOver={(event) => event.preventDefault()}
                   onDrop={(event) => {
                     event.preventDefault();
@@ -3590,7 +3590,7 @@ export default function App() {
                   </p>
                   <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
                     <button
-                      className="rounded-md bg-slate-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-teal-700"
+                      className="rounded-md bg-ink px-5 py-3 text-sm font-medium text-ink transition hover:bg-accent"
                       onClick={() => converterInputRef.current?.click()}
                       disabled={converterProcessing}
                     >
@@ -3599,7 +3599,7 @@ export default function App() {
                   </div>
                 </div>
 
-                {converterError ? <p className="mt-4 rounded-lg bg-red-50 p-4 text-sm font-medium text-red-700" role="alert">{converterError}</p> : null}
+                {converterError ? <p className="mt-4 rounded-lg bg-surface p-4 text-sm font-medium text-error" role="alert">{converterError}</p> : null}
 
                 {converterMode ? (
                   <div className="mt-6">
@@ -3672,14 +3672,14 @@ export default function App() {
 
                     <div className="mt-5 flex flex-col gap-3 sm:flex-row">
                       <motion.button
-                        className="rounded-md bg-teal-500 px-5 py-3 text-sm font-medium text-ink transition hover:bg-teal-300"
+                        className="rounded-md bg-accent px-5 py-3 text-sm font-medium text-ink transition hover:bg-accent-tint"
                         onClick={downloadConverterExcel}
                         whileTap={{ scale: 0.98 }}
                       >
                         Download as Excel
                       </motion.button>
                       <motion.button
-                        className="rounded-md border border-line px-5 py-3 text-sm font-medium text-ink transition hover:border-slate-950"
+                        className="rounded-md border border-line px-5 py-3 text-sm font-medium text-ink transition hover:border-ink"
                         onClick={downloadConverterText}
                         whileTap={{ scale: 0.98 }}
                       >
@@ -3701,7 +3701,7 @@ export default function App() {
               transition={{ duration: 0.5, ease: "easeOut" }}
             >
               <div>
-                <p className="text-sm font-medium uppercase tracking-[0.28em] text-teal-700">Excel formulas and formatting</p>
+                <p className="text-sm font-medium uppercase tracking-[0.28em] text-accent">Excel formulas and formatting</p>
                 <h3 className="mt-4 text-3xl font-medium tracking-[-0.03em] text-ink">
                   Add totals, currency, percentage, and date formatting to your Excel export.
                 </h3>
@@ -3715,7 +3715,7 @@ export default function App() {
 
               <div className="rounded-[2rem] border border-line bg-canvas p-4 shadow-slate-900/10 sm:p-6" aria-busy={formulaProcessing}>
                 <div
-                  className="rounded-[1.5rem] border border-dashed border-line bg-surface p-6 text-center transition hover:border-teal-500 hover:bg-teal-50/40"
+                  className="rounded-[1.5rem] border border-dashed border-line bg-surface p-6 text-center transition hover:border-accent hover:bg-accent-tint"
                   onDragOver={(event) => event.preventDefault()}
                   onDrop={(event) => {
                     event.preventDefault();
@@ -3737,7 +3737,7 @@ export default function App() {
                   </p>
                   <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
                     <button
-                      className="rounded-md bg-slate-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-teal-700"
+                      className="rounded-md bg-ink px-5 py-3 text-sm font-medium text-ink transition hover:bg-accent"
                       onClick={() => formulaInputRef.current?.click()}
                       disabled={formulaProcessing}
                     >
@@ -3746,7 +3746,7 @@ export default function App() {
                   </div>
                 </div>
 
-                {formulaError ? <p className="mt-4 rounded-lg bg-red-50 p-4 text-sm font-medium text-red-700" role="alert">{formulaError}</p> : null}
+                {formulaError ? <p className="mt-4 rounded-lg bg-surface p-4 text-sm font-medium text-error" role="alert">{formulaError}</p> : null}
 
                 {formulaMatrix ? (
                   <div className="mt-6">
@@ -3781,7 +3781,7 @@ export default function App() {
 
                     <div className="mt-5">
                       <motion.button
-                        className="rounded-md bg-teal-500 px-5 py-3 text-sm font-medium text-ink transition hover:bg-teal-300"
+                        className="rounded-md bg-accent px-5 py-3 text-sm font-medium text-ink transition hover:bg-accent-tint"
                         onClick={downloadFormulaWorkbook}
                         whileTap={{ scale: 0.98 }}
                       >
@@ -3804,7 +3804,7 @@ export default function App() {
               transition={{ duration: 0.5, ease: "easeOut" }}
             >
               <div>
-                <p className="text-sm font-medium uppercase tracking-[0.28em] text-teal-700">Bank Ledger X</p>
+                <p className="text-sm font-medium uppercase tracking-[0.28em] text-accent">Bank Ledger X</p>
                 <h3 className="mt-4 text-3xl font-medium tracking-[-0.03em] text-ink">
                   Turn PDF bank statements into clean Excel, CSV, and QIF files.
                 </h3>
@@ -3823,7 +3823,7 @@ export default function App() {
 
               <div className="rounded-[2rem] border border-line bg-canvas p-4 shadow-slate-900/10 sm:p-6" aria-busy={bankProcessing}>
                 <div
-                  className="rounded-[1.5rem] border border-dashed border-line bg-surface p-6 text-center transition hover:border-teal-500 hover:bg-teal-50/40"
+                  className="rounded-[1.5rem] border border-dashed border-line bg-surface p-6 text-center transition hover:border-accent hover:bg-accent-tint"
                   onDragOver={(event) => event.preventDefault()}
                   onDrop={(event) => {
                     event.preventDefault();
@@ -3844,7 +3844,7 @@ export default function App() {
                     text below.
                   </p>
                   <button
-                    className="mt-6 rounded-md bg-slate-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-teal-700"
+                    className="mt-6 rounded-md bg-ink px-5 py-3 text-sm font-medium text-ink transition hover:bg-accent"
                     onClick={() => bankInputRef.current?.click()}
                     disabled={bankProcessing}
                   >
@@ -3864,26 +3864,26 @@ export default function App() {
                     aria-label="Paste bank statement text"
                   />
                   <button
-                    className="mt-2 rounded-md border border-line px-4 py-2 text-xs font-medium text-ink-2 transition hover:border-slate-950"
+                    className="mt-2 rounded-md border border-line px-4 py-2 text-xs font-medium text-ink-2 transition hover:border-ink"
                     onClick={convertPastedStatement}
                   >
                     Convert pasted text
                   </button>
                 </div>
 
-                {bankError ? <p className="mt-4 rounded-lg bg-red-50 p-4 text-sm font-medium text-red-700" role="alert">{bankError}</p> : null}
+                {bankError ? <p className="mt-4 rounded-lg bg-surface p-4 text-sm font-medium text-error" role="alert">{bankError}</p> : null}
 
                 {bankTransactions ? (
                   <div className="mt-6">
-                    <div className="rounded-lg bg-slate-950 p-4 text-white">
+                    <div className="rounded-lg bg-ink p-4 text-ink">
                       <p className="text-3xl font-medium">{bankTransactions.length}</p>
-                      <p className="mt-1 text-xs uppercase tracking-[0.18em] text-white/60">Transactions extracted</p>
+                      <p className="mt-1 text-xs uppercase tracking-[0.18em] text-ink/60">Transactions extracted</p>
                     </div>
 
                     <div className="mt-5 flex flex-wrap gap-2">
-                      <button className="rounded-md bg-teal-500 px-4 py-2 text-xs font-medium text-ink transition hover:bg-teal-300" onClick={() => downloadBankStatement("xlsx")}>Download Excel</button>
-                      <button className="rounded-md border border-line px-4 py-2 text-xs font-medium text-ink-2 transition hover:border-slate-950" onClick={() => downloadBankStatement("csv")}>Download CSV</button>
-                      <button className="rounded-md border border-line px-4 py-2 text-xs font-medium text-ink-2 transition hover:border-slate-950" onClick={() => downloadBankStatement("qif")}>Download QIF</button>
+                      <button className="rounded-md bg-accent px-4 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={() => downloadBankStatement("xlsx")}>Download Excel</button>
+                      <button className="rounded-md border border-line px-4 py-2 text-xs font-medium text-ink-2 transition hover:border-ink" onClick={() => downloadBankStatement("csv")}>Download CSV</button>
+                      <button className="rounded-md border border-line px-4 py-2 text-xs font-medium text-ink-2 transition hover:border-ink" onClick={() => downloadBankStatement("qif")}>Download QIF</button>
                     </div>
 
                     <div className="mt-6 overflow-hidden rounded-lg border border-line">
@@ -3925,7 +3925,7 @@ export default function App() {
           </div>
         </section>
 
-        <section id="features" className="mc-hero-root relative overflow-hidden border-y border-white/10 py-20 text-white">
+        <section id="features" className="mc-hero-root relative overflow-hidden border-y border-line py-20 text-ink">
           <div className="mc-grid-overlay pointer-events-none absolute inset-0 opacity-40" aria-hidden="true" />
           <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
             <motion.div
@@ -3936,10 +3936,10 @@ export default function App() {
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
               <p className="mc-mono text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">Platform capabilities</p>
-              <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-white sm:text-5xl">
+              <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-ink sm:text-5xl">
                 Built for data cleaning, CSV processing, Excel automation and reconciliation.
               </h2>
-              <p className="mc-prose mt-5 text-lg leading-relaxed text-white/70">
+              <p className="mc-prose mt-5 text-lg leading-relaxed text-ink-2">
                 MarqClean AI helps operations, compliance, finance and data teams clean, validate, transform and
                 reconcile Excel, CSV, PDF and financial datasets, all in the browser.
               </p>
@@ -3955,17 +3955,17 @@ export default function App() {
               <motion.div
                 variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0 } }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className="mc-glass mc-card-interactive group relative overflow-hidden rounded-lg p-7 hover:border-[rgb(var(--accent))]/50 hover:shadow-[0_20px_60px_-20px_rgba(13,148,136,0.4)] lg:col-span-2 lg:row-span-2"
+                className="mc-glass mc-card-interactive group relative overflow-hidden rounded-lg p-7 hover:border-[rgb(var(--accent))]/50  lg:col-span-2 lg:row-span-2"
               >
-                <div className="mc-anim-float pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-md bg-[rgb(var(--accent))]/20 blur-3xl transition group-hover:bg-[rgb(var(--accent))]/30" aria-hidden="true" />
+                <div className=" pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-md bg-[rgb(var(--accent))]/20  transition group-hover:bg-[rgb(var(--accent))]/30" aria-hidden="true" />
                 <span className="mc-mono relative inline-flex rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-3 py-1 text-[11px] font-medium text-[rgb(var(--accent-hover))]">DATA CLEANING</span>
-                <h3 className="mc-display relative mt-5 text-2xl font-medium tracking-[-0.02em] text-white lg:text-3xl">Name formatting and capitalization</h3>
-                <p className="relative mt-4 max-w-md text-[15px] leading-6 text-white/65">
+                <h3 className="mc-display relative mt-5 text-2xl font-medium tracking-[-0.02em] text-ink lg:text-3xl">Name formatting and capitalization</h3>
+                <p className="relative mt-4 max-w-md text-[15px] leading-6 text-ink-2">
                   Converts inconsistent contact names, job titles, company names, cities, states, and countries into clean,
                   readable values for CRM imports and email personalization.
                 </p>
-                <div className="relative mt-6 flex flex-wrap gap-2 font-mono text-xs text-white/40">
-                  <span className="rounded-md border border-white/10 bg-black/20 px-2 py-1 line-through decoration-red-400/60">john SMITH</span>
+                <div className="relative mt-6 flex flex-wrap gap-2 font-mono text-xs text-ink/40">
+                  <span className="rounded-md border border-line bg-black/20 px-2 py-1 line-through decoration-error">john SMITH</span>
                   <span className="self-center text-[rgb(var(--accent-hover))]">→</span>
                   <span className="rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-2 py-1 text-[rgb(var(--accent-hover))]">John Smith</span>
                 </div>
@@ -3977,8 +3977,8 @@ export default function App() {
                 className="mc-glass mc-card-interactive group rounded-lg p-6 hover:border-[rgb(var(--accent))]/40 lg:col-span-2"
               >
                 <span className="mc-mono inline-flex rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-3 py-1 text-[11px] font-medium text-[rgb(var(--accent-hover))]">DATA CLEANING</span>
-                <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-white">Column repair and field detection</h3>
-                <p className="mt-3 text-[15px] leading-6 text-white/65">
+                <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-ink">Column repair and field detection</h3>
+                <p className="mt-3 text-[15px] leading-6 text-ink-2">
                   Detects emails, phone numbers, websites, and common CRM field aliases even when marketers receive exports
                   with mixed-up or poorly named columns.
                 </p>
@@ -3990,8 +3990,8 @@ export default function App() {
                 className="mc-glass mc-card-interactive group rounded-lg p-6 hover:border-[rgb(var(--accent))]/40"
               >
                 <span className="mc-mono inline-flex rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-3 py-1 text-[11px] font-medium text-[rgb(var(--accent-hover))]">DATA CLEANING</span>
-                <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-white">Industry categorization</h3>
-                <p className="mt-3 text-[15px] leading-6 text-white/65">
+                <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-ink">Industry categorization</h3>
+                <p className="mt-3 text-[15px] leading-6 text-ink-2">
                   Enriches company records with campaign-friendly industries such as SaaS, healthcare, ecommerce, and finance.
                 </p>
               </motion.div>
@@ -4002,8 +4002,8 @@ export default function App() {
                 className="mc-glass mc-card-interactive group rounded-lg p-6 hover:border-[rgb(var(--accent))]/40"
               >
                 <span className="mc-mono inline-flex rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-3 py-1 text-[11px] font-medium text-[rgb(var(--accent-hover))]">EXCEL AUTOMATION</span>
-                <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-white">CSV to Excel conversion</h3>
-                <p className="mt-3 text-[15px] leading-6 text-white/65">
+                <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-ink">CSV to Excel conversion</h3>
+                <p className="mt-3 text-[15px] leading-6 text-ink-2">
                   Splits delimited text into columns using Excel's Text to Columns logic, then exports a clean XLSX workbook.
                 </p>
               </motion.div>
@@ -4014,8 +4014,8 @@ export default function App() {
                 className="mc-glass mc-card-interactive group rounded-lg p-6 hover:border-[rgb(var(--accent))]/40 lg:col-span-2"
               >
                 <span className="mc-mono inline-flex rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-3 py-1 text-[11px] font-medium text-[rgb(var(--accent-hover))]">EXCEL AUTOMATION</span>
-                <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-white">Excel formulas and number formatting</h3>
-                <p className="mt-3 text-[15px] leading-6 text-white/65">
+                <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-ink">Excel formulas and number formatting</h3>
+                <p className="mt-3 text-[15px] leading-6 text-ink-2">
                   Detects numeric, currency, percentage, and date columns, then generates a formatted Excel workbook with
                   a frozen header row, autofilter, banded rows, and a totals row powered by real Excel formulas.
                 </p>
@@ -4027,8 +4027,8 @@ export default function App() {
                 className="mc-glass mc-card-interactive group rounded-lg p-6 hover:border-[rgb(var(--accent))]/40 lg:col-span-2"
               >
                 <span className="mc-mono inline-flex rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-3 py-1 text-[11px] font-medium text-[rgb(var(--accent-hover))]">EXCEL AUTOMATION</span>
-                <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-white">Advanced Excel functions engine</h3>
-                <p className="mt-3 text-[15px] leading-6 text-white/65">
+                <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-ink">Advanced Excel functions engine</h3>
+                <p className="mt-3 text-[15px] leading-6 text-ink-2">
                   Run 40+ Excel functions without writing formulas, including IF, XLOOKUP, INDEX/MATCH, SUMIFS, COUNTIFS,
                   and text functions like TEXTJOIN and SUBSTITUTE, in Data Toolbox.
                 </p>
@@ -4037,15 +4037,15 @@ export default function App() {
           </div>
         </section>
 
-        <section id="reconciliation" className="border-y border-white/10 bg-slate-950 py-20 text-white">
+        <section id="reconciliation" className="border-y border-line bg-ink py-20 text-ink">
           <div className="mx-auto max-w-7xl px-5 lg:px-8">
             <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
               <div>
-                <p className="text-sm font-medium uppercase tracking-[0.28em] text-teal-300">Verification and reconciliation hub</p>
+                <p className="text-sm font-medium uppercase tracking-[0.28em] text-accent">Verification and reconciliation hub</p>
                 <h2 className="mt-4 text-4xl font-medium tracking-[-0.04em] sm:text-5xl">
                   Verify PDF client mailing data against your Excel master file.
                 </h2>
-                <p className="mt-5 text-lg leading-8 text-white/78">
+                <p className="mt-5 text-lg leading-8 text-ink/78">
                   A comprehensive document verification, extraction, and reconciliation hub for investor services,
                   transfer secretarial, compliance, and data quality teams. Upload an unstructured PDF mailing list and a
                   structured Excel master, auto-detect fields, and download colour-coded Excel reports with executive
@@ -4054,12 +4054,12 @@ export default function App() {
                 </p>
                 <div className="mt-8 flex flex-wrap gap-3">
                   <button
-                    className="rounded-md bg-teal-300 px-6 py-3 text-sm font-medium text-ink transition hover:bg-canvas"
+                    className="rounded-md bg-accent-tint px-6 py-3 text-sm font-medium text-ink transition hover:bg-canvas"
                     onClick={() => navigateToPage("reconciliation-hub")}
                   >
                     Open Reconciliation Hub
                   </button>
-                  <PageLink className="rounded-md border border-white/30 px-6 py-3 text-sm font-medium text-white transition hover:border-white hover:bg-canvas hover:text-ink" page="data-reconciliation-tool">
+                  <PageLink className="rounded-md border border-white/30 px-6 py-3 text-sm font-medium text-ink transition hover:border-white hover:bg-canvas hover:text-ink" page="data-reconciliation-tool">
                     Learn about reconciliation
                   </PageLink>
                 </div>
@@ -4071,9 +4071,9 @@ export default function App() {
                   { h: "Auto field mapping", p: "Detects columns and maps them to mailing fields automatically." },
                   { h: "Colour-coded reports", p: "Green, blue, red, and orange statuses across six report sheets." },
                 ].map((card) => (
-                  <div key={card.h} className="rounded-lg border border-white/10 bg-canvas/5 p-5">
+                  <div key={card.h} className="rounded-lg border border-line bg-canvas/5 p-5">
                     <h3 className="text-lg font-medium">{card.h}</h3>
-                    <p className="mt-2 text-sm text-white/70">{card.p}</p>
+                    <p className="mt-2 text-sm text-ink-2">{card.p}</p>
                   </div>
                 ))}
               </div>
@@ -4081,15 +4081,15 @@ export default function App() {
           </div>
         </section>
 
-        <section id="data-toolbox" className="relative overflow-hidden bg-[rgb(var(--canvas))] py-20 text-white">
+        <section id="data-toolbox" className="relative overflow-hidden bg-[rgb(var(--canvas))] py-20 text-ink">
           <div className="mc-grid-overlay pointer-events-none absolute inset-0 opacity-30" aria-hidden="true" />
           <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
             <div className="max-w-3xl">
               <p className="mc-mono text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">Free data toolbox</p>
-              <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-white sm:text-5xl">
+              <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-ink sm:text-5xl">
                 Advanced Excel functions plus merge, match, score, predict, and extract.
               </h2>
-              <p className="mt-5 text-lg leading-8 text-white/70">
+              <p className="mt-5 text-lg leading-8 text-ink-2">
                 A consolidated toolbox of best-in-class data utilities, all unlocked and free. Run advanced Excel functions
                 such as XLOOKUP, INDEX and MATCH, SUMIFS, COUNTIFS, SUMPRODUCT, FILTER, UNIQUE, SORT, LET, XNPV, XIRR, PMT,
                 and IPMT from a dropdown or by typing a plain-English instruction. Then merge spreadsheets, remove exact and
@@ -4116,23 +4116,23 @@ export default function App() {
                 { h: "Web Table Extractor", p: "Turn HTML tables and lists into spreadsheets." },
               ].map((card) => (
                 <div key={card.h} className="mc-glass mc-card-interactive rounded-lg p-5 hover:border-[rgb(var(--accent))]/40">
-                  <h3 className="mc-display text-lg font-medium text-white">{card.h}</h3>
-                  <p className="mt-2 text-sm text-white/60">{card.p}</p>
+                  <h3 className="mc-display text-lg font-medium text-ink">{card.h}</h3>
+                  <p className="mt-2 text-sm text-ink/60">{card.p}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        <section id="excel-automation" className="relative overflow-hidden bg-slate-950 py-20 text-white">
+        <section id="excel-automation" className="relative overflow-hidden bg-ink py-20 text-ink">
           <div className="mx-auto max-w-7xl px-5 lg:px-8">
             <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
               <div>
                 <p className="mc-mono text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">Excel automation</p>
-                <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-white sm:text-5xl">
+                <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-ink sm:text-5xl">
                   Excel Automation for sorting, subtotals and workbooks.
                 </h2>
-                <p className="mt-5 text-lg leading-8 text-white/70">
+                <p className="mt-5 text-lg leading-8 text-ink-2">
                   Automate Excel sorting, subtotaling, number formatting, formula handling and workbook generation.
                   The built-in Sort &amp; Subtotal Engine groups related records by the root SRN or reference before the
                   first slash, subtotals each group, inserts a blank spacer row, and produces a clean workbook with a
@@ -4154,8 +4154,8 @@ export default function App() {
                   { h: "Preserves the original", p: "Outputs Sorted_Output, Formula_Guide, and Error_Report sheets." },
                 ].map((card) => (
                   <div key={card.h} className="mc-glass mc-card-interactive rounded-lg p-5 hover:border-[rgb(var(--accent))]/40">
-                    <h3 className="mc-display text-lg font-medium text-white">{card.h}</h3>
-                    <p className="mt-2 text-sm text-white/60">{card.p}</p>
+                    <h3 className="mc-display text-lg font-medium text-ink">{card.h}</h3>
+                    <p className="mt-2 text-sm text-ink/60">{card.p}</p>
                   </div>
                 ))}
               </div>
@@ -4177,8 +4177,8 @@ export default function App() {
                 { icon: "✓", title: "Schema Guard", text: "Define and enforce browser-local validation rules with Zod and produce a reviewable Error Report.", action: "Validate data", page: "data-engine" as AppPageKey },
                 { icon: "☎", title: "Phone Intelligence", text: "Detect country, validate numbers and format international or national output using libphonenumber-js.", action: "Fix phone data", page: "data-engine" as AppPageKey },
               ].map((item) => (
-                <button key={item.title} type="button" onClick={() => navigateToPage(item.page)} className="group rounded-lg border border-line bg-surface p-6 text-left transition hover:-translate-y-1 hover:border-sky-200 hover:bg-canvas hover:shadow-xl">
-                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-lg bg-sky-50 text-xl">{item.icon}</span>
+                <button key={item.title} type="button" onClick={() => navigateToPage(item.page)} className="group rounded-lg border border-line bg-surface p-6 text-left transition hover:-translate-y-1 hover:border-line hover:bg-canvas hover:shadow-xl">
+                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-lg bg-surface text-xl">{item.icon}</span>
                   <h3 className="mc-display mt-5 text-xl font-medium">{item.title}</h3>
                   <p className="mt-2 text-sm leading-6 text-ink-3">{item.text}</p>
                   <span className="mt-5 inline-flex text-sm font-medium text-[rgb(var(--accent))]">{item.action} →</span>
@@ -4188,14 +4188,14 @@ export default function App() {
           </div>
         </section>
 
-        <section id="free-tools" className="bg-[rgb(var(--surface))] py-20 text-white">
+        <section id="free-tools" className="bg-[rgb(var(--surface))] py-20 text-ink">
           <div className="mx-auto max-w-7xl px-5 lg:px-8">
             <div className="max-w-3xl">
               <p className="mc-mono text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">Free data tools</p>
-              <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-white sm:text-5xl">
+              <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-ink sm:text-5xl">
                 One engine for CSV, Excel, data cleaning and reconciliation workflows.
               </h2>
-              <p className="mc-prose mt-5 text-lg leading-relaxed text-white/70">
+              <p className="mc-prose mt-5 text-lg leading-relaxed text-ink-2">
                 MarqClean AI uses a modular data architecture, so teams can solve specific spreadsheet problems with
                 focused tools for CSV cleanup, Excel conversion, formatting, duplicates, validation, and reconciliation.
               </p>
@@ -4207,16 +4207,16 @@ export default function App() {
           </div>
         </section>
 
-        <section id="workflow" className="relative overflow-hidden bg-[rgb(var(--canvas))] py-20 text-white">
+        <section id="workflow" className="relative overflow-hidden bg-[rgb(var(--canvas))] py-20 text-ink">
           <div className="mc-grid-overlay pointer-events-none absolute inset-0 opacity-30" aria-hidden="true" />
           <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
             <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
               <div>
                 <p className="mc-mono text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">CSV to Excel workflow</p>
-                <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-white sm:text-5xl">
+                <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-ink sm:text-5xl">
                   A passive automation tool for repetitive spreadsheet cleaning.
                 </h2>
-                <p className="mt-5 text-lg leading-8 text-white/70">
+                <p className="mt-5 text-lg leading-8 text-ink-2">
                   Marketers can replace manual find-and-replace work with a repeatable browser workflow that cleans lists before
                   they enter HubSpot, Salesforce, Mailchimp, Microsoft Excel, or Microsoft 365 reporting pipelines.
                 </p>
@@ -4224,23 +4224,23 @@ export default function App() {
               <div className="space-y-6">
                 <div className="mc-glass rounded-lg p-6">
                   <span className="mc-mono inline-flex h-8 w-8 items-center justify-center rounded-md border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/10 text-xs font-medium text-[rgb(var(--accent-hover))]">01</span>
-                  <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-white">Upload CSV or XLSX</h3>
-                  <p className="mt-3 text-[15px] leading-6 text-white/65">
+                  <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-ink">Upload CSV or XLSX</h3>
+                  <p className="mt-3 text-[15px] leading-6 text-ink-2">
                     Import a messy lead list from an ad platform, CRM export, event attendee list, or spreadsheet vendor.
                   </p>
                 </div>
                 <div className="mc-glass rounded-lg p-6">
                   <span className="mc-mono inline-flex h-8 w-8 items-center justify-center rounded-md border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/10 text-xs font-medium text-[rgb(var(--accent-hover))]">02</span>
-                  <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-white">Clean and standardize fields</h3>
-                  <p className="mt-3 text-[15px] leading-6 text-white/65">
+                  <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-ink">Clean and standardize fields</h3>
+                  <p className="mt-3 text-[15px] leading-6 text-ink-2">
                     {PRODUCT_NAME} normalizes headers, fixes casing, splits full names, validates emails, formats phone numbers,
                     and flags missing data for review.
                   </p>
                 </div>
                 <div className="mc-glass rounded-lg p-6">
                   <span className="mc-mono inline-flex h-8 w-8 items-center justify-center rounded-md border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/10 text-xs font-medium text-[rgb(var(--accent-hover))]">03</span>
-                  <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-white">Download a pristine Excel file</h3>
-                  <p className="mt-3 text-[15px] leading-6 text-white/65">
+                  <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-ink">Download a pristine Excel file</h3>
+                  <p className="mt-3 text-[15px] leading-6 text-ink-2">
                     Export a clean normal Excel workbook or CSV file for segmentation, enrichment, reporting, and campaign
                     activation.
                   </p>
@@ -4250,11 +4250,11 @@ export default function App() {
           </div>
         </section>
 
-        <section id="faq" className="bg-[rgb(var(--canvas))] py-20 text-white">
+        <section id="faq" className="bg-[rgb(var(--canvas))] py-20 text-ink">
           <div className="mx-auto max-w-3xl px-5 lg:px-8">
             <p className="mc-mono text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">Frequently asked questions</p>
-            <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-white sm:text-5xl">Questions, answered honestly.</h2>
-            <div className="mt-10 divide-y divide-white/10 border-y border-white/10">
+            <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-ink sm:text-5xl">Questions, answered honestly.</h2>
+            <div className="mt-10 divide-y divide-white/10 border-y border-line">
               {[
                 {
                   q: "Is MarqClean AI actually free?",
@@ -4286,13 +4286,13 @@ export default function App() {
                 },
               ].map((item) => (
                 <details key={item.q} className="group py-5">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left text-base font-medium text-white marker:content-none">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left text-base font-medium text-ink marker:content-none">
                     {item.q}
-                    <svg className="h-5 w-5 shrink-0 text-white/40 transition group-open:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <svg className="h-5 w-5 shrink-0 text-ink/40 transition group-open:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                       <path d="M12 5v14M5 12h14" />
                     </svg>
                   </summary>
-                  <p className="mt-3 max-w-2xl text-[15px] leading-7 text-white/65">{item.a}</p>
+                  <p className="mt-3 max-w-2xl text-[15px] leading-7 text-ink-2">{item.a}</p>
                 </details>
               ))}
             </div>
