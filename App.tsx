@@ -3162,7 +3162,7 @@ export default function App() {
               navigateToHomeSection("top");
             }}
           >
-            <img src="/brand-logo.svg" alt="MarqClean AI" className="h-9 w-auto" />
+            <img src="/brand-logo-dark.svg" alt="MarqClean AI" className="h-10 w-auto" />
           </a>
           <div className="hidden items-center gap-6 text-[13px] font-semibold text-slate-600 xl:flex">
             <a href="/#top" className="transition hover:text-[#0D9488]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("top"); }}>Home</a>
