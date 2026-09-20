@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 type HeroActions = {
   onCleanFile: () => void;
@@ -8,42 +8,23 @@ type HeroActions = {
 
 function ProductPreview() {
   return (
-    <div className="amzigo-product-preview">
-      <div className="amzigo-preview-top">
-        <div className="amzigo-preview-brand"><span className="amzigo-mini-mark">M</span> MarqClean AI</div>
-        <span className="amzigo-preview-status">LIVE DATA QUALITY</span>
+    <div className="mc-dark-product">
+      <div className="mc-dark-product__bar">
+        <div className="mc-dark-product__brand"><span className="mc-dark-mini">M</span> MarqClean AI</div>
+        <span className="mc-dark-product__pill">LIVE DATA</span>
       </div>
-      <div className="amzigo-preview-body">
+      <div className="mc-dark-product__body">
         <aside>
-          <div className="amzigo-side-active">Overview</div>
-          <div>Data Cleaner</div>
-          <div>Excel Automation</div>
-          <div>Reconciliation</div>
-          <div>Academy</div>
+          {["Dashboard","Smart Drop","Data Cleaner","Enrichment","Workflows","Export"].map((item, i) => <div key={item} className={i === 1 ? "is-active" : ""}><span>{["⌂","◈","⌁","◇","⌘","↓"][i]}</span>{item}</div>)}
         </aside>
-        <div className="amzigo-dashboard">
-          <div className="amzigo-dash-head">
-            <div><span>Good morning</span><strong>Your data, under control.</strong></div>
-            <button>Export report</button>
-          </div>
-          <div className="amzigo-stat-grid">
-            <div><span>Records cleaned</span><strong>24,680</strong><small>+18.4% this month</small></div>
-            <div><span>Duplicates removed</span><strong>3,842</strong><small>98.7% confidence</small></div>
-            <div><span>Files processed</span><strong>1,284</strong><small>All browser-first</small></div>
-          </div>
-          <div className="amzigo-chart-card">
-            <div><div><span>Data quality score</span><strong>96.8%</strong></div><em>Last 30 days</em></div>
-            <div className="amzigo-bars">
-              {[44,58,51,72,68,84,78,92,88,96,91,98].map((h,i)=><span key={i} style={{height:h+"%"}} />)}
-            </div>
-          </div>
-          <div className="amzigo-table-card">
-            <div className="amzigo-table-title"><strong>Recent files</strong><span>View all</span></div>
-            <div className="amzigo-row"><span>Q3_Leads.xlsx</span><b>Cleaned</b><small>4,821 rows</small></div>
-            <div className="amzigo-row"><span>Bank_Statement.csv</span><b>Reconciled</b><small>2,104 rows</small></div>
-            <div className="amzigo-row"><span>CRM_Export.csv</span><b>Validated</b><small>8,936 rows</small></div>
+        <div className="mc-dark-product__main">
+          <div className="mc-dark-product__title"><span>Smart Drop</span><strong>Ready for your data.</strong></div>
+          <div className="mc-dark-drop">↥<strong>Drag & drop your file here</strong><span>or click to browse · CSV, XLSX, PDF</span></div>
+          <div className="mc-dark-actions">
+            {["Clean & Format","Enrich with AI","Run Workflows","Export Clean Files"].map((x,i)=><div key={x}><span>{["⌁","◎","⌘","↓"][i]}</span><b>{x}</b><em>→</em></div>)}
           </div>
         </div>
+        <div className="mc-dark-security"><span>♢</span><strong>100% Secure</strong><small>Client-side execution</small><p>Your files never leave this browser.</p></div>
       </div>
     </div>
   );
@@ -51,54 +32,40 @@ function ProductPreview() {
 
 export default function HeroCarousel({ onCleanFile, onSampleLeads, onOpenReconciliation }: HeroActions) {
   const [active, setActive] = useState(0);
-  const rootRef = useRef<HTMLDivElement>(null);
-
-  const tabs = [
-    { label: "Data Cleaning", title: "Clean your data. Grow with confidence.", text: "Clean, standardise, validate and transform Excel and CSV files in seconds — without sending your data away.", cta: "Start Cleaning Free" },
-    { label: "Excel Automation", title: "Automate the spreadsheet work.", text: "Turn repetitive Excel tasks into reliable workflows with formulas, formatting, conversions and intelligent data preparation.", cta: "Automate Excel" },
-    { label: "Reconciliation", title: "Reconcile records without the manual grind.", text: "Compare statements, ledgers and master files, surface exceptions and export review-ready reconciliation results.", cta: "Open Reconciliation" },
-    { label: "Data Toolbox", title: "Everything your data team needs, in one place.", text: "A practical browser-first toolkit for cleaning, conversion, analysis, document processing and everyday spreadsheet work.", cta: "Explore Data Toolbox" },
+  const tabs = ["Data Cleaning","Excel Automation","Reconciliation","Data Toolbox"];
+  useEffect(() => { const t = window.setInterval(() => setActive(v => (v + 1) % tabs.length), 6500); return () => window.clearInterval(t); }, []);
+  const actions = [
+    () => onCleanFile(),
+    () => onCleanFile(),
+    () => onOpenReconciliation(),
+    () => onSampleLeads(),
   ];
-
-  useEffect(() => {
-    const timer = window.setInterval(() => setActive((value) => (value + 1) % tabs.length), 7000);
-    return () => window.clearInterval(timer);
-  }, [tabs.length]);
-
-  const current = tabs[active];
-
   return (
-    <section ref={rootRef} className="amzigo-hero">
-      <div className="amzigo-hero-orb amzigo-orb-one" />
-      <div className="amzigo-hero-orb amzigo-orb-two" />
-      <div className="amzigo-container amzigo-hero-inner">
-        <div className="amzigo-eyebrow"><span /> AI-powered data operations for modern teams</div>
-        <h1>{current.title}</h1>
-        <p className="amzigo-hero-copy">{current.text}</p>
-        <div className="amzigo-hero-actions">
-          <button className="amzigo-btn-primary" onClick={onCleanFile}>{current.cta}<span>→</span></button>
-          <button className="amzigo-btn-secondary" onClick={onSampleLeads}>Try a sample</button>
+    <section className="mc-hex-hero" aria-label="MarqClean AI data automation">
+      <div className="mc-hex-hero__grid" />
+      <div className="mc-hex-hero__spreadsheet" />
+      <div className="mc-hex-container">
+        <div className="mc-hex-copy">
+          <div className="mc-hex-eyebrow"><span /> AI-POWERED DATA CLEANING</div>
+          <h1>Turn Messy Spreadsheets<br />into <em>Clean, Powerful Data</em></h1>
+          <p>MarqClean AI is the all-in-one, serverless platform that cleans, enriches, and transforms your data — right in your browser. No servers. No uploads. Just powerful AI tools, complete privacy, and professional-grade results.</p>
+          <div className="mc-hex-benefits">
+            <span>⌁ <b>Clean & Format</b><small>Data Automatically</small></span>
+            <span>◎ <b>Enrich with AI</b><small>Web Scrapers</small></span>
+            <span>⌘ <b>Automate Workflows</b><small>& Bulk Processing</small></span>
+            <span>♢ <b>100% Client-Side</b><small>& Secure</small></span>
+          </div>
+          <div className="mc-hex-actions">
+            <button onClick={onCleanFile}>Get Started Free <span>→</span></button>
+            <button className="secondary" onClick={onSampleLeads}>▷ &nbsp; Watch Demo</button>
+          </div>
         </div>
-        <div className="amzigo-trust-row">
-          <span>✓ Browser-first processing</span>
-          <span>✓ CSV & Excel ready</span>
-          <span>✓ No credit card required</span>
-        </div>
-        <div className="amzigo-tabs" role="tablist" aria-label="MarqClean AI capabilities">
-          {tabs.map((tab, index) => (
-            <button key={tab.label} role="tab" aria-selected={active === index} className={active === index ? "is-active" : ""} onClick={() => {
-              setActive(index);
-              if (index === 2) onOpenReconciliation();
-            }}>
-              <span>{tab.label}</span>
-              <i />
-            </button>
-          ))}
-        </div>
-        <div className="amzigo-product-stage">
-          <div className="amzigo-stage-glow" />
+        <div className="mc-hex-stage">
           <ProductPreview />
         </div>
+      </div>
+      <div className="mc-hex-tabs" role="tablist">
+        {tabs.map((tab, i) => <button key={tab} className={active === i ? "is-active" : ""} onClick={() => { setActive(i); actions[i](); }} role="tab" aria-selected={active === i}>{tab}</button>)}
       </div>
     </section>
   );
