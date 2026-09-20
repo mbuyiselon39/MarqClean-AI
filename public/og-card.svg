@@ -1,0 +1,12 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .wordmark { font-family: Geist, Inter, Arial, sans-serif; }
+  </style>
+  <rect width="1200" height="630" fill="#FFFFFF"/>
+  <g transform="translate(480 235)">
+    <path d="M20 5H11a6 6 0 0 0-6 6v10a6 6 0 0 0 6 6h10a6 6 0 0 0 6-6v-5" stroke="#09090B" stroke-width="2.25" stroke-linecap="butt"/>
+    <rect x="15" y="11" width="8" height="8" rx="1.5" fill="#5B21B6"/>
+  </g>
+  <text x="532" y="263" class="wordmark" font-size="36" letter-spacing="-0.72" fill="#09090B"><tspan font-weight="500">Marq</tspan><tspan font-weight="400" fill="#52525B">Clean AI</tspan></text>
+  <text x="600" y="340" text-anchor="middle" class="wordmark" font-size="24" font-weight="400" fill="#52525B">Clean data. Clear decisions.</text>
+</svg>
