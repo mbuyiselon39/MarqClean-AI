@@ -1625,3 +1625,12 @@ footer,
   box-shadow: none !important;
   filter: none !important;
 }
+
+/* Muted ink-3 is intentionally retained as a token, but readable dark-theme
+   metadata uses ink-2 so normal-size text remains WCAG AA compliant. */
+[data-theme="dark"] :where(small, th, input::placeholder, textarea::placeholder, .mc-eyebrow, .mc-asset-credit, .mc-site-footer__brand p, .mc-site-footer__bottom p),
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) :where(small, th, input::placeholder, textarea::placeholder, .mc-eyebrow, .mc-asset-credit, .mc-site-footer__brand p, .mc-site-footer__bottom p) {
+    color: rgb(var(--ink-2)) !important;
+  }
+}
