@@ -134,13 +134,13 @@ export default function DataToolbox({ onExit }: { onExit: () => void }) {
 
       <div className="relative mx-auto mb-2 flex max-w-[110rem] flex-wrap items-center justify-between gap-3 px-5 pt-24 lg:px-8">
         <div className="flex items-center gap-3">
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#0D9488]/20 to-[#14B8A6]/20 text-xl ring-1 ring-inset ring-white/10">🧰</span>
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-canvas from-[rgb(var(--accent))]/20 to-[rgb(var(--accent))]/20 text-xl ring-1 ring-inset ring-white/10">🧰</span>
           <div>
-            <h2 className="mc-display text-xl font-bold text-white">Data Toolbox</h2>
+            <h2 className="mc-display text-xl font-medium text-ink">Data Toolbox</h2>
             <p className="text-xs text-[#b0bacb]">Advanced Excel functions, cleansing, matching and transformation. All tools free, browser-based.</p>
           </div>
         </div>
-        <button className="ws-btn-secondary rounded-full px-4 py-2 text-sm font-medium" onClick={onExit}>Back to MarqClean AI</button>
+        <button className="ws-btn-secondary rounded-md px-4 py-2 text-sm font-medium" onClick={onExit}>Back to MarqClean AI</button>
       </div>
 
       <div className="relative mx-auto max-w-[110rem] px-5 pb-16 pt-4 lg:px-8">
@@ -172,8 +172,8 @@ function Panel({ title, description, children, centered }: { title: string; desc
   return (
     <section>
       <div className={centered ? "mx-auto max-w-3xl text-center" : undefined}>
-        <h1 className="text-3xl font-semibold tracking-[-0.03em]">{title}</h1>
-        <p className={centered ? "mt-2 text-justify leading-7 text-slate-600 [hyphens:auto]" : "mt-2 max-w-3xl text-slate-600"}>{description}</p>
+        <h1 className="text-3xl font-medium tracking-[-0.03em]">{title}</h1>
+        <p className={centered ? "mt-2 text-justify leading-7 text-ink-2 [hyphens:auto]" : "mt-2 max-w-3xl text-ink-2"}>{description}</p>
       </div>
       <div className="mt-6">{children}</div>
     </section>
@@ -202,14 +202,14 @@ function useSingleUpload() {
 function UploadBox({ label, table, refEl, onFile }: { label: string; table: DataTable | null; refEl: React.RefObject<HTMLInputElement | null>; onFile: (f: File) => void }) {
   return (
     <div
-      className="rounded-2xl border border-dashed border-slate-300 bg-white p-5 text-center transition hover:border-teal-500"
+      className="rounded-xl border border-dashed border-line bg-canvas p-5 text-center transition hover:border-line"
       onDragOver={(e) => e.preventDefault()}
       onDrop={(e) => { e.preventDefault(); const f = e.dataTransfer.files?.[0]; if (f) onFile(f); }}
     >
       <input ref={refEl} className="sr-only" type="file" accept=".pdf,.xlsx,.xls,.csv,.txt,.docx,.doc" onChange={(e) => { const f = e.target.files?.[0]; if (f) onFile(f); if (refEl.current) refEl.current.value = ""; }} />
-      <h3 className="text-sm font-semibold text-slate-900">{label}</h3>
-      <p className="mt-1 text-xs text-slate-500">{table ? `${table.sourceName} - ${table.rows.length} rows` : "Drop or choose a CSV, Excel, PDF, or Word file."}</p>
-      <button className="mt-3 rounded-full bg-slate-950 px-4 py-2 text-xs font-semibold text-white transition hover:bg-teal-700" onClick={() => refEl.current?.click()}>
+      <h3 className="text-sm font-medium text-ink">{label}</h3>
+      <p className="mt-1 text-xs text-ink-3">{table ? `${table.sourceName} - ${table.rows.length} rows` : "Drop or choose a CSV, Excel, PDF, or Word file."}</p>
+      <button className="mt-3 rounded-md bg-ink px-4 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={() => refEl.current?.click()}>
         {table ? "Replace" : "Choose file"}
       </button>
     </div>
@@ -218,14 +218,14 @@ function UploadBox({ label, table, refEl, onFile }: { label: string; table: Data
 
 function TablePreview({ table, max = 8 }: { table: DataTable; max?: number }) {
   return (
-    <div className="mt-4 overflow-auto rounded-xl border border-slate-200 bg-white" style={{ maxHeight: "22rem" }}>
+    <div className="mt-4 overflow-auto rounded-xl border border-line bg-canvas" style={{ maxHeight: "22rem" }}>
       <table className="min-w-full text-left text-sm">
-        <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
-          <tr>{table.headers.map((h, i) => <th key={i} className="whitespace-nowrap px-3 py-2 font-semibold">{h}</th>)}</tr>
+        <thead className="bg-surface text-xs uppercase tracking-wide text-ink-3">
+          <tr>{table.headers.map((h, i) => <th key={i} className="whitespace-nowrap px-3 py-2 font-medium">{h}</th>)}</tr>
         </thead>
         <tbody className="divide-y divide-slate-100">
           {table.rows.slice(0, max).map((row, r) => (
-            <tr key={r}>{table.headers.map((_, c) => <td key={c} className="max-w-48 truncate px-3 py-2 text-slate-700">{row[c] || "-"}</td>)}</tr>
+            <tr key={r}>{table.headers.map((_, c) => <td key={c} className="max-w-48 truncate px-3 py-2 text-ink-2">{row[c] || "-"}</td>)}</tr>
           ))}
         </tbody>
       </table>
@@ -236,8 +236,8 @@ function TablePreview({ table, max = 8 }: { table: DataTable; max?: number }) {
 function DownloadButtons({ table, name }: { table: DataTable; name: string }) {
   return (
     <div className="mt-4 flex flex-wrap gap-2">
-      <button className="rounded-full bg-teal-500 px-4 py-2 text-xs font-semibold text-slate-950 transition hover:bg-teal-300" onClick={() => downloadTableExcel(table, `${name}.xlsx`, name)}>Download Excel</button>
-      <button className="rounded-full border border-slate-300 px-4 py-2 text-xs font-semibold text-slate-700 transition hover:border-slate-950" onClick={() => downloadTableCsv(table, `${name}.csv`)}>Download CSV</button>
+      <button className="rounded-md bg-accent-tint px-4 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={() => downloadTableExcel(table, `${name}.xlsx`, name)}>Download Excel</button>
+      <button className="rounded-md border border-line px-4 py-2 text-xs font-medium text-ink-2 transition hover:border-slate-950" onClick={() => downloadTableCsv(table, `${name}.csv`)}>Download CSV</button>
     </div>
   );
 }
@@ -351,9 +351,9 @@ function PowerQueryTool() {
 
   return (
     <Panel title="Power Query-Style Workflow" description="Import one or more files, then build a repeatable pipeline of steps — choose columns, change types, split or merge columns, remove duplicates or blanks, filter, sort, append, or join — with a full step-by-step log, the same way Power Query's Applied Steps pane works.">
-      <div className="rounded-xl border border-teal-200 bg-teal-50 p-4 text-sm text-teal-900">
-        <p className="font-semibold">What this actually is</p>
-        <p className="mt-1 text-teal-800">
+      <div className="rounded-xl border border-line bg-accent-tint p-4 text-sm text-accent">
+        <p className="font-medium">What this actually is</p>
+        <p className="mt-1 text-accent">
           This reproduces the <em>result</em> of a Power Query transformation — cleaned, combined, reshaped data with a
           full step log you can export. It does not generate real Power Query "M" code, and a saved pipeline will not
           appear as a live, refreshable query inside Excel's own Data → Queries &amp; Connections pane.
@@ -362,12 +362,12 @@ function PowerQueryTool() {
 
       {error ? <p className="mt-3 rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-700">{error}</p> : null}
 
-      <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-5">
+      <div className="mt-4 rounded-xl border border-line bg-canvas p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <p className="text-sm font-semibold text-slate-900">Sources ({sources.length})</p>
+          <p className="text-sm font-medium text-ink">Sources ({sources.length})</p>
           <div>
             <input ref={importRef} type="file" className="sr-only" accept=".csv,.xlsx,.xls,.pdf,.docx,.doc,.txt" onChange={(e) => { const f = e.target.files?.[0]; if (f) onImport(f); if (importRef.current) importRef.current.value = ""; }} />
-            <button className="rounded-full bg-slate-950 px-4 py-2 text-xs font-semibold text-white transition hover:bg-teal-700" onClick={() => importRef.current?.click()}>Import file</button>
+            <button className="rounded-md bg-ink px-4 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={() => importRef.current?.click()}>Import file</button>
           </div>
         </div>
         {sources.length > 0 ? (
@@ -376,31 +376,31 @@ function PowerQueryTool() {
               <button
                 key={s.name}
                 onClick={() => setPrimaryName(s.name)}
-                className={`rounded-full border px-3 py-1.5 font-medium ${s.name === primaryName ? "border-teal-500 bg-teal-50 text-teal-700" : "border-slate-300 text-slate-600 hover:border-teal-400"}`}
+                className={`rounded-md border px-3 py-1.5 font-medium ${s.name === primaryName ? "border-line bg-accent-tint text-accent" : "border-line text-ink-2 hover:border-line"}`}
               >
                 {s.name === primaryName ? "★ " : ""}{s.name} ({s.table.rows.length} rows)
               </button>
             ))}
           </div>
         ) : (
-          <p className="mt-3 text-sm text-slate-500">Import at least one file to start building a pipeline. Import a second file if you plan to append or join.</p>
+          <p className="mt-3 text-sm text-ink-3">Import at least one file to start building a pipeline. Import a second file if you plan to append or join.</p>
         )}
       </div>
 
       {primary && currentTable ? (
         <>
-          <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-5">
-            <p className="text-sm font-semibold text-slate-900">Applied steps ({steps.length})</p>
+          <div className="mt-4 rounded-xl border border-line bg-canvas p-5">
+            <p className="text-sm font-medium text-ink">Applied steps ({steps.length})</p>
             {steps.length === 0 ? (
-              <p className="mt-2 text-sm text-slate-500">No steps yet — add one below.</p>
+              <p className="mt-2 text-sm text-ink-3">No steps yet — add one below.</p>
             ) : (
               <ol className="mt-3 space-y-1.5 text-sm">
                 {steps.map((s, i) => (
-                  <li key={s.id} className="flex items-center justify-between gap-3 rounded-lg bg-slate-50 px-3 py-2">
-                    <span className="text-slate-700"><span className="mr-2 font-mono text-xs text-slate-400">{i + 1}.</span>{s.label}</span>
+                  <li key={s.id} className="flex items-center justify-between gap-3 rounded-lg bg-surface px-3 py-2">
+                    <span className="text-ink-2"><span className="mr-2 font-mono text-xs text-ink-3">{i + 1}.</span>{s.label}</span>
                     <span className="flex shrink-0 items-center gap-1">
-                      <button className="rounded border border-slate-300 px-1.5 text-xs text-slate-500 hover:border-teal-500" onClick={() => moveStep(s.id, -1)} aria-label={`Move step ${i + 1} up`}>↑</button>
-                      <button className="rounded border border-slate-300 px-1.5 text-xs text-slate-500 hover:border-teal-500" onClick={() => moveStep(s.id, 1)} aria-label={`Move step ${i + 1} down`}>↓</button>
+                      <button className="rounded border border-line px-1.5 text-xs text-ink-3 hover:border-line" onClick={() => moveStep(s.id, -1)} aria-label={`Move step ${i + 1} up`}>↑</button>
+                      <button className="rounded border border-line px-1.5 text-xs text-ink-3 hover:border-line" onClick={() => moveStep(s.id, 1)} aria-label={`Move step ${i + 1} down`}>↓</button>
                       <button className="rounded border border-rose-300 px-1.5 text-xs text-rose-600 hover:border-rose-500" onClick={() => removeStep(s.id)} aria-label={`Remove step ${i + 1}`}>✕</button>
                     </span>
                   </li>
@@ -409,11 +409,11 @@ function PowerQueryTool() {
             )}
           </div>
 
-          <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-5">
-            <p className="text-sm font-semibold text-slate-900">Add a step</p>
+          <div className="mt-4 rounded-xl border border-line bg-canvas p-5">
+            <p className="text-sm font-medium text-ink">Add a step</p>
             <div className="mt-3 flex flex-wrap items-end gap-3 text-xs">
-              <label className="font-semibold uppercase tracking-wide text-slate-500">Step type
-                <select className="mt-1 block rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={stepType} onChange={(e) => setStepType(e.target.value as QueryStepType)}>
+              <label className="font-medium uppercase tracking-wide text-ink-3">Step type
+                <select className="mt-1 block rounded border border-line px-2 py-1.5 text-sm font-normal" value={stepType} onChange={(e) => setStepType(e.target.value as QueryStepType)}>
                   <option value="choose-columns">Choose columns</option>
                   <option value="change-type">Change data type</option>
                   <option value="split-column">Split column</option>
@@ -429,10 +429,10 @@ function PowerQueryTool() {
 
               {(stepType === "choose-columns" || stepType === "remove-duplicates") ? (
                 <div className="flex flex-col">
-                  <span className="font-semibold uppercase tracking-wide text-slate-500">{stepType === "choose-columns" ? "Columns to keep" : "Match columns (blank = whole row)"}</span>
+                  <span className="font-medium uppercase tracking-wide text-ink-3">{stepType === "choose-columns" ? "Columns to keep" : "Match columns (blank = whole row)"}</span>
                   <div className="mt-1 flex max-w-md flex-wrap gap-2">
                     {currentTable.headers.map((h, i) => (
-                      <label key={i} className="flex items-center gap-1 rounded border border-slate-200 px-2 py-1 text-sm font-normal">
+                      <label key={i} className="flex items-center gap-1 rounded border border-line px-2 py-1 text-sm font-normal">
                         <input type="checkbox" checked={chosenCols.has(i)} onChange={() => setChosenCols((prev) => { const n = new Set(prev); if (n.has(i)) n.delete(i); else n.add(i); return n; })} />{h}
                       </label>
                     ))}
@@ -443,8 +443,8 @@ function PowerQueryTool() {
               {stepType === "change-type" ? (
                 <>
                   <ColSelect2 table={currentTable} label="Column" value={stepCol} onChange={setStepCol} />
-                  <label className="font-semibold uppercase tracking-wide text-slate-500">Convert to
-                    <select className="mt-1 block rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={stepType2} onChange={(e) => setStepType2(e.target.value as DataTypeTarget)}>
+                  <label className="font-medium uppercase tracking-wide text-ink-3">Convert to
+                    <select className="mt-1 block rounded border border-line px-2 py-1.5 text-sm font-normal" value={stepType2} onChange={(e) => setStepType2(e.target.value as DataTypeTarget)}>
                       <option value="number">Number</option>
                       <option value="text">Text</option>
                       <option value="date-iso">Date (ISO)</option>
@@ -456,7 +456,7 @@ function PowerQueryTool() {
               {stepType === "split-column" ? (
                 <>
                   <ColSelect2 table={currentTable} label="Column" value={stepCol} onChange={setStepCol} />
-                  <label className="font-semibold uppercase tracking-wide text-slate-500">Delimiter<input className="mt-1 block w-20 rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={stepText} onChange={(e) => setStepText(e.target.value)} /></label>
+                  <label className="font-medium uppercase tracking-wide text-ink-3">Delimiter<input className="mt-1 block w-20 rounded border border-line px-2 py-1.5 text-sm font-normal" value={stepText} onChange={(e) => setStepText(e.target.value)} /></label>
                 </>
               ) : null}
 
@@ -464,7 +464,7 @@ function PowerQueryTool() {
                 <>
                   <ColSelect2 table={currentTable} label="First column" value={stepCol} onChange={setStepCol} />
                   <ColSelect2 table={currentTable} label="Second column" value={stepCol2} onChange={setStepCol2} />
-                  <label className="font-semibold uppercase tracking-wide text-slate-500">Separator<input className="mt-1 block w-20 rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={stepText} onChange={(e) => setStepText(e.target.value)} /></label>
+                  <label className="font-medium uppercase tracking-wide text-ink-3">Separator<input className="mt-1 block w-20 rounded border border-line px-2 py-1.5 text-sm font-normal" value={stepText} onChange={(e) => setStepText(e.target.value)} /></label>
                 </>
               ) : null}
 
@@ -473,20 +473,20 @@ function PowerQueryTool() {
               {stepType === "filter-rows" ? (
                 <>
                   <ColSelect2 table={currentTable} label="Column" value={stepCol} onChange={setStepCol} />
-                  <label className="font-semibold uppercase tracking-wide text-slate-500">Operator
-                    <select className="mt-1 block rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={stepOp} onChange={(e) => setStepOp(e.target.value as typeof stepOp)}>
+                  <label className="font-medium uppercase tracking-wide text-ink-3">Operator
+                    <select className="mt-1 block rounded border border-line px-2 py-1.5 text-sm font-normal" value={stepOp} onChange={(e) => setStepOp(e.target.value as typeof stepOp)}>
                       <option value="=">=</option><option value="!=">≠</option><option value=">">&gt;</option><option value="<">&lt;</option><option value=">=">≥</option><option value="<=">≤</option><option value="contains">contains</option>
                     </select>
                   </label>
-                  <label className="font-semibold uppercase tracking-wide text-slate-500">Value<input className="mt-1 block w-28 rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={stepText} onChange={(e) => setStepText(e.target.value)} /></label>
+                  <label className="font-medium uppercase tracking-wide text-ink-3">Value<input className="mt-1 block w-28 rounded border border-line px-2 py-1.5 text-sm font-normal" value={stepText} onChange={(e) => setStepText(e.target.value)} /></label>
                 </>
               ) : null}
 
               {stepType === "sort" ? (
                 <>
                   <ColSelect2 table={currentTable} label="Column" value={stepCol} onChange={setStepCol} />
-                  <label className="font-semibold uppercase tracking-wide text-slate-500">Direction
-                    <select className="mt-1 block rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={stepDir} onChange={(e) => setStepDir(e.target.value as "asc" | "desc")}>
+                  <label className="font-medium uppercase tracking-wide text-ink-3">Direction
+                    <select className="mt-1 block rounded border border-line px-2 py-1.5 text-sm font-normal" value={stepDir} onChange={(e) => setStepDir(e.target.value as "asc" | "desc")}>
                       <option value="asc">Ascending</option><option value="desc">Descending</option>
                     </select>
                   </label>
@@ -495,11 +495,11 @@ function PowerQueryTool() {
 
               {(stepType === "append" || stepType === "join") ? (
                 otherSources.length === 0 ? (
-                  <p className="text-slate-500">Import a second file to append or join.</p>
+                  <p className="text-ink-3">Import a second file to append or join.</p>
                 ) : (
                   <>
-                    <label className="font-semibold uppercase tracking-wide text-slate-500">Other source
-                      <select className="mt-1 block rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={stepSource} onChange={(e) => setStepSource(e.target.value)}>
+                    <label className="font-medium uppercase tracking-wide text-ink-3">Other source
+                      <select className="mt-1 block rounded border border-line px-2 py-1.5 text-sm font-normal" value={stepSource} onChange={(e) => setStepSource(e.target.value)}>
                         <option value="">Choose...</option>
                         {otherSources.map((s) => <option key={s.name} value={s.name}>{s.name}</option>)}
                       </select>
@@ -514,15 +514,15 @@ function PowerQueryTool() {
                 )
               ) : null}
 
-              <button className="rounded-full bg-teal-600 px-5 py-2 text-xs font-semibold text-white transition hover:bg-teal-700" onClick={addStep}>Add step</button>
+              <button className="rounded-md bg-accent-tint px-5 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={addStep}>Add step</button>
             </div>
           </div>
 
           <div className="mt-4">
-            <p className="text-sm text-slate-600">Preview after {steps.length} step{steps.length === 1 ? "" : "s"}: {currentTable.rows.length} rows, {currentTable.headers.length} columns.</p>
+            <p className="text-sm text-ink-2">Preview after {steps.length} step{steps.length === 1 ? "" : "s"}: {currentTable.rows.length} rows, {currentTable.headers.length} columns.</p>
             <TablePreview table={currentTable} />
             <DownloadButtons table={currentTable} name="power-query-output" />
-            <button className="mt-2 rounded-full border border-slate-300 px-4 py-2 text-xs font-semibold text-slate-700 transition hover:border-slate-950" onClick={downloadSummary}>Download transformation summary</button>
+            <button className="mt-2 rounded-md border border-line px-4 py-2 text-xs font-medium text-ink-2 transition hover:border-slate-950" onClick={downloadSummary}>Download transformation summary</button>
           </div>
         </>
       ) : null}
@@ -614,9 +614,9 @@ function DataModelTool() {
 
   return (
     <Panel title="Data Model & Relationships" description="Link tables the way Power Pivot links them: declare a relationship, get real validation against your actual data, see the model as a diagram, and build cross-table measures.">
-      <div className="rounded-xl border border-teal-200 bg-teal-50 p-4 text-sm text-teal-900">
-        <p className="font-semibold">What this actually is</p>
-        <p className="mt-1 text-teal-800">
+      <div className="rounded-xl border border-line bg-accent-tint p-4 text-sm text-accent">
+        <p className="font-medium">What this actually is</p>
+        <p className="mt-1 text-accent">
           This is not an in-memory columnar database and does not support dynamic, arbitrary filter-context
           re-aggregation the way real Power Pivot measures do inside Excel. Measures here are computed once when you
           build the model, grouped by the matching key — recalculating after new data arrives means rebuilding.
@@ -625,47 +625,47 @@ function DataModelTool() {
 
       {error ? <p className="mt-3 rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-700">{error}</p> : null}
 
-      <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-5">
+      <div className="mt-4 rounded-xl border border-line bg-canvas p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <p className="text-sm font-semibold text-slate-900">Tables ({sources.length})</p>
+          <p className="text-sm font-medium text-ink">Tables ({sources.length})</p>
           <div>
             <input ref={importRef} type="file" className="sr-only" accept=".csv,.xlsx,.xls" onChange={(e) => { const f = e.target.files?.[0]; if (f) onImport(f); if (importRef.current) importRef.current.value = ""; }} />
-            <button className="rounded-full bg-slate-950 px-4 py-2 text-xs font-semibold text-white transition hover:bg-teal-700" onClick={() => importRef.current?.click()}>Import table</button>
+            <button className="rounded-md bg-ink px-4 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={() => importRef.current?.click()}>Import table</button>
           </div>
         </div>
-        {sources.length === 0 ? <p className="mt-3 text-sm text-slate-500">Import at least two tables to build relationships between them.</p> : (
+        {sources.length === 0 ? <p className="mt-3 text-sm text-ink-3">Import at least two tables to build relationships between them.</p> : (
           <div className="mt-3 flex flex-wrap gap-2 text-xs">
-            {sources.map((s) => <span key={s.name} className="rounded-full border border-slate-300 px-3 py-1.5 text-slate-600">{s.name} ({s.table.rows.length} rows)</span>)}
+            {sources.map((s) => <span key={s.name} className="rounded-md border border-line px-3 py-1.5 text-ink-2">{s.name} ({s.table.rows.length} rows)</span>)}
           </div>
         )}
       </div>
 
       {sources.length >= 2 ? (
         <>
-          <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-5">
-            <p className="text-sm font-semibold text-slate-900">Relationships</p>
+          <div className="mt-4 rounded-xl border border-line bg-canvas p-5">
+            <p className="text-sm font-medium text-ink">Relationships</p>
             <div className="mt-3 flex flex-wrap items-end gap-3 text-xs">
-              <label className="font-semibold uppercase tracking-wide text-slate-500">"One" side table
-                <select className="mt-1 block rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={oneTable} onChange={(e) => { setOneTable(e.target.value); setOneKey(0); }}>
+              <label className="font-medium uppercase tracking-wide text-ink-3">"One" side table
+                <select className="mt-1 block rounded border border-line px-2 py-1.5 text-sm font-normal" value={oneTable} onChange={(e) => { setOneTable(e.target.value); setOneKey(0); }}>
                   <option value="">Choose...</option>
                   {sources.map((s) => <option key={s.name} value={s.name}>{s.name}</option>)}
                 </select>
               </label>
               {oneTable ? <ColSelect2 table={tableMap.get(oneTable)!} label="Key column" value={oneKey} onChange={setOneKey} /> : null}
-              <label className="font-semibold uppercase tracking-wide text-slate-500">"Many" side table
-                <select className="mt-1 block rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={manyTable} onChange={(e) => { setManyTable(e.target.value); setManyKey(0); }}>
+              <label className="font-medium uppercase tracking-wide text-ink-3">"Many" side table
+                <select className="mt-1 block rounded border border-line px-2 py-1.5 text-sm font-normal" value={manyTable} onChange={(e) => { setManyTable(e.target.value); setManyKey(0); }}>
                   <option value="">Choose...</option>
                   {sources.map((s) => <option key={s.name} value={s.name}>{s.name}</option>)}
                 </select>
               </label>
               {manyTable ? <ColSelect2 table={tableMap.get(manyTable)!} label="Key column" value={manyKey} onChange={setManyKey} /> : null}
-              <label className="font-semibold uppercase tracking-wide text-slate-500">Cardinality
-                <select className="mt-1 block rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={cardinality} onChange={(e) => setCardinality(e.target.value as Cardinality)}>
+              <label className="font-medium uppercase tracking-wide text-ink-3">Cardinality
+                <select className="mt-1 block rounded border border-line px-2 py-1.5 text-sm font-normal" value={cardinality} onChange={(e) => setCardinality(e.target.value as Cardinality)}>
                   <option value="one-to-many">One-to-many</option>
                   <option value="one-to-one">One-to-one</option>
                 </select>
               </label>
-              <button className="rounded-full bg-teal-600 px-5 py-2 text-xs font-semibold text-white transition hover:bg-teal-700" onClick={addRelationship}>Add relationship</button>
+              <button className="rounded-md bg-accent-tint px-5 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={addRelationship}>Add relationship</button>
             </div>
 
             {relationships.length > 0 ? (
@@ -674,23 +674,23 @@ function DataModelTool() {
                   const conflicts = conflictsByRel.get(rel.id) ?? [];
                   const hasError = conflicts.some((c) => c.severity === "error");
                   return (
-                    <li key={rel.id} className={`rounded-lg border p-3 ${hasError ? "border-rose-300 bg-rose-50" : conflicts.length > 0 ? "border-amber-300 bg-amber-50" : "border-emerald-300 bg-emerald-50"}`}>
+                    <li key={rel.id} className={`rounded-lg border p-3 ${hasError ? "border-rose-300 bg-rose-50" : conflicts.length > 0 ? "border-line bg-surface" : "border-line bg-surface"}`}>
                       <div className="flex items-center justify-between gap-3">
-                        <span className="font-medium text-slate-800">
+                        <span className="font-medium text-ink">
                           {rel.oneTable}.{tableMap.get(rel.oneTable)?.headers[rel.oneKey]} → {rel.manyTable}.{tableMap.get(rel.manyTable)?.headers[rel.manyKey]} ({rel.cardinality})
                         </span>
-                        <button className="rounded border border-slate-300 px-2 py-0.5 text-xs text-slate-500 hover:border-rose-500" onClick={() => removeRelationship(rel.id)}>Remove</button>
+                        <button className="rounded border border-line px-2 py-0.5 text-xs text-ink-3 hover:border-rose-500" onClick={() => removeRelationship(rel.id)}>Remove</button>
                       </div>
                       {conflicts.length > 0 ? (
                         <ul className="mt-2 space-y-1 text-xs">
                           {conflicts.map((c, i) => (
-                            <li key={i} className={c.severity === "error" ? "text-rose-700" : "text-amber-700"}>
+                            <li key={i} className={c.severity === "error" ? "text-rose-700" : "text-ink-2"}>
                               {c.severity === "error" ? "⛔" : "⚠️"} {c.message}
                             </li>
                           ))}
                         </ul>
                       ) : (
-                        <p className="mt-1 text-xs text-emerald-700">✓ No conflicts found — every key on the "one" side is unique, and every row matches.</p>
+                        <p className="mt-1 text-xs text-ink-2">✓ No conflicts found — every key on the "one" side is unique, and every row matches.</p>
                       )}
                     </li>
                   );
@@ -700,38 +700,38 @@ function DataModelTool() {
           </div>
 
           {relationships.length > 0 ? (
-            <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-5">
-              <p className="text-sm font-semibold text-slate-900">Relationship diagram</p>
+            <div className="mt-4 rounded-xl border border-line bg-canvas p-5">
+              <p className="text-sm font-medium text-ink">Relationship diagram</p>
               <RelationshipDiagram sources={sources} relationships={relationships} conflictsByRel={conflictsByRel} />
             </div>
           ) : null}
 
           {relationships.length > 0 ? (
-            <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-5">
-              <p className="text-sm font-semibold text-slate-900">Measures</p>
+            <div className="mt-4 rounded-xl border border-line bg-canvas p-5">
+              <p className="text-sm font-medium text-ink">Measures</p>
               <div className="mt-3 flex flex-wrap items-end gap-3 text-xs">
-                <label className="font-semibold uppercase tracking-wide text-slate-500">Name<input className="mt-1 block w-36 rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={measureName} onChange={(e) => setMeasureName(e.target.value)} placeholder="Total Orders" /></label>
-                <label className="font-semibold uppercase tracking-wide text-slate-500">Relationship
-                  <select className="mt-1 block rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={measureRel} onChange={(e) => { setMeasureRel(e.target.value); setMeasureCol(0); }}>
+                <label className="font-medium uppercase tracking-wide text-ink-3">Name<input className="mt-1 block w-36 rounded border border-line px-2 py-1.5 text-sm font-normal" value={measureName} onChange={(e) => setMeasureName(e.target.value)} placeholder="Total Orders" /></label>
+                <label className="font-medium uppercase tracking-wide text-ink-3">Relationship
+                  <select className="mt-1 block rounded border border-line px-2 py-1.5 text-sm font-normal" value={measureRel} onChange={(e) => { setMeasureRel(e.target.value); setMeasureCol(0); }}>
                     <option value="">Choose...</option>
                     {relationships.map((r) => <option key={r.id} value={r.id}>{r.oneTable} ← {r.manyTable}</option>)}
                   </select>
                 </label>
                 {measureSourceTable ? <ColSelect2 table={measureSourceTable} label="Column to aggregate" value={measureCol} onChange={setMeasureCol} /> : null}
-                <label className="font-semibold uppercase tracking-wide text-slate-500">Aggregation
-                  <select className="mt-1 block rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={measureFn} onChange={(e) => setMeasureFn(e.target.value as MeasureAggFn)}>
+                <label className="font-medium uppercase tracking-wide text-ink-3">Aggregation
+                  <select className="mt-1 block rounded border border-line px-2 py-1.5 text-sm font-normal" value={measureFn} onChange={(e) => setMeasureFn(e.target.value as MeasureAggFn)}>
                     <option value="sum">Sum</option><option value="average">Average</option><option value="count">Count</option><option value="min">Min</option><option value="max">Max</option>
                   </select>
                 </label>
-                <button className="rounded-full bg-teal-600 px-5 py-2 text-xs font-semibold text-white transition hover:bg-teal-700" onClick={addMeasure}>Add measure</button>
+                <button className="rounded-md bg-accent-tint px-5 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={addMeasure}>Add measure</button>
               </div>
               {measures.length > 0 ? (
                 <ul className="mt-3 space-y-1.5 text-sm">
                   {measures.map((m) => {
                     const rel = relationships.find((r) => r.id === m.relationshipId);
                     return (
-                      <li key={m.id} className="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2">
-                        <span className="text-slate-700">{m.name}: {m.aggFn}({rel?.manyTable}.{rel ? tableMap.get(rel.manyTable)?.headers[m.aggColumn] : ""}) grouped by {rel?.oneTable}</span>
+                      <li key={m.id} className="flex items-center justify-between rounded-lg bg-surface px-3 py-2">
+                        <span className="text-ink-2">{m.name}: {m.aggFn}({rel?.manyTable}.{rel ? tableMap.get(rel.manyTable)?.headers[m.aggColumn] : ""}) grouped by {rel?.oneTable}</span>
                         <button className="rounded border border-rose-300 px-2 py-0.5 text-xs text-rose-600 hover:border-rose-500" onClick={() => removeMeasure(m.id)}>Remove</button>
                       </li>
                     );
@@ -742,16 +742,16 @@ function DataModelTool() {
           ) : null}
 
           {measures.length > 0 ? (
-            <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-5">
-              <p className="text-sm font-semibold text-slate-900">Build model</p>
+            <div className="mt-4 rounded-xl border border-line bg-canvas p-5">
+              <p className="text-sm font-medium text-ink">Build model</p>
               <div className="mt-3 flex flex-wrap items-end gap-3 text-xs">
-                <label className="font-semibold uppercase tracking-wide text-slate-500">Base table (the "one" side to attach measures to)
-                  <select className="mt-1 block rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={baseTable} onChange={(e) => setBaseTable(e.target.value)}>
+                <label className="font-medium uppercase tracking-wide text-ink-3">Base table (the "one" side to attach measures to)
+                  <select className="mt-1 block rounded border border-line px-2 py-1.5 text-sm font-normal" value={baseTable} onChange={(e) => setBaseTable(e.target.value)}>
                     <option value="">Choose...</option>
                     {Array.from(new Set(relationships.map((r) => r.oneTable))).map((t) => <option key={t} value={t}>{t}</option>)}
                   </select>
                 </label>
-                <button className="rounded-full bg-slate-950 px-5 py-2 text-xs font-semibold text-white transition hover:bg-teal-700" onClick={buildModel}>Build model</button>
+                <button className="rounded-md bg-ink px-5 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={buildModel}>Build model</button>
               </div>
               {result ? (
                 <div className="mt-4">
@@ -782,7 +782,7 @@ function RelationshipDiagram({ sources, relationships, conflictsByRel }: { sourc
         const hasError = (conflictsByRel.get(rel.id) ?? []).some((c) => c.severity === "error");
         return (
           <g key={rel.id}>
-            <line x1={from.x} y1={from.y} x2={to.x} y2={to.y} stroke={hasError ? "#e11d48" : "#0D9488"} strokeWidth={2} />
+            <line x1={from.x} y1={from.y} x2={to.x} y2={to.y} stroke={hasError ? "#e11d48" : "rgb(var(--accent))"} strokeWidth={2} />
             <text x={(from.x + to.x) / 2} y={from.y - 8} textAnchor="middle" fontSize="10" fill="#64748b">{rel.cardinality}</text>
           </g>
         );
@@ -792,7 +792,7 @@ function RelationshipDiagram({ sources, relationships, conflictsByRel }: { sourc
         const table = sources.find((s) => s.name === name)?.table;
         return (
           <g key={name}>
-            <rect x={pos.x - nodeWidth / 2} y={pos.y - 24} width={nodeWidth} height={48} rx={10} fill="#0f172a" />
+            <rect x={pos.x - nodeWidth / 2} y={pos.y - 24} width={nodeWidth} height={48} rx={10} fill="rgb(var(--ink))" />
             <text x={pos.x} y={pos.y - 4} textAnchor="middle" fontSize="12" fill="#ffffff" fontWeight="600">{name.length > 20 ? name.slice(0, 18) + "…" : name}</text>
             <text x={pos.x} y={pos.y + 14} textAnchor="middle" fontSize="10" fill="#94a3b8">{table?.rows.length ?? 0} rows</text>
           </g>
@@ -820,9 +820,9 @@ function DaxReferenceTool() {
 
   return (
     <Panel title="DAX Formula Reference" description="Look up common DAX patterns across aggregation, filtering, time intelligence, relationships, and finance, see the equivalent operation this platform can actually run, and check a formula's syntax shape.">
-      <div className="rounded-xl border border-teal-200 bg-teal-50 p-4 text-sm text-teal-900">
-        <p className="font-semibold">What this actually is</p>
-        <p className="mt-1 text-teal-800">
+      <div className="rounded-xl border border-line bg-accent-tint p-4 text-sm text-accent">
+        <p className="font-medium">What this actually is</p>
+        <p className="mt-1 text-accent">
           This is a DAX formula reference and pattern library, not a DAX engine. Formulas are explained and mapped to
           an equivalent calculation this platform can run — they are not parsed, executed, or validated as real DAX,
           and are not guaranteed to work if pasted into Power BI or Excel's Power Pivot without adjustment. The syntax
@@ -831,17 +831,17 @@ function DaxReferenceTool() {
         </p>
       </div>
 
-      <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-5">
-        <p className="text-sm font-semibold text-slate-900">Check a formula's syntax shape</p>
+      <div className="mt-4 rounded-xl border border-line bg-canvas p-5">
+        <p className="text-sm font-medium text-ink">Check a formula's syntax shape</p>
         <textarea
-          className="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2 font-mono text-sm"
+          className="mt-2 w-full rounded-lg border border-line px-3 py-2 font-mono text-sm"
           rows={2}
           placeholder='e.g. CALCULATE(SUM(Orders[Amount]), Orders[Region] = "East")'
           value={formula}
           onChange={(e) => setFormula(e.target.value)}
         />
         {checkResult ? (
-          <div className={`mt-2 rounded-lg border p-3 text-sm ${checkResult.ok ? "border-emerald-300 bg-emerald-50 text-emerald-800" : "border-amber-300 bg-amber-50 text-amber-800"}`}>
+          <div className={`mt-2 rounded-lg border p-3 text-sm ${checkResult.ok ? "border-line bg-surface text-ink-2" : "border-line bg-surface text-ink-2"}`}>
             {checkResult.ok ? "✓ Syntax shape looks valid." : (
               <ul className="space-y-1">{checkResult.issues.map((issue, i) => <li key={i}>⚠️ {issue}</li>)}</ul>
             )}
@@ -858,27 +858,27 @@ function DaxReferenceTool() {
         <input
           type="search"
           placeholder="Search DAX functions..."
-          className="w-full max-w-xs rounded-lg border border-slate-300 px-3 py-2 text-sm"
+          className="w-full max-w-xs rounded-lg border border-line px-3 py-2 text-sm"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
         <div className="flex flex-wrap gap-2 text-xs">
           {(["All", ...DAX_CATEGORIES] as const).map((c) => (
-            <button key={c} onClick={() => setCategory(c)} className={`rounded-full border px-3 py-1.5 font-semibold ${category === c ? "border-teal-500 bg-teal-50 text-teal-700" : "border-slate-300 text-slate-600"}`}>{c}</button>
+            <button key={c} onClick={() => setCategory(c)} className={`rounded-md border px-3 py-1.5 font-medium ${category === c ? "border-line bg-accent-tint text-accent" : "border-line text-ink-2"}`}>{c}</button>
           ))}
         </div>
       </div>
 
       <div className="mt-4 grid gap-3 md:grid-cols-2">
         {filtered.map((p) => (
-          <div key={p.name} className="rounded-xl border border-slate-200 bg-white p-4">
+          <div key={p.name} className="rounded-xl border border-line bg-canvas p-4">
             <div className="flex items-center justify-between gap-2">
-              <span className="font-mono text-sm font-bold text-slate-900">{p.name}</span>
-              <span className="rounded-full border border-slate-200 px-2 py-0.5 text-[10px] text-slate-500">{p.category}</span>
+              <span className="font-mono text-sm font-medium text-ink">{p.name}</span>
+              <span className="rounded-md border border-line px-2 py-0.5 text-[10px] text-ink-3">{p.category}</span>
             </div>
-            <pre className="mt-2 overflow-x-auto rounded bg-slate-50 px-2 py-1.5 font-mono text-xs text-slate-700">{p.daxSyntax}</pre>
-            <p className="mt-1 font-mono text-xs text-emerald-700">{p.daxExample}</p>
-            <p className="mt-2 text-sm text-slate-600">{p.equivalent}</p>
+            <pre className="mt-2 overflow-x-auto rounded bg-surface px-2 py-1.5 font-mono text-xs text-ink-2">{p.daxSyntax}</pre>
+            <p className="mt-1 font-mono text-xs text-ink-2">{p.daxExample}</p>
+            <p className="mt-2 text-sm text-ink-2">{p.equivalent}</p>
           </div>
         ))}
       </div>
@@ -888,8 +888,8 @@ function DaxReferenceTool() {
 
 function ColSelect2({ table, label, value, onChange }: { table: DataTable; label: string; value: number; onChange: (n: number) => void }) {
   return (
-    <label className="font-semibold uppercase tracking-wide text-slate-500">{label}
-      <select className="mt-1 block rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={Math.min(value, table.headers.length - 1)} onChange={(e) => onChange(Number(e.target.value))}>
+    <label className="font-medium uppercase tracking-wide text-ink-3">{label}
+      <select className="mt-1 block rounded border border-line px-2 py-1.5 text-sm font-normal" value={Math.min(value, table.headers.length - 1)} onChange={(e) => onChange(Number(e.target.value))}>
         {table.headers.map((h, i) => <option key={i} value={i}>{h}</option>)}
       </select>
     </label>
@@ -916,32 +916,32 @@ function MergeTool() {
         <UploadBox label="First file" table={a.table} refEl={a.ref} onFile={a.onFile} />
         <UploadBox label="Second file" table={b.table} refEl={b.ref} onFile={b.onFile} />
       </div>
-      {a.error || b.error ? <p className="mt-3 text-sm text-red-700">{a.error || b.error}</p> : null}
+      {a.error || b.error ? <p className="mt-3 text-sm text-error">{a.error || b.error}</p> : null}
       {a.table && b.table ? (
-        <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-5">
+        <div className="mt-4 rounded-xl border border-line bg-canvas p-5">
           <div className="flex flex-wrap items-center gap-3 text-sm">
-            <label className="font-semibold">Mode</label>
-            <select className="rounded border border-slate-300 px-3 py-1.5" value={mode} onChange={(e) => setMode(e.target.value as "append" | "join")}>
+            <label className="font-medium">Mode</label>
+            <select className="rounded border border-line px-3 py-1.5" value={mode} onChange={(e) => setMode(e.target.value as "append" | "join")}>
               <option value="append">Append (stack rows)</option>
               <option value="join">Join (match by key)</option>
             </select>
             {mode === "join" ? (
               <>
                 <label>First key</label>
-                <select className="rounded border border-slate-300 px-2 py-1" value={leftKey} onChange={(e) => setLeftKey(Number(e.target.value))}>
+                <select className="rounded border border-line px-2 py-1" value={leftKey} onChange={(e) => setLeftKey(Number(e.target.value))}>
                   {a.table.headers.map((h, i) => <option key={i} value={i}>{h}</option>)}
                 </select>
                 <label>Second key</label>
-                <select className="rounded border border-slate-300 px-2 py-1" value={rightKey} onChange={(e) => setRightKey(Number(e.target.value))}>
+                <select className="rounded border border-line px-2 py-1" value={rightKey} onChange={(e) => setRightKey(Number(e.target.value))}>
                   {b.table.headers.map((h, i) => <option key={i} value={i}>{h}</option>)}
                 </select>
               </>
             ) : null}
-            <button className="rounded-full bg-slate-950 px-5 py-2 text-xs font-semibold text-white transition hover:bg-teal-700" onClick={run}>Merge</button>
+            <button className="rounded-md bg-ink px-5 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={run}>Merge</button>
           </div>
         </div>
       ) : null}
-      {result ? (<><p className="mt-4 text-sm text-slate-600">{result.rows.length} rows, {result.headers.length} columns.</p><TablePreview table={result} /><DownloadButtons table={result} name="merged" /></>) : null}
+      {result ? (<><p className="mt-4 text-sm text-ink-2">{result.rows.length} rows, {result.headers.length} columns.</p><TablePreview table={result} /><DownloadButtons table={result} name="merged" /></>) : null}
     </Panel>
   );
 }
@@ -959,40 +959,40 @@ function DedupeTool() {
   return (
     <Panel title="Remove Duplicates" description="Remove exact duplicate rows based on selected columns, or find near-duplicate (fuzzy) records for review.">
       <UploadBox label="Upload file" table={up.table} refEl={up.ref} onFile={up.onFile} />
-      {up.error ? <p className="mt-3 text-sm text-red-700">{up.error}</p> : null}
+      {up.error ? <p className="mt-3 text-sm text-error">{up.error}</p> : null}
       {up.table ? (
-        <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-5">
-          <h3 className="text-sm font-semibold">Exact duplicate columns (leave all unchecked for whole-row match)</h3>
+        <div className="mt-4 rounded-xl border border-line bg-canvas p-5">
+          <h3 className="text-sm font-medium">Exact duplicate columns (leave all unchecked for whole-row match)</h3>
           <div className="mt-2 flex flex-wrap gap-2 text-sm">
             {up.table.headers.map((h, i) => (
-              <label key={i} className="flex items-center gap-1 rounded border border-slate-200 px-2 py-1"><input type="checkbox" checked={selected.has(i)} onChange={() => toggle(i)} />{h}</label>
+              <label key={i} className="flex items-center gap-1 rounded border border-line px-2 py-1"><input type="checkbox" checked={selected.has(i)} onChange={() => toggle(i)} />{h}</label>
             ))}
           </div>
-          <button className="mt-3 rounded-full bg-slate-950 px-5 py-2 text-xs font-semibold text-white transition hover:bg-teal-700" onClick={() => setResult(removeDuplicatesByColumns(up.table!, Array.from(selected)))}>Remove duplicates</button>
+          <button className="mt-3 rounded-md bg-ink px-5 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={() => setResult(removeDuplicatesByColumns(up.table!, Array.from(selected)))}>Remove duplicates</button>
 
-          <div className="mt-6 border-t border-slate-200 pt-4">
-            <h3 className="text-sm font-semibold">Fuzzy duplicate finder</h3>
+          <div className="mt-6 border-t border-line pt-4">
+            <h3 className="text-sm font-medium">Fuzzy duplicate finder</h3>
             <div className="mt-2 flex flex-wrap items-center gap-3 text-sm">
-              <select className="rounded border border-slate-300 px-2 py-1" value={fuzzyCol} onChange={(e) => setFuzzyCol(Number(e.target.value))}>
+              <select className="rounded border border-line px-2 py-1" value={fuzzyCol} onChange={(e) => setFuzzyCol(Number(e.target.value))}>
                 {up.table.headers.map((h, i) => <option key={i} value={i}>{h}</option>)}
               </select>
               <label>Similarity</label>
               <input type="range" min={0.6} max={0.98} step={0.01} value={threshold} onChange={(e) => setThreshold(Number(e.target.value))} />
               <span>{Math.round(threshold * 100)}%</span>
-              <button className="rounded-full border border-slate-300 px-4 py-2 text-xs font-semibold text-slate-700 transition hover:border-slate-950" onClick={() => setFuzzyPairs(findFuzzyDuplicates(up.table!, fuzzyCol, threshold))}>Find near-duplicates</button>
+              <button className="rounded-md border border-line px-4 py-2 text-xs font-medium text-ink-2 transition hover:border-slate-950" onClick={() => setFuzzyPairs(findFuzzyDuplicates(up.table!, fuzzyCol, threshold))}>Find near-duplicates</button>
             </div>
             {fuzzyPairs ? (
               <div className="mt-3 max-h-64 overflow-auto text-sm">
-                <p className="text-slate-600">{fuzzyPairs.length} likely duplicate pairs</p>
+                <p className="text-ink-2">{fuzzyPairs.length} likely duplicate pairs</p>
                 <table className="mt-2 min-w-full text-left"><tbody className="divide-y divide-slate-100">
-                  {fuzzyPairs.map((p, i) => <tr key={i}><td className="py-1 pr-4">{p.valueA}</td><td className="py-1 pr-4">{p.valueB}</td><td className="py-1 text-teal-700">{Math.round(p.score * 100)}%</td></tr>)}
+                  {fuzzyPairs.map((p, i) => <tr key={i}><td className="py-1 pr-4">{p.valueA}</td><td className="py-1 pr-4">{p.valueB}</td><td className="py-1 text-accent">{Math.round(p.score * 100)}%</td></tr>)}
                 </tbody></table>
               </div>
             ) : null}
           </div>
         </div>
       ) : null}
-      {result ? (<><p className="mt-4 text-sm text-slate-600">Removed {result.removed} duplicates. {result.table.rows.length} rows remain.</p><TablePreview table={result.table} /><DownloadButtons table={result.table} name="deduplicated" /></>) : null}
+      {result ? (<><p className="mt-4 text-sm text-ink-2">Removed {result.removed} duplicates. {result.table.rows.length} rows remain.</p><TablePreview table={result.table} /><DownloadButtons table={result.table} name="deduplicated" /></>) : null}
     </Panel>
   );
 }
@@ -1007,25 +1007,25 @@ function FuzzyTool() {
   return (
     <Panel title="Fuzzy Match Search" description="Similarity-based searching and matching for names and addresses, tuned for compliance-grade approximate matching.">
       <UploadBox label="Upload file" table={up.table} refEl={up.ref} onFile={up.onFile} />
-      {up.error ? <p className="mt-3 text-sm text-red-700">{up.error}</p> : null}
+      {up.error ? <p className="mt-3 text-sm text-error">{up.error}</p> : null}
       {up.table ? (
-        <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-5">
+        <div className="mt-4 rounded-xl border border-line bg-canvas p-5">
           <div className="flex flex-wrap items-center gap-3 text-sm">
             <label>Search column</label>
-            <select className="rounded border border-slate-300 px-2 py-1" value={col} onChange={(e) => setCol(Number(e.target.value))}>
+            <select className="rounded border border-line px-2 py-1" value={col} onChange={(e) => setCol(Number(e.target.value))}>
               {up.table.headers.map((h, i) => <option key={i} value={i}>{h}</option>)}
             </select>
-            <input className="min-w-48 flex-1 rounded border border-slate-300 px-3 py-1.5" placeholder="Search name or address" value={query} onChange={(e) => setQuery(e.target.value)} />
+            <input className="min-w-48 flex-1 rounded border border-line px-3 py-1.5" placeholder="Search name or address" value={query} onChange={(e) => setQuery(e.target.value)} />
             <label>Min similarity</label>
             <input type="range" min={0.4} max={0.95} step={0.01} value={threshold} onChange={(e) => setThreshold(Number(e.target.value))} />
             <span>{Math.round(threshold * 100)}%</span>
-            <button className="rounded-full bg-slate-950 px-5 py-2 text-xs font-semibold text-white transition hover:bg-teal-700" onClick={() => setResults(fuzzySearch(up.table!, col, query, threshold))}>Search</button>
+            <button className="rounded-md bg-ink px-5 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={() => setResults(fuzzySearch(up.table!, col, query, threshold))}>Search</button>
           </div>
           {results ? (
             <div className="mt-3 max-h-72 overflow-auto text-sm">
-              <p className="text-slate-600">{results.length} matches</p>
+              <p className="text-ink-2">{results.length} matches</p>
               <table className="mt-2 min-w-full text-left"><tbody className="divide-y divide-slate-100">
-                {results.map((r, i) => <tr key={i}><td className="py-1 pr-4">{r.value}</td><td className="py-1 text-teal-700">{Math.round(r.score * 100)}%</td></tr>)}
+                {results.map((r, i) => <tr key={i}><td className="py-1 pr-4">{r.value}</td><td className="py-1 text-accent">{Math.round(r.score * 100)}%</td></tr>)}
               </tbody></table>
             </div>
           ) : null}
@@ -1046,42 +1046,42 @@ function ClarityTool() {
   return (
     <Panel title="Data Health & Clarity Score" description="Deduplicate, fill gaps, standardize formatting, and get a live clarity score that shows overall data quality.">
       <UploadBox label="Upload file" table={up.table} refEl={up.ref} onFile={(f) => { up.onFile(f).then(() => undefined); }} />
-      {up.error ? <p className="mt-3 text-sm text-red-700">{up.error}</p> : null}
+      {up.error ? <p className="mt-3 text-sm text-error">{up.error}</p> : null}
       {up.table ? (
         <div className="mt-4 space-y-4">
-          <div className="rounded-2xl border border-slate-200 bg-white p-5">
-            <button className="rounded-full bg-slate-950 px-5 py-2 text-xs font-semibold text-white transition hover:bg-teal-700" onClick={() => setReport(computeClarityScore(up.table!))}>Compute clarity score</button>
+          <div className="rounded-xl border border-line bg-canvas p-5">
+            <button className="rounded-md bg-ink px-5 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={() => setReport(computeClarityScore(up.table!))}>Compute clarity score</button>
             {report ? (
               <div className="mt-4">
                 <div className="flex items-center gap-4">
-                  <div className="flex h-20 w-20 items-center justify-center rounded-full bg-teal-100 text-2xl font-bold text-teal-800">{report.score}</div>
-                  <div className="text-sm text-slate-600">
+                  <div className="flex h-20 w-20 items-center justify-center rounded-md bg-accent-tint text-2xl font-medium text-accent">{report.score}</div>
+                  <div className="text-sm text-ink-2">
                     <p>{report.totalRows} rows, {report.filledCells}/{report.totalCells} cells filled</p>
                     <p>{report.duplicateRows} duplicate rows</p>
                   </div>
                 </div>
                 {report.issues.length ? (
                   <div className="mt-4 max-h-48 overflow-auto text-sm">
-                    <table className="min-w-full text-left"><thead className="text-xs uppercase text-slate-500"><tr><th className="py-1 pr-4">Column</th><th className="py-1 pr-4">Issue</th><th className="py-1">Count</th></tr></thead>
-                    <tbody className="divide-y divide-slate-100">{report.issues.map((iss, i) => <tr key={i}><td className="py-1 pr-4">{iss.column}</td><td className="py-1 pr-4 text-amber-700">{iss.issue}</td><td className="py-1">{iss.count}</td></tr>)}</tbody></table>
+                    <table className="min-w-full text-left"><thead className="text-xs uppercase text-ink-3"><tr><th className="py-1 pr-4">Column</th><th className="py-1 pr-4">Issue</th><th className="py-1">Count</th></tr></thead>
+                    <tbody className="divide-y divide-slate-100">{report.issues.map((iss, i) => <tr key={i}><td className="py-1 pr-4">{iss.column}</td><td className="py-1 pr-4 text-ink-2">{iss.issue}</td><td className="py-1">{iss.count}</td></tr>)}</tbody></table>
                   </div>
                 ) : null}
               </div>
             ) : null}
           </div>
 
-          <div className="rounded-2xl border border-slate-200 bg-white p-5">
-            <h3 className="text-sm font-semibold">Auto clean actions</h3>
+          <div className="rounded-xl border border-line bg-canvas p-5">
+            <h3 className="text-sm font-medium">Auto clean actions</h3>
             <div className="mt-2 flex flex-wrap items-center gap-3 text-sm">
-              <select className="rounded border border-slate-300 px-2 py-1" value={col} onChange={(e) => setCol(Number(e.target.value))}>
+              <select className="rounded border border-line px-2 py-1" value={col} onChange={(e) => setCol(Number(e.target.value))}>
                 {up.table.headers.map((h, i) => <option key={i} value={i}>{h}</option>)}
               </select>
-              <button className="rounded-full border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:border-slate-950" onClick={() => { const r = smartFill(up.table!, col); recompute(r.table); }}>Fill gaps (mode)</button>
-              <select className="rounded border border-slate-300 px-2 py-1" value={fmt} onChange={(e) => setFmt(e.target.value as FormatMode)}>
+              <button className="rounded-md border border-line px-3 py-1.5 text-xs font-medium text-ink-2 transition hover:border-slate-950" onClick={() => { const r = smartFill(up.table!, col); recompute(r.table); }}>Fill gaps (mode)</button>
+              <select className="rounded border border-line px-2 py-1" value={fmt} onChange={(e) => setFmt(e.target.value as FormatMode)}>
                 <option value="title">Title Case</option><option value="upper">UPPERCASE</option><option value="lower">lowercase</option><option value="trim">Trim</option>
               </select>
-              <button className="rounded-full border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:border-slate-950" onClick={() => recompute(autoFormatColumn(up.table!, col, fmt))}>Auto format</button>
-              <button className="rounded-full border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:border-slate-950" onClick={() => { const r = removeDuplicatesByColumns(up.table!, []); recompute(r.table); }}>Remove duplicate rows</button>
+              <button className="rounded-md border border-line px-3 py-1.5 text-xs font-medium text-ink-2 transition hover:border-slate-950" onClick={() => recompute(autoFormatColumn(up.table!, col, fmt))}>Auto format</button>
+              <button className="rounded-md border border-line px-3 py-1.5 text-xs font-medium text-ink-2 transition hover:border-slate-950" onClick={() => { const r = removeDuplicatesByColumns(up.table!, []); recompute(r.table); }}>Remove duplicate rows</button>
             </div>
           </div>
 
@@ -1105,30 +1105,30 @@ function ExplorerTool() {
   return (
     <Panel title="Data Explorer" description="Visually explore your data. Filter and query rows, and view auto-updating distributions for any column.">
       <UploadBox label="Upload file" table={up.table} refEl={up.ref} onFile={up.onFile} />
-      {up.error ? <p className="mt-3 text-sm text-red-700">{up.error}</p> : null}
+      {up.error ? <p className="mt-3 text-sm text-error">{up.error}</p> : null}
       {up.table ? (
         <div className="mt-4 grid gap-4 lg:grid-cols-2">
-          <div className="rounded-2xl border border-slate-200 bg-white p-5">
-            <h3 className="text-sm font-semibold">Filter</h3>
+          <div className="rounded-xl border border-line bg-canvas p-5">
+            <h3 className="text-sm font-medium">Filter</h3>
             <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
-              <select className="rounded border border-slate-300 px-2 py-1" value={col} onChange={(e) => setCol(Number(e.target.value))}>
+              <select className="rounded border border-line px-2 py-1" value={col} onChange={(e) => setCol(Number(e.target.value))}>
                 {up.table.headers.map((h, i) => <option key={i} value={i}>{h}</option>)}
               </select>
-              <select className="rounded border border-slate-300 px-2 py-1" value={op} onChange={(e) => setOp(e.target.value as FilterOp)}>
+              <select className="rounded border border-line px-2 py-1" value={op} onChange={(e) => setOp(e.target.value as FilterOp)}>
                 <option value="contains">contains</option><option value="equals">equals</option><option value="gt">greater than</option><option value="lt">less than</option><option value="nonempty">is not empty</option><option value="empty">is empty</option>
               </select>
-              <input className="rounded border border-slate-300 px-2 py-1" value={value} onChange={(e) => setValue(e.target.value)} placeholder="value" />
-              <button className="rounded-full bg-slate-950 px-4 py-1.5 text-xs font-semibold text-white transition hover:bg-teal-700" onClick={() => setView(filterTable(up.table!, col, op, value))}>Apply</button>
+              <input className="rounded border border-line px-2 py-1" value={value} onChange={(e) => setValue(e.target.value)} placeholder="value" />
+              <button className="rounded-md bg-ink px-4 py-1.5 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={() => setView(filterTable(up.table!, col, op, value))}>Apply</button>
             </div>
-            {view ? (<><p className="mt-3 text-sm text-slate-600">{view.rows.length} matching rows</p><DownloadButtons table={view} name="filtered" /></>) : null}
+            {view ? (<><p className="mt-3 text-sm text-ink-2">{view.rows.length} matching rows</p><DownloadButtons table={view} name="filtered" /></>) : null}
           </div>
-          <div className="rounded-2xl border border-slate-200 bg-white p-5">
-            <h3 className="text-sm font-semibold">Distribution of {up.table.headers[col]}</h3>
+          <div className="rounded-xl border border-line bg-canvas p-5">
+            <h3 className="text-sm font-medium">Distribution of {up.table.headers[col]}</h3>
             <div className="mt-3 space-y-2">
               {dist.map((d) => (
                 <div key={d.label}>
-                  <div className="flex justify-between text-xs text-slate-600"><span className="truncate pr-2">{d.label}</span><span className="font-semibold">{d.count}</span></div>
-                  <div className="mt-1 h-2 rounded-full bg-slate-100"><div className="h-2 rounded-full bg-teal-500" style={{ width: `${Math.max((d.count / distMax) * 100, 2)}%` }} /></div>
+                  <div className="flex justify-between text-xs text-ink-2"><span className="truncate pr-2">{d.label}</span><span className="font-medium">{d.count}</span></div>
+                  <div className="mt-1 h-2 rounded-md bg-surface"><div className="h-2 rounded-md bg-accent-tint" style={{ width: `${Math.max((d.count / distMax) * 100, 2)}%` }} /></div>
                 </div>
               ))}
             </div>
@@ -1163,26 +1163,26 @@ function PredictTool() {
   return (
     <Panel title="Smart Predict" description="One-click machine learning. Upload a CSV, pick a feature and a target, and get an instant prediction using regression or nearest-neighbour classification.">
       <UploadBox label="Upload file" table={up.table} refEl={up.ref} onFile={up.onFile} />
-      {up.error ? <p className="mt-3 text-sm text-red-700">{up.error}</p> : null}
+      {up.error ? <p className="mt-3 text-sm text-error">{up.error}</p> : null}
       {up.table ? (
-        <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-5">
+        <div className="mt-4 rounded-xl border border-line bg-canvas p-5">
           <div className="flex flex-wrap items-center gap-3 text-sm">
-            <select className="rounded border border-slate-300 px-2 py-1" value={mode} onChange={(e) => setMode(e.target.value as "regression" | "classify")}>
+            <select className="rounded border border-line px-2 py-1" value={mode} onChange={(e) => setMode(e.target.value as "regression" | "classify")}>
               <option value="regression">Predict number (regression)</option>
               <option value="classify">Predict category (classification)</option>
             </select>
             <label>Feature</label>
-            <select className="rounded border border-slate-300 px-2 py-1" value={feature} onChange={(e) => setFeature(Number(e.target.value))}>
+            <select className="rounded border border-line px-2 py-1" value={feature} onChange={(e) => setFeature(Number(e.target.value))}>
               {up.table.headers.map((h, i) => <option key={i} value={i}>{h}</option>)}
             </select>
             <label>Target</label>
-            <select className="rounded border border-slate-300 px-2 py-1" value={target} onChange={(e) => setTarget(Number(e.target.value))}>
+            <select className="rounded border border-line px-2 py-1" value={target} onChange={(e) => setTarget(Number(e.target.value))}>
               {up.table.headers.map((h, i) => <option key={i} value={i}>{h}</option>)}
             </select>
-            <input className="w-28 rounded border border-slate-300 px-2 py-1" placeholder="feature value" value={input} onChange={(e) => setInput(e.target.value)} />
-            <button className="rounded-full bg-slate-950 px-5 py-2 text-xs font-semibold text-white transition hover:bg-teal-700" onClick={run}>Predict</button>
+            <input className="w-28 rounded border border-line px-2 py-1" placeholder="feature value" value={input} onChange={(e) => setInput(e.target.value)} />
+            <button className="rounded-md bg-ink px-5 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={run}>Predict</button>
           </div>
-          {output ? <p className="mt-4 rounded-xl bg-teal-50 px-4 py-3 text-sm font-medium text-teal-800">{output}</p> : null}
+          {output ? <p className="mt-4 rounded-xl bg-accent-tint px-4 py-3 text-sm font-medium text-accent">{output}</p> : null}
         </div>
       ) : null}
     </Panel>
@@ -1203,12 +1203,12 @@ function ExtractTool() {
 
   return (
     <Panel title="Web Table Extractor" description="Turn web data into structured spreadsheets. Paste the HTML of a web table or list and export it to Excel or CSV, no code required.">
-      <textarea className="h-40 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm" placeholder="Paste HTML containing a <table> or list here" value={html} onChange={(e) => setHtml(e.target.value)} />
+      <textarea className="h-40 w-full rounded-xl border border-line bg-canvas px-4 py-3 text-sm" placeholder="Paste HTML containing a <table> or list here" value={html} onChange={(e) => setHtml(e.target.value)} />
       <div className="mt-3 flex gap-2">
-        <button className="rounded-full bg-slate-950 px-5 py-2 text-xs font-semibold text-white transition hover:bg-teal-700" onClick={run}>Extract table</button>
+        <button className="rounded-md bg-ink px-5 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={run}>Extract table</button>
       </div>
-      {error ? <p className="mt-3 text-sm text-red-700">{error}</p> : null}
-      {table ? (<><p className="mt-4 text-sm text-slate-600">{table.rows.length} rows, {table.headers.length} columns.</p><TablePreview table={table} /><DownloadButtons table={table} name="extracted" /></>) : null}
+      {error ? <p className="mt-3 text-sm text-error">{error}</p> : null}
+      {table ? (<><p className="mt-4 text-sm text-ink-2">{table.rows.length} rows, {table.headers.length} columns.</p><TablePreview table={table} /><DownloadButtons table={table} name="extracted" /></>) : null}
     </Panel>
   );
 }
@@ -1380,55 +1380,55 @@ function FunctionsTool() {
   }
 
   const ColSelect = ({ value, onChange, label }: { value: number; onChange: (v: number) => void; label: string }) => (
-    <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+    <label className="text-xs font-medium uppercase tracking-wide text-ink-3">
       {label}
-      <select className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal normal-case text-slate-800" value={value} onChange={(e) => onChange(Number(e.target.value))}>
+      <select className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal normal-case text-ink" value={value} onChange={(e) => onChange(Number(e.target.value))}>
         {headers.map((h, i) => <option key={i} value={i}>{h}</option>)}
       </select>
     </label>
   );
 
   const CriteriaEditor = (
-    <div className="rounded-xl border border-slate-200 p-3">
-      <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Criteria (all must match)</p>
+    <div className="rounded-xl border border-line p-3">
+      <p className="text-xs font-medium uppercase tracking-wide text-ink-3">Criteria (all must match)</p>
       <div className="mt-2 space-y-2">
         {criteria.map((c, i) => (
           <div key={i} className="flex flex-wrap items-center gap-2 text-sm">
-            <select className="rounded border border-slate-300 px-2 py-1" value={c.col} onChange={(e) => updateCriterion(i, { col: Number(e.target.value) })}>
+            <select className="rounded border border-line px-2 py-1" value={c.col} onChange={(e) => updateCriterion(i, { col: Number(e.target.value) })}>
               {headers.map((h, hi) => <option key={hi} value={hi}>{h}</option>)}
             </select>
-            <select className="rounded border border-slate-300 px-2 py-1" value={c.op} onChange={(e) => updateCriterion(i, { op: e.target.value as CriteriaOp })}>
+            <select className="rounded border border-line px-2 py-1" value={c.op} onChange={(e) => updateCriterion(i, { op: e.target.value as CriteriaOp })}>
               {["=", "!=", ">", "<", ">=", "<=", "contains"].map((op) => <option key={op} value={op}>{op}</option>)}
             </select>
-            <input className="min-w-32 flex-1 rounded border border-slate-300 px-2 py-1" placeholder="value" value={c.value} onChange={(e) => updateCriterion(i, { value: e.target.value })} />
-            {criteria.length > 1 ? <button className="text-xs text-red-600" onClick={() => removeCriterion(i)}>Remove</button> : null}
+            <input className="min-w-32 flex-1 rounded border border-line px-2 py-1" placeholder="value" value={c.value} onChange={(e) => updateCriterion(i, { value: e.target.value })} />
+            {criteria.length > 1 ? <button className="text-xs text-error" onClick={() => removeCriterion(i)}>Remove</button> : null}
           </div>
         ))}
       </div>
-      {(fnKey !== "filter") ? <button className="mt-2 rounded-full border border-slate-300 px-3 py-1 text-xs font-semibold text-slate-700 transition hover:border-slate-950" onClick={addCriterion}>Add criterion</button> : null}
+      {(fnKey !== "filter") ? <button className="mt-2 rounded-md border border-line px-3 py-1 text-xs font-medium text-ink-2 transition hover:border-slate-950" onClick={addCriterion}>Add criterion</button> : null}
     </div>
   );
 
   return (
     <Panel centered title="Advanced Excel Functions" description="Transform a spreadsheet into a data analysis engine. Upload a file, then pick from 50+ Excel functions across lookup, conditional maths, statistics, text, date, logical, dynamic arrays, and finance, or type what you want in plain English. Results appear in seconds and each shows the equivalent Excel formula.">
       <UploadBox label="Upload file" table={up.table} refEl={up.ref} onFile={up.onFile} />
-      {up.error ? <p className="mt-3 text-sm text-red-700">{up.error}</p> : null}
+      {up.error ? <p className="mt-3 text-sm text-error">{up.error}</p> : null}
 
       {table ? (
         <div className="mt-4 space-y-4">
-          <div className="rounded-2xl border border-slate-200 bg-white p-5">
-            <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Describe what you want (natural language)</label>
+          <div className="rounded-xl border border-line bg-canvas p-5">
+            <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Describe what you want (natural language)</label>
             <div className="mt-1 flex flex-wrap gap-2">
-              <input className="min-w-64 flex-1 rounded border border-slate-300 px-3 py-2 text-sm" placeholder='e.g. sum all amounts where region is "A", or find unique clients, or loan payment' value={instruction} onChange={(e) => setInstruction(e.target.value)} />
-              <button className="rounded-full bg-slate-950 px-5 py-2 text-xs font-semibold text-white transition hover:bg-teal-700" onClick={runInterpret}>Detect function</button>
+              <input className="min-w-64 flex-1 rounded border border-line px-3 py-2 text-sm" placeholder='e.g. sum all amounts where region is "A", or find unique clients, or loan payment' value={instruction} onChange={(e) => setInstruction(e.target.value)} />
+              <button className="rounded-md bg-ink px-5 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={runInterpret}>Detect function</button>
             </div>
-            {note ? <p className="mt-2 text-xs text-teal-700">{note}</p> : null}
+            {note ? <p className="mt-2 text-xs text-accent">{note}</p> : null}
           </div>
 
-          <div className="rounded-2xl border border-slate-200 bg-white p-5">
+          <div className="rounded-xl border border-line bg-canvas p-5">
             <div className="flex flex-wrap items-center gap-3">
-              <label className="text-sm font-semibold">Function</label>
-              <select className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm" value={fnKey} onChange={(e) => { setFnKey(e.target.value as FunctionKey); setResult(null); }}>
+              <label className="text-sm font-medium">Function</label>
+              <select className="rounded-lg border border-line px-3 py-1.5 text-sm" value={fnKey} onChange={(e) => { setFnKey(e.target.value as FunctionKey); setResult(null); }}>
                 {(["Lookup & Reference", "Conditional Mathematics", "Statistical & Math", "Text", "Date & Time", "Logical", "Dynamic Arrays", "Advanced Logic", "Financial & Forecasting"] as const).map((cat) => (
                   <optgroup key={cat} label={cat}>
                     {EXCEL_FUNCTIONS.filter((f) => f.category === cat).map((f) => <option key={f.key} value={f.key}>{f.label}</option>)}
@@ -1436,25 +1436,25 @@ function FunctionsTool() {
                 ))}
               </select>
             </div>
-            <p className="mt-2 text-sm text-slate-600">{currentDef.description}</p>
-            <p className="mt-1 font-mono text-xs text-slate-400">{currentDef.syntax}</p>
+            <p className="mt-2 text-sm text-ink-2">{currentDef.description}</p>
+            <p className="mt-1 font-mono text-xs text-ink-3">{currentDef.syntax}</p>
 
             <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {(fnKey === "xlookup" || fnKey === "index-match") ? (
                 <>
                   <ColSelect label="Lookup column" value={lookupCol} onChange={setLookupCol} />
                   <ColSelect label="Return column" value={returnCol} onChange={setReturnCol} />
-                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Lookup value<input className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal normal-case" value={lookupValue} onChange={(e) => setLookupValue(e.target.value)} /></label>
-                  {fnKey === "xlookup" ? <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">If not found<input className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal normal-case" value={ifNotFound} onChange={(e) => setIfNotFound(e.target.value)} /></label> : null}
+                  <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Lookup value<input className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal normal-case" value={lookupValue} onChange={(e) => setLookupValue(e.target.value)} /></label>
+                  {fnKey === "xlookup" ? <label className="text-xs font-medium uppercase tracking-wide text-ink-3">If not found<input className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal normal-case" value={ifNotFound} onChange={(e) => setIfNotFound(e.target.value)} /></label> : null}
                 </>
               ) : null}
 
               {fnKey === "offset-sum" ? (
                 <>
                   <ColSelect label="Column" value={valueCol} onChange={setValueCol} />
-                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Start row (0-based)<input type="number" className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={offsetStart} onChange={(e) => setOffsetStart(Number(e.target.value))} /></label>
-                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Height (rows)<input type="number" className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={offsetHeight} onChange={(e) => setOffsetHeight(Number(e.target.value))} /></label>
-                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Mode<select className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={offsetMode} onChange={(e) => setOffsetMode(e.target.value as "sum" | "average")}><option value="sum">SUM</option><option value="average">AVERAGE</option></select></label>
+                  <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Start row (0-based)<input type="number" className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={offsetStart} onChange={(e) => setOffsetStart(Number(e.target.value))} /></label>
+                  <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Height (rows)<input type="number" className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={offsetHeight} onChange={(e) => setOffsetHeight(Number(e.target.value))} /></label>
+                  <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Mode<select className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={offsetMode} onChange={(e) => setOffsetMode(e.target.value as "sum" | "average")}><option value="sum">SUM</option><option value="average">AVERAGE</option></select></label>
                 </>
               ) : null}
 
@@ -1462,31 +1462,31 @@ function FunctionsTool() {
               {fnKey === "sumproduct" ? (<><ColSelect label="Column A" value={valueCol} onChange={setValueCol} /><ColSelect label="Column B" value={colB} onChange={setColB} /></>) : null}
               {(fnKey === "unique" || fnKey === "sort" || fnKey === "stdev-s" || fnKey === "var-s" || fnKey === "datevalue" || fnKey === "timevalue" || fnKey === "regexreplace" || fnKey === "regextest" || fnKey === "regexextract" || fnKey === "formulatext" || fnKey === "error-type" || fnKey === "tocol") ? <ColSelect label="Column" value={valueCol} onChange={setValueCol} /> : null}
               {fnKey === "correl" ? (<><ColSelect label="Column A" value={valueCol} onChange={setValueCol} /><ColSelect label="Column B" value={colB} onChange={setColB} /></>) : null}
-              {fnKey === "forecast-linear" ? (<><ColSelect label="Known X" value={valueCol} onChange={setValueCol} /><ColSelect label="Known Y" value={colB} onChange={setColB} /><label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Forecast X<input type="number" className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={targetX} onChange={e=>setTargetX(Number(e.target.value))} /></label></>) : null}
-              {fnKey === "forecast-ets" ? (<><ColSelect label="Timeline" value={dateCol} onChange={setDateCol} /><ColSelect label="Values" value={valueCol} onChange={setValueCol} /><label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Target period<input type="number" className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={targetX} onChange={e=>setTargetX(Number(e.target.value))} /></label><label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Seasonality<input type="number" min="1" className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={seasonality} onChange={e=>setSeasonality(Number(e.target.value))} /></label></>) : null}
-              {fnKey === "choosecols" ? <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Columns (1-based, comma-separated)<input className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={otherColumns} onChange={e=>setOtherColumns(e.target.value)} /></label> : null}
-              {(fnKey === "regexreplace" || fnKey === "regextest" || fnKey === "regexextract") ? (<><label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Regex pattern<input className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal font-mono" value={regexPattern} onChange={e=>setRegexPattern(e.target.value)} /></label>{fnKey === "regexreplace" ? <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Replacement<input className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={regexReplacement} onChange={e=>setRegexReplacement(e.target.value)} /></label> : null}</>) : null}
-              {fnKey === "sort" ? <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Direction<select className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={sortDir} onChange={(e) => setSortDir(e.target.value as "asc" | "desc")}><option value="asc">Ascending</option><option value="desc">Descending</option></select></label> : null}
+              {fnKey === "forecast-linear" ? (<><ColSelect label="Known X" value={valueCol} onChange={setValueCol} /><ColSelect label="Known Y" value={colB} onChange={setColB} /><label className="text-xs font-medium uppercase tracking-wide text-ink-3">Forecast X<input type="number" className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={targetX} onChange={e=>setTargetX(Number(e.target.value))} /></label></>) : null}
+              {fnKey === "forecast-ets" ? (<><ColSelect label="Timeline" value={dateCol} onChange={setDateCol} /><ColSelect label="Values" value={valueCol} onChange={setValueCol} /><label className="text-xs font-medium uppercase tracking-wide text-ink-3">Target period<input type="number" className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={targetX} onChange={e=>setTargetX(Number(e.target.value))} /></label><label className="text-xs font-medium uppercase tracking-wide text-ink-3">Seasonality<input type="number" min="1" className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={seasonality} onChange={e=>setSeasonality(Number(e.target.value))} /></label></>) : null}
+              {fnKey === "choosecols" ? <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Columns (1-based, comma-separated)<input className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={otherColumns} onChange={e=>setOtherColumns(e.target.value)} /></label> : null}
+              {(fnKey === "regexreplace" || fnKey === "regextest" || fnKey === "regexextract") ? (<><label className="text-xs font-medium uppercase tracking-wide text-ink-3">Regex pattern<input className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal font-mono" value={regexPattern} onChange={e=>setRegexPattern(e.target.value)} /></label>{fnKey === "regexreplace" ? <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Replacement<input className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={regexReplacement} onChange={e=>setRegexReplacement(e.target.value)} /></label> : null}</>) : null}
+              {fnKey === "sort" ? <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Direction<select className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={sortDir} onChange={(e) => setSortDir(e.target.value as "asc" | "desc")}><option value="asc">Ascending</option><option value="desc">Descending</option></select></label> : null}
 
               {fnKey === "let" ? (
                 <>
                   <ColSelect label="Column" value={valueCol} onChange={setValueCol} />
-                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Aggregate<select className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={letAgg} onChange={(e) => setLetAgg(e.target.value as typeof letAgg)}><option value="sum">SUM</option><option value="average">AVERAGE</option><option value="count">COUNT</option><option value="max">MAX</option><option value="min">MIN</option></select></label>
-                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Compare<div className="mt-1 flex gap-1"><select className="rounded border border-slate-300 px-1 py-1.5 text-sm font-normal" value={letOp} onChange={(e) => setLetOp(e.target.value as CriteriaOp)}>{[">", "<", ">=", "<=", "=", "!="].map((op) => <option key={op} value={op}>{op}</option>)}</select><input className="w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={letValue} onChange={(e) => setLetValue(e.target.value)} /></div></label>
+                  <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Aggregate<select className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={letAgg} onChange={(e) => setLetAgg(e.target.value as typeof letAgg)}><option value="sum">SUM</option><option value="average">AVERAGE</option><option value="count">COUNT</option><option value="max">MAX</option><option value="min">MIN</option></select></label>
+                  <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Compare<div className="mt-1 flex gap-1"><select className="rounded border border-line px-1 py-1.5 text-sm font-normal" value={letOp} onChange={(e) => setLetOp(e.target.value as CriteriaOp)}>{[">", "<", ">=", "<=", "=", "!="].map((op) => <option key={op} value={op}>{op}</option>)}</select><input className="w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={letValue} onChange={(e) => setLetValue(e.target.value)} /></div></label>
                 </>
               ) : null}
 
               {(fnKey === "xnpv" || fnKey === "xirr") ? (<><ColSelect label="Values column" value={valueCol} onChange={setValueCol} /><ColSelect label="Dates column" value={dateCol} onChange={setDateCol} /></>) : null}
               {(fnKey === "npv" || fnKey === "irr") ? <ColSelect label="Cash flow column" value={valueCol} onChange={setValueCol} /> : null}
-              {fnKey === "vstack" ? (<div className="sm:col-span-2 lg:col-span-3 rounded-xl border border-slate-200 bg-slate-50 p-3"><input ref={secondUploadRef} type="file" className="sr-only" accept=".csv,.xlsx,.xls" onChange={e=>{const file=e.target.files?.[0]; if(file) void onSecondFile(file); if(secondUploadRef.current) secondUploadRef.current.value="";}} /><button className="rounded-full border border-slate-300 px-3 py-1.5 text-xs font-semibold" onClick={()=>secondUploadRef.current?.click()}>{secondTable ? `Second table: ${secondTable.rows.length} rows` : "Import second table for VSTACK"}</button></div>) : null}
-              {fnKey === "xnpv" ? <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Discount rate %<input type="number" className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={rate} onChange={(e) => setRate(Number(e.target.value))} /></label> : null}
+              {fnKey === "vstack" ? (<div className="sm:col-span-2 lg:col-span-3 rounded-xl border border-line bg-surface p-3"><input ref={secondUploadRef} type="file" className="sr-only" accept=".csv,.xlsx,.xls" onChange={e=>{const file=e.target.files?.[0]; if(file) void onSecondFile(file); if(secondUploadRef.current) secondUploadRef.current.value="";}} /><button className="rounded-md border border-line px-3 py-1.5 text-xs font-medium" onClick={()=>secondUploadRef.current?.click()}>{secondTable ? `Second table: ${secondTable.rows.length} rows` : "Import second table for VSTACK"}</button></div>) : null}
+              {fnKey === "xnpv" ? <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Discount rate %<input type="number" className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={rate} onChange={(e) => setRate(Number(e.target.value))} /></label> : null}
 
               {(fnKey === "pmt" || fnKey === "ipmt") ? (
                 <>
-                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Annual rate %<input type="number" className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={rate} onChange={(e) => setRate(Number(e.target.value))} /></label>
-                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Total periods<input type="number" className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={periods} onChange={(e) => setPeriods(Number(e.target.value))} /></label>
-                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Present value<input type="number" className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={presentValue} onChange={(e) => setPresentValue(Number(e.target.value))} /></label>
-                  {fnKey === "ipmt" ? <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Payment period<input type="number" className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={period} onChange={(e) => setPeriod(Number(e.target.value))} /></label> : null}
+                  <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Annual rate %<input type="number" className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={rate} onChange={(e) => setRate(Number(e.target.value))} /></label>
+                  <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Total periods<input type="number" className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={periods} onChange={(e) => setPeriods(Number(e.target.value))} /></label>
+                  <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Present value<input type="number" className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={presentValue} onChange={(e) => setPresentValue(Number(e.target.value))} /></label>
+                  {fnKey === "ipmt" ? <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Payment period<input type="number" className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={period} onChange={(e) => setPeriod(Number(e.target.value))} /></label> : null}
                 </>
               ) : null}
 
@@ -1494,7 +1494,7 @@ function FunctionsTool() {
                 <>
                   <ColSelect label="Lookup column" value={lookupCol} onChange={setLookupCol} />
                   <ColSelect label="Return column" value={returnCol} onChange={setReturnCol} />
-                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Lookup value<input className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal normal-case" value={lookupValue} onChange={(e) => setLookupValue(e.target.value)} /></label>
+                  <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Lookup value<input className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal normal-case" value={lookupValue} onChange={(e) => setLookupValue(e.target.value)} /></label>
                 </>
               ) : null}
 
@@ -1504,117 +1504,117 @@ function FunctionsTool() {
               {fnKey === "round" ? (
                 <>
                   <ColSelect label="Column" value={valueCol} onChange={setValueCol} />
-                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Decimals<input type="number" className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={decimals} onChange={(e) => setDecimals(Number(e.target.value))} /></label>
-                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Mode<select className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={roundMode} onChange={(e) => setRoundMode(e.target.value as RoundMode)}><option value="round">ROUND</option><option value="up">ROUNDUP</option><option value="down">ROUNDDOWN</option></select></label>
+                  <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Decimals<input type="number" className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={decimals} onChange={(e) => setDecimals(Number(e.target.value))} /></label>
+                  <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Mode<select className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={roundMode} onChange={(e) => setRoundMode(e.target.value as RoundMode)}><option value="round">ROUND</option><option value="up">ROUNDUP</option><option value="down">ROUNDDOWN</option></select></label>
                 </>
               ) : null}
 
               {fnKey === "aggregate" ? (
                 <>
                   <ColSelect label="Column" value={valueCol} onChange={setValueCol} />
-                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Function<select className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={aggFn} onChange={(e) => setAggFn(e.target.value as AggFn)}><option value="sum">SUM</option><option value="average">AVERAGE</option><option value="min">MIN</option><option value="max">MAX</option><option value="median">MEDIAN</option><option value="count">COUNT</option><option value="stdev">STDEV</option><option value="var">VAR</option></select></label>
+                  <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Function<select className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={aggFn} onChange={(e) => setAggFn(e.target.value as AggFn)}><option value="sum">SUM</option><option value="average">AVERAGE</option><option value="min">MIN</option><option value="max">MAX</option><option value="median">MEDIAN</option><option value="count">COUNT</option><option value="stdev">STDEV</option><option value="var">VAR</option></select></label>
                 </>
               ) : null}
 
-              {fnKey === "rank" ? (<><ColSelect label="Column" value={valueCol} onChange={setValueCol} /><label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Order<select className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={sortDir} onChange={(e) => setSortDir(e.target.value as "asc" | "desc")}><option value="desc">Highest first</option><option value="asc">Lowest first</option></select></label></>) : null}
+              {fnKey === "rank" ? (<><ColSelect label="Column" value={valueCol} onChange={setValueCol} /><label className="text-xs font-medium uppercase tracking-wide text-ink-3">Order<select className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={sortDir} onChange={(e) => setSortDir(e.target.value as "asc" | "desc")}><option value="desc">Highest first</option><option value="asc">Lowest first</option></select></label></>) : null}
 
-              {fnKey === "percentile" ? (<><ColSelect label="Column" value={valueCol} onChange={setValueCol} /><label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Percentile (0-1)<input type="number" step="0.05" min="0" max="1" className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={percentileK} onChange={(e) => setPercentileK(Number(e.target.value))} /></label></>) : null}
+              {fnKey === "percentile" ? (<><ColSelect label="Column" value={valueCol} onChange={setValueCol} /><label className="text-xs font-medium uppercase tracking-wide text-ink-3">Percentile (0-1)<input type="number" step="0.05" min="0" max="1" className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={percentileK} onChange={(e) => setPercentileK(Number(e.target.value))} /></label></>) : null}
 
-              {fnKey === "concat" ? (<><ColSelect label="First column" value={valueCol} onChange={setValueCol} /><ColSelect label="Second column" value={colB} onChange={setColB} /><label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Separator<input className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={sep} onChange={(e) => setSep(e.target.value)} /></label></>) : null}
+              {fnKey === "concat" ? (<><ColSelect label="First column" value={valueCol} onChange={setValueCol} /><ColSelect label="Second column" value={colB} onChange={setColB} /><label className="text-xs font-medium uppercase tracking-wide text-ink-3">Separator<input className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={sep} onChange={(e) => setSep(e.target.value)} /></label></>) : null}
 
-              {(fnKey === "textsplit" || fnKey === "textjoin" || fnKey === "textbefore-after") ? (<><ColSelect label="Column" value={valueCol} onChange={setValueCol} /><label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Delimiter<input className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={delimiter} onChange={(e) => setDelimiter(e.target.value)} /></label></>) : null}
-              {fnKey === "textbefore-after" ? <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Before or after<select className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={beforeAfter} onChange={(e) => setBeforeAfter(e.target.value as "before" | "after")}><option value="before">Before</option><option value="after">After</option></select></label> : null}
+              {(fnKey === "textsplit" || fnKey === "textjoin" || fnKey === "textbefore-after") ? (<><ColSelect label="Column" value={valueCol} onChange={setValueCol} /><label className="text-xs font-medium uppercase tracking-wide text-ink-3">Delimiter<input className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={delimiter} onChange={(e) => setDelimiter(e.target.value)} /></label></>) : null}
+              {fnKey === "textbefore-after" ? <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Before or after<select className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={beforeAfter} onChange={(e) => setBeforeAfter(e.target.value as "before" | "after")}><option value="before">Before</option><option value="after">After</option></select></label> : null}
 
               {fnKey === "left-right-mid" ? (
                 <>
                   <ColSelect label="Column" value={valueCol} onChange={setValueCol} />
-                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Mode<select className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={substrMode} onChange={(e) => setSubstrMode(e.target.value as SubstringMode)}><option value="left">LEFT</option><option value="right">RIGHT</option><option value="mid">MID</option></select></label>
-                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Characters<input type="number" className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={charCount} onChange={(e) => setCharCount(Number(e.target.value))} /></label>
-                  {substrMode === "mid" ? <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Start position<input type="number" className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={midStart} onChange={(e) => setMidStart(Number(e.target.value))} /></label> : null}
+                  <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Mode<select className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={substrMode} onChange={(e) => setSubstrMode(e.target.value as SubstringMode)}><option value="left">LEFT</option><option value="right">RIGHT</option><option value="mid">MID</option></select></label>
+                  <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Characters<input type="number" className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={charCount} onChange={(e) => setCharCount(Number(e.target.value))} /></label>
+                  {substrMode === "mid" ? <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Start position<input type="number" className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={midStart} onChange={(e) => setMidStart(Number(e.target.value))} /></label> : null}
                 </>
               ) : null}
 
               {(fnKey === "trim-clean" || fnKey === "len") ? <ColSelect label="Column" value={valueCol} onChange={setValueCol} /> : null}
-              {fnKey === "upper-lower-proper" ? (<><ColSelect label="Column" value={valueCol} onChange={setValueCol} /><label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Case<select className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={caseMode} onChange={(e) => setCaseMode(e.target.value as CaseMode)}><option value="proper">Proper Case</option><option value="upper">UPPERCASE</option><option value="lower">lowercase</option></select></label></>) : null}
-              {fnKey === "substitute" ? (<><ColSelect label="Column" value={valueCol} onChange={setValueCol} /><label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Find<input className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={oldText} onChange={(e) => setOldText(e.target.value)} /></label><label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Replace with<input className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={newText} onChange={(e) => setNewText(e.target.value)} /></label></>) : null}
+              {fnKey === "upper-lower-proper" ? (<><ColSelect label="Column" value={valueCol} onChange={setValueCol} /><label className="text-xs font-medium uppercase tracking-wide text-ink-3">Case<select className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={caseMode} onChange={(e) => setCaseMode(e.target.value as CaseMode)}><option value="proper">Proper Case</option><option value="upper">UPPERCASE</option><option value="lower">lowercase</option></select></label></>) : null}
+              {fnKey === "substitute" ? (<><ColSelect label="Column" value={valueCol} onChange={setValueCol} /><label className="text-xs font-medium uppercase tracking-wide text-ink-3">Find<input className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={oldText} onChange={(e) => setOldText(e.target.value)} /></label><label className="text-xs font-medium uppercase tracking-wide text-ink-3">Replace with<input className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={newText} onChange={(e) => setNewText(e.target.value)} /></label></>) : null}
 
-              {(fnKey === "year-month-day") ? (<><ColSelect label="Date column" value={valueCol} onChange={setValueCol} /><label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Part<select className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={datePartMode} onChange={(e) => setDatePartMode(e.target.value as "year" | "month" | "day")}><option value="year">Year</option><option value="month">Month</option><option value="day">Day</option></select></label></>) : null}
+              {(fnKey === "year-month-day") ? (<><ColSelect label="Date column" value={valueCol} onChange={setValueCol} /><label className="text-xs font-medium uppercase tracking-wide text-ink-3">Part<select className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={datePartMode} onChange={(e) => setDatePartMode(e.target.value as "year" | "month" | "day")}><option value="year">Year</option><option value="month">Month</option><option value="day">Day</option></select></label></>) : null}
               {(fnKey === "weekday" || fnKey === "text-date" || fnKey === "eomonth") ? <ColSelect label="Date column" value={valueCol} onChange={setValueCol} /> : null}
-              {fnKey === "text-date" ? <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Format<select className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={dateFormat} onChange={(e) => setDateFormat(e.target.value as "iso" | "us" | "long")}><option value="iso">yyyy-mm-dd</option><option value="us">mm/dd/yyyy</option><option value="long">d Month yyyy</option></select></label> : null}
-              {fnKey === "eomonth" ? <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Months offset<input type="number" className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={monthsOffset} onChange={(e) => setMonthsOffset(Number(e.target.value))} /></label> : null}
+              {fnKey === "text-date" ? <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Format<select className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={dateFormat} onChange={(e) => setDateFormat(e.target.value as "iso" | "us" | "long")}><option value="iso">yyyy-mm-dd</option><option value="us">mm/dd/yyyy</option><option value="long">d Month yyyy</option></select></label> : null}
+              {fnKey === "eomonth" ? <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Months offset<input type="number" className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={monthsOffset} onChange={(e) => setMonthsOffset(Number(e.target.value))} /></label> : null}
               {(fnKey === "datedif" || fnKey === "networkdays") ? (<><ColSelect label="Start date column" value={valueCol} onChange={setValueCol} /><ColSelect label="End date column" value={endDateCol} onChange={setEndDateCol} /></>) : null}
-              {fnKey === "datedif" ? <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Unit<select className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={dateUnit} onChange={(e) => setDateUnit(e.target.value as "days" | "months" | "years")}><option value="days">Days</option><option value="months">Months</option><option value="years">Years</option></select></label> : null}
+              {fnKey === "datedif" ? <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Unit<select className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={dateUnit} onChange={(e) => setDateUnit(e.target.value as "days" | "months" | "years")}><option value="days">Days</option><option value="months">Months</option><option value="years">Years</option></select></label> : null}
 
               {fnKey === "if" ? (
                 <>
                   <ColSelect label="Column" value={valueCol} onChange={setValueCol} />
-                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Condition<div className="mt-1 flex gap-1"><select className="rounded border border-slate-300 px-1 py-1.5 text-sm font-normal" value={ifOp} onChange={(e) => setIfOp(e.target.value as CriteriaOp)}>{[">", "<", ">=", "<=", "=", "!=", "contains"].map((op) => <option key={op} value={op}>{op}</option>)}</select><input className="w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={ifValue} onChange={(e) => setIfValue(e.target.value)} /></div></label>
-                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">If true<input className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={ifTrue} onChange={(e) => setIfTrue(e.target.value)} /></label>
-                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">If false<input className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={ifFalse} onChange={(e) => setIfFalse(e.target.value)} /></label>
+                  <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Condition<div className="mt-1 flex gap-1"><select className="rounded border border-line px-1 py-1.5 text-sm font-normal" value={ifOp} onChange={(e) => setIfOp(e.target.value as CriteriaOp)}>{[">", "<", ">=", "<=", "=", "!=", "contains"].map((op) => <option key={op} value={op}>{op}</option>)}</select><input className="w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={ifValue} onChange={(e) => setIfValue(e.target.value)} /></div></label>
+                  <label className="text-xs font-medium uppercase tracking-wide text-ink-3">If true<input className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={ifTrue} onChange={(e) => setIfTrue(e.target.value)} /></label>
+                  <label className="text-xs font-medium uppercase tracking-wide text-ink-3">If false<input className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={ifFalse} onChange={(e) => setIfFalse(e.target.value)} /></label>
                 </>
               ) : null}
 
               {fnKey === "ifs" ? <ColSelect label="Numeric column" value={valueCol} onChange={setValueCol} /> : null}
-              {fnKey === "and-or" ? <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Logic<select className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={andOrMode} onChange={(e) => setAndOrMode(e.target.value as "and" | "or")}><option value="and">AND (all)</option><option value="or">OR (any)</option></select></label> : null}
-              {fnKey === "iferror" ? (<><ColSelect label="Column" value={valueCol} onChange={setValueCol} /><label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Fallback<input className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={fallback} onChange={(e) => setFallback(e.target.value)} /></label></>) : null}
+              {fnKey === "and-or" ? <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Logic<select className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={andOrMode} onChange={(e) => setAndOrMode(e.target.value as "and" | "or")}><option value="and">AND (all)</option><option value="or">OR (any)</option></select></label> : null}
+              {fnKey === "iferror" ? (<><ColSelect label="Column" value={valueCol} onChange={setValueCol} /><label className="text-xs font-medium uppercase tracking-wide text-ink-3">Fallback<input className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={fallback} onChange={(e) => setFallback(e.target.value)} /></label></>) : null}
               {fnKey === "switch" ? <ColSelect label="Column" value={valueCol} onChange={setValueCol} /> : null}
               {fnKey === "is-type" ? (
                 <>
                   <ColSelect label="Column" value={valueCol} onChange={setValueCol} />
-                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Check<select className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={typeCheckMode} onChange={(e) => setTypeCheckMode(e.target.value as TypeCheckMode)}><option value="blank">ISBLANK</option><option value="number">ISNUMBER</option><option value="text">ISTEXT</option></select></label>
+                  <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Check<select className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={typeCheckMode} onChange={(e) => setTypeCheckMode(e.target.value as TypeCheckMode)}><option value="blank">ISBLANK</option><option value="number">ISNUMBER</option><option value="text">ISTEXT</option></select></label>
                 </>
               ) : null}
               {fnKey === "indirect" ? <ColSelect label="Selector column (holds a column name)" value={valueCol} onChange={setValueCol} /> : null}
               {fnKey === "sequence" ? (
                 <>
-                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Start<input type="number" className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={sequenceStart} onChange={(e) => setSequenceStart(Number(e.target.value))} /></label>
-                  <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Step<input type="number" className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={sequenceStep} onChange={(e) => setSequenceStep(Number(e.target.value))} /></label>
+                  <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Start<input type="number" className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={sequenceStart} onChange={(e) => setSequenceStart(Number(e.target.value))} /></label>
+                  <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Step<input type="number" className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal" value={sequenceStep} onChange={(e) => setSequenceStep(Number(e.target.value))} /></label>
                 </>
               ) : null}
             </div>
 
             {fnKey === "ifs" ? (
-              <div className="mt-4 rounded-xl border border-slate-200 p-3">
-                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Bands (value greater than or equal to threshold gets the label)</p>
+              <div className="mt-4 rounded-xl border border-line p-3">
+                <p className="text-xs font-medium uppercase tracking-wide text-ink-3">Bands (value greater than or equal to threshold gets the label)</p>
                 <div className="mt-2 space-y-2">
                   {bands.map((b, i) => (
                     <div key={i} className="flex items-center gap-2 text-sm">
-                      <input type="number" className="w-28 rounded border border-slate-300 px-2 py-1" value={b.threshold} onChange={(e) => setBands((prev) => prev.map((x, xi) => (xi === i ? { ...x, threshold: Number(e.target.value) } : x)))} />
-                      <input className="flex-1 rounded border border-slate-300 px-2 py-1" value={b.label} onChange={(e) => setBands((prev) => prev.map((x, xi) => (xi === i ? { ...x, label: e.target.value } : x)))} />
-                      {bands.length > 1 ? <button className="text-xs text-red-600" onClick={() => setBands((prev) => prev.filter((_, xi) => xi !== i))}>Remove</button> : null}
+                      <input type="number" className="w-28 rounded border border-line px-2 py-1" value={b.threshold} onChange={(e) => setBands((prev) => prev.map((x, xi) => (xi === i ? { ...x, threshold: Number(e.target.value) } : x)))} />
+                      <input className="flex-1 rounded border border-line px-2 py-1" value={b.label} onChange={(e) => setBands((prev) => prev.map((x, xi) => (xi === i ? { ...x, label: e.target.value } : x)))} />
+                      {bands.length > 1 ? <button className="text-xs text-error" onClick={() => setBands((prev) => prev.filter((_, xi) => xi !== i))}>Remove</button> : null}
                     </div>
                   ))}
                 </div>
-                <button className="mt-2 rounded-full border border-slate-300 px-3 py-1 text-xs font-semibold text-slate-700" onClick={() => setBands((prev) => [...prev, { threshold: 0, label: "" }])}>Add band</button>
+                <button className="mt-2 rounded-md border border-line px-3 py-1 text-xs font-medium text-ink-2" onClick={() => setBands((prev) => [...prev, { threshold: 0, label: "" }])}>Add band</button>
               </div>
             ) : null}
 
             {fnKey === "switch" ? (
-              <div className="mt-4 rounded-xl border border-slate-200 p-3">
-                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Value mapping (from -&gt; to)</p>
+              <div className="mt-4 rounded-xl border border-line p-3">
+                <p className="text-xs font-medium uppercase tracking-wide text-ink-3">Value mapping (from -&gt; to)</p>
                 <div className="mt-2 space-y-2">
                   {switchMaps.map((m, i) => (
                     <div key={i} className="flex items-center gap-2 text-sm">
-                      <input className="flex-1 rounded border border-slate-300 px-2 py-1" placeholder="from" value={m.from} onChange={(e) => setSwitchMaps((prev) => prev.map((x, xi) => (xi === i ? { ...x, from: e.target.value } : x)))} />
-                      <input className="flex-1 rounded border border-slate-300 px-2 py-1" placeholder="to" value={m.to} onChange={(e) => setSwitchMaps((prev) => prev.map((x, xi) => (xi === i ? { ...x, to: e.target.value } : x)))} />
-                      {switchMaps.length > 1 ? <button className="text-xs text-red-600" onClick={() => setSwitchMaps((prev) => prev.filter((_, xi) => xi !== i))}>Remove</button> : null}
+                      <input className="flex-1 rounded border border-line px-2 py-1" placeholder="from" value={m.from} onChange={(e) => setSwitchMaps((prev) => prev.map((x, xi) => (xi === i ? { ...x, from: e.target.value } : x)))} />
+                      <input className="flex-1 rounded border border-line px-2 py-1" placeholder="to" value={m.to} onChange={(e) => setSwitchMaps((prev) => prev.map((x, xi) => (xi === i ? { ...x, to: e.target.value } : x)))} />
+                      {switchMaps.length > 1 ? <button className="text-xs text-error" onClick={() => setSwitchMaps((prev) => prev.filter((_, xi) => xi !== i))}>Remove</button> : null}
                     </div>
                   ))}
                 </div>
-                <button className="mt-2 rounded-full border border-slate-300 px-3 py-1 text-xs font-semibold text-slate-700" onClick={() => setSwitchMaps((prev) => [...prev, { from: "", to: "" }])}>Add mapping</button>
+                <button className="mt-2 rounded-md border border-line px-3 py-1 text-xs font-medium text-ink-2" onClick={() => setSwitchMaps((prev) => [...prev, { from: "", to: "" }])}>Add mapping</button>
               </div>
             ) : null}
 
             {(fnKey === "sumifs" || fnKey === "countifs" || fnKey === "averageifs" || fnKey === "filter" || fnKey === "and-or") ? <div className="mt-4">{CriteriaEditor}</div> : null}
 
-            <button className="mt-5 rounded-full bg-slate-950 px-6 py-3 text-sm font-semibold text-white transition hover:bg-teal-700" onClick={run}>Run function</button>
+            <button className="mt-5 rounded-md bg-ink px-6 py-3 text-sm font-medium text-ink transition hover:bg-accent-tint" onClick={run}>Run function</button>
           </div>
 
           {result ? (
-            <div className={`rounded-2xl border p-5 ${result.ok ? "border-slate-200 bg-white" : "border-red-200 bg-red-50"}`}>
-              {result.scalar !== undefined ? <p className="text-3xl font-semibold text-slate-950">{result.scalar}</p> : null}
-              <p className={`mt-1 text-sm ${result.ok ? "text-slate-600" : "text-red-700"}`}>{result.message}</p>
-              {result.formula ? <p className="mt-2 rounded-lg bg-slate-900 px-3 py-2 font-mono text-xs text-teal-100">{result.formula}</p> : null}
+            <div className={`rounded-xl border p-5 ${result.ok ? "border-line bg-canvas" : "border-line bg-surface"}`}>
+              {result.scalar !== undefined ? <p className="text-3xl font-medium text-ink">{result.scalar}</p> : null}
+              <p className={`mt-1 text-sm ${result.ok ? "text-ink-2" : "text-error"}`}>{result.message}</p>
+              {result.formula ? <p className="mt-2 rounded-lg bg-slate-900 px-3 py-2 font-mono text-xs text-accent">{result.formula}</p> : null}
               {result.table ? (<><TablePreview table={result.table} /><DownloadButtons table={result.table} name="result" /></>) : null}
             </div>
           ) : null}
@@ -1639,34 +1639,34 @@ function TimesheetTool() {
 
   return (
     <Panel title="Timesheet Builder" description="Track hours across projects and generate a billable time report. Export a clean Excel timesheet for invoicing and analysis.">
-      <div className="rounded-2xl border border-slate-200 bg-white p-5">
+      <div className="rounded-xl border border-line bg-canvas p-5">
         <div className="overflow-x-auto">
           <table className="min-w-full text-left text-sm">
-            <thead className="text-xs uppercase text-slate-500"><tr><th className="px-2 py-2">Date</th><th className="px-2 py-2">Project</th><th className="px-2 py-2">Task</th><th className="px-2 py-2">Hours</th><th className="px-2 py-2">Billable</th><th /></tr></thead>
+            <thead className="text-xs uppercase text-ink-3"><tr><th className="px-2 py-2">Date</th><th className="px-2 py-2">Project</th><th className="px-2 py-2">Task</th><th className="px-2 py-2">Hours</th><th className="px-2 py-2">Billable</th><th /></tr></thead>
             <tbody>
               {entries.map((e, i) => (
                 <tr key={i}>
-                  <td className="px-2 py-1"><input type="date" className="rounded border border-slate-300 px-2 py-1" value={e.date} onChange={(ev) => update(i, { date: ev.target.value })} /></td>
-                  <td className="px-2 py-1"><input className="rounded border border-slate-300 px-2 py-1" value={e.project} onChange={(ev) => update(i, { project: ev.target.value })} placeholder="Project" /></td>
-                  <td className="px-2 py-1"><input className="rounded border border-slate-300 px-2 py-1" value={e.task} onChange={(ev) => update(i, { task: ev.target.value })} placeholder="Task" /></td>
-                  <td className="px-2 py-1"><input type="number" step="0.25" className="w-20 rounded border border-slate-300 px-2 py-1" value={e.hours} onChange={(ev) => update(i, { hours: Number(ev.target.value) })} /></td>
+                  <td className="px-2 py-1"><input type="date" className="rounded border border-line px-2 py-1" value={e.date} onChange={(ev) => update(i, { date: ev.target.value })} /></td>
+                  <td className="px-2 py-1"><input className="rounded border border-line px-2 py-1" value={e.project} onChange={(ev) => update(i, { project: ev.target.value })} placeholder="Project" /></td>
+                  <td className="px-2 py-1"><input className="rounded border border-line px-2 py-1" value={e.task} onChange={(ev) => update(i, { task: ev.target.value })} placeholder="Task" /></td>
+                  <td className="px-2 py-1"><input type="number" step="0.25" className="w-20 rounded border border-line px-2 py-1" value={e.hours} onChange={(ev) => update(i, { hours: Number(ev.target.value) })} /></td>
                   <td className="px-2 py-1"><input type="checkbox" checked={e.billable} onChange={(ev) => update(i, { billable: ev.target.checked })} /></td>
-                  <td className="px-2 py-1"><button className="text-xs text-red-600" onClick={() => removeRow(i)}>Remove</button></td>
+                  <td className="px-2 py-1"><button className="text-xs text-error" onClick={() => removeRow(i)}>Remove</button></td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <button className="mt-3 rounded-full border border-slate-300 px-4 py-2 text-xs font-semibold text-slate-700 transition hover:border-slate-950" onClick={addRow}>Add row</button>
+        <button className="mt-3 rounded-md border border-line px-4 py-2 text-xs font-medium text-ink-2 transition hover:border-slate-950" onClick={addRow}>Add row</button>
       </div>
 
       <div className="mt-4 grid gap-4 sm:grid-cols-3">
-        <div className="rounded-2xl border border-slate-200 bg-white p-5"><p className="text-3xl font-semibold">{summary.totalHours}</p><p className="text-xs uppercase text-slate-500">Total hours</p></div>
-        <div className="rounded-2xl border border-slate-200 bg-white p-5"><p className="text-3xl font-semibold text-emerald-700">{summary.billableHours}</p><p className="text-xs uppercase text-slate-500">Billable</p></div>
-        <div className="rounded-2xl border border-slate-200 bg-white p-5"><p className="text-3xl font-semibold text-slate-500">{summary.nonBillableHours}</p><p className="text-xs uppercase text-slate-500">Non-billable</p></div>
+        <div className="rounded-xl border border-line bg-canvas p-5"><p className="text-3xl font-medium">{summary.totalHours}</p><p className="text-xs uppercase text-ink-3">Total hours</p></div>
+        <div className="rounded-xl border border-line bg-canvas p-5"><p className="text-3xl font-medium text-ink-2">{summary.billableHours}</p><p className="text-xs uppercase text-ink-3">Billable</p></div>
+        <div className="rounded-xl border border-line bg-canvas p-5"><p className="text-3xl font-medium text-ink-3">{summary.nonBillableHours}</p><p className="text-xs uppercase text-ink-3">Non-billable</p></div>
       </div>
 
-      <button className="mt-4 rounded-full bg-teal-500 px-5 py-2 text-xs font-semibold text-slate-950 transition hover:bg-teal-300" onClick={() => downloadMatrixExcel(timesheetToMatrix(entries), "timesheet.xlsx", "Timesheet")}>Download Excel timesheet</button>
+      <button className="mt-4 rounded-md bg-accent-tint px-5 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={() => downloadMatrixExcel(timesheetToMatrix(entries), "timesheet.xlsx", "Timesheet")}>Download Excel timesheet</button>
     </Panel>
   );
 }
