@@ -58,14 +58,14 @@ export function GlobalHeader() {
       >
         Skip to content
       </a>
-      <header className="ws-surface fixed inset-x-0 top-0 z-40 border-b border-white/10">
+      <header className="ws-surface ws-global-header fixed inset-x-0 top-0 z-40 border-b">
       <nav className="mx-auto flex max-w-[100rem] items-center justify-between gap-4 px-5 py-3.5 lg:px-8" aria-label="Primary navigation">
         <a
           href="/"
           className="mc-display flex items-center gap-2 text-lg font-extrabold tracking-tight text-white"
           onClick={(e) => { e.preventDefault(); go("/"); }}
         >
-          <img src="/brand-logo.svg" alt="MarqClean AI" className="h-9 w-auto" />
+          <img src="/brand-logo-dark.svg" alt="MarqClean AI" className="h-9 w-auto" />
         </a>
         <div className="hidden items-center gap-6 text-[13px] font-medium text-[#b0bacb] xl:flex">
           <a href={SIMPLE_NAV[0].path} className="transition hover:text-[#0D9488]" onClick={(e) => { e.preventDefault(); go(SIMPLE_NAV[0].path); }}>{SIMPLE_NAV[0].label}</a>
@@ -234,7 +234,7 @@ export function WorkspaceShell({
 
       <div className="relative mx-auto max-w-[110rem] px-5 pb-20 pt-24 lg:px-8">
         {/* Module page header */}
-        <div className="ws-surface flex flex-wrap items-start justify-between gap-4 rounded-2xl p-6">
+        <div className="ws-surface ws-module-header flex flex-wrap items-start justify-between gap-4 rounded-2xl p-6">
           <div className="flex items-start gap-4">
             <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#0D9488]/20 to-[#14B8A6]/20 text-2xl ring-1 ring-inset ring-white/10">{icon}</span>
             <div>
