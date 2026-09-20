@@ -26,6 +26,8 @@ export type FunctionKey =
   | "sumifs"
   | "countifs"
   | "averageifs"
+  | "maxifs"
+  | "minifs"
   | "sumproduct"
   | "round"
   | "aggregate"
@@ -59,7 +61,9 @@ export type FunctionKey =
   | "sort"
   | "let"
   | "xnpv"
+  | "npv"
   | "xirr"
+  | "irr"
   | "pmt"
   | "ipmt";
 
@@ -80,6 +84,8 @@ export const EXCEL_FUNCTIONS: FunctionDef[] = [
   { key: "sumifs", label: "SUMIFS", category: "Conditional Mathematics", description: "Sum a column where multiple criteria across other columns are met.", syntax: "SUMIFS(sum_column, criteria_col1, crit1, criteria_col2, crit2, ...)" },
   { key: "countifs", label: "COUNTIFS", category: "Conditional Mathematics", description: "Count rows where multiple criteria across columns are met.", syntax: "COUNTIFS(criteria_col1, crit1, criteria_col2, crit2, ...)" },
   { key: "averageifs", label: "AVERAGEIFS", category: "Conditional Mathematics", description: "Average a column where multiple criteria across columns are met.", syntax: "AVERAGEIFS(avg_column, criteria_col1, crit1, ...)" },
+  { key: "maxifs", label: "MAXIFS", category: "Conditional Mathematics", description: "Return the largest value in a column among rows meeting all selected criteria.", syntax: "MAXIFS(max_column, criteria_col1, crit1, ...)" },
+  { key: "minifs", label: "MINIFS", category: "Conditional Mathematics", description: "Return the smallest value in a column among rows meeting all selected criteria.", syntax: "MINIFS(min_column, criteria_col1, crit1, ...)" },
   { key: "sumproduct", label: "SUMPRODUCT", category: "Conditional Mathematics", description: "Multiply two columns row by row and sum the products (weighted totals).", syntax: "SUMPRODUCT(column_a, column_b)" },
   { key: "round", label: "ROUND / ROUNDUP / ROUNDDOWN", category: "Statistical & Math", description: "Round every value in a numeric column to a set number of decimals.", syntax: "ROUND(column, decimals)" },
   { key: "aggregate", label: "SUM / AVERAGE / MIN / MAX / MEDIAN", category: "Statistical & Math", description: "Compute a single aggregate over a numeric column, including MEDIAN, STDEV, and VAR.", syntax: "AGGREGATE(function, column)" },
@@ -113,7 +119,9 @@ export const EXCEL_FUNCTIONS: FunctionDef[] = [
   { key: "sort", label: "SORT", category: "Dynamic Arrays", description: "Sort the table by a column, ascending or descending.", syntax: "SORT(table, by column, asc/desc)" },
   { key: "let", label: "LET (named calc)", category: "Advanced Logic", description: "Compute a named intermediate result and a final expression for readable calculations.", syntax: "LET(name = aggregate(column), name operator value)" },
   { key: "xnpv", label: "XNPV", category: "Financial & Forecasting", description: "Net present value for cash flows on irregular dates.", syntax: "XNPV(rate, values_column, dates_column)" },
+  { key: "npv", label: "NPV", category: "Financial & Forecasting", description: "Net present value for periodic cash flows.", syntax: "NPV(rate, values_column)" },
   { key: "xirr", label: "XIRR", category: "Financial & Forecasting", description: "Internal rate of return for cash flows on irregular dates.", syntax: "XIRR(values_column, dates_column)" },
+  { key: "irr", label: "IRR", category: "Financial & Forecasting", description: "Internal rate of return for periodic cash flows.", syntax: "IRR(values_column)" },
   { key: "pmt", label: "PMT", category: "Financial & Forecasting", description: "Total periodic loan payment (principal plus interest).", syntax: "PMT(annual_rate, periods, present_value)" },
   { key: "ipmt", label: "IPMT", category: "Financial & Forecasting", description: "Interest portion of a specific loan payment period.", syntax: "IPMT(annual_rate, period, periods, present_value)" },
 ];
@@ -235,6 +243,18 @@ export function countifs(table: DataTable, criteria: Criterion[]): FunctionResul
   return { ok: true, message: "Counted matching rows.", scalar: String(count), formula: buildConditionalFormula("COUNTIFS", table, -1, criteria) };
 }
 
+export function maxifs(table: DataTable, maxCol: number, criteria: Criterion[]): FunctionResult {
+  const values = table.rows.filter((_, i) => rowMatchesAll(table, i, criteria)).map((row) => toNumber(row[maxCol] ?? ""));
+  if (!values.length) return { ok: true, message: "No rows matched the criteria.", scalar: "0", formula: buildConditionalFormula("MAXIFS", table, maxCol, criteria) };
+  return { ok: true, message: `Maximum across ${values.length} matching rows.`, scalar: formatNumber(Math.max(...values)), formula: buildConditionalFormula("MAXIFS", table, maxCol, criteria) };
+}
+
+export function minifs(table: DataTable, minCol: number, criteria: Criterion[]): FunctionResult {
+  const values = table.rows.filter((_, i) => rowMatchesAll(table, i, criteria)).map((row) => toNumber(row[minCol] ?? ""));
+  if (!values.length) return { ok: true, message: "No rows matched the criteria.", scalar: "0", formula: buildConditionalFormula("MINIFS", table, minCol, criteria) };
+  return { ok: true, message: `Minimum across ${values.length} matching rows.`, scalar: formatNumber(Math.min(...values)), formula: buildConditionalFormula("MINIFS", table, minCol, criteria) };
+}
+
 export function sumproduct(table: DataTable, colA: number, colB: number): FunctionResult {
   let total = 0;
   table.rows.forEach((row) => { total += toNumber(row[colA] ?? "") * toNumber(row[colB] ?? ""); });
@@ -311,6 +331,36 @@ export function letCalc(table: DataTable, col: number, agg: "sum" | "average" | 
 function parseDateSafe(value: string): Date | null {
   const d = new Date(value.trim());
   return Number.isNaN(d.getTime()) ? null : d;
+}
+
+export function npv(table: DataTable, valuesCol: number, ratePct: number): FunctionResult {
+  const rate = ratePct / 100;
+  if (rate <= -1) return { ok: false, message: "Rate must be greater than -100%." };
+  const values = table.rows.map((row) => toNumber(row[valuesCol] ?? ""));
+  const value = values.reduce((sum, cashflow, i) => sum + cashflow / Math.pow(1 + rate, i + 1), 0);
+  return { ok: true, message: `Discounted ${values.length} periodic cash flows.`, scalar: formatNumber(value), formula: `=NPV(${ratePct}%, ${table.headers[valuesCol]})` };
+}
+
+export function irr(table: DataTable, valuesCol: number): FunctionResult {
+  const values = table.rows.map((row) => toNumber(row[valuesCol] ?? ""));
+  if (values.length < 2 || !values.some((v) => v > 0) || !values.some((v) => v < 0)) return { ok: false, message: "IRR needs at least one positive and one negative cash flow." };
+  let guess = 0.1;
+  for (let i = 0; i < 100; i += 1) {
+    let f = 0, df = 0;
+    values.forEach((cashflow, periodIndex) => {
+      const base = Math.pow(1 + guess, periodIndex);
+      f += cashflow / base;
+      if (periodIndex > 0) df -= periodIndex * cashflow / (base * (1 + guess));
+    });
+    if (Math.abs(f) < 1e-9 || !Number.isFinite(df) || Math.abs(df) < 1e-12) break;
+    const next = guess - f / df;
+    if (!Number.isFinite(next) || next <= -0.999999 || next > 1000) break;
+    if (Math.abs(next - guess) < 1e-10) { guess = next; break; }
+    guess = next;
+  }
+  const npvAt = (r: number) => values.reduce((sum, cashflow, i) => sum + cashflow / Math.pow(1 + r, i), 0);
+  if (!Number.isFinite(guess) || Math.abs(npvAt(guess)) > 1e-5) return { ok: false, message: "Could not converge on an IRR for these cash flows." };
+  return { ok: true, message: `Periodic internal rate of return across ${values.length} cash flows.`, scalar: `${(guess * 100).toFixed(2)}%`, formula: `=IRR(${table.headers[valuesCol]})` };
 }
 
 export function xnpv(table: DataTable, valuesCol: number, datesCol: number, ratePct: number): FunctionResult {
@@ -712,10 +762,10 @@ export function formatNumber(n: number): string {
   return Number.isInteger(n) ? n.toLocaleString() : n.toLocaleString(undefined, { maximumFractionDigits: 2 });
 }
 
-function buildConditionalFormula(fn: "SUMIFS" | "COUNTIFS", table: DataTable, sumCol: number, criteria: Criterion[]): string {
+function buildConditionalFormula(fn: "SUMIFS" | "COUNTIFS" | "MAXIFS" | "MINIFS", table: DataTable, sumCol: number, criteria: Criterion[]): string {
   const crit = criteria.map((c) => `${table.headers[c.col]}, "${c.op}${c.value}"`).join(", ");
-  if (fn === "SUMIFS") return `=SUMIFS(${table.headers[sumCol]}, ${crit})`;
-  return `=COUNTIFS(${crit})`;
+  if (fn === "COUNTIFS") return `=COUNTIFS(${crit})`;
+  return `=${fn}(${table.headers[sumCol]}, ${crit})`;
 }
 
 // ---------------------------------------------------------------------------
