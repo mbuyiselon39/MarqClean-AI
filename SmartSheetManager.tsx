@@ -364,7 +364,7 @@ export default function SmartSheetManager() {
           </div>
 
           <div className="rounded-xl border border-line bg-canvas">
-            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 p-4">
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line p-4">
               <input
                 type="text"
                 placeholder="Search sheet names..."
@@ -435,7 +435,7 @@ export default function SmartSheetManager() {
                 </p>
               </div>
               <button
-                className="rounded-md bg-accent-tint px-5 py-2.5 text-sm font-medium text-ink transition hover:bg-accent-tint disabled:cursor-not-allowed disabled:bg-slate-300"
+                className="rounded-md bg-accent-tint px-5 py-2.5 text-sm font-medium text-ink transition hover:bg-accent-tint disabled:cursor-not-allowed disabled:bg-surface"
                 onClick={buildWorkbook}
                 disabled={keepCount === 0}
               >
