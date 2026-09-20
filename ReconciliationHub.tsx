@@ -323,10 +323,10 @@ export default function ReconciliationHub({ onExit }: { onExit: () => void }) {
 
       <div className="relative mx-auto mb-2 flex max-w-[110rem] flex-wrap items-center justify-between gap-3 px-5 pt-24 lg:px-8">
         <div className="flex items-center gap-3">
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-canvas from-[rgb(var(--accent))]/20 to-[rgb(var(--accent))]/20 text-xl ring-1 ring-inset ring-white/10">🔄</span>
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-canvas /20 /20 text-xl ring-1 ring-inset ring-white/10">🔄</span>
           <div>
             <h2 className="mc-display text-xl font-medium text-ink">Reconciliation Hub</h2>
-            <p className="text-xs text-[#b0bacb]">AI-powered reconciliation, validation and record matching. Runs 100% in your browser.</p>
+            <p className="text-xs text-[rgb(var(--ink-2))]">AI-powered reconciliation, validation and record matching. Runs 100% in your browser.</p>
           </div>
         </div>
         <button className="ws-btn-secondary rounded-md px-4 py-2 text-sm font-medium" onClick={onExit}>Back to MarqClean AI</button>
@@ -334,7 +334,7 @@ export default function ReconciliationHub({ onExit }: { onExit: () => void }) {
 
       <div className="relative mx-auto max-w-[110rem] px-5 pb-16 pt-4 lg:px-8">
         <div className="mb-2">
-          <p className="mc-mono text-[11px] uppercase tracking-[0.2em] text-[#8a94a8]">Modules Available ({NAV_ITEMS.length})</p>
+          <p className="mc-mono text-[11px] uppercase tracking-[0.2em] text-[rgb(var(--ink-3))]">Modules Available ({NAV_ITEMS.length})</p>
         </div>
         <ToolLaunchpad tools={NAV_ITEMS} active={nav} onSelect={setNav} />
 
@@ -457,7 +457,7 @@ export default function ReconciliationHub({ onExit }: { onExit: () => void }) {
                   {filteredMacros.map((macro) => (
                     <button
                       key={macro.id}
-                      className={`rounded-xl border p-4 text-left transition ${selectedMacro === macro.id ? "border-line bg-accent-tint" : "border-line hover:border-slate-400"}`}
+                      className={`rounded-xl border p-4 text-left transition ${selectedMacro === macro.id ? "border-line bg-accent-tint" : "border-line hover:border-line"}`}
                       onClick={() => applyMacro(macro)}
                     >
                       <span className="block text-xs uppercase tracking-wide text-ink-3">{macro.category}</span>
@@ -535,7 +535,7 @@ function BankLedgerView() {
   return (
     <section>
       <h1 className="text-3xl font-medium tracking-[-0.03em]">Bank Ledger X</h1>
-      <p className="mt-2 max-w-3xl text-[#b0bacb]">
+      <p className="mt-2 max-w-3xl text-[rgb(var(--ink-2))]">
         Bank statement and ledger reconciliation module within Reconciliation Hub. Convert PDF bank statements into clean
         Excel, CSV and QIF, then reconcile transactions against ledger records with AI-powered matching and exception
         reporting.
@@ -550,13 +550,13 @@ function BankLedgerView() {
       <div className="mt-6 grid gap-4 lg:grid-cols-2">
         <div className="ws-surface rounded-xl p-6">
           <h2 className="text-lg font-medium text-ink">Convert a bank statement</h2>
-          <p className="mt-2 text-sm text-[#b0bacb]">Turn a PDF statement into a structured, import-ready spreadsheet with normalized dates and amounts.</p>
+          <p className="mt-2 text-sm text-[rgb(var(--ink-2))]">Turn a PDF statement into a structured, import-ready spreadsheet with normalized dates and amounts.</p>
           <button className="ws-btn-primary mt-4 rounded-md px-5 py-2.5 text-sm font-medium" onClick={goHomeBankTab}>Open Bank Statement Converter</button>
         </div>
         <div className="ws-surface rounded-xl p-6">
           <h2 className="text-lg font-medium text-ink">Reconcile against ledger</h2>
-          <p className="mt-2 text-sm text-[#b0bacb]">Use the reconciliation modules to match statement transactions against ledger and account records, and export exceptions.</p>
-          <div className="mt-3 flex flex-wrap gap-2 text-xs text-[#8a94a8]">
+          <p className="mt-2 text-sm text-[rgb(var(--ink-2))]">Use the reconciliation modules to match statement transactions against ledger and account records, and export exceptions.</p>
+          <div className="mt-3 flex flex-wrap gap-2 text-xs text-[rgb(var(--ink-3))]">
             <span>✓ Client Reconciliation</span>
             <span>✓ Investor Reconciliation</span>
             <span>✓ Register Reconciliation</span>
@@ -884,7 +884,7 @@ function MailingView(props: {
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h2 className="text-lg font-medium">Field mapping (Excel column to mailing field)</h2>
             <button
-              className="rounded-md border border-line px-4 py-2 text-xs font-medium text-ink-2 transition hover:border-slate-950"
+              className="rounded-md border border-line px-4 py-2 text-xs font-medium text-ink-2 transition hover:border-ink"
               onClick={() => setMapping(autoDetectMailingMapping(excel))}
             >
               Auto detect mapping
@@ -927,7 +927,7 @@ function MailingView(props: {
             {MAILING_FIELDS.filter((f) => ["fullName", "title", "addressLine1", "addressLine2", "addressLine3", "addressLine4", "postalCode", "email", "cellPhone"].includes(f.key)).map((field) => {
               const mapped = mappedKeys.has(field.key);
               return (
-                <label key={field.key} className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm ${mapped ? "border-line" : "border-slate-100 bg-surface text-ink-3"}`}>
+                <label key={field.key} className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm ${mapped ? "border-line" : "border-line bg-surface text-ink-3"}`}>
                   <input type="checkbox" checked={fields.has(field.key)} disabled={!mapped} onChange={() => toggleField(field.key)} />
                   <span>{field.label}</span>
                   {!mapped ? <span className="ml-auto text-xs">not mapped</span> : null}
