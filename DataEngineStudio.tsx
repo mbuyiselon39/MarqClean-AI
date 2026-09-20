@@ -121,11 +121,11 @@ export default function DataEngineStudio({ onExit }: { onExit: () => void }) {
       status={{ tone: busy ? "processing" : "success", label: busy ? "Processing locally" : "Browser ready" }}
     >
       <div className="space-y-6">
-        <div className="ws-surface rounded-2xl p-4">
+        <div className="ws-surface rounded-xl p-4">
           <div className="flex flex-wrap gap-2">
             {tabs.map((item) => (
               <button key={item.key} type="button" onClick={() => setTab(item.key)}
-                className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${tab === item.key ? "border-[#0877e8] bg-[#0877e8] text-white" : "border-slate-200 bg-white text-slate-600 hover:border-[#0877e8]"}`}>
+                className={`rounded-md border px-4 py-2 text-sm font-medium transition ${tab === item.key ? "border-[rgb(var(--accent))] bg-[rgb(var(--accent))] text-ink" : "border-line bg-canvas text-ink-2 hover:border-[rgb(var(--accent))]"}`}>
                 {item.label}
               </button>
             ))}
@@ -133,60 +133,60 @@ export default function DataEngineStudio({ onExit }: { onExit: () => void }) {
         </div>
 
         {tab !== "enrich" ? (
-          <div className="ws-surface rounded-2xl p-6">
-            <label className="block text-sm font-semibold text-slate-800">Local CSV workspace</label>
-            <p className="mt-1 text-sm text-slate-500">Files are read from your device. For multi-hundred-MB CSVs, the worker and DuckDB paths avoid pushing every row through React state.</p>
+          <div className="ws-surface rounded-xl p-6">
+            <label className="block text-sm font-medium text-ink">Local CSV workspace</label>
+            <p className="mt-1 text-sm text-ink-3">Files are read from your device. For multi-hundred-MB CSVs, the worker and DuckDB paths avoid pushing every row through React state.</p>
             <input className="mt-4 block w-full rounded-xl border p-3" type="file" accept=".csv,text/csv" onChange={(event) => setFile(event.target.files?.[0] ?? null)} />
-            {file ? <p className="mt-2 text-xs font-medium text-slate-500">{file.name} · {(file.size / 1024 / 1024).toFixed(1)} MB</p> : null}
+            {file ? <p className="mt-2 text-xs font-medium text-ink-3">{file.name} · {(file.size / 1024 / 1024).toFixed(1)} MB</p> : null}
           </div>
         ) : null}
 
         {tab === "engine" ? (
-          <div className="ws-surface rounded-2xl p-6">
+          <div className="ws-surface rounded-xl p-6">
             <div className="flex flex-col gap-3 lg:flex-row lg:items-end">
-              <label className="flex-1 text-sm font-semibold text-slate-700">SQL</label>
-              <button className="ws-btn-primary rounded-full px-5 py-2 text-sm" onClick={runQuery} disabled={busy}>Run locally</button>
+              <label className="flex-1 text-sm font-medium text-ink-2">SQL</label>
+              <button className="ws-btn-primary rounded-md px-5 py-2 text-sm" onClick={runQuery} disabled={busy}>Run locally</button>
             </div>
             <textarea className="mt-3 min-h-36 w-full rounded-xl border p-4 font-mono text-xs" value={sql} onChange={(e) => setSql(e.target.value)} />
-            <p className="mt-3 text-xs text-slate-500">Use <code>__CSV__</code> as the registered local file. Example: GROUP BY, JOIN, DISTINCT, window functions and other DuckDB SQL can run without a server.</p>
-            {queryRows.length ? <pre className="mt-4 max-h-72 overflow-auto rounded-xl bg-slate-950 p-4 text-xs text-slate-100">{JSON.stringify(queryRows, null, 2)}</pre> : null}
+            <p className="mt-3 text-xs text-ink-3">Use <code>__CSV__</code> as the registered local file. Example: GROUP BY, JOIN, DISTINCT, window functions and other DuckDB SQL can run without a server.</p>
+            {queryRows.length ? <pre className="mt-4 max-h-72 overflow-auto rounded-xl bg-ink p-4 text-xs text-slate-100">{JSON.stringify(queryRows, null, 2)}</pre> : null}
           </div>
         ) : null}
 
         {tab === "spreadsheet" ? (
-          <div className="ws-surface rounded-2xl p-6">
+          <div className="ws-surface rounded-xl p-6">
             <div className="flex items-center justify-between gap-3">
-              <div><h2 className="text-lg font-bold">Excel Worker</h2><p className="text-sm text-slate-500">SheetJS parses XLSX in a dedicated Web Worker so workbook inspection does not block the interface.</p></div>
-              <label className="ws-btn-primary cursor-pointer rounded-full px-5 py-2 text-sm">Inspect XLSX<input type="file" accept=".xlsx,.xls" className="hidden" onChange={async (event) => { const selected=event.target.files?.[0]; if(!selected)return; setBusy(true); try { setSpreadsheetResult(await inspectSpreadsheetInWorker(selected)); setMessage("Workbook inspected in a background worker."); } catch (error) { setMessage(error instanceof Error ? error.message : "Workbook worker failed."); } finally { setBusy(false); } }} /></label>
+              <div><h2 className="text-lg font-medium">Excel Worker</h2><p className="text-sm text-ink-3">SheetJS parses XLSX in a dedicated Web Worker so workbook inspection does not block the interface.</p></div>
+              <label className="ws-btn-primary cursor-pointer rounded-md px-5 py-2 text-sm">Inspect XLSX<input type="file" accept=".xlsx,.xls" className="hidden" onChange={async (event) => { const selected=event.target.files?.[0]; if(!selected)return; setBusy(true); try { setSpreadsheetResult(await inspectSpreadsheetInWorker(selected)); setMessage("Workbook inspected in a background worker."); } catch (error) { setMessage(error instanceof Error ? error.message : "Workbook worker failed."); } finally { setBusy(false); } }} /></label>
             </div>
-            {spreadsheetResult ? <div className="mt-5 space-y-4"><div className="flex flex-wrap gap-2">{spreadsheetResult.sheetNames.map((name)=><span key={name} className="rounded-full bg-sky-50 px-3 py-1 text-xs font-semibold text-sky-700">{name}</span>)}</div><div><p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Detected columns</p><div className="mt-2 flex flex-wrap gap-2">{spreadsheetResult.headers.map((header,index)=><span key={index} className="rounded-lg border bg-white px-2.5 py-1 text-xs text-slate-700">{header || `Column ${index+1}`}</span>)}</div></div><pre className="max-h-64 overflow-auto rounded-xl bg-slate-950 p-4 text-xs text-slate-100">{JSON.stringify(spreadsheetResult.preview, null, 2)}</pre></div> : null}
+            {spreadsheetResult ? <div className="mt-5 space-y-4"><div className="flex flex-wrap gap-2">{spreadsheetResult.sheetNames.map((name)=><span key={name} className="rounded-md bg-surface px-3 py-1 text-xs font-medium text-sky-700">{name}</span>)}</div><div><p className="text-xs font-medium uppercase tracking-wider text-ink-3">Detected columns</p><div className="mt-2 flex flex-wrap gap-2">{spreadsheetResult.headers.map((header,index)=><span key={index} className="rounded-lg border bg-canvas px-2.5 py-1 text-xs text-ink-2">{header || `Column ${index+1}`}</span>)}</div></div><pre className="max-h-64 overflow-auto rounded-xl bg-ink p-4 text-xs text-slate-100">{JSON.stringify(spreadsheetResult.preview, null, 2)}</pre></div> : null}
           </div>
         ) : null}
 
         {tab === "validate" ? (
-          <div className="ws-surface rounded-2xl p-6">
+          <div className="ws-surface rounded-xl p-6">
             <div className="flex items-center justify-between gap-3">
-              <div><h2 className="text-lg font-bold">Lead data schema</h2><p className="text-sm text-slate-500">Email, phone, company and website fields are checked locally with Zod.</p></div>
-              <button className="ws-btn-primary rounded-full px-5 py-2 text-sm" onClick={validateCsv} disabled={busy}>Validate file</button>
+              <div><h2 className="text-lg font-medium">Lead data schema</h2><p className="text-sm text-ink-3">Email, phone, company and website fields are checked locally with Zod.</p></div>
+              <button className="ws-btn-primary rounded-md px-5 py-2 text-sm" onClick={validateCsv} disabled={busy}>Validate file</button>
             </div>
             {schemaIssues.length ? (
               <div className="mt-5">
-                <p className="text-sm font-semibold text-red-600">{schemaIssues.length} issues captured</p>
-                <pre className="mt-2 max-h-64 overflow-auto rounded-xl bg-red-50 p-4 text-xs text-red-800">{schemaIssues.join("\n")}</pre>
-                <button className="mt-3 ws-btn-secondary rounded-full px-4 py-2 text-sm" onClick={() => download("MarqClean_Error_Report.csv", Papa.unparse(schemaIssues.map((issue) => ({ error: issue }))))}>Download Error Report</button>
+                <p className="text-sm font-medium text-error">{schemaIssues.length} issues captured</p>
+                <pre className="mt-2 max-h-64 overflow-auto rounded-xl bg-surface p-4 text-xs text-error">{schemaIssues.join("\n")}</pre>
+                <button className="mt-3 ws-btn-secondary rounded-md px-4 py-2 text-sm" onClick={() => download("MarqClean_Error_Report.csv", Papa.unparse(schemaIssues.map((issue) => ({ error: issue }))))}>Download Error Report</button>
               </div>
             ) : null}
           </div>
         ) : null}
 
         {tab === "phone" ? (
-          <div className="ws-surface rounded-2xl p-6">
-            <h2 className="text-lg font-bold">Phone intelligence</h2>
-            <p className="mt-1 text-sm text-slate-500">Detect country, validate the number and output international/national formats without a network call.</p>
+          <div className="ws-surface rounded-xl p-6">
+            <h2 className="text-lg font-medium">Phone intelligence</h2>
+            <p className="mt-1 text-sm text-ink-3">Detect country, validate the number and output international/national formats without a network call.</p>
             <div className="mt-5 grid gap-3 sm:grid-cols-[1fr_160px_auto]">
               <input className="rounded-xl border p-3" placeholder="+27 11 123 4567" value={phoneValue} onChange={(e) => setPhoneValue(e.target.value)} />
               <select className="rounded-xl border p-3" value={phoneCountry} onChange={(e) => setPhoneCountry(e.target.value)}><option value="ZA">South Africa</option><option value="US">United States</option><option value="GB">United Kingdom</option><option value="AU">Australia</option><option value="IN">India</option></select>
-              <button className="ws-btn-primary rounded-full px-5 py-3 text-sm" onClick={auditCurrentPhone}>Audit</button>
+              <button className="ws-btn-primary rounded-md px-5 py-3 text-sm" onClick={auditCurrentPhone}>Audit</button>
             </div>
             {phoneResult ? <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {[
@@ -194,26 +194,26 @@ export default function DataEngineStudio({ onExit }: { onExit: () => void }) {
                 ["Country", phoneResult.country ?? "—"],
                 ["International", phoneResult.international ?? "—"],
                 ["National", phoneResult.national ?? "—"],
-              ].map(([label, value]) => <div key={label} className="rounded-xl border bg-slate-50 p-4"><p className="text-xs text-slate-500">{label}</p><p className="mt-1 font-semibold text-slate-900">{value}</p></div>)}
+              ].map(([label, value]) => <div key={label} className="rounded-xl border bg-surface p-4"><p className="text-xs text-ink-3">{label}</p><p className="mt-1 font-medium text-ink">{value}</p></div>)}
             </div> : null}
           </div>
         ) : null}
 
         {tab === "enrich" ? (
           <div className="grid gap-6 lg:grid-cols-2">
-            <div className="ws-surface rounded-2xl p-6">
-              <h2 className="text-lg font-bold">Web enrichment — no API</h2>
-              <p className="mt-1 text-sm text-slate-500">Direct fetch works only when the website permits browser CORS. Otherwise paste saved page HTML. This extracts title, company/schema.org, description, emails, phones, social links and useful links locally.</p>
+            <div className="ws-surface rounded-xl p-6">
+              <h2 className="text-lg font-medium">Web enrichment — no API</h2>
+              <p className="mt-1 text-sm text-ink-3">Direct fetch works only when the website permits browser CORS. Otherwise paste saved page HTML. This extracts title, company/schema.org, description, emails, phones, social links and useful links locally.</p>
               <input className="mt-5 w-full rounded-xl border p-3" placeholder="https://example.com" value={urlInput} onChange={(e) => setUrlInput(e.target.value)} />
               <div className="mt-3 flex flex-wrap gap-2">
-                <button className="ws-btn-primary rounded-full px-5 py-2 text-sm" onClick={enrichUrl} disabled={busy}>Try direct fetch</button>
-                <label className="ws-btn-secondary cursor-pointer rounded-full px-5 py-2 text-sm">Load HTML file<input type="file" accept=".html,.htm,text/html" className="hidden" onChange={async (e) => { const f=e.target.files?.[0]; if(f){setHtmlInput(await f.text());setMessage("HTML file loaded locally.");} }} /></label>
+                <button className="ws-btn-primary rounded-md px-5 py-2 text-sm" onClick={enrichUrl} disabled={busy}>Try direct fetch</button>
+                <label className="ws-btn-secondary cursor-pointer rounded-md px-5 py-2 text-sm">Load HTML file<input type="file" accept=".html,.htm,text/html" className="hidden" onChange={async (e) => { const f=e.target.files?.[0]; if(f){setHtmlInput(await f.text());setMessage("HTML file loaded locally.");} }} /></label>
               </div>
               <textarea className="mt-4 min-h-48 w-full rounded-xl border p-3 font-mono text-xs" placeholder="Or paste saved HTML here…" value={htmlInput} onChange={(e) => setHtmlInput(e.target.value)} />
-              <button className="ws-btn-secondary rounded-full px-5 py-2 text-sm" onClick={parseHtml}>Extract signals</button>
+              <button className="ws-btn-secondary rounded-md px-5 py-2 text-sm" onClick={parseHtml}>Extract signals</button>
             </div>
-            <div className="ws-surface rounded-2xl p-6">
-              <h2 className="text-lg font-bold">Enrichment preview</h2>
+            <div className="ws-surface rounded-xl p-6">
+              <h2 className="text-lg font-medium">Enrichment preview</h2>
               {enrichment ? <div className="mt-4 space-y-3 text-sm">
                 {[
                   ["Company", enrichment.company || "Not detected"],
@@ -222,22 +222,22 @@ export default function DataEngineStudio({ onExit }: { onExit: () => void }) {
                   ["Emails", enrichment.emails.join(", ") || "None detected"],
                   ["Phones", enrichment.phones.join(", ") || "None detected"],
                   ["Social", enrichment.social.length ? enrichment.social.join("\n") : "None detected"],
-                ].map(([label, value]) => <div key={label} className="rounded-xl border bg-slate-50 p-4"><p className="text-xs font-semibold text-slate-500">{label}</p><p className="mt-1 whitespace-pre-wrap break-words text-slate-800">{value}</p></div>)}
-              </div> : <div className="mt-6 rounded-xl border border-dashed p-8 text-center text-sm text-slate-500">No enrichment result yet.</div>}
+                ].map(([label, value]) => <div key={label} className="rounded-xl border bg-surface p-4"><p className="text-xs font-medium text-ink-3">{label}</p><p className="mt-1 whitespace-pre-wrap break-words text-ink">{value}</p></div>)}
+              </div> : <div className="mt-6 rounded-xl border border-dashed p-8 text-center text-sm text-ink-3">No enrichment result yet.</div>}
             </div>
           </div>
         ) : null}
 
-        <div className="ws-surface rounded-2xl p-6">
+        <div className="ws-surface rounded-xl p-6">
           <div className="grid gap-4 md:grid-cols-3">
-            <div><p className="text-xs font-semibold uppercase tracking-wider text-[#0877e8]">Performance</p><h3 className="mt-1 font-bold">Worker-first parsing</h3><p className="mt-1 text-sm text-slate-500">Papa Parse supports worker and streaming modes for very large CSVs.</p></div>
-            <div><p className="text-xs font-semibold uppercase tracking-wider text-[#0877e8]">Analytics</p><h3 className="mt-1 font-bold">SQL in the browser</h3><p className="mt-1 text-sm text-slate-500">DuckDB-WASM provides joins, dedupe, grouping and aggregations without uploading rows.</p></div>
-            <div><p className="text-xs font-semibold uppercase tracking-wider text-[#0877e8]">Enrichment</p><h3 className="mt-1 font-bold">CORS-aware by design</h3><p className="mt-1 text-sm text-slate-500">No scraping API is hidden behind the UI; blocked sites can be handled from saved HTML.</p></div>
+            <div><p className="text-xs font-medium uppercase tracking-wider text-[rgb(var(--accent))]">Performance</p><h3 className="mt-1 font-medium">Worker-first parsing</h3><p className="mt-1 text-sm text-ink-3">Papa Parse supports worker and streaming modes for very large CSVs.</p></div>
+            <div><p className="text-xs font-medium uppercase tracking-wider text-[rgb(var(--accent))]">Analytics</p><h3 className="mt-1 font-medium">SQL in the browser</h3><p className="mt-1 text-sm text-ink-3">DuckDB-WASM provides joins, dedupe, grouping and aggregations without uploading rows.</p></div>
+            <div><p className="text-xs font-medium uppercase tracking-wider text-[rgb(var(--accent))]">Enrichment</p><h3 className="mt-1 font-medium">CORS-aware by design</h3><p className="mt-1 text-sm text-ink-3">No scraping API is hidden behind the UI; blocked sites can be handled from saved HTML.</p></div>
           </div>
-          <p className="mt-5 rounded-xl bg-slate-50 p-4 text-xs text-slate-500">{message}</p>
+          <p className="mt-5 rounded-xl bg-surface p-4 text-xs text-ink-3">{message}</p>
         </div>
 
-        <button type="button" className="ws-btn-secondary rounded-full px-5 py-2 text-sm" onClick={onExit}>← Back to MarqClean</button>
+        <button type="button" className="ws-btn-secondary rounded-md px-5 py-2 text-sm" onClick={onExit}>← Back to MarqClean</button>
       </div>
     </WorkspaceShell>
   );
