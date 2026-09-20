@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
+import Logo from "./Logo";
+import ThemeToggle from "./ThemeToggle";
 
 // ---------------------------------------------------------------------------
 // Shared enterprise workspace shell: unified dark theme, homepage global
@@ -62,10 +64,10 @@ export function GlobalHeader() {
       <nav className="mx-auto flex max-w-[100rem] items-center justify-between gap-4 px-5 py-3.5 lg:px-8" aria-label="Primary navigation">
         <a
           href="/"
-          className="mc-display flex items-center gap-2 text-lg font-medium tracking-tight text-white"
+          className="mc-display flex items-center gap-2 text-lg font-medium tracking-tight text-ink"
           onClick={(e) => { e.preventDefault(); go("/"); }}
         >
-          <img src="/brand-logo-dark.svg" alt="MarqClean AI" className="h-9 w-auto" />
+          <Logo className="shrink-0" />
         </a>
         <div className="hidden items-center gap-6 text-[13px] font-medium text-[rgb(var(--ink-2))] xl:flex">
           <a href={SIMPLE_NAV[0].path} className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); go(SIMPLE_NAV[0].path); }}>{SIMPLE_NAV[0].label}</a>
@@ -93,7 +95,7 @@ export function GlobalHeader() {
                     key={item.label}
                     role="menuitem"
                     href={item.path}
-                    className="block rounded-lg px-3 py-2.5 font-medium text-ink-2 transition hover:bg-sky-50 hover:text-[rgb(var(--accent))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/30"
+                    className="block rounded-lg px-3 py-2.5 font-medium text-ink-2 transition hover:bg-surface hover:text-[rgb(var(--accent))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/30"
                     onClick={(e) => { e.preventDefault(); setIsWorkspacesOpen(false); go(item.path); }}
                   >
                     {item.label}
@@ -105,6 +107,7 @@ export function GlobalHeader() {
           <a href="/contact" className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); go("/contact"); }}>Contact</a>
         </div>
         <div className="flex items-center gap-2">
+          <ThemeToggle compact />
           <button
             className="ws-btn-primary hidden rounded-md px-5 py-2 text-sm font-medium sm:inline-flex"
             onClick={() => go("/#cleaner")}
@@ -138,7 +141,7 @@ export function GlobalHeader() {
               <a
                 key={item.label}
                 href={item.path}
-                className="rounded-lg px-3 py-2.5 transition hover:bg-sky-50 hover:text-[rgb(var(--accent))]"
+                className="rounded-lg px-3 py-2.5 transition hover:bg-surface hover:text-[rgb(var(--accent))]"
                 onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); go(item.path); }}
               >
                 {item.label}
@@ -158,7 +161,7 @@ export function GlobalHeader() {
                   <a
                     key={item.label}
                     href={item.path}
-                    className="rounded-lg px-3 py-2 text-sm text-ink-2 transition hover:bg-sky-50 hover:text-[rgb(var(--accent))]"
+                    className="rounded-lg px-3 py-2 text-sm text-ink-2 transition hover:bg-surface hover:text-[rgb(var(--accent))]"
                     onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); setIsMobileWorkspacesOpen(false); go(item.path); }}
                   >
                     {item.label}
