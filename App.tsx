@@ -2421,7 +2421,7 @@ function ToolsDirectory() {
     <div>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="relative w-full sm:max-w-sm">
-          <svg className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink/35" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <svg className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" />
           </svg>
           <input
@@ -2430,10 +2430,10 @@ function ToolsDirectory() {
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search data and Excel tools..."
             aria-label="Search data and Excel tools"
-            className="w-full rounded-md border border-line bg-canvas/[0.04] py-2.5 pl-10 pr-4 text-sm text-ink placeholder:text-ink/35 outline-none transition focus-visible:border-[rgb(var(--accent))] focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/40"
+            className="w-full rounded-md border border-line bg-canvas/[0.04] py-2.5 pl-10 pr-4 text-sm text-ink placeholder:text-ink-2 outline-none transition focus-visible:border-[rgb(var(--accent))] focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/40"
           />
         </div>
-        <p className="text-xs text-ink/45">{filtered.length} of {allTools.length} tools</p>
+        <p className="text-xs text-ink-2">{filtered.length} of {allTools.length} tools</p>
       </div>
 
       <div className="mt-4 flex flex-wrap gap-2" role="group" aria-label="Filter tools by category">
@@ -2507,7 +2507,7 @@ function FooterContentPage({ page }: { page: FooterPage }) {
         <p className="mt-8 text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">{COMPANY_NAME}</p>
         <h1 className="mt-4 text-5xl font-medium tracking-[-0.05em] text-ink sm:text-6xl">{page.title}</h1>
         <p className="mt-6 text-lg leading-8 text-ink-2">{page.description}</p>
-        <p className="mt-4 text-sm text-ink/40">Last updated: June 29, 2026</p>
+        <p className="mt-4 text-sm text-ink-2">Last updated: June 29, 2026</p>
 
         <div className="mt-12 space-y-10">
           {page.sections.map((section) => (
@@ -3097,7 +3097,7 @@ export default function App() {
   if (currentPage === "reconciliation-hub") {
     return (
       <>
-        <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-[rgb(var(--canvas))] text-ink/60">Loading Reconciliation Hub...</div>}>
+        <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-[rgb(var(--canvas))] text-ink-2">Loading Reconciliation Hub...</div>}>
           <ReconciliationHub onExit={() => navigateToPage("home")} />
         </Suspense>
         {renderBackToTop()}
@@ -3108,7 +3108,7 @@ export default function App() {
   if (currentPage === "data-toolbox") {
     return (
       <>
-        <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-[rgb(var(--canvas))] text-ink/60">Loading Data Toolbox...</div>}>
+        <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-[rgb(var(--canvas))] text-ink-2">Loading Data Toolbox...</div>}>
           <DataToolbox onExit={() => navigateToPage("home")} />
         </Suspense>
         {renderBackToTop()}
@@ -3294,7 +3294,7 @@ export default function App() {
         </Suspense>
 
         <section className="border-y border-line bg-[rgb(var(--canvas))] py-10 text-ink">
-          <div className="mx-auto flex max-w-6xl items-center justify-center gap-2 px-5 pb-6 text-xs text-ink/40 lg:px-8">
+          <div className="mx-auto flex max-w-6xl items-center justify-center gap-2 px-5 pb-6 text-xs text-ink-2 lg:px-8">
             <span className="relative flex h-2 w-2">
               <span className="mc-anim-glow-pulse absolute inline-flex h-full w-full rounded-md bg-[rgb(var(--accent))]" />
               <span className="relative inline-flex h-2 w-2 rounded-md bg-[rgb(var(--accent))]" />
@@ -3472,7 +3472,7 @@ export default function App() {
                     <div className="grid gap-3 sm:grid-cols-3">
                       <div className="rounded-lg bg-ink p-4 text-ink">
                         <p className="text-3xl font-medium">{result.stats.cleanedRows}</p>
-                        <p className="mt-1 text-xs uppercase tracking-[0.18em] text-ink/60">Rows cleaned</p>
+                        <p className="mt-1 text-xs uppercase tracking-[0.18em] text-ink-2">Rows cleaned</p>
                       </div>
                       <div className="rounded-lg bg-accent-tint p-4 text-ink">
                         <p className="text-3xl font-medium">{result.stats.fieldRepairs + result.stats.headerFixes}</p>
@@ -3877,7 +3877,7 @@ export default function App() {
                   <div className="mt-6">
                     <div className="rounded-lg bg-ink p-4 text-ink">
                       <p className="text-3xl font-medium">{bankTransactions.length}</p>
-                      <p className="mt-1 text-xs uppercase tracking-[0.18em] text-ink/60">Transactions extracted</p>
+                      <p className="mt-1 text-xs uppercase tracking-[0.18em] text-ink-2">Transactions extracted</p>
                     </div>
 
                     <div className="mt-5 flex flex-wrap gap-2">
@@ -3964,8 +3964,8 @@ export default function App() {
                   Converts inconsistent contact names, job titles, company names, cities, states, and countries into clean,
                   readable values for CRM imports and email personalization.
                 </p>
-                <div className="relative mt-6 flex flex-wrap gap-2 font-mono text-xs text-ink/40">
-                  <span className="rounded-md border border-line bg-ink/20 px-2 py-1 line-through decoration-error">john SMITH</span>
+                <div className="relative mt-6 flex flex-wrap gap-2 font-mono text-xs text-ink-2">
+                  <span className="rounded-md border border-line bg-surface px-2 py-1 line-through decoration-error">john SMITH</span>
                   <span className="self-center text-[rgb(var(--accent-hover))]">→</span>
                   <span className="rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-2 py-1 text-[rgb(var(--accent-hover))]">John Smith</span>
                 </div>
@@ -4045,7 +4045,7 @@ export default function App() {
                 <h2 className="mt-4 text-4xl font-medium tracking-[-0.04em] sm:text-5xl">
                   Verify PDF client mailing data against your Excel master file.
                 </h2>
-                <p className="mt-5 text-lg leading-8 text-ink/78">
+                <p className="mt-5 text-lg leading-8 text-ink-2">
                   A comprehensive document verification, extraction, and reconciliation hub for investor services,
                   transfer secretarial, compliance, and data quality teams. Upload an unstructured PDF mailing list and a
                   structured Excel master, auto-detect fields, and download colour-coded Excel reports with executive
@@ -4117,7 +4117,7 @@ export default function App() {
               ].map((card) => (
                 <div key={card.h} className="mc-glass mc-card-interactive rounded-lg p-5 hover:border-[rgb(var(--accent))]/40">
                   <h3 className="mc-display text-lg font-medium text-ink">{card.h}</h3>
-                  <p className="mt-2 text-sm text-ink/60">{card.p}</p>
+                  <p className="mt-2 text-sm text-ink-2">{card.p}</p>
                 </div>
               ))}
             </div>
@@ -4155,7 +4155,7 @@ export default function App() {
                 ].map((card) => (
                   <div key={card.h} className="mc-glass mc-card-interactive rounded-lg p-5 hover:border-[rgb(var(--accent))]/40">
                     <h3 className="mc-display text-lg font-medium text-ink">{card.h}</h3>
-                    <p className="mt-2 text-sm text-ink/60">{card.p}</p>
+                    <p className="mt-2 text-sm text-ink-2">{card.p}</p>
                   </div>
                 ))}
               </div>
@@ -4288,7 +4288,7 @@ export default function App() {
                 <details key={item.q} className="group py-5">
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left text-base font-medium text-ink marker:content-none">
                     {item.q}
-                    <svg className="h-5 w-5 shrink-0 text-ink/40 transition group-open:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <svg className="h-5 w-5 shrink-0 text-ink-2 transition group-open:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                       <path d="M12 5v14M5 12h14" />
                     </svg>
                   </summary>
