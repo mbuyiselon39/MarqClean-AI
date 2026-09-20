@@ -239,7 +239,7 @@ export function WorkspaceShell({
         {/* Module page header */}
         <div className="ws-surface ws-module-header flex flex-wrap items-start justify-between gap-4 rounded-lg p-6">
           <div className="flex items-start gap-4">
-            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[rgb(var(--accent))]/20 to-[rgb(var(--accent))]/20 text-2xl ring-1 ring-inset ring-white/10">{icon}</span>
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-canvas /20 /20 text-2xl ring-1 ring-inset ring-white/10">{icon}</span>
             <div>
               <h1 className="mc-display text-2xl font-medium tracking-tight text-white sm:text-3xl">{title}</h1>
               <p className="mt-1 max-w-3xl text-justify text-sm leading-6 text-[rgb(var(--ink-2))] [hyphens:auto]">{description}</p>
