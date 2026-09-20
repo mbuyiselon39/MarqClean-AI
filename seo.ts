@@ -16,18 +16,20 @@ function upsertMeta(name: string, content: string, property = false) {
 }
 
 function upsertThemeColor() {
-  document.head.querySelectorAll('meta[name="theme-color"][data-runtime-theme]').forEach((el) => el.remove());
-
   for (const [media, color] of [
     ["(prefers-color-scheme: light)", "#FFFFFF"],
     ["(prefers-color-scheme: dark)", "#09090B"],
   ]) {
-    const el = document.createElement("meta");
-    el.name = "theme-color";
+    let el = document.head.querySelector<HTMLMetaElement>(
+      `meta[name="theme-color"][media="${media}"]`,
+    );
+    if (!el) {
+      el = document.createElement("meta");
+      el.name = "theme-color";
+      el.media = media;
+      document.head.appendChild(el);
+    }
     el.content = color;
-    el.media = media;
-    el.dataset.runtimeTheme = "true";
-    document.head.appendChild(el);
   }
 }
 
