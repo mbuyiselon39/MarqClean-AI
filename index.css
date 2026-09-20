@@ -1163,3 +1163,52 @@ footer a:focus-visible{outline-color:#91e8ca}
 
 /* Product logo sizing */
 img[src*="brand-logo"]{object-fit:contain}
+
+
+/* Final site footer component */
+.mc-site-footer{background:#0b1512!important;color:#edf6f2;border-top:1px solid rgba(255,255,255,.07)}
+.mc-site-footer__inner{width:min(1280px,calc(100% - 40px));margin:0 auto;padding:58px 0 24px}
+.mc-site-footer__top{display:grid;grid-template-columns:1.7fr repeat(3,1fr);gap:48px;padding-bottom:42px;border-bottom:1px solid rgba(255,255,255,.08)}
+.mc-site-footer__brand img{width:220px;height:auto;display:block}
+.mc-site-footer__brand p{max-width:390px;margin:20px 0 14px;color:rgba(237,246,242,.62);font-size:13px;line-height:1.75}
+.mc-site-footer__trust{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid rgba(145,232,202,.15);border-radius:8px;background:rgba(145,232,202,.05);color:#9adcc5;font-size:10px;font-weight:650}
+.mc-site-footer__trust span{font-size:8px;color:#6fffc1}
+.mc-site-footer__column{display:flex;flex-direction:column;align-items:flex-start;gap:11px}
+.mc-site-footer__column h3{margin:2px 0 5px;color:#91e8ca;font:700 10px/1.2 var(--mc-mono);letter-spacing:.13em;text-transform:uppercase}
+.mc-site-footer__column a{color:rgba(237,246,242,.62)!important;font-size:12px;line-height:1.45;text-decoration:none}
+.mc-site-footer__column a:hover{color:#fff!important}
+.mc-site-footer__bottom{display:flex;justify-content:space-between;gap:20px;padding-top:22px}
+.mc-site-footer__bottom p,.mc-site-footer__bottom a{margin:0;color:rgba(237,246,242,.45)!important;font-size:11px;line-height:1.6}
+.mc-site-footer__bottom a:hover{color:#91e8ca!important}
+@media(max-width:900px){
+ .mc-site-footer__top{grid-template-columns:1.4fr 1fr;gap:36px}
+}
+@media(max-width:560px){
+ .mc-site-footer__inner{width:min(100% - 28px,1280px);padding-top:42px}
+ .mc-site-footer__top{grid-template-columns:1fr;gap:30px}
+ .mc-site-footer__bottom{flex-direction:column}
+ .mc-site-footer__brand img{width:190px}
+}
+
+/* Public pages: normalize legacy dark section utility classes without rewriting
+   the functional JSX, keeping the product's new light visual system consistent. */
+.amzigo-revamp main .bg-\[\#08090f\],
+.amzigo-revamp main .bg-\[\#0a0b16\],
+.amzigo-revamp main .bg-\[\#0b0c1a\]{
+  background:#f8faf9!important;color:#111714!important;
+}
+.amzigo-revamp main .text-white{color:#111714!important}
+.amzigo-revamp main .text-white\/70{color:#65716c!important}
+.amzigo-revamp main .text-white\/65{color:#65716c!important}
+.amzigo-revamp main .text-white\/60{color:#65716c!important}
+.amzigo-revamp main .text-white\/55{color:#7b8781!important}
+.amzigo-revamp main .text-white\/45,.amzigo-revamp main .text-white\/40{color:#98a29d!important}
+.amzigo-revamp main [class*="border-white/10"]{border-color:#e2e7e4!important}
+.amzigo-revamp main [class*="border-white/15"]{border-color:#d8e0dc!important}
+.amzigo-revamp main [class*="divide-white/10"] > :not([hidden]) ~ :not([hidden]){border-color:#e2e7e4!important}
+.amzigo-revamp main .mc-glass{background:#fff!important;border-color:#e2e7e4!important;box-shadow:var(--mc-shadow-sm)!important;backdrop-filter:none}
+.amzigo-revamp main .mc-glass .text-white{color:#111714!important}
+.amzigo-revamp main .mc-glass .text-white\/65,.amzigo-revamp main .mc-glass .text-white\/70{color:#65716c!important}
+.amzigo-revamp main .text-\[\#0D9488\]{color:#087a5a!important}
+.amzigo-revamp main .text-\[\#5EEAD4\]{color:#087a5a!important}
+.amzigo-revamp main .text-\[\#FB6F58\]{color:#087a5a!important}
