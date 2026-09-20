@@ -149,7 +149,7 @@ export default function DataEngineStudio({ onExit }: { onExit: () => void }) {
             </div>
             <textarea className="mt-3 min-h-36 w-full rounded-xl border p-4 font-mono text-xs" value={sql} onChange={(e) => setSql(e.target.value)} />
             <p className="mt-3 text-xs text-ink-3">Use <code>__CSV__</code> as the registered local file. Example: GROUP BY, JOIN, DISTINCT, window functions and other DuckDB SQL can run without a server.</p>
-            {queryRows.length ? <pre className="mt-4 max-h-72 overflow-auto rounded-xl bg-ink p-4 text-xs text-slate-100">{JSON.stringify(queryRows, null, 2)}</pre> : null}
+            {queryRows.length ? <pre className="mt-4 max-h-72 overflow-auto rounded-xl bg-ink p-4 text-xs text-ink-2">{JSON.stringify(queryRows, null, 2)}</pre> : null}
           </div>
         ) : null}
 
@@ -159,7 +159,7 @@ export default function DataEngineStudio({ onExit }: { onExit: () => void }) {
               <div><h2 className="text-lg font-medium">Excel Worker</h2><p className="text-sm text-ink-3">SheetJS parses XLSX in a dedicated Web Worker so workbook inspection does not block the interface.</p></div>
               <label className="ws-btn-primary cursor-pointer rounded-md px-5 py-2 text-sm">Inspect XLSX<input type="file" accept=".xlsx,.xls" className="hidden" onChange={async (event) => { const selected=event.target.files?.[0]; if(!selected)return; setBusy(true); try { setSpreadsheetResult(await inspectSpreadsheetInWorker(selected)); setMessage("Workbook inspected in a background worker."); } catch (error) { setMessage(error instanceof Error ? error.message : "Workbook worker failed."); } finally { setBusy(false); } }} /></label>
             </div>
-            {spreadsheetResult ? <div className="mt-5 space-y-4"><div className="flex flex-wrap gap-2">{spreadsheetResult.sheetNames.map((name)=><span key={name} className="rounded-md bg-surface px-3 py-1 text-xs font-medium text-sky-700">{name}</span>)}</div><div><p className="text-xs font-medium uppercase tracking-wider text-ink-3">Detected columns</p><div className="mt-2 flex flex-wrap gap-2">{spreadsheetResult.headers.map((header,index)=><span key={index} className="rounded-lg border bg-canvas px-2.5 py-1 text-xs text-ink-2">{header || `Column ${index+1}`}</span>)}</div></div><pre className="max-h-64 overflow-auto rounded-xl bg-ink p-4 text-xs text-slate-100">{JSON.stringify(spreadsheetResult.preview, null, 2)}</pre></div> : null}
+            {spreadsheetResult ? <div className="mt-5 space-y-4"><div className="flex flex-wrap gap-2">{spreadsheetResult.sheetNames.map((name)=><span key={name} className="rounded-md bg-surface px-3 py-1 text-xs font-medium text-accent">{name}</span>)}</div><div><p className="text-xs font-medium uppercase tracking-wider text-ink-3">Detected columns</p><div className="mt-2 flex flex-wrap gap-2">{spreadsheetResult.headers.map((header,index)=><span key={index} className="rounded-lg border bg-canvas px-2.5 py-1 text-xs text-ink-2">{header || `Column ${index+1}`}</span>)}</div></div><pre className="max-h-64 overflow-auto rounded-xl bg-ink p-4 text-xs text-ink-2">{JSON.stringify(spreadsheetResult.preview, null, 2)}</pre></div> : null}
           </div>
         ) : null}
 
