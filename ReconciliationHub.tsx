@@ -59,13 +59,13 @@ const NAV_ITEMS: Array<{ key: NavKey; label: string; blurb: string; icon: string
 ];
 
 const STATUS_COLORS: Record<string, string> = {
-  "Exact Match": "bg-emerald-100 text-emerald-800",
-  "Partial Match": "bg-blue-100 text-blue-800",
-  "Mismatch": "bg-red-100 text-red-700",
-  "Missing Value": "bg-amber-100 text-amber-800",
-  "Unmatched Source": "bg-amber-100 text-amber-800",
-  "Unmatched Target": "bg-amber-100 text-amber-800",
-  "Duplicate": "bg-amber-100 text-amber-800",
+  "Exact Match": "bg-surface text-ink-2",
+  "Partial Match": "bg-accent-tint text-accent",
+  "Mismatch": "bg-surface text-error",
+  "Missing Value": "bg-surface text-ink-2",
+  "Unmatched Source": "bg-surface text-ink-2",
+  "Unmatched Target": "bg-surface text-ink-2",
+  "Duplicate": "bg-surface text-ink-2",
 };
 
 type HistoryEntry = {
@@ -323,13 +323,13 @@ export default function ReconciliationHub({ onExit }: { onExit: () => void }) {
 
       <div className="relative mx-auto mb-2 flex max-w-[110rem] flex-wrap items-center justify-between gap-3 px-5 pt-24 lg:px-8">
         <div className="flex items-center gap-3">
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#0D9488]/20 to-[#14B8A6]/20 text-xl ring-1 ring-inset ring-white/10">🔄</span>
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-canvas from-[rgb(var(--accent))]/20 to-[rgb(var(--accent))]/20 text-xl ring-1 ring-inset ring-white/10">🔄</span>
           <div>
-            <h2 className="mc-display text-xl font-bold text-white">Reconciliation Hub</h2>
+            <h2 className="mc-display text-xl font-medium text-ink">Reconciliation Hub</h2>
             <p className="text-xs text-[#b0bacb]">AI-powered reconciliation, validation and record matching. Runs 100% in your browser.</p>
           </div>
         </div>
-        <button className="ws-btn-secondary rounded-full px-4 py-2 text-sm font-medium" onClick={onExit}>Back to MarqClean AI</button>
+        <button className="ws-btn-secondary rounded-md px-4 py-2 text-sm font-medium" onClick={onExit}>Back to MarqClean AI</button>
       </div>
 
       <div className="relative mx-auto max-w-[110rem] px-5 pb-16 pt-4 lg:px-8">
@@ -339,13 +339,13 @@ export default function ReconciliationHub({ onExit }: { onExit: () => void }) {
         <ToolLaunchpad tools={NAV_ITEMS} active={nav} onSelect={setNav} />
 
         <main id="main-content" className="mt-6 min-w-0">
-          {error ? <p className="mb-5 rounded-2xl bg-red-50 p-4 text-sm font-medium text-red-700" role="alert">{error}</p> : null}
+          {error ? <p className="mb-5 rounded-xl bg-surface p-4 text-sm font-medium text-error" role="alert">{error}</p> : null}
 
           <AnimatePresence>
             {processing ? (
-              <motion.div className="mb-5 overflow-hidden rounded-2xl bg-white shadow" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                <div className="p-4 text-sm font-medium text-slate-700" role="status">Processing files and reconciling records...</div>
-                <motion.div className="h-1 bg-teal-500" initial={{ width: "10%" }} animate={{ width: "100%" }} transition={{ duration: 1, repeat: Infinity, repeatType: "reverse" }} />
+              <motion.div className="mb-5 overflow-hidden rounded-xl bg-canvas shadow" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                <div className="p-4 text-sm font-medium text-ink-2" role="status">Processing files and reconciling records...</div>
+                <motion.div className="h-1 bg-accent-tint" initial={{ width: "10%" }} animate={{ width: "100%" }} transition={{ duration: 1, repeat: Infinity, repeatType: "reverse" }} />
               </motion.div>
             ) : null}
           </AnimatePresence>
@@ -375,26 +375,26 @@ export default function ReconciliationHub({ onExit }: { onExit: () => void }) {
             />
           ) : nav === "dashboard" ? (
             <section>
-              <h1 className="text-3xl font-semibold tracking-[-0.03em]">Processing Dashboard</h1>
-              <p className="mt-2 max-w-2xl text-slate-600">Reconciliation statistics, exception summary, data quality metrics, and processing history for this browser session.</p>
+              <h1 className="text-3xl font-medium tracking-[-0.03em]">Processing Dashboard</h1>
+              <p className="mt-2 max-w-2xl text-ink-2">Reconciliation statistics, exception summary, data quality metrics, and processing history for this browser session.</p>
               <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <DashCard label="Runs this session" value={history.length} />
                 <DashCard label="Last match %" value={history[0]?.matchPct ?? 0} suffix="%" />
                 <DashCard label="Last exceptions" value={history[0]?.exceptions ?? 0} />
                 <DashCard label="Last records" value={history[0]?.records ?? 0} />
               </div>
-              <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-5">
-                <h2 className="text-lg font-semibold">Processing history</h2>
+              <div className="mt-8 rounded-xl border border-line bg-canvas p-5">
+                <h2 className="text-lg font-medium">Processing history</h2>
                 {history.length ? (
                   <div className="mt-4 overflow-x-auto">
                     <table className="min-w-full text-left text-sm">
-                      <thead className="text-xs uppercase tracking-wide text-slate-500">
+                      <thead className="text-xs uppercase tracking-wide text-ink-3">
                         <tr><th className="py-2 pr-4">Time</th><th className="py-2 pr-4">Source</th><th className="py-2 pr-4">Target</th><th className="py-2 pr-4">Records</th><th className="py-2 pr-4">Exceptions</th><th className="py-2">Match %</th></tr>
                       </thead>
                       <tbody className="divide-y divide-slate-100">
                         {history.map((entry, index) => (
                           <tr key={index}>
-                            <td className="py-2 pr-4 text-slate-600">{entry.time}</td>
+                            <td className="py-2 pr-4 text-ink-2">{entry.time}</td>
                             <td className="py-2 pr-4">{entry.source}</td>
                             <td className="py-2 pr-4">{entry.target}</td>
                             <td className="py-2 pr-4">{entry.records}</td>
@@ -406,7 +406,7 @@ export default function ReconciliationHub({ onExit }: { onExit: () => void }) {
                     </table>
                   </div>
                 ) : (
-                  <p className="mt-3 text-sm text-slate-500">No runs yet. Start in the File Comparison Centre.</p>
+                  <p className="mt-3 text-sm text-ink-3">No runs yet. Start in the File Comparison Centre.</p>
                 )}
               </div>
             </section>
@@ -418,19 +418,19 @@ export default function ReconciliationHub({ onExit }: { onExit: () => void }) {
             <SmartSheetManager />
           ) : (
             <section>
-              <h1 className="text-3xl font-semibold tracking-[-0.03em]">
+              <h1 className="text-3xl font-medium tracking-[-0.03em]">
                 {NAV_ITEMS.find((i) => i.key === nav)?.label}
               </h1>
-              <p className="mt-2 max-w-3xl text-slate-600">
+              <p className="mt-2 max-w-3xl text-ink-2">
                 Upload a source and target file, auto-detect the structure, choose a macro or select fields, then run a colour-coded reconciliation. Every mode (Excel, CSV, PDF, Word, and multi-file) uses the same engine.
               </p>
 
               {/* Macro selector */}
-              <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5">
+              <div className="mt-6 rounded-xl border border-line bg-canvas p-5">
                 <div className="flex flex-wrap items-center justify-between gap-3">
-                  <h2 className="text-lg font-semibold">Reconciliation macros</h2>
+                  <h2 className="text-lg font-medium">Reconciliation macros</h2>
                   <input
-                    className="w-64 max-w-full rounded-full border border-slate-300 px-4 py-2 text-sm"
+                    className="w-64 max-w-full rounded-md border border-line px-4 py-2 text-sm"
                     placeholder="Search macros (e.g. banking, KYC, register)"
                     value={macroSearch}
                     onChange={(event) => setMacroSearch(event.target.value)}
@@ -438,9 +438,9 @@ export default function ReconciliationHub({ onExit }: { onExit: () => void }) {
                   />
                 </div>
                 <div className="mt-3 flex flex-wrap items-center gap-3">
-                  <label className="text-sm text-slate-600">Quick select</label>
+                  <label className="text-sm text-ink-2">Quick select</label>
                   <select
-                    className="rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                    className="rounded-lg border border-line px-3 py-2 text-sm"
                     value={selectedMacro}
                     onChange={(event) => {
                       const macro = MACRO_LIBRARY.find((m) => m.id === event.target.value);
@@ -457,12 +457,12 @@ export default function ReconciliationHub({ onExit }: { onExit: () => void }) {
                   {filteredMacros.map((macro) => (
                     <button
                       key={macro.id}
-                      className={`rounded-xl border p-4 text-left transition ${selectedMacro === macro.id ? "border-teal-500 bg-teal-50" : "border-slate-200 hover:border-slate-400"}`}
+                      className={`rounded-xl border p-4 text-left transition ${selectedMacro === macro.id ? "border-line bg-accent-tint" : "border-line hover:border-slate-400"}`}
                       onClick={() => applyMacro(macro)}
                     >
-                      <span className="block text-xs uppercase tracking-wide text-slate-400">{macro.category}</span>
-                      <span className="mt-1 block text-sm font-semibold text-slate-900">{macro.name}</span>
-                      <span className="mt-1 block text-xs text-slate-500">{macro.description}</span>
+                      <span className="block text-xs uppercase tracking-wide text-ink-3">{macro.category}</span>
+                      <span className="mt-1 block text-sm font-medium text-ink">{macro.name}</span>
+                      <span className="mt-1 block text-xs text-ink-3">{macro.description}</span>
                     </button>
                   ))}
                 </div>
@@ -476,12 +476,12 @@ export default function ReconciliationHub({ onExit }: { onExit: () => void }) {
 
               {/* Field selection */}
               {sourceTable && targetTable ? (
-                <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5">
+                <div className="mt-6 rounded-xl border border-line bg-canvas p-5">
                   <div className="flex flex-wrap items-center justify-between gap-3">
-                    <h2 className="text-lg font-semibold">Fields to compare</h2>
+                    <h2 className="text-lg font-medium">Fields to compare</h2>
                     <div className="flex items-center gap-2 text-sm">
-                      <label className="text-slate-600">Match key</label>
-                      <select className="rounded-lg border border-slate-300 px-3 py-1.5" value={keyField} onChange={(event) => setKeyField(event.target.value)}>
+                      <label className="text-ink-2">Match key</label>
+                      <select className="rounded-lg border border-line px-3 py-1.5" value={keyField} onChange={(event) => setKeyField(event.target.value)}>
                         <option value="">Auto (first field)</option>
                         {commonMappedFields.filter((f) => selectedFields.has(f.key)).map((f) => (
                           <option key={f.key} value={f.key}>{f.label}</option>
@@ -489,20 +489,20 @@ export default function ReconciliationHub({ onExit }: { onExit: () => void }) {
                       </select>
                     </div>
                   </div>
-                  <p className="mt-1 text-xs text-slate-500">Only fields mapped in both files can be compared. Use Administration to adjust mapping.</p>
+                  <p className="mt-1 text-xs text-ink-3">Only fields mapped in both files can be compared. Use Administration to adjust mapping.</p>
                   <div className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
                     {commonMappedFields.length ? commonMappedFields.map((field) => (
-                      <label key={field.key} className="flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm">
+                      <label key={field.key} className="flex items-center gap-2 rounded-lg border border-line px-3 py-2 text-sm">
                         <input type="checkbox" checked={selectedFields.has(field.key)} onChange={() => toggleField(field.key)} />
                         <span>{field.label}</span>
-                        <span className="ml-auto text-xs text-slate-400">{field.group}</span>
+                        <span className="ml-auto text-xs text-ink-3">{field.group}</span>
                       </label>
                     )) : (
-                      <p className="text-sm text-slate-500">No overlapping mapped fields detected. Open Administration to map columns manually.</p>
+                      <p className="text-sm text-ink-3">No overlapping mapped fields detected. Open Administration to map columns manually.</p>
                     )}
                   </div>
                   <button
-                    className="mt-5 rounded-full bg-slate-950 px-6 py-3 text-sm font-semibold text-white transition hover:bg-teal-700"
+                    className="mt-5 rounded-md bg-ink px-6 py-3 text-sm font-medium text-ink transition hover:bg-accent-tint"
                     onClick={runComparison}
                     disabled={processing}
                   >
@@ -515,7 +515,7 @@ export default function ReconciliationHub({ onExit }: { onExit: () => void }) {
           )}
 
           {nav === "reporting" && !result ? (
-            <p className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 text-sm text-slate-600">Run a comparison to generate reconciliation, exception, audit, and data quality reports.</p>
+            <p className="mt-6 rounded-xl border border-line bg-canvas p-6 text-sm text-ink-2">Run a comparison to generate reconciliation, exception, audit, and data quality reports.</p>
           ) : null}
         </main>
       </div>
@@ -534,27 +534,27 @@ function BankLedgerView() {
   }
   return (
     <section>
-      <h1 className="text-3xl font-semibold tracking-[-0.03em]">Bank Ledger X</h1>
+      <h1 className="text-3xl font-medium tracking-[-0.03em]">Bank Ledger X</h1>
       <p className="mt-2 max-w-3xl text-[#b0bacb]">
         Bank statement and ledger reconciliation module within Reconciliation Hub. Convert PDF bank statements into clean
         Excel, CSV and QIF, then reconcile transactions against ledger records with AI-powered matching and exception
         reporting.
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
-        <span className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-semibold uppercase">PDF</span>
-        <span className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-semibold uppercase">XLSX</span>
-        <span className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-semibold uppercase">CSV</span>
-        <span className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-semibold uppercase">QIF</span>
+        <span className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-medium uppercase">PDF</span>
+        <span className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-medium uppercase">XLSX</span>
+        <span className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-medium uppercase">CSV</span>
+        <span className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-medium uppercase">QIF</span>
       </div>
 
       <div className="mt-6 grid gap-4 lg:grid-cols-2">
-        <div className="ws-surface rounded-2xl p-6">
-          <h2 className="text-lg font-semibold text-white">Convert a bank statement</h2>
+        <div className="ws-surface rounded-xl p-6">
+          <h2 className="text-lg font-medium text-ink">Convert a bank statement</h2>
           <p className="mt-2 text-sm text-[#b0bacb]">Turn a PDF statement into a structured, import-ready spreadsheet with normalized dates and amounts.</p>
-          <button className="ws-btn-primary mt-4 rounded-full px-5 py-2.5 text-sm font-semibold" onClick={goHomeBankTab}>Open Bank Statement Converter</button>
+          <button className="ws-btn-primary mt-4 rounded-md px-5 py-2.5 text-sm font-medium" onClick={goHomeBankTab}>Open Bank Statement Converter</button>
         </div>
-        <div className="ws-surface rounded-2xl p-6">
-          <h2 className="text-lg font-semibold text-white">Reconcile against ledger</h2>
+        <div className="ws-surface rounded-xl p-6">
+          <h2 className="text-lg font-medium text-ink">Reconcile against ledger</h2>
           <p className="mt-2 text-sm text-[#b0bacb]">Use the reconciliation modules to match statement transactions against ledger and account records, and export exceptions.</p>
           <div className="mt-3 flex flex-wrap gap-2 text-xs text-[#8a94a8]">
             <span>✓ Client Reconciliation</span>
@@ -571,9 +571,9 @@ function BankLedgerView() {
 
 function DashCard({ label, value, suffix }: { label: string; value: number; suffix?: string }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5">
-      <p className="text-3xl font-semibold text-slate-950">{value}{suffix ?? ""}</p>
-      <p className="mt-1 text-xs uppercase tracking-wide text-slate-500">{label}</p>
+    <div className="rounded-xl border border-line bg-canvas p-5">
+      <p className="text-3xl font-medium text-ink">{value}{suffix ?? ""}</p>
+      <p className="mt-1 text-xs uppercase tracking-wide text-ink-3">{label}</p>
     </div>
   );
 }
@@ -589,7 +589,7 @@ function UploadCard({
 }) {
   return (
     <div
-      className="rounded-2xl border border-dashed border-slate-300 bg-white p-5 text-center transition hover:border-teal-500"
+      className="rounded-xl border border-dashed border-line bg-canvas p-5 text-center transition hover:border-line"
       onDragOver={(event) => event.preventDefault()}
       onDrop={(event) => {
         event.preventDefault();
@@ -608,16 +608,16 @@ function UploadCard({
           if (inputRef.current) inputRef.current.value = "";
         }}
       />
-      <h3 className="text-base font-semibold text-slate-900">{title}</h3>
+      <h3 className="text-base font-medium text-ink">{title}</h3>
       {table ? (
         <div className="mt-2">
-          <p className="text-sm text-slate-600">{table.sourceName}</p>
-          <p className="text-xs text-slate-400">{table.rows.length} rows, {table.headers.length} columns</p>
+          <p className="text-sm text-ink-2">{table.sourceName}</p>
+          <p className="text-xs text-ink-3">{table.rows.length} rows, {table.headers.length} columns</p>
         </div>
       ) : (
-        <p className="mt-2 text-xs text-slate-500">Drop PDF, Excel, CSV, or Word, or choose a file.</p>
+        <p className="mt-2 text-xs text-ink-3">Drop PDF, Excel, CSV, or Word, or choose a file.</p>
       )}
-      <button className="mt-4 rounded-full bg-slate-950 px-4 py-2 text-xs font-semibold text-white transition hover:bg-teal-700" onClick={onPick}>
+      <button className="mt-4 rounded-md bg-ink px-4 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={onPick}>
         {table ? "Replace file" : "Choose file"}
       </button>
     </div>
@@ -642,8 +642,8 @@ function ReportView({ result, onDownload }: { result: ReconResult; onDownload: (
   return (
     <section>
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-3xl font-semibold tracking-[-0.03em]">Reporting Centre</h1>
-        <button className="rounded-full bg-teal-500 px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-teal-300" onClick={onDownload}>
+        <h1 className="text-3xl font-medium tracking-[-0.03em]">Reporting Centre</h1>
+        <button className="rounded-md bg-accent-tint px-5 py-2.5 text-sm font-medium text-ink transition hover:bg-accent-tint" onClick={onDownload}>
           Download Excel report (4 sheets)
         </button>
       </div>
@@ -656,24 +656,24 @@ function ReportView({ result, onDownload }: { result: ReconResult; onDownload: (
       </div>
 
       <div className="mt-4 grid gap-3 sm:grid-cols-5">
-        <Legend color="bg-emerald-100 text-emerald-800" label={`Exact ${summary.matched}`} />
-        <Legend color="bg-blue-100 text-blue-800" label={`Partial ${summary.partial}`} />
-        <Legend color="bg-red-100 text-red-700" label={`Mismatch ${summary.mismatched}`} />
-        <Legend color="bg-amber-100 text-amber-800" label={`Missing ${summary.missing}`} />
-        <Legend color="bg-amber-100 text-amber-800" label={`Unmatched ${summary.unmatched}`} />
+        <Legend color="bg-surface text-ink-2" label={`Exact ${summary.matched}`} />
+        <Legend color="bg-accent-tint text-accent" label={`Partial ${summary.partial}`} />
+        <Legend color="bg-surface text-error" label={`Mismatch ${summary.mismatched}`} />
+        <Legend color="bg-surface text-ink-2" label={`Missing ${summary.missing}`} />
+        <Legend color="bg-surface text-ink-2" label={`Unmatched ${summary.unmatched}`} />
       </div>
 
-      <div className="mt-6 rounded-2xl border border-slate-200 bg-white">
-        <div className="flex items-center justify-between border-b border-slate-200 px-5 py-3">
-          <h2 className="text-lg font-semibold">Detailed reconciliation</h2>
-          <label className="flex items-center gap-2 text-sm text-slate-600">
+      <div className="mt-6 rounded-xl border border-line bg-canvas">
+        <div className="flex items-center justify-between border-b border-line px-5 py-3">
+          <h2 className="text-lg font-medium">Detailed reconciliation</h2>
+          <label className="flex items-center gap-2 text-sm text-ink-2">
             <input type="checkbox" checked={showExceptionsOnly} onChange={(event) => setShowExceptionsOnly(event.target.checked)} />
             Exceptions only
           </label>
         </div>
         <div className="max-h-[32rem] overflow-auto">
           <table className="min-w-full text-left text-sm">
-            <thead className="sticky top-0 bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+            <thead className="sticky top-0 bg-surface text-xs uppercase tracking-wide text-ink-3">
               <tr>
                 <th className="px-4 py-2">Record</th><th className="px-4 py-2">Field</th><th className="px-4 py-2">Source</th>
                 <th className="px-4 py-2">Target</th><th className="px-4 py-2">Status</th><th className="px-4 py-2">Comment</th>
@@ -682,12 +682,12 @@ function ReportView({ result, onDownload }: { result: ReconResult; onDownload: (
             <tbody className="divide-y divide-slate-100">
               {rows.map((row, index) => (
                 <tr key={index}>
-                  <td className="max-w-40 truncate px-4 py-2 text-slate-700">{row.key}</td>
-                  <td className="px-4 py-2 text-slate-700">{row.field}</td>
-                  <td className="max-w-48 truncate px-4 py-2 text-slate-700">{row.source || "-"}</td>
-                  <td className="max-w-48 truncate px-4 py-2 text-slate-700">{row.target || "-"}</td>
-                  <td className="px-4 py-2"><span className={`rounded-full px-2 py-1 text-xs font-semibold ${STATUS_COLORS[row.status] ?? "bg-slate-100 text-slate-700"}`}>{row.status}</span></td>
-                  <td className="max-w-48 truncate px-4 py-2 text-slate-500">{row.comment}</td>
+                  <td className="max-w-40 truncate px-4 py-2 text-ink-2">{row.key}</td>
+                  <td className="px-4 py-2 text-ink-2">{row.field}</td>
+                  <td className="max-w-48 truncate px-4 py-2 text-ink-2">{row.source || "-"}</td>
+                  <td className="max-w-48 truncate px-4 py-2 text-ink-2">{row.target || "-"}</td>
+                  <td className="px-4 py-2"><span className={`rounded-md px-2 py-1 text-xs font-medium ${STATUS_COLORS[row.status] ?? "bg-surface text-ink-2"}`}>{row.status}</span></td>
+                  <td className="max-w-48 truncate px-4 py-2 text-ink-3">{row.comment}</td>
                 </tr>
               ))}
             </tbody>
@@ -696,14 +696,14 @@ function ReportView({ result, onDownload }: { result: ReconResult; onDownload: (
       </div>
 
       {result.quality.length ? (
-        <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5">
-          <h2 className="text-lg font-semibold">Data quality report ({result.quality.length})</h2>
+        <div className="mt-6 rounded-xl border border-line bg-canvas p-5">
+          <h2 className="text-lg font-medium">Data quality report ({result.quality.length})</h2>
           <div className="mt-3 max-h-64 overflow-auto">
             <table className="min-w-full text-left text-sm">
-              <thead className="text-xs uppercase tracking-wide text-slate-500"><tr><th className="py-2 pr-4">Location</th><th className="py-2 pr-4">Field</th><th className="py-2">Issue</th></tr></thead>
+              <thead className="text-xs uppercase tracking-wide text-ink-3"><tr><th className="py-2 pr-4">Location</th><th className="py-2 pr-4">Field</th><th className="py-2">Issue</th></tr></thead>
               <tbody className="divide-y divide-slate-100">
                 {result.quality.slice(0, 200).map((issue, index) => (
-                  <tr key={index}><td className="py-2 pr-4 text-slate-600">{issue.rowRef}</td><td className="py-2 pr-4">{issue.field}</td><td className="py-2 text-amber-700">{issue.issue}</td></tr>
+                  <tr key={index}><td className="py-2 pr-4 text-ink-2">{issue.rowRef}</td><td className="py-2 pr-4">{issue.field}</td><td className="py-2 text-ink-2">{issue.issue}</td></tr>
                 ))}
               </tbody>
             </table>
@@ -715,7 +715,7 @@ function ReportView({ result, onDownload }: { result: ReconResult; onDownload: (
 }
 
 function Legend({ color, label }: { color: string; label: string }) {
-  return <div className={`rounded-lg px-3 py-2 text-center text-xs font-semibold ${color}`}>{label}</div>;
+  return <div className={`rounded-lg px-3 py-2 text-center text-xs font-medium ${color}`}>{label}</div>;
 }
 
 function AdministrationView({
@@ -730,8 +730,8 @@ function AdministrationView({
 }) {
   return (
     <section>
-      <h1 className="text-3xl font-semibold tracking-[-0.03em]">Administration</h1>
-      <p className="mt-2 max-w-3xl text-slate-600">Field mapping, templates, and configuration. Map each uploaded column to a platform field. Auto Detect Mapping is applied on upload; adjust it here as needed.</p>
+      <h1 className="text-3xl font-medium tracking-[-0.03em]">Administration</h1>
+      <p className="mt-2 max-w-3xl text-ink-2">Field mapping, templates, and configuration. Map each uploaded column to a platform field. Auto Detect Mapping is applied on upload; adjust it here as needed.</p>
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
         <MappingTable title="Source mapping" table={sourceTable} mapping={sourceMapping} setMapping={setSourceMapping} />
         <MappingTable title="Target mapping" table={targetTable} mapping={targetMapping} setMapping={setTargetMapping} />
@@ -748,17 +748,17 @@ function MappingTable({
   mapping: Record<number, string>;
   setMapping: (m: Record<number, string>) => void;
 }) {
-  if (!table) return <div className="rounded-2xl border border-slate-200 bg-white p-5 text-sm text-slate-500">{title}: upload a file first.</div>;
+  if (!table) return <div className="rounded-xl border border-line bg-canvas p-5 text-sm text-ink-3">{title}: upload a file first.</div>;
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5">
-      <h2 className="text-lg font-semibold">{title}</h2>
-      <p className="text-xs text-slate-500">{table.sourceName}</p>
+    <div className="rounded-xl border border-line bg-canvas p-5">
+      <h2 className="text-lg font-medium">{title}</h2>
+      <p className="text-xs text-ink-3">{table.sourceName}</p>
       <div className="mt-3 max-h-96 space-y-2 overflow-auto">
         {table.headers.map((header, index) => (
           <div key={index} className="flex items-center gap-3">
-            <span className="w-1/2 truncate text-sm text-slate-700" title={header}>{header || `Column ${index + 1}`}</span>
+            <span className="w-1/2 truncate text-sm text-ink-2" title={header}>{header || `Column ${index + 1}`}</span>
             <select
-              className="w-1/2 rounded border border-slate-300 px-2 py-1 text-sm"
+              className="w-1/2 rounded border border-line px-2 py-1 text-sm"
               value={mapping[index] ?? ""}
               onChange={(event) => setMapping({ ...mapping, [index]: event.target.value })}
             >
@@ -786,7 +786,7 @@ function MailingUpload({
 }) {
   return (
     <div
-      className="rounded-2xl border border-dashed border-slate-300 bg-white p-5 text-center transition hover:border-teal-500"
+      className="rounded-xl border border-dashed border-line bg-canvas p-5 text-center transition hover:border-line"
       onDragOver={(event) => event.preventDefault()}
       onDrop={(event) => {
         event.preventDefault();
@@ -805,9 +805,9 @@ function MailingUpload({
           if (inputRef.current) inputRef.current.value = "";
         }}
       />
-      <h3 className="text-base font-semibold text-slate-900">{title}</h3>
-      <p className="mt-1 text-xs text-slate-500">{filledLabel || subtitle}</p>
-      <button className="mt-4 rounded-full bg-slate-950 px-4 py-2 text-xs font-semibold text-white transition hover:bg-teal-700" onClick={onPick}>
+      <h3 className="text-base font-medium text-ink">{title}</h3>
+      <p className="mt-1 text-xs text-ink-3">{filledLabel || subtitle}</p>
+      <button className="mt-4 rounded-md bg-ink px-4 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={onPick}>
         {filledLabel ? "Replace file" : "Choose file"}
       </button>
     </div>
@@ -852,8 +852,8 @@ function MailingView(props: {
   return (
     <section>
       <div className="mx-auto max-w-3xl text-center">
-        <h1 className="text-3xl font-semibold tracking-[-0.03em]">Data Verification</h1>
-        <p className="mt-2 text-justify leading-7 text-slate-600 [hyphens:auto]">
+        <h1 className="text-3xl font-medium tracking-[-0.03em]">Data Verification</h1>
+        <p className="mt-2 text-justify leading-7 text-ink-2 [hyphens:auto]">
           Upload an unstructured PDF client mailing list and a structured Excel master file. The platform extracts and
           structures the PDF into Full Name, Title, Address Lines, and Postal Code, maps them to the Excel columns, then
           verifies each record and produces a colour-coded report.
@@ -880,11 +880,11 @@ function MailingView(props: {
       </div>
 
       {excel ? (
-        <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5">
+        <div className="mt-6 rounded-xl border border-line bg-canvas p-5">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <h2 className="text-lg font-semibold">Field mapping (Excel column to mailing field)</h2>
+            <h2 className="text-lg font-medium">Field mapping (Excel column to mailing field)</h2>
             <button
-              className="rounded-full border border-slate-300 px-4 py-2 text-xs font-semibold text-slate-700 transition hover:border-slate-950"
+              className="rounded-md border border-line px-4 py-2 text-xs font-medium text-ink-2 transition hover:border-slate-950"
               onClick={() => setMapping(autoDetectMailingMapping(excel))}
             >
               Auto detect mapping
@@ -893,9 +893,9 @@ function MailingView(props: {
           <div className="mt-4 grid gap-2 sm:grid-cols-2">
             {excel.headers.map((header, index) => (
               <div key={index} className="flex items-center gap-2">
-                <span className="w-1/2 truncate text-sm text-slate-700" title={header}>{header || `Column ${index + 1}`}</span>
+                <span className="w-1/2 truncate text-sm text-ink-2" title={header}>{header || `Column ${index + 1}`}</span>
                 <select
-                  className="w-1/2 rounded border border-slate-300 px-2 py-1 text-sm"
+                  className="w-1/2 rounded border border-line px-2 py-1 text-sm"
                   value={mapping[index] ?? ""}
                   onChange={(event) => setMapping({ ...mapping, [index]: event.target.value })}
                 >
@@ -911,12 +911,12 @@ function MailingView(props: {
       ) : null}
 
       {records && excel ? (
-        <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5">
+        <div className="mt-6 rounded-xl border border-line bg-canvas p-5">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <h2 className="text-lg font-semibold">Fields to verify</h2>
+            <h2 className="text-lg font-medium">Fields to verify</h2>
             <div className="flex items-center gap-2 text-sm">
-              <label className="text-slate-600">Match key</label>
-              <select className="rounded-lg border border-slate-300 px-3 py-1.5" value={matchKey} onChange={(event) => setMatchKey(event.target.value as MailingFieldKey)}>
+              <label className="text-ink-2">Match key</label>
+              <select className="rounded-lg border border-line px-3 py-1.5" value={matchKey} onChange={(event) => setMatchKey(event.target.value as MailingFieldKey)}>
                 {MAILING_FIELDS.filter((f) => ["fullName", "shareholderNumber", "postalCode", "email", "cellPhone"].includes(f.key) && mappedKeys.has(f.key)).map((f) => (
                   <option key={f.key} value={f.key}>{f.label}</option>
                 ))}
@@ -927,7 +927,7 @@ function MailingView(props: {
             {MAILING_FIELDS.filter((f) => ["fullName", "title", "addressLine1", "addressLine2", "addressLine3", "addressLine4", "postalCode", "email", "cellPhone"].includes(f.key)).map((field) => {
               const mapped = mappedKeys.has(field.key);
               return (
-                <label key={field.key} className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm ${mapped ? "border-slate-200" : "border-slate-100 bg-slate-50 text-slate-400"}`}>
+                <label key={field.key} className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm ${mapped ? "border-line" : "border-slate-100 bg-surface text-ink-3"}`}>
                   <input type="checkbox" checked={fields.has(field.key)} disabled={!mapped} onChange={() => toggleField(field.key)} />
                   <span>{field.label}</span>
                   {!mapped ? <span className="ml-auto text-xs">not mapped</span> : null}
@@ -935,7 +935,7 @@ function MailingView(props: {
               );
             })}
           </div>
-          <button className="mt-5 rounded-full bg-slate-950 px-6 py-3 text-sm font-semibold text-white transition hover:bg-teal-700" onClick={props.onRun} disabled={props.processing}>
+          <button className="mt-5 rounded-md bg-ink px-6 py-3 text-sm font-medium text-ink transition hover:bg-accent-tint" onClick={props.onRun} disabled={props.processing}>
             Run mailing verification
           </button>
         </div>
@@ -944,8 +944,8 @@ function MailingView(props: {
       {result ? (
         <div className="mt-6">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <h2 className="text-2xl font-semibold tracking-[-0.02em]">Results</h2>
-            <button className="rounded-full bg-teal-500 px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-teal-300" onClick={props.onDownload}>
+            <h2 className="text-2xl font-medium tracking-[-0.02em]">Results</h2>
+            <button className="rounded-md bg-accent-tint px-5 py-2.5 text-sm font-medium text-ink transition hover:bg-accent-tint" onClick={props.onDownload}>
               Download Excel report (6 sheets)
             </button>
           </div>
@@ -958,23 +958,23 @@ function MailingView(props: {
           </div>
 
           <div className="mt-4 grid gap-3 sm:grid-cols-4">
-            <Legend color="bg-emerald-100 text-emerald-800" label={`Exact ${result.summary.matches}`} />
-            <Legend color="bg-blue-100 text-blue-800" label={`Partial ${result.summary.partial}`} />
-            <Legend color="bg-red-100 text-red-700" label={`Mismatch ${result.summary.mismatches}`} />
-            <Legend color="bg-amber-100 text-amber-800" label={`Missing ${result.summary.missing}`} />
+            <Legend color="bg-surface text-ink-2" label={`Exact ${result.summary.matches}`} />
+            <Legend color="bg-accent-tint text-accent" label={`Partial ${result.summary.partial}`} />
+            <Legend color="bg-surface text-error" label={`Mismatch ${result.summary.mismatches}`} />
+            <Legend color="bg-surface text-ink-2" label={`Missing ${result.summary.missing}`} />
           </div>
 
-          <div className="mt-6 rounded-2xl border border-slate-200 bg-white">
-            <div className="flex items-center justify-between border-b border-slate-200 px-5 py-3">
-              <h3 className="text-lg font-semibold">Detailed verification</h3>
-              <label className="flex items-center gap-2 text-sm text-slate-600">
+          <div className="mt-6 rounded-xl border border-line bg-canvas">
+            <div className="flex items-center justify-between border-b border-line px-5 py-3">
+              <h3 className="text-lg font-medium">Detailed verification</h3>
+              <label className="flex items-center gap-2 text-sm text-ink-2">
                 <input type="checkbox" checked={showExceptionsOnly} onChange={(event) => setShowExceptionsOnly(event.target.checked)} />
                 Exceptions only
               </label>
             </div>
             <div className="max-h-[30rem] overflow-auto">
               <table className="min-w-full text-left text-sm">
-                <thead className="sticky top-0 bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+                <thead className="sticky top-0 bg-surface text-xs uppercase tracking-wide text-ink-3">
                   <tr>
                     <th className="px-4 py-2">Rec</th><th className="px-4 py-2">Excel Row</th><th className="px-4 py-2">Field</th>
                     <th className="px-4 py-2">PDF Value</th><th className="px-4 py-2">Excel Value</th><th className="px-4 py-2">Status</th><th className="px-4 py-2">Comment</th>
@@ -983,13 +983,13 @@ function MailingView(props: {
                 <tbody className="divide-y divide-slate-100">
                   {flatRows.map((row, index) => (
                     <tr key={index}>
-                      <td className="px-4 py-2 text-slate-600">{row.record}</td>
-                      <td className="px-4 py-2 text-slate-600">{row.row}</td>
-                      <td className="px-4 py-2 text-slate-700">{row.field}</td>
-                      <td className="max-w-48 truncate px-4 py-2 text-slate-700">{row.pdf || "-"}</td>
-                      <td className="max-w-48 truncate px-4 py-2 text-slate-700">{row.excel || "-"}</td>
-                      <td className="px-4 py-2"><span className={`rounded-full px-2 py-1 text-xs font-semibold ${STATUS_COLORS[row.status] ?? "bg-slate-100 text-slate-700"}`}>{row.status}</span></td>
-                      <td className="max-w-48 truncate px-4 py-2 text-slate-500">{row.comment}</td>
+                      <td className="px-4 py-2 text-ink-2">{row.record}</td>
+                      <td className="px-4 py-2 text-ink-2">{row.row}</td>
+                      <td className="px-4 py-2 text-ink-2">{row.field}</td>
+                      <td className="max-w-48 truncate px-4 py-2 text-ink-2">{row.pdf || "-"}</td>
+                      <td className="max-w-48 truncate px-4 py-2 text-ink-2">{row.excel || "-"}</td>
+                      <td className="px-4 py-2"><span className={`rounded-md px-2 py-1 text-xs font-medium ${STATUS_COLORS[row.status] ?? "bg-surface text-ink-2"}`}>{row.status}</span></td>
+                      <td className="max-w-48 truncate px-4 py-2 text-ink-3">{row.comment}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -998,14 +998,14 @@ function MailingView(props: {
           </div>
 
           {result.quality.length ? (
-            <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5">
-              <h3 className="text-lg font-semibold">Data quality issues ({result.quality.length})</h3>
+            <div className="mt-6 rounded-xl border border-line bg-canvas p-5">
+              <h3 className="text-lg font-medium">Data quality issues ({result.quality.length})</h3>
               <div className="mt-3 max-h-64 overflow-auto">
                 <table className="min-w-full text-left text-sm">
-                  <thead className="text-xs uppercase tracking-wide text-slate-500"><tr><th className="py-2 pr-4">Location</th><th className="py-2">Issue</th></tr></thead>
+                  <thead className="text-xs uppercase tracking-wide text-ink-3"><tr><th className="py-2 pr-4">Location</th><th className="py-2">Issue</th></tr></thead>
                   <tbody className="divide-y divide-slate-100">
                     {result.quality.slice(0, 200).map((issue, index) => (
-                      <tr key={index}><td className="py-2 pr-4 text-slate-600">{issue.location}</td><td className="py-2 text-amber-700">{issue.issue}</td></tr>
+                      <tr key={index}><td className="py-2 pr-4 text-ink-2">{issue.location}</td><td className="py-2 text-ink-2">{issue.issue}</td></tr>
                     ))}
                   </tbody>
                 </table>
