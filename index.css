@@ -1651,7 +1651,8 @@ footer,
     .mc-eyebrow,
     .mc-asset-credit,
     .mc-site-footer__brand p,
-    .mc-site-footer__bottom p
+    .mc-site-footer__bottom p,
+  .text-ink-3
   ) {
     color: rgb(var(--ink-2)) !important;
   }
