@@ -2430,7 +2430,7 @@ function ToolsDirectory() {
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search data and Excel tools..."
             aria-label="Search data and Excel tools"
-            className="w-full rounded-full border border-white/12 bg-white/[0.04] py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-white/35 outline-none transition focus-visible:border-[#0D9488] focus-visible:ring-2 focus-visible:ring-[#0D9488]/40"
+            className="w-full rounded-md border border-white/12 bg-canvas/[0.04] py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-white/35 outline-none transition focus-visible:border-[rgb(var(--accent))] focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/40"
           />
         </div>
         <p className="text-xs text-white/45">{filtered.length} of {allTools.length} tools</p>
@@ -2443,9 +2443,9 @@ function ToolsDirectory() {
             type="button"
             aria-pressed={category === c}
             onClick={() => setCategory(c)}
-            className={`rounded-full border px-3.5 py-1.5 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0D9488]/50 ${
+            className={`rounded-md border px-3.5 py-1.5 text-xs font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/50 ${
               category === c
-                ? "border-[#0D9488] bg-[#0D9488]/20 text-white"
+                ? "border-[rgb(var(--accent))] bg-[rgb(var(--accent))]/20 text-white"
                 : "border-white/12 text-white/55 hover:border-white/30 hover:text-white"
             }`}
           >
@@ -2455,12 +2455,12 @@ function ToolsDirectory() {
       </div>
 
       {filtered.length === 0 ? (
-        <div className="mt-10 rounded-2xl border border-dashed border-white/15 bg-white/[0.02] p-10 text-center">
-          <p className="text-sm font-semibold text-white">No tools match "{query}"{category !== "All" ? ` in ${category}` : ""}.</p>
+        <div className="mt-10 rounded-lg border border-dashed border-white/15 bg-canvas/[0.02] p-10 text-center">
+          <p className="text-sm font-medium text-white">No tools match "{query}"{category !== "All" ? ` in ${category}` : ""}.</p>
           <p className="mt-2 text-sm text-white/50">Try a different search term, or clear the category filter.</p>
           <button
             onClick={() => { setQuery(""); setCategory("All"); }}
-            className="mt-4 rounded-full border border-white/20 px-4 py-2 text-xs font-semibold text-white hover:border-white/50"
+            className="mt-4 rounded-md border border-white/20 px-4 py-2 text-xs font-medium text-white hover:border-white/50"
           >
             Clear search and filters
           </button>
@@ -2471,16 +2471,16 @@ function ToolsDirectory() {
             <PageLink
               key={tool.slug}
               page={tool.slug}
-              className="group mc-card-interactive flex flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-sm hover:border-[#0D9488]/50 hover:bg-white/[0.05] hover:shadow-[0_20px_40px_-20px_rgba(13,148,136,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0D9488]/50"
+              className="group mc-card-interactive flex flex-col rounded-lg border border-white/10 bg-canvas/[0.03] p-5 text-sm hover:border-[rgb(var(--accent))]/50 hover:bg-canvas/[0.05] hover:shadow-[0_20px_40px_-20px_rgba(13,148,136,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/50"
             >
               <div className="flex items-center justify-between gap-2">
                 <span className="text-2xl" aria-hidden="true">{tool.icon}</span>
-                <span className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-300">Free Tool</span>
+                <span className="rounded-md border border-emerald-400/30 bg-emerald-400/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-emerald-300">Free Tool</span>
               </div>
-              <span className="mc-mono mt-3 block text-[10px] uppercase tracking-[0.18em] text-[#0D9488]/80">{tool.category}</span>
-              <span className="mt-1.5 block text-lg font-semibold leading-snug tracking-[-0.01em] text-white">{tool.cardTitle}</span>
+              <span className="mc-mono mt-3 block text-[10px] uppercase tracking-[0.18em] text-[rgb(var(--accent))]/80">{tool.category}</span>
+              <span className="mt-1.5 block text-lg font-medium leading-snug tracking-[-0.01em] text-white">{tool.cardTitle}</span>
               <span className="mt-2 flex-1 text-white/55">{tool.description.replace(/^Free /, "").slice(0, 96)}...</span>
-              <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[#5EEAD4] transition group-hover:gap-2.5 group-hover:text-white">
+              <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[rgb(var(--accent-hover))] transition group-hover:gap-2.5 group-hover:text-white">
                 Open Tool
                 <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </span>
@@ -2494,25 +2494,25 @@ function ToolsDirectory() {
 
 function FooterContentPage({ page }: { page: FooterPage }) {
   return (
-    <main id="main-content" className="min-h-screen bg-[#08090f] px-5 pb-20 pt-32 text-white lg:px-8">
+    <main id="main-content" className="min-h-screen bg-[rgb(var(--canvas))] px-5 pb-20 pt-32 text-white lg:px-8">
       <motion.article
         className="mx-auto max-w-4xl"
         initial={{ opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
-        <PageLink className="text-sm font-semibold text-[#5EEAD4] transition hover:text-white" page="home">
+        <PageLink className="text-sm font-medium text-[rgb(var(--accent-hover))] transition hover:text-white" page="home">
           Back to product
         </PageLink>
-        <p className="mt-8 text-sm font-semibold uppercase tracking-[0.28em] text-[#0D9488]">{COMPANY_NAME}</p>
-        <h1 className="mt-4 text-5xl font-semibold tracking-[-0.05em] text-white sm:text-6xl">{page.title}</h1>
+        <p className="mt-8 text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">{COMPANY_NAME}</p>
+        <h1 className="mt-4 text-5xl font-medium tracking-[-0.05em] text-white sm:text-6xl">{page.title}</h1>
         <p className="mt-6 text-lg leading-8 text-white/70">{page.description}</p>
         <p className="mt-4 text-sm text-white/40">Last updated: June 29, 2026</p>
 
         <div className="mt-12 space-y-10">
           {page.sections.map((section) => (
             <section key={section.heading} className="border-t border-white/10 pt-8">
-              <h2 className="text-3xl font-semibold tracking-[-0.04em] text-white">{section.heading}</h2>
+              <h2 className="text-3xl font-medium tracking-[-0.04em] text-white">{section.heading}</h2>
               <div className="mt-4 space-y-4">
                 {section.body.map((paragraph) => (
                   <p className="text-justify leading-7 text-white/65 [hyphens:auto]" key={paragraph}>
@@ -2530,22 +2530,22 @@ function FooterContentPage({ page }: { page: FooterPage }) {
 
 function ToolContentPage({ page }: { page: SeoToolPage }) {
   return (
-    <main id="main-content" className="min-h-screen bg-[#08090f] px-5 pb-20 pt-32 text-white lg:px-8">
+    <main id="main-content" className="min-h-screen bg-[rgb(var(--canvas))] px-5 pb-20 pt-32 text-white lg:px-8">
       <motion.article
         className="mx-auto max-w-5xl"
         initial={{ opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
-        <PageLink className="text-sm font-semibold text-[#5EEAD4] transition hover:text-white" page="home">
+        <PageLink className="text-sm font-medium text-[rgb(var(--accent-hover))] transition hover:text-white" page="home">
           Back to free CSV cleaner
         </PageLink>
-        <p className="mt-8 text-sm font-semibold uppercase tracking-[0.28em] text-[#0D9488]">Free browser-based tool</p>
-        <h1 className="mt-4 max-w-4xl text-5xl font-semibold tracking-[-0.05em] text-white sm:text-6xl">{page.h1}</h1>
+        <p className="mt-8 text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">Free browser-based tool</p>
+        <h1 className="mt-4 max-w-4xl text-5xl font-medium tracking-[-0.05em] text-white sm:text-6xl">{page.h1}</h1>
         <p className="mt-6 max-w-3xl text-lg leading-8 text-white/70">{page.description}</p>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <a
-            className="mc-cta-cyan rounded-full px-6 py-3 text-center text-sm font-semibold"
+            className="mc-cta-cyan rounded-md px-6 py-3 text-center text-sm font-medium"
             href="/#cleaner"
             onClick={(event) => {
               event.preventDefault();
@@ -2555,14 +2555,14 @@ function ToolContentPage({ page }: { page: SeoToolPage }) {
           >
             Use the free cleaner
           </a>
-          <PageLink className="rounded-full border border-white/20 px-6 py-3 text-center text-sm font-semibold text-white transition hover:border-white/50" page="lead-list-cleaner">
+          <PageLink className="rounded-md border border-white/20 px-6 py-3 text-center text-sm font-medium text-white transition hover:border-white/50" page="lead-list-cleaner">
             Explore lead list cleanup
           </PageLink>
         </div>
 
         <section className="mt-16 border-t border-white/10 pt-10">
-          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#0D9488]">{page.keyword}</p>
-          <h2 className="mt-4 text-4xl font-semibold tracking-[-0.04em] text-white">{page.h2}</h2>
+          <p className="text-sm font-medium uppercase tracking-[0.24em] text-[rgb(var(--accent))]">{page.keyword}</p>
+          <h2 className="mt-4 text-4xl font-medium tracking-[-0.04em] text-white">{page.h2}</h2>
           <p className="mt-5 max-w-3xl text-justify leading-7 text-white/65 [hyphens:auto]">
             This page is powered by the same modular MarqClean AI cleaning engine used across every free CSV cleaner,
             Excel converter, lead list cleaner, CRM data cleanup tool, duplicate checker, and spreadsheet formatting workflow.
@@ -2571,8 +2571,8 @@ function ToolContentPage({ page }: { page: SeoToolPage }) {
 
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {page.sections.map((section) => (
-            <section key={section.h3} className="mc-glass rounded-2xl p-6">
-              <h3 className="text-xl font-semibold tracking-[-0.02em] text-white">{section.h3}</h3>
+            <section key={section.h3} className="mc-glass rounded-lg p-6">
+              <h3 className="text-xl font-medium tracking-[-0.02em] text-white">{section.h3}</h3>
               <p className="mt-3 text-[15px] leading-6 text-white/65">{section.body}</p>
             </section>
           ))}
@@ -3069,10 +3069,10 @@ export default function App() {
           window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
         }}
         aria-label="Back to top"
-        className={`fixed bottom-5 right-4 z-40 inline-flex h-11 w-11 items-center justify-center rounded-full
-          border border-white/15 bg-gradient-to-br from-[#0D9488] to-[#14B8A6] text-white shadow-[0_10px_30px_-8px_rgba(13,148,136,0.65)]
+        className={`fixed bottom-5 right-4 z-40 inline-flex h-11 w-11 items-center justify-center rounded-md
+          border border-white/15 bg-gradient-to-br from-[rgb(var(--accent))] to-[rgb(var(--accent))] text-white
           backdrop-blur transition-all duration-300 hover:shadow-[0_14px_36px_-6px_rgba(13,148,136,0.8)] hover:brightness-110
-          focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#08090f]
+          focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(var(--canvas))]
           sm:bottom-7 sm:right-6 sm:h-12 sm:w-12
           ${showBackToTop ? "translate-y-0 scale-100 opacity-100" : "pointer-events-none translate-y-3 scale-90 opacity-0"}`}
       >
@@ -3086,7 +3086,7 @@ export default function App() {
   if (currentPage === "data-engine") {
     return (
       <>
-        <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-[#f7fafc] text-slate-500">Loading Local Data Engine...</div>}>
+        <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-[rgb(var(--surface))] text-ink-3">Loading Local Data Engine...</div>}>
           <DataEngineStudio onExit={() => navigateToPage("home")} />
         </Suspense>
         {renderBackToTop()}
@@ -3097,7 +3097,7 @@ export default function App() {
   if (currentPage === "reconciliation-hub") {
     return (
       <>
-        <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-[#08090f] text-white/60">Loading Reconciliation Hub...</div>}>
+        <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-[rgb(var(--canvas))] text-white/60">Loading Reconciliation Hub...</div>}>
           <ReconciliationHub onExit={() => navigateToPage("home")} />
         </Suspense>
         {renderBackToTop()}
@@ -3108,7 +3108,7 @@ export default function App() {
   if (currentPage === "data-toolbox") {
     return (
       <>
-        <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-[#08090f] text-white/60">Loading Data Toolbox...</div>}>
+        <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-[rgb(var(--canvas))] text-white/60">Loading Data Toolbox...</div>}>
           <DataToolbox onExit={() => navigateToPage("home")} />
         </Suspense>
         {renderBackToTop()}
@@ -3119,7 +3119,7 @@ export default function App() {
   if (currentPage === "excel-automation") {
     return (
       <>
-        <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-[#0a0b16] text-[#b0bacb]">Loading Excel Automation...</div>}>
+        <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-[rgb(var(--surface))] text-[rgb(var(--ink-2))]">Loading Excel Automation...</div>}>
           <ClientFunds onExit={() => navigateToPage("home")} />
         </Suspense>
         {renderBackToTop()}
@@ -3130,7 +3130,7 @@ export default function App() {
   if (currentPage === "excel-academy") {
     return (
       <>
-        <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-[#0a0b16] text-[#b0bacb]">Loading Free Excel Academy...</div>}>
+        <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-[rgb(var(--surface))] text-[rgb(var(--ink-2))]">Loading Free Excel Academy...</div>}>
           <AcademyHub onExit={() => navigateToPage("home")} />
         </Suspense>
         {renderBackToTop()}
@@ -3147,18 +3147,18 @@ export default function App() {
   ];
 
   return (
-    <div className="amzigo-revamp min-h-screen bg-[#f6f3ec] text-slate-950">
+    <div className="amzigo-revamp min-h-screen bg-[rgb(var(--canvas))] text-ink">
       <a
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-slate-950"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-canvas focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-ink"
         href="#main-content"
       >
         Skip to content
       </a>
-      <header className="mc-glass fixed left-0 right-0 top-0 z-30 border-b border-slate-200/80 bg-white/95 text-slate-900 shadow-sm backdrop-blur-xl">
+      <header className="mc-glass fixed left-0 right-0 top-0 z-30 border-b border-line/80 bg-canvas/95 text-ink backdrop-blur-xl">
         <nav className="mx-auto flex max-w-[100rem] items-center justify-between gap-4 px-5 py-3.5 lg:px-8" aria-label="Primary navigation">
           <a
             href="/#top"
-            className="mc-display flex items-center gap-2 text-lg font-extrabold tracking-tight"
+            className="mc-display flex items-center gap-2 text-lg font-medium tracking-tight"
             onClick={(event) => {
               event.preventDefault();
               navigateToHomeSection("top");
@@ -3167,14 +3167,14 @@ export default function App() {
             <Logo className="shrink-0" />
           </a>
           <div className="hidden items-center gap-6 text-[13px] font-medium text-ink-2 xl:flex">
-            <a href="/#top" className="transition hover:text-[#0D9488]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("top"); }}>Home</a>
-            <a href="/#features" className="transition hover:text-[#0D9488]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("features"); }}>Platform</a>
-            <a href="/#services" className="transition hover:text-[#0D9488]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("services"); }}>Services</a>
-            <a href="/#workflow" className="transition hover:text-[#0D9488]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("workflow"); }}>How it works</a>
+            <a href="/#top" className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("top"); }}>Home</a>
+            <a href="/#features" className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("features"); }}>Platform</a>
+            <a href="/#services" className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("services"); }}>Services</a>
+            <a href="/#workflow" className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("workflow"); }}>How it works</a>
             <div className="relative" ref={productsMenuRef}>
               <button
                 type="button"
-                className="flex items-center gap-1 transition hover:text-[#0D9488] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0D9488]/50"
+                className="flex items-center gap-1 transition hover:text-[rgb(var(--accent))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/50"
                 aria-haspopup="true"
                 aria-expanded={isWorkspacesOpen}
                 aria-controls="workspaces-menu"
@@ -3186,14 +3186,14 @@ export default function App() {
                   id="workspaces-menu"
                   role="menu"
                   aria-label="Workspaces"
-                  className="absolute left-1/2 top-full mt-3 w-72 -translate-x-1/2 rounded-2xl border border-white/10 bg-[#0a0b16] p-2 text-sm shadow-2xl"
+                  className="absolute left-1/2 top-full mt-3 w-72 -translate-x-1/2 rounded-lg border border-white/10 bg-[rgb(var(--surface))] p-2 text-sm"
                 >
                   {productsMenu.map((item) => (
                     <a
                       key={item.label}
                       role="menuitem"
                       href={item.href}
-                      className="block rounded-lg px-3 py-2.5 font-medium text-white/80 transition hover:bg-white/5 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0D9488]/50"
+                      className="block rounded-lg px-3 py-2.5 font-medium text-white/80 transition hover:bg-canvas/5 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/50"
                       onClick={(e) => { e.preventDefault(); setIsWorkspacesOpen(false); item.onClick(); }}
                     >
                       {item.label}
@@ -3202,19 +3202,19 @@ export default function App() {
                 </div>
               ) : null}
             </div>
-            <a href="/contact" className="transition hover:text-[#0D9488]" onClick={(e) => { e.preventDefault(); navigateToPage("contact"); }}>Contact</a>
+            <a href="/contact" className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); navigateToPage("contact"); }}>Contact</a>
           </div>
           <div className="flex items-center gap-2">
             <ThemeToggle compact />
             <button
-              className="mc-cta-cyan hidden rounded-full px-5 py-2 text-sm font-semibold sm:inline-flex"
+              className="mc-cta-cyan hidden rounded-md px-5 py-2 text-sm font-medium sm:inline-flex"
               onClick={() => navigateToHomeSection("cleaner")}
             >
               Start Free
             </button>
             <button
               type="button"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white transition hover:border-[#0D9488]/60 hover:text-[#0D9488] xl:hidden"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/15 text-white transition hover:border-[rgb(var(--accent))]/60 hover:text-[rgb(var(--accent))] xl:hidden"
               aria-label={isMobileNavOpen ? "Close navigation menu" : "Open navigation menu"}
               aria-expanded={isMobileNavOpen}
               aria-controls="mobile-nav-panel"
@@ -3233,26 +3233,26 @@ export default function App() {
           </div>
         </nav>
         {isMobileNavOpen ? (
-          <div id="mobile-nav-panel" className="border-t border-slate-200 bg-white px-5 py-4 xl:hidden">
-            <div className="flex flex-col gap-1 text-[15px] font-medium text-slate-600">
-              <a className="rounded-xl px-3 py-2.5 transition hover:bg-sky-50 hover:text-[#0877e8]" href="/#top" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("top"); }}>Home</a>
-              <a className="rounded-lg px-3 py-2.5 transition hover:bg-white/5 hover:text-[#0D9488]" href="/#features" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("features"); }}>Platform</a>
-              <a className="rounded-xl px-3 py-2.5 transition hover:bg-sky-50 hover:text-[#0877e8]" href="/#services" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("services"); }}>Services</a>\n              <a className="rounded-xl px-3 py-2.5 transition hover:bg-sky-50 hover:text-[#0877e8]" href="/#workflow" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("workflow"); }}>How it works</a>
+          <div id="mobile-nav-panel" className="border-t border-line bg-canvas px-5 py-4 xl:hidden">
+            <div className="flex flex-col gap-1 text-[15px] font-medium text-ink-2">
+              <a className="rounded-lg px-3 py-2.5 transition hover:bg-sky-50 hover:text-[rgb(var(--accent))]" href="/#top" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("top"); }}>Home</a>
+              <a className="rounded-lg px-3 py-2.5 transition hover:bg-canvas/5 hover:text-[rgb(var(--accent))]" href="/#features" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("features"); }}>Platform</a>
+              <a className="rounded-lg px-3 py-2.5 transition hover:bg-sky-50 hover:text-[rgb(var(--accent))]" href="/#services" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("services"); }}>Services</a>\n              <a className="rounded-lg px-3 py-2.5 transition hover:bg-sky-50 hover:text-[rgb(var(--accent))]" href="/#workflow" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("workflow"); }}>How it works</a>
               <button
                 type="button"
-                className="flex items-center justify-between rounded-xl px-3 py-2.5 text-left transition hover:bg-sky-50 hover:text-[#0877e8]"
+                className="flex items-center justify-between rounded-lg px-3 py-2.5 text-left transition hover:bg-sky-50 hover:text-[rgb(var(--accent))]"
                 aria-expanded={isMobileWorkspacesOpen}
                 aria-controls="mobile-workspaces-menu"
                 onClick={() => setIsMobileWorkspacesOpen((open) => !open)}
               >Workspaces<svg className={`h-4 w-4 transition ${isMobileWorkspacesOpen ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
               </button>
               {isMobileWorkspacesOpen ? (
-                <div id="mobile-workspaces-menu" className="ml-3 flex flex-col gap-1 border-l border-slate-200 pl-3">
+                <div id="mobile-workspaces-menu" className="ml-3 flex flex-col gap-1 border-l border-line pl-3">
                   {productsMenu.map((item) => (
                     <a
                       key={item.label}
                       href={item.href}
-                      className="rounded-xl px-3 py-2 text-sm text-slate-600 transition hover:bg-sky-50 hover:text-[#0877e8]"
+                      className="rounded-lg px-3 py-2 text-sm text-ink-2 transition hover:bg-sky-50 hover:text-[rgb(var(--accent))]"
                       onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); setIsMobileWorkspacesOpen(false); item.onClick(); }}
                     >
                       {item.label}
@@ -3260,9 +3260,9 @@ export default function App() {
                   ))}
                 </div>
               ) : null}
-              <a className="rounded-lg px-3 py-2.5 transition hover:bg-white/5 hover:text-[#0D9488]" href="/contact" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToPage("contact"); }}>Contact</a>
+              <a className="rounded-lg px-3 py-2.5 transition hover:bg-canvas/5 hover:text-[rgb(var(--accent))]" href="/contact" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToPage("contact"); }}>Contact</a>
               <button
-                className="mc-cta-cyan mt-2 rounded-full px-5 py-2.5 text-sm font-semibold sm:hidden"
+                className="mc-cta-cyan mt-2 rounded-md px-5 py-2.5 text-sm font-medium sm:hidden"
                 onClick={() => { setIsMobileNavOpen(false); navigateToHomeSection("cleaner"); }}
               >
                 Start Free
@@ -3279,7 +3279,7 @@ export default function App() {
       ) : (
       <main id="main-content">
         <span id="top" className="sr-only">Top</span>
-        <Suspense fallback={<div className="min-h-[80vh] bg-[#08090f]" />}>
+        <Suspense fallback={<div className="min-h-[80vh] bg-[rgb(var(--canvas))]" />}>
           <HeroCarousel
             onCleanFile={() => {
               navigateToHomeSection("cleaner");
@@ -3293,11 +3293,11 @@ export default function App() {
           />
         </Suspense>
 
-        <section className="border-y border-white/10 bg-[#08090f] py-10 text-white">
+        <section className="border-y border-white/10 bg-[rgb(var(--canvas))] py-10 text-white">
           <div className="mx-auto flex max-w-6xl items-center justify-center gap-2 px-5 pb-6 text-xs text-white/40 lg:px-8">
             <span className="relative flex h-2 w-2">
-              <span className="mc-anim-glow-pulse absolute inline-flex h-full w-full rounded-full bg-[#0D9488]" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#0D9488]" />
+              <span className="mc-anim-glow-pulse absolute inline-flex h-full w-full rounded-md bg-[rgb(var(--accent))]" />
+              <span className="relative inline-flex h-2 w-2 rounded-md bg-[rgb(var(--accent))]" />
             </span>
             Engine live and processing in your browser right now
           </div>
@@ -3320,14 +3320,14 @@ export default function App() {
                 transition={{ duration: 0.4, ease: "easeOut" }}
                 className="text-center"
               >
-                <p className="mc-display bg-gradient-to-r from-[#5EEAD4] to-[#14B8A6] bg-clip-text text-3xl font-bold tracking-tight text-transparent sm:text-4xl">{stat.value}</p>
+                <p className="mc-display bg-gradient-to-r from-[rgb(var(--accent-hover))] to-[rgb(var(--accent))] bg-clip-text text-3xl font-medium tracking-tight text-transparent sm:text-4xl">{stat.value}</p>
                 <p className="mt-1 text-xs text-white/50 sm:text-sm">{stat.label}</p>
               </motion.div>
             ))}
           </motion.div>
         </section>
 
-        <section className="bg-white px-5 py-14 lg:px-8" aria-labelledby="smart-drop-heading">
+        <section className="bg-canvas px-5 py-14 lg:px-8" aria-labelledby="smart-drop-heading">
           <div id="smart-drop-heading" className="sr-only">Smart Drop data ingestion</div>
           <SmartDropzone onFile={(file, actions) => void handleFile(file, actions)} onRecommendation={handleSmartRecommendation} />
         </section>
@@ -3336,23 +3336,23 @@ export default function App() {
           <div className="ws-grid pointer-events-none absolute inset-x-0 top-0 h-[30rem]" aria-hidden="true" />
           <div className="relative mx-auto max-w-[100rem] px-5 py-16 lg:px-8">
             {/* Module header card (matches Excel Automation / Reconciliation Hub / Data Toolbox) */}
-            <div className="ws-surface mb-8 flex flex-wrap items-start justify-between gap-4 rounded-2xl p-6">
+            <div className="ws-surface mb-8 flex flex-wrap items-start justify-between gap-4 rounded-lg p-6">
               <div className="flex items-start gap-4">
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#0D9488]/20 to-[#14B8A6]/20 text-2xl ring-1 ring-inset ring-white/10">{WORKSPACE_MODULES[workspaceTab].icon}</span>
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[rgb(var(--accent))]/20 to-[rgb(var(--accent))]/20 text-2xl ring-1 ring-inset ring-white/10">{WORKSPACE_MODULES[workspaceTab].icon}</span>
                 <div>
-                  <h2 className="mc-display text-2xl font-bold tracking-tight text-white sm:text-3xl">{WORKSPACE_MODULES[workspaceTab].title}</h2>
-                  <p className="mc-prose mt-1 text-justify text-sm leading-relaxed text-[#b0bacb] [hyphens:auto]">{WORKSPACE_MODULES[workspaceTab].description}</p>
+                  <h2 className="mc-display text-2xl font-medium tracking-tight text-white sm:text-3xl">{WORKSPACE_MODULES[workspaceTab].title}</h2>
+                  <p className="mc-prose mt-1 text-justify text-sm leading-relaxed text-[rgb(var(--ink-2))] [hyphens:auto]">{WORKSPACE_MODULES[workspaceTab].description}</p>
                   <div className="mt-3 flex flex-wrap items-center gap-2">
                     {WORKSPACE_MODULES[workspaceTab].formats.map((f) => (
-                      <span key={f} className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide">{f}</span>
+                      <span key={f} className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide">{f}</span>
                     ))}
-                    <span className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-semibold text-[#5EEAD4]">Engine: {WORKSPACE_MODULES[workspaceTab].engine}</span>
+                    <span className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-medium text-[rgb(var(--accent-hover))]">Engine: {WORKSPACE_MODULES[workspaceTab].engine}</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <p className="mc-mono mb-2 text-[11px] uppercase tracking-[0.2em] text-[#8a94a8]">Modules Available ({4})</p>
+            <p className="mc-mono mb-2 text-[11px] uppercase tracking-[0.2em] text-[rgb(var(--ink-3))]">Modules Available ({4})</p>
             <div className="mb-8 flex flex-wrap gap-2" role="tablist" aria-label="Data tools">
               {([
                 ["leads", "Quick Data & CSV Cleaner"],
@@ -3365,7 +3365,7 @@ export default function App() {
                   type="button"
                   role="tab"
                   aria-selected={workspaceTab === key}
-                  className={`rounded-full border px-5 py-2.5 text-sm font-semibold transition ${workspaceTab === key ? "border-[#0D9488]/60 bg-[#0D9488]/10 text-white" : "border-white/12 bg-white/[0.03] text-[#b0bacb] hover:border-white/30 hover:text-white"}`}
+                  className={`rounded-md border px-5 py-2.5 text-sm font-medium transition ${workspaceTab === key ? "border-[rgb(var(--accent))]/60 bg-[rgb(var(--accent))]/10 text-white" : "border-white/12 bg-canvas/[0.03] text-[rgb(var(--ink-2))] hover:border-white/30 hover:text-white"}`}
                   onClick={() => setWorkspaceTab(key)}
                 >
                   {label}
@@ -3382,19 +3382,19 @@ export default function App() {
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
             <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.28em] text-teal-700">Automated CSV cleaner</p>
-              <h3 className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-slate-950">
+              <p className="text-sm font-medium uppercase tracking-[0.28em] text-teal-700">Automated CSV cleaner</p>
+              <h3 className="mt-4 text-3xl font-medium tracking-[-0.03em] text-ink">
                 Upload messy marketing data for free. Download a clean Excel workbook.
               </h3>
-              <p className="mt-5 text-lg leading-8 text-slate-700">
+              <p className="mt-5 text-lg leading-8 text-ink-2">
                 {PRODUCT_NAME} runs local browser-based cleaning for CSV and XLSX lead lists, giving marketing teams a
                 fast way to standardize outreach data without payment, signup, or repetitive spreadsheet edits.
               </p>
             </div>
 
-            <div className="rounded-[2rem] border border-slate-200 bg-white p-4 shadow-2xl shadow-slate-900/10 sm:p-6" aria-busy={isProcessing}>
+            <div className="rounded-[2rem] border border-line bg-canvas p-4 shadow-slate-900/10 sm:p-6" aria-busy={isProcessing}>
               <div
-                className="rounded-[1.5rem] border border-dashed border-slate-300 bg-slate-50 p-6 text-center transition hover:border-teal-500 hover:bg-teal-50/40"
+                className="rounded-[1.5rem] border border-dashed border-line bg-surface p-6 text-center transition hover:border-teal-500 hover:bg-teal-50/40"
                 onDragOver={(event) => event.preventDefault()}
                 onDrop={(event) => {
                   event.preventDefault();
@@ -3409,28 +3409,28 @@ export default function App() {
                   aria-label="Upload CSV or Excel file for cleaning"
                   onChange={(event) => handleFileInput(event.target.files)}
                 />
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-slate-950 text-white">
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-md bg-slate-950 text-white">
                   <svg className="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                     <path d="M12 16V4" strokeLinecap="round" />
                     <path d="m7 9 5-5 5 5" strokeLinecap="round" strokeLinejoin="round" />
                     <path d="M20 16.5v1.75A1.75 1.75 0 0 1 18.25 20H5.75A1.75 1.75 0 0 1 4 18.25V16.5" strokeLinecap="round" />
                   </svg>
                 </div>
-                <h4 className="mt-5 text-2xl font-semibold tracking-[-0.03em] text-slate-950">CSV and Excel upload</h4>
-                <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600">
+                <h4 className="mt-5 text-2xl font-medium tracking-[-0.03em] text-ink">CSV and Excel upload</h4>
+                <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-ink-2">
                   Drop a .csv or .xlsx file here, or choose a file to automatically clean names, companies,
                   industries, emails, phones, and spreadsheet headers. Maximum file size is {MAX_FILE_SIZE_LABEL}.
                 </p>
                 <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
                   <button
-                    className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-teal-700"
+                    className="rounded-md bg-slate-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-teal-700"
                     onClick={() => fileInputRef.current?.click()}
                     disabled={isProcessing}
                   >
                     {isProcessing ? "Processing" : "Choose File"}
                   </button>
                   <button
-                    className="rounded-full border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-800 transition hover:border-slate-950"
+                    className="rounded-md border border-line px-5 py-3 text-sm font-medium text-ink transition hover:border-slate-950"
                     onClick={loadSampleData}
                     disabled={isProcessing}
                   >
@@ -3442,12 +3442,12 @@ export default function App() {
               <AnimatePresence>
                 {isProcessing ? (
                   <motion.div
-                    className="mt-5 overflow-hidden rounded-2xl bg-slate-100"
+                    className="mt-5 overflow-hidden rounded-lg bg-surface"
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}
                   >
-                    <div className="p-4 text-sm font-medium text-slate-700" role="status">Cleaning fields and preparing exports...</div>
+                    <div className="p-4 text-sm font-medium text-ink-2" role="status">Cleaning fields and preparing exports...</div>
                     <motion.div
                       className="h-1 bg-teal-500"
                       initial={{ width: "12%" }}
@@ -3458,7 +3458,7 @@ export default function App() {
                 ) : null}
               </AnimatePresence>
 
-              {error ? <p className="mt-4 rounded-2xl bg-red-50 p-4 text-sm font-medium text-red-700" role="alert">{error}</p> : null}
+              {error ? <p className="mt-4 rounded-lg bg-red-50 p-4 text-sm font-medium text-red-700" role="alert">{error}</p> : null}
 
               <AnimatePresence>
                 {result ? (
@@ -3470,30 +3470,30 @@ export default function App() {
                     transition={{ duration: 0.45 }}
                   >
                     <div className="grid gap-3 sm:grid-cols-3">
-                      <div className="rounded-2xl bg-slate-950 p-4 text-white">
-                        <p className="text-3xl font-semibold">{result.stats.cleanedRows}</p>
+                      <div className="rounded-lg bg-slate-950 p-4 text-white">
+                        <p className="text-3xl font-medium">{result.stats.cleanedRows}</p>
                         <p className="mt-1 text-xs uppercase tracking-[0.18em] text-white/60">Rows cleaned</p>
                       </div>
-                      <div className="rounded-2xl bg-teal-100 p-4 text-slate-950">
-                        <p className="text-3xl font-semibold">{result.stats.fieldRepairs + result.stats.headerFixes}</p>
-                        <p className="mt-1 text-xs uppercase tracking-[0.18em] text-slate-600">Fixes applied</p>
+                      <div className="rounded-lg bg-teal-100 p-4 text-ink">
+                        <p className="text-3xl font-medium">{result.stats.fieldRepairs + result.stats.headerFixes}</p>
+                        <p className="mt-1 text-xs uppercase tracking-[0.18em] text-ink-2">Fixes applied</p>
                       </div>
-                      <div className="rounded-2xl bg-amber-100 p-4 text-slate-950">
-                        <p className="text-3xl font-semibold">{result.stats.industriesAdded}</p>
-                        <p className="mt-1 text-xs uppercase tracking-[0.18em] text-slate-600">Industries added</p>
+                      <div className="rounded-lg bg-amber-100 p-4 text-ink">
+                        <p className="text-3xl font-medium">{result.stats.industriesAdded}</p>
+                        <p className="mt-1 text-xs uppercase tracking-[0.18em] text-ink-2">Industries added</p>
                       </div>
                     </div>
 
                     <div className="mt-5 flex flex-col gap-3 sm:flex-row">
                       <motion.button
-                        className="rounded-full bg-teal-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-teal-300"
+                        className="rounded-md bg-teal-500 px-5 py-3 text-sm font-medium text-ink transition hover:bg-teal-300"
                         onClick={downloadXlsx}
                         whileTap={{ scale: 0.98 }}
                       >
                         Download Clean Excel
                       </motion.button>
                       <motion.button
-                        className="rounded-full border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-800 transition hover:border-slate-950"
+                        className="rounded-md border border-line px-5 py-3 text-sm font-medium text-ink transition hover:border-slate-950"
                         onClick={downloadCsv}
                         whileTap={{ scale: 0.98 }}
                       >
@@ -3501,23 +3501,23 @@ export default function App() {
                       </motion.button>
                     </div>
 
-                    <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200">
-                      <div className="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-3">
-                        <h4 className="text-sm font-semibold text-slate-950">Cleaned lead preview</h4>
-                        <p className="text-xs text-slate-500">Showing {previewRows.length} rows</p>
+                    <div className="mt-6 overflow-hidden rounded-lg border border-line">
+                      <div className="flex items-center justify-between border-b border-line bg-surface px-4 py-3">
+                        <h4 className="text-sm font-medium text-ink">Cleaned lead preview</h4>
+                        <p className="text-xs text-ink-3">Showing {previewRows.length} rows</p>
                       </div>
                       <div className="overflow-x-auto">
                         <table className="min-w-full text-left text-sm">
-                          <thead className="bg-white text-xs uppercase tracking-[0.12em] text-slate-500">
+                          <thead className="bg-canvas text-xs uppercase tracking-[0.12em] text-ink-3">
                             <tr>
                               {visibleHeaders.map((header) => (
-                                <th className="whitespace-nowrap px-4 py-3 font-semibold" key={header}>
+                                <th className="whitespace-nowrap px-4 py-3 font-medium" key={header}>
                                   {header}
                                 </th>
                               ))}
                             </tr>
                           </thead>
-                          <tbody className="divide-y divide-slate-100 bg-white">
+                          <tbody className="divide-y divide-slate-100 bg-canvas">
                             {previewRows.map((row, rowIndex) => (
                               <motion.tr
                                 key={`${row.Email}-${rowIndex}`}
@@ -3526,7 +3526,7 @@ export default function App() {
                                 transition={{ delay: rowIndex * 0.04 }}
                               >
                                 {visibleHeaders.map((header) => (
-                                  <td className="max-w-64 truncate px-4 py-3 text-slate-700" key={header}>
+                                  <td className="max-w-64 truncate px-4 py-3 text-ink-2" key={header}>
                                     {row[header] || "-"}
                                   </td>
                                 ))}
@@ -3537,7 +3537,7 @@ export default function App() {
                       </div>
                     </div>
 
-                    <p className="mt-4 text-xs leading-5 text-slate-500">
+                    <p className="mt-4 text-xs leading-5 text-ink-3">
                       Source headers detected: {result.originalHeaders.join(", ") || "None"}. Files are processed in your
                       browser and are not uploaded to a server.
                     </p>
@@ -3554,21 +3554,21 @@ export default function App() {
               transition={{ duration: 0.5, ease: "easeOut" }}
             >
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.28em] text-teal-700">CSV to Excel converter</p>
-                <h3 className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-slate-950">
+                <p className="text-sm font-medium uppercase tracking-[0.28em] text-teal-700">CSV to Excel converter</p>
+                <h3 className="mt-4 text-3xl font-medium tracking-[-0.03em] text-ink">
                   Split delimited text into columns, just like the Excel wizard.
                 </h3>
-                <p className="mt-5 text-lg leading-8 text-slate-700">
+                <p className="mt-5 text-lg leading-8 text-ink-2">
                   Upload a CSV or TXT file, choose the same delimiter and text qualifier options as the Excel Data tab
                   Text to Columns wizard, preview the split result, and export a properly formatted Excel workbook.
                   Upload an XLSX file instead to reverse the conversion into delimited CSV or TXT.
                 </p>
-                <p className="mt-4 text-sm text-slate-500">Maximum file size is {MAX_FILE_SIZE_LABEL}.</p>
+                <p className="mt-4 text-sm text-ink-3">Maximum file size is {MAX_FILE_SIZE_LABEL}.</p>
               </div>
 
-              <div className="rounded-[2rem] border border-slate-200 bg-white p-4 shadow-2xl shadow-slate-900/10 sm:p-6" aria-busy={converterProcessing}>
+              <div className="rounded-[2rem] border border-line bg-canvas p-4 shadow-slate-900/10 sm:p-6" aria-busy={converterProcessing}>
                 <div
-                  className="rounded-[1.5rem] border border-dashed border-slate-300 bg-slate-50 p-6 text-center transition hover:border-teal-500 hover:bg-teal-50/40"
+                  className="rounded-[1.5rem] border border-dashed border-line bg-surface p-6 text-center transition hover:border-teal-500 hover:bg-teal-50/40"
                   onDragOver={(event) => event.preventDefault()}
                   onDrop={(event) => {
                     event.preventDefault();
@@ -3583,14 +3583,14 @@ export default function App() {
                     aria-label="Upload CSV, TXT, or Excel file to convert"
                     onChange={(event) => handleConverterFileInput(event.target.files)}
                   />
-                  <h4 className="text-2xl font-semibold tracking-[-0.03em] text-slate-950">CSV, TXT, or Excel upload</h4>
-                  <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600">
+                  <h4 className="text-2xl font-medium tracking-[-0.03em] text-ink">CSV, TXT, or Excel upload</h4>
+                  <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-ink-2">
                     Drop a delimited text file to split it into columns, or drop an XLSX file to convert it back into
                     delimited text.
                   </p>
                   <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
                     <button
-                      className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-teal-700"
+                      className="rounded-md bg-slate-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-teal-700"
                       onClick={() => converterInputRef.current?.click()}
                       disabled={converterProcessing}
                     >
@@ -3599,12 +3599,12 @@ export default function App() {
                   </div>
                 </div>
 
-                {converterError ? <p className="mt-4 rounded-2xl bg-red-50 p-4 text-sm font-medium text-red-700" role="alert">{converterError}</p> : null}
+                {converterError ? <p className="mt-4 rounded-lg bg-red-50 p-4 text-sm font-medium text-red-700" role="alert">{converterError}</p> : null}
 
                 {converterMode ? (
                   <div className="mt-6">
-                    <h4 className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">Delimiters</h4>
-                    <div className="mt-3 flex flex-wrap gap-4 text-sm text-slate-700">
+                    <h4 className="text-sm font-medium uppercase tracking-[0.18em] text-ink-3">Delimiters</h4>
+                    <div className="mt-3 flex flex-wrap gap-4 text-sm text-ink-2">
                       {(["tab", "semicolon", "comma", "space", "other"] as DelimiterOption[]).map((option) => (
                         <label className="flex items-center gap-2" key={option}>
                           <input
@@ -3617,7 +3617,7 @@ export default function App() {
                       ))}
                       {wizardSettings.delimiters.other ? (
                         <input
-                          className="w-16 rounded border border-slate-300 px-2 py-1 text-sm"
+                          className="w-16 rounded border border-line px-2 py-1 text-sm"
                           maxLength={1}
                           value={wizardSettings.otherChar}
                           onChange={(event) => setWizardSettings((previous) => ({ ...previous, otherChar: event.target.value }))}
@@ -3626,7 +3626,7 @@ export default function App() {
                       ) : null}
                     </div>
 
-                    <div className="mt-4 flex flex-wrap items-center gap-6 text-sm text-slate-700">
+                    <div className="mt-4 flex flex-wrap items-center gap-6 text-sm text-ink-2">
                       <label className="flex items-center gap-2">
                         <input
                           type="checkbox"
@@ -3638,7 +3638,7 @@ export default function App() {
                       <label className="flex items-center gap-2">
                         Text qualifier
                         <select
-                          className="rounded border border-slate-300 px-2 py-1"
+                          className="rounded border border-line px-2 py-1"
                           value={wizardSettings.textQualifier}
                           onChange={(event) => setWizardSettings((previous) => ({ ...previous, textQualifier: event.target.value as TextQualifier }))}
                         >
@@ -3649,17 +3649,17 @@ export default function App() {
                       </label>
                     </div>
 
-                    <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200">
-                      <div className="border-b border-slate-200 bg-slate-50 px-4 py-3">
-                        <h4 className="text-sm font-semibold text-slate-950">Data preview</h4>
+                    <div className="mt-6 overflow-hidden rounded-lg border border-line">
+                      <div className="border-b border-line bg-surface px-4 py-3">
+                        <h4 className="text-sm font-medium text-ink">Data preview</h4>
                       </div>
                       <div className="max-h-72 overflow-auto">
                         <table className="min-w-full text-left text-sm">
-                          <tbody className="divide-y divide-slate-100 bg-white">
+                          <tbody className="divide-y divide-slate-100 bg-canvas">
                             {converterPreviewMatrix.slice(0, 8).map((row, rowIndex) => (
                               <tr key={rowIndex}>
                                 {row.map((value, columnIndex) => (
-                                  <td className="max-w-56 truncate px-4 py-2 text-slate-700" key={columnIndex}>
+                                  <td className="max-w-56 truncate px-4 py-2 text-ink-2" key={columnIndex}>
                                     {value || "-"}
                                   </td>
                                 ))}
@@ -3672,21 +3672,21 @@ export default function App() {
 
                     <div className="mt-5 flex flex-col gap-3 sm:flex-row">
                       <motion.button
-                        className="rounded-full bg-teal-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-teal-300"
+                        className="rounded-md bg-teal-500 px-5 py-3 text-sm font-medium text-ink transition hover:bg-teal-300"
                         onClick={downloadConverterExcel}
                         whileTap={{ scale: 0.98 }}
                       >
                         Download as Excel
                       </motion.button>
                       <motion.button
-                        className="rounded-full border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-800 transition hover:border-slate-950"
+                        className="rounded-md border border-line px-5 py-3 text-sm font-medium text-ink transition hover:border-slate-950"
                         onClick={downloadConverterText}
                         whileTap={{ scale: 0.98 }}
                       >
                         {converterMode === "excel-to-text" ? "Download as CSV or TXT" : "Download as Normalized CSV"}
                       </motion.button>
                     </div>
-                    <p className="mt-4 text-xs leading-5 text-slate-500">
+                    <p className="mt-4 text-xs leading-5 text-ink-3">
                       Files are processed in your browser and are not uploaded to a server.
                     </p>
                   </div>
@@ -3701,21 +3701,21 @@ export default function App() {
               transition={{ duration: 0.5, ease: "easeOut" }}
             >
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.28em] text-teal-700">Excel formulas and formatting</p>
-                <h3 className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-slate-950">
+                <p className="text-sm font-medium uppercase tracking-[0.28em] text-teal-700">Excel formulas and formatting</p>
+                <h3 className="mt-4 text-3xl font-medium tracking-[-0.03em] text-ink">
                   Add totals, currency, percentage, and date formatting to your Excel export.
                 </h3>
-                <p className="mt-5 text-lg leading-8 text-slate-700">
+                <p className="mt-5 text-lg leading-8 text-ink-2">
                   Upload a CSV or Excel file, choose a calculation for each numeric column such as sum, average, count,
                   minimum, or maximum, and download a formatted Excel workbook with real formulas, a frozen header row,
                   autofilter, and a totals row.
                 </p>
-                <p className="mt-4 text-sm text-slate-500">Maximum file size is {MAX_FILE_SIZE_LABEL}.</p>
+                <p className="mt-4 text-sm text-ink-3">Maximum file size is {MAX_FILE_SIZE_LABEL}.</p>
               </div>
 
-              <div className="rounded-[2rem] border border-slate-200 bg-white p-4 shadow-2xl shadow-slate-900/10 sm:p-6" aria-busy={formulaProcessing}>
+              <div className="rounded-[2rem] border border-line bg-canvas p-4 shadow-slate-900/10 sm:p-6" aria-busy={formulaProcessing}>
                 <div
-                  className="rounded-[1.5rem] border border-dashed border-slate-300 bg-slate-50 p-6 text-center transition hover:border-teal-500 hover:bg-teal-50/40"
+                  className="rounded-[1.5rem] border border-dashed border-line bg-surface p-6 text-center transition hover:border-teal-500 hover:bg-teal-50/40"
                   onDragOver={(event) => event.preventDefault()}
                   onDrop={(event) => {
                     event.preventDefault();
@@ -3730,14 +3730,14 @@ export default function App() {
                     aria-label="Upload CSV or Excel file for formulas and formatting"
                     onChange={(event) => handleFormulaFileInput(event.target.files)}
                   />
-                  <h4 className="text-2xl font-semibold tracking-[-0.03em] text-slate-950">CSV or Excel upload</h4>
-                  <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600">
+                  <h4 className="text-2xl font-medium tracking-[-0.03em] text-ink">CSV or Excel upload</h4>
+                  <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-ink-2">
                     Drop a spreadsheet with a header row. Numeric, currency, percentage, and date columns are detected
                     automatically.
                   </p>
                   <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
                     <button
-                      className="rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-teal-700"
+                      className="rounded-md bg-slate-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-teal-700"
                       onClick={() => formulaInputRef.current?.click()}
                       disabled={formulaProcessing}
                     >
@@ -3746,24 +3746,24 @@ export default function App() {
                   </div>
                 </div>
 
-                {formulaError ? <p className="mt-4 rounded-2xl bg-red-50 p-4 text-sm font-medium text-red-700" role="alert">{formulaError}</p> : null}
+                {formulaError ? <p className="mt-4 rounded-lg bg-red-50 p-4 text-sm font-medium text-red-700" role="alert">{formulaError}</p> : null}
 
                 {formulaMatrix ? (
                   <div className="mt-6">
-                    <h4 className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">Column calculations</h4>
+                    <h4 className="text-sm font-medium uppercase tracking-[0.18em] text-ink-3">Column calculations</h4>
                     <div className="mt-3 max-h-64 space-y-3 overflow-auto pr-1">
                       {formulaMatrix[0].map((header, columnIndex) => {
                         const type = formulaColumnTypes[columnIndex] ?? "text";
                         const isCalculable = type === "numeric" || type === "currency" || type === "percent";
 
                         return (
-                          <div className="flex items-center justify-between gap-3 rounded-xl border border-slate-200 px-3 py-2" key={columnIndex}>
+                          <div className="flex items-center justify-between gap-3 rounded-lg border border-line px-3 py-2" key={columnIndex}>
                             <div className="min-w-0">
-                              <p className="truncate text-sm font-semibold text-slate-900">{header || `Column ${columnIndex + 1}`}</p>
-                              <p className="text-xs uppercase tracking-[0.12em] text-slate-400">{type}</p>
+                              <p className="truncate text-sm font-medium text-ink">{header || `Column ${columnIndex + 1}`}</p>
+                              <p className="text-xs uppercase tracking-[0.12em] text-ink-3">{type}</p>
                             </div>
                             <select
-                              className="rounded border border-slate-300 px-2 py-1 text-sm disabled:opacity-40"
+                              className="rounded border border-line px-2 py-1 text-sm disabled:opacity-40"
                               value={aggregateChoices[columnIndex] ?? "none"}
                               disabled={!isCalculable}
                               onChange={(event) => updateAggregateChoice(columnIndex, event.target.value as AggregateChoice)}
@@ -3781,14 +3781,14 @@ export default function App() {
 
                     <div className="mt-5">
                       <motion.button
-                        className="rounded-full bg-teal-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-teal-300"
+                        className="rounded-md bg-teal-500 px-5 py-3 text-sm font-medium text-ink transition hover:bg-teal-300"
                         onClick={downloadFormulaWorkbook}
                         whileTap={{ scale: 0.98 }}
                       >
                         Download Formatted Excel
                       </motion.button>
                     </div>
-                    <p className="mt-4 text-xs leading-5 text-slate-500">
+                    <p className="mt-4 text-xs leading-5 text-ink-3">
                       Formulas and number formatting are saved in the Excel file. CSV does not support formulas, so this
                       tool exports Excel only. Files are processed in your browser and are not uploaded to a server.
                     </p>
@@ -3804,16 +3804,16 @@ export default function App() {
               transition={{ duration: 0.5, ease: "easeOut" }}
             >
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.28em] text-teal-700">Bank Ledger X</p>
-                <h3 className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-slate-950">
+                <p className="text-sm font-medium uppercase tracking-[0.28em] text-teal-700">Bank Ledger X</p>
+                <h3 className="mt-4 text-3xl font-medium tracking-[-0.03em] text-ink">
                   Turn PDF bank statements into clean Excel, CSV, and QIF files.
                 </h3>
-                <p className="mt-5 text-lg leading-8 text-slate-700">
+                <p className="mt-5 text-lg leading-8 text-ink-2">
                   Upload a PDF statement from any bank, or paste statement text, and {PRODUCT_NAME} extracts every
                   transaction into a clean structure with normalized dates, descriptions, amounts, and balances. Export
                   import-ready files for QuickBooks, Xero, Sage, Excel, and any tool that reads Excel, CSV, or QIF.
                 </p>
-                <ul className="mt-5 space-y-2 text-sm text-slate-600">
+                <ul className="mt-5 space-y-2 text-sm text-ink-2">
                   <li>Works with digital PDF statements and text based exports</li>
                   <li>Normalizes dates, amounts, debits, credits, and balances</li>
                   <li>Exports Excel, CSV, and QIF for accounting software</li>
@@ -3821,9 +3821,9 @@ export default function App() {
                 </ul>
               </div>
 
-              <div className="rounded-[2rem] border border-slate-200 bg-white p-4 shadow-2xl shadow-slate-900/10 sm:p-6" aria-busy={bankProcessing}>
+              <div className="rounded-[2rem] border border-line bg-canvas p-4 shadow-slate-900/10 sm:p-6" aria-busy={bankProcessing}>
                 <div
-                  className="rounded-[1.5rem] border border-dashed border-slate-300 bg-slate-50 p-6 text-center transition hover:border-teal-500 hover:bg-teal-50/40"
+                  className="rounded-[1.5rem] border border-dashed border-line bg-surface p-6 text-center transition hover:border-teal-500 hover:bg-teal-50/40"
                   onDragOver={(event) => event.preventDefault()}
                   onDrop={(event) => {
                     event.preventDefault();
@@ -3838,13 +3838,13 @@ export default function App() {
                     aria-label="Upload a bank statement PDF or text file"
                     onChange={(event) => handleBankFileInput(event.target.files)}
                   />
-                  <h4 className="text-2xl font-semibold tracking-[-0.03em] text-slate-950">Upload a bank statement</h4>
-                  <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600">
+                  <h4 className="text-2xl font-medium tracking-[-0.03em] text-ink">Upload a bank statement</h4>
+                  <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-ink-2">
                     Drop a PDF, TXT, or CSV statement, or choose a file. Scanned image-only PDFs may need to be pasted as
                     text below.
                   </p>
                   <button
-                    className="mt-6 rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-teal-700"
+                    className="mt-6 rounded-md bg-slate-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-teal-700"
                     onClick={() => bankInputRef.current?.click()}
                     disabled={bankProcessing}
                   >
@@ -3853,67 +3853,67 @@ export default function App() {
                 </div>
 
                 <div className="mt-4">
-                  <label className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
+                  <label className="text-xs font-medium uppercase tracking-[0.14em] text-ink-3">
                     Or paste statement text
                   </label>
                   <textarea
-                    className="mt-2 h-24 w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
+                    className="mt-2 h-24 w-full rounded-lg border border-line px-3 py-2 text-sm"
                     placeholder="2026-06-03 Client payment 2,500.00 12,480.40"
                     value={bankPastedText}
                     onChange={(event) => setBankPastedText(event.target.value)}
                     aria-label="Paste bank statement text"
                   />
                   <button
-                    className="mt-2 rounded-full border border-slate-300 px-4 py-2 text-xs font-semibold text-slate-700 transition hover:border-slate-950"
+                    className="mt-2 rounded-md border border-line px-4 py-2 text-xs font-medium text-ink-2 transition hover:border-slate-950"
                     onClick={convertPastedStatement}
                   >
                     Convert pasted text
                   </button>
                 </div>
 
-                {bankError ? <p className="mt-4 rounded-2xl bg-red-50 p-4 text-sm font-medium text-red-700" role="alert">{bankError}</p> : null}
+                {bankError ? <p className="mt-4 rounded-lg bg-red-50 p-4 text-sm font-medium text-red-700" role="alert">{bankError}</p> : null}
 
                 {bankTransactions ? (
                   <div className="mt-6">
-                    <div className="rounded-2xl bg-slate-950 p-4 text-white">
-                      <p className="text-3xl font-semibold">{bankTransactions.length}</p>
+                    <div className="rounded-lg bg-slate-950 p-4 text-white">
+                      <p className="text-3xl font-medium">{bankTransactions.length}</p>
                       <p className="mt-1 text-xs uppercase tracking-[0.18em] text-white/60">Transactions extracted</p>
                     </div>
 
                     <div className="mt-5 flex flex-wrap gap-2">
-                      <button className="rounded-full bg-teal-500 px-4 py-2 text-xs font-semibold text-slate-950 transition hover:bg-teal-300" onClick={() => downloadBankStatement("xlsx")}>Download Excel</button>
-                      <button className="rounded-full border border-slate-300 px-4 py-2 text-xs font-semibold text-slate-700 transition hover:border-slate-950" onClick={() => downloadBankStatement("csv")}>Download CSV</button>
-                      <button className="rounded-full border border-slate-300 px-4 py-2 text-xs font-semibold text-slate-700 transition hover:border-slate-950" onClick={() => downloadBankStatement("qif")}>Download QIF</button>
+                      <button className="rounded-md bg-teal-500 px-4 py-2 text-xs font-medium text-ink transition hover:bg-teal-300" onClick={() => downloadBankStatement("xlsx")}>Download Excel</button>
+                      <button className="rounded-md border border-line px-4 py-2 text-xs font-medium text-ink-2 transition hover:border-slate-950" onClick={() => downloadBankStatement("csv")}>Download CSV</button>
+                      <button className="rounded-md border border-line px-4 py-2 text-xs font-medium text-ink-2 transition hover:border-slate-950" onClick={() => downloadBankStatement("qif")}>Download QIF</button>
                     </div>
 
-                    <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200">
-                      <div className="border-b border-slate-200 bg-slate-50 px-4 py-3">
-                        <h4 className="text-sm font-semibold text-slate-950">Transaction preview</h4>
+                    <div className="mt-6 overflow-hidden rounded-lg border border-line">
+                      <div className="border-b border-line bg-surface px-4 py-3">
+                        <h4 className="text-sm font-medium text-ink">Transaction preview</h4>
                       </div>
                       <div className="max-h-72 overflow-auto">
                         <table className="min-w-full text-left text-sm">
-                          <thead className="bg-white text-xs uppercase tracking-[0.1em] text-slate-500">
+                          <thead className="bg-canvas text-xs uppercase tracking-[0.1em] text-ink-3">
                             <tr>
-                              <th className="px-4 py-2 font-semibold">Date</th>
-                              <th className="px-4 py-2 font-semibold">Description</th>
-                              <th className="px-4 py-2 font-semibold">Amount</th>
-                              <th className="px-4 py-2 font-semibold">Balance</th>
+                              <th className="px-4 py-2 font-medium">Date</th>
+                              <th className="px-4 py-2 font-medium">Description</th>
+                              <th className="px-4 py-2 font-medium">Amount</th>
+                              <th className="px-4 py-2 font-medium">Balance</th>
                             </tr>
                           </thead>
-                          <tbody className="divide-y divide-slate-100 bg-white">
+                          <tbody className="divide-y divide-slate-100 bg-canvas">
                             {bankTransactions.slice(0, 12).map((transaction, index) => (
                               <tr key={index}>
-                                <td className="whitespace-nowrap px-4 py-2 text-slate-700">{transaction.date}</td>
-                                <td className="max-w-56 truncate px-4 py-2 text-slate-700">{transaction.description}</td>
-                                <td className="whitespace-nowrap px-4 py-2 text-slate-700">{transaction.amount || "-"}</td>
-                                <td className="whitespace-nowrap px-4 py-2 text-slate-700">{transaction.balance || "-"}</td>
+                                <td className="whitespace-nowrap px-4 py-2 text-ink-2">{transaction.date}</td>
+                                <td className="max-w-56 truncate px-4 py-2 text-ink-2">{transaction.description}</td>
+                                <td className="whitespace-nowrap px-4 py-2 text-ink-2">{transaction.amount || "-"}</td>
+                                <td className="whitespace-nowrap px-4 py-2 text-ink-2">{transaction.balance || "-"}</td>
                               </tr>
                             ))}
                           </tbody>
                         </table>
                       </div>
                     </div>
-                    <p className="mt-4 text-xs leading-5 text-slate-500">
+                    <p className="mt-4 text-xs leading-5 text-ink-3">
                       Statements are processed in your browser and are not uploaded to a server. Always review extracted
                       values before using them for accounting.
                     </p>
@@ -3935,8 +3935,8 @@ export default function App() {
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
-              <p className="mc-mono text-sm font-semibold uppercase tracking-[0.28em] text-[#0D9488]">Platform capabilities</p>
-              <h2 className="mc-display mt-4 text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl">
+              <p className="mc-mono text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">Platform capabilities</p>
+              <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-white sm:text-5xl">
                 Built for data cleaning, CSV processing, Excel automation and reconciliation.
               </h2>
               <p className="mc-prose mt-5 text-lg leading-relaxed text-white/70">
@@ -3955,29 +3955,29 @@ export default function App() {
               <motion.div
                 variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0 } }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className="mc-glass mc-card-interactive group relative overflow-hidden rounded-2xl p-7 hover:border-[#0D9488]/50 hover:shadow-[0_20px_60px_-20px_rgba(13,148,136,0.4)] lg:col-span-2 lg:row-span-2"
+                className="mc-glass mc-card-interactive group relative overflow-hidden rounded-lg p-7 hover:border-[rgb(var(--accent))]/50 hover:shadow-[0_20px_60px_-20px_rgba(13,148,136,0.4)] lg:col-span-2 lg:row-span-2"
               >
-                <div className="mc-anim-float pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-[#0D9488]/20 blur-3xl transition group-hover:bg-[#0D9488]/30" aria-hidden="true" />
-                <span className="mc-mono relative inline-flex rounded-full border border-[#0D9488]/30 bg-[#0D9488]/10 px-3 py-1 text-[11px] font-semibold text-[#5EEAD4]">DATA CLEANING</span>
-                <h3 className="mc-display relative mt-5 text-2xl font-semibold tracking-[-0.02em] text-white lg:text-3xl">Name formatting and capitalization</h3>
+                <div className="mc-anim-float pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-md bg-[rgb(var(--accent))]/20 blur-3xl transition group-hover:bg-[rgb(var(--accent))]/30" aria-hidden="true" />
+                <span className="mc-mono relative inline-flex rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-3 py-1 text-[11px] font-medium text-[rgb(var(--accent-hover))]">DATA CLEANING</span>
+                <h3 className="mc-display relative mt-5 text-2xl font-medium tracking-[-0.02em] text-white lg:text-3xl">Name formatting and capitalization</h3>
                 <p className="relative mt-4 max-w-md text-[15px] leading-6 text-white/65">
                   Converts inconsistent contact names, job titles, company names, cities, states, and countries into clean,
                   readable values for CRM imports and email personalization.
                 </p>
                 <div className="relative mt-6 flex flex-wrap gap-2 font-mono text-xs text-white/40">
                   <span className="rounded-md border border-white/10 bg-black/20 px-2 py-1 line-through decoration-red-400/60">john SMITH</span>
-                  <span className="self-center text-[#5EEAD4]">→</span>
-                  <span className="rounded-md border border-[#0D9488]/30 bg-[#0D9488]/10 px-2 py-1 text-[#5EEAD4]">John Smith</span>
+                  <span className="self-center text-[rgb(var(--accent-hover))]">→</span>
+                  <span className="rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-2 py-1 text-[rgb(var(--accent-hover))]">John Smith</span>
                 </div>
               </motion.div>
 
               <motion.div
                 variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0 } }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className="mc-glass mc-card-interactive group rounded-2xl p-6 hover:border-[#0D9488]/40 lg:col-span-2"
+                className="mc-glass mc-card-interactive group rounded-lg p-6 hover:border-[rgb(var(--accent))]/40 lg:col-span-2"
               >
-                <span className="mc-mono inline-flex rounded-full border border-[#0D9488]/30 bg-[#0D9488]/10 px-3 py-1 text-[11px] font-semibold text-[#5EEAD4]">DATA CLEANING</span>
-                <h3 className="mc-display mt-4 text-xl font-semibold tracking-[-0.02em] text-white">Column repair and field detection</h3>
+                <span className="mc-mono inline-flex rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-3 py-1 text-[11px] font-medium text-[rgb(var(--accent-hover))]">DATA CLEANING</span>
+                <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-white">Column repair and field detection</h3>
                 <p className="mt-3 text-[15px] leading-6 text-white/65">
                   Detects emails, phone numbers, websites, and common CRM field aliases even when marketers receive exports
                   with mixed-up or poorly named columns.
@@ -3987,10 +3987,10 @@ export default function App() {
               <motion.div
                 variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0 } }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className="mc-glass mc-card-interactive group rounded-2xl p-6 hover:border-[#0D9488]/40"
+                className="mc-glass mc-card-interactive group rounded-lg p-6 hover:border-[rgb(var(--accent))]/40"
               >
-                <span className="mc-mono inline-flex rounded-full border border-[#0D9488]/30 bg-[#0D9488]/10 px-3 py-1 text-[11px] font-semibold text-[#5EEAD4]">DATA CLEANING</span>
-                <h3 className="mc-display mt-4 text-xl font-semibold tracking-[-0.02em] text-white">Industry categorization</h3>
+                <span className="mc-mono inline-flex rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-3 py-1 text-[11px] font-medium text-[rgb(var(--accent-hover))]">DATA CLEANING</span>
+                <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-white">Industry categorization</h3>
                 <p className="mt-3 text-[15px] leading-6 text-white/65">
                   Enriches company records with campaign-friendly industries such as SaaS, healthcare, ecommerce, and finance.
                 </p>
@@ -3999,10 +3999,10 @@ export default function App() {
               <motion.div
                 variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0 } }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className="mc-glass mc-card-interactive group rounded-2xl p-6 hover:border-[#14B8A6]/40"
+                className="mc-glass mc-card-interactive group rounded-lg p-6 hover:border-[rgb(var(--accent))]/40"
               >
-                <span className="mc-mono inline-flex rounded-full border border-[#14B8A6]/30 bg-[#14B8A6]/10 px-3 py-1 text-[11px] font-semibold text-[#99F6E4]">EXCEL AUTOMATION</span>
-                <h3 className="mc-display mt-4 text-xl font-semibold tracking-[-0.02em] text-white">CSV to Excel conversion</h3>
+                <span className="mc-mono inline-flex rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-3 py-1 text-[11px] font-medium text-[rgb(var(--accent-hover))]">EXCEL AUTOMATION</span>
+                <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-white">CSV to Excel conversion</h3>
                 <p className="mt-3 text-[15px] leading-6 text-white/65">
                   Splits delimited text into columns using Excel's Text to Columns logic, then exports a clean XLSX workbook.
                 </p>
@@ -4011,10 +4011,10 @@ export default function App() {
               <motion.div
                 variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0 } }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className="mc-glass mc-card-interactive group rounded-2xl p-6 hover:border-[#14B8A6]/40 lg:col-span-2"
+                className="mc-glass mc-card-interactive group rounded-lg p-6 hover:border-[rgb(var(--accent))]/40 lg:col-span-2"
               >
-                <span className="mc-mono inline-flex rounded-full border border-[#14B8A6]/30 bg-[#14B8A6]/10 px-3 py-1 text-[11px] font-semibold text-[#99F6E4]">EXCEL AUTOMATION</span>
-                <h3 className="mc-display mt-4 text-xl font-semibold tracking-[-0.02em] text-white">Excel formulas and number formatting</h3>
+                <span className="mc-mono inline-flex rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-3 py-1 text-[11px] font-medium text-[rgb(var(--accent-hover))]">EXCEL AUTOMATION</span>
+                <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-white">Excel formulas and number formatting</h3>
                 <p className="mt-3 text-[15px] leading-6 text-white/65">
                   Detects numeric, currency, percentage, and date columns, then generates a formatted Excel workbook with
                   a frozen header row, autofilter, banded rows, and a totals row powered by real Excel formulas.
@@ -4024,10 +4024,10 @@ export default function App() {
               <motion.div
                 variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0 } }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className="mc-glass mc-card-interactive group rounded-2xl p-6 hover:border-[#14B8A6]/40 lg:col-span-2"
+                className="mc-glass mc-card-interactive group rounded-lg p-6 hover:border-[rgb(var(--accent))]/40 lg:col-span-2"
               >
-                <span className="mc-mono inline-flex rounded-full border border-[#14B8A6]/30 bg-[#14B8A6]/10 px-3 py-1 text-[11px] font-semibold text-[#99F6E4]">EXCEL AUTOMATION</span>
-                <h3 className="mc-display mt-4 text-xl font-semibold tracking-[-0.02em] text-white">Advanced Excel functions engine</h3>
+                <span className="mc-mono inline-flex rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-3 py-1 text-[11px] font-medium text-[rgb(var(--accent-hover))]">EXCEL AUTOMATION</span>
+                <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-white">Advanced Excel functions engine</h3>
                 <p className="mt-3 text-[15px] leading-6 text-white/65">
                   Run 40+ Excel functions without writing formulas, including IF, XLOOKUP, INDEX/MATCH, SUMIFS, COUNTIFS,
                   and text functions like TEXTJOIN and SUBSTITUTE, in Data Toolbox.
@@ -4041,8 +4041,8 @@ export default function App() {
           <div className="mx-auto max-w-7xl px-5 lg:px-8">
             <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.28em] text-teal-300">Verification and reconciliation hub</p>
-                <h2 className="mt-4 text-4xl font-semibold tracking-[-0.04em] sm:text-5xl">
+                <p className="text-sm font-medium uppercase tracking-[0.28em] text-teal-300">Verification and reconciliation hub</p>
+                <h2 className="mt-4 text-4xl font-medium tracking-[-0.04em] sm:text-5xl">
                   Verify PDF client mailing data against your Excel master file.
                 </h2>
                 <p className="mt-5 text-lg leading-8 text-white/78">
@@ -4054,12 +4054,12 @@ export default function App() {
                 </p>
                 <div className="mt-8 flex flex-wrap gap-3">
                   <button
-                    className="rounded-full bg-teal-300 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-white"
+                    className="rounded-md bg-teal-300 px-6 py-3 text-sm font-medium text-ink transition hover:bg-canvas"
                     onClick={() => navigateToPage("reconciliation-hub")}
                   >
                     Open Reconciliation Hub
                   </button>
-                  <PageLink className="rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white transition hover:border-white hover:bg-white hover:text-slate-950" page="data-reconciliation-tool">
+                  <PageLink className="rounded-md border border-white/30 px-6 py-3 text-sm font-medium text-white transition hover:border-white hover:bg-canvas hover:text-ink" page="data-reconciliation-tool">
                     Learn about reconciliation
                   </PageLink>
                 </div>
@@ -4071,8 +4071,8 @@ export default function App() {
                   { h: "Auto field mapping", p: "Detects columns and maps them to mailing fields automatically." },
                   { h: "Colour-coded reports", p: "Green, blue, red, and orange statuses across six report sheets." },
                 ].map((card) => (
-                  <div key={card.h} className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                    <h3 className="text-lg font-semibold">{card.h}</h3>
+                  <div key={card.h} className="rounded-lg border border-white/10 bg-canvas/5 p-5">
+                    <h3 className="text-lg font-medium">{card.h}</h3>
                     <p className="mt-2 text-sm text-white/70">{card.p}</p>
                   </div>
                 ))}
@@ -4081,12 +4081,12 @@ export default function App() {
           </div>
         </section>
 
-        <section id="data-toolbox" className="relative overflow-hidden bg-[#08090f] py-20 text-white">
+        <section id="data-toolbox" className="relative overflow-hidden bg-[rgb(var(--canvas))] py-20 text-white">
           <div className="mc-grid-overlay pointer-events-none absolute inset-0 opacity-30" aria-hidden="true" />
           <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
             <div className="max-w-3xl">
-              <p className="mc-mono text-sm font-semibold uppercase tracking-[0.28em] text-[#0D9488]">Free data toolbox</p>
-              <h2 className="mc-display mt-4 text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl">
+              <p className="mc-mono text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">Free data toolbox</p>
+              <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-white sm:text-5xl">
                 Advanced Excel functions plus merge, match, score, predict, and extract.
               </h2>
               <p className="mt-5 text-lg leading-8 text-white/70">
@@ -4098,7 +4098,7 @@ export default function App() {
                 large datasets without a server.
               </p>
               <button
-                className="mc-cta-cyan mt-8 rounded-full px-6 py-3 text-sm font-semibold"
+                className="mc-cta-cyan mt-8 rounded-md px-6 py-3 text-sm font-medium"
                 onClick={() => navigateToPage("data-toolbox")}
               >
                 Open Data Toolbox
@@ -4115,8 +4115,8 @@ export default function App() {
                 { h: "Smart Predict", p: "One-click regression and classification." },
                 { h: "Web Table Extractor", p: "Turn HTML tables and lists into spreadsheets." },
               ].map((card) => (
-                <div key={card.h} className="mc-glass mc-card-interactive rounded-2xl p-5 hover:border-[#0D9488]/40">
-                  <h3 className="mc-display text-lg font-semibold text-white">{card.h}</h3>
+                <div key={card.h} className="mc-glass mc-card-interactive rounded-lg p-5 hover:border-[rgb(var(--accent))]/40">
+                  <h3 className="mc-display text-lg font-medium text-white">{card.h}</h3>
                   <p className="mt-2 text-sm text-white/60">{card.p}</p>
                 </div>
               ))}
@@ -4128,8 +4128,8 @@ export default function App() {
           <div className="mx-auto max-w-7xl px-5 lg:px-8">
             <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
               <div>
-                <p className="mc-mono text-sm font-semibold uppercase tracking-[0.28em] text-[#14B8A6]">Excel automation</p>
-                <h2 className="mc-display mt-4 text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl">
+                <p className="mc-mono text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">Excel automation</p>
+                <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-white sm:text-5xl">
                   Excel Automation for sorting, subtotals and workbooks.
                 </h2>
                 <p className="mt-5 text-lg leading-8 text-white/70">
@@ -4140,7 +4140,7 @@ export default function App() {
                   preserved and everything runs in your browser.
                 </p>
                 <button
-                  className="mc-cta-cyan mt-8 rounded-full px-6 py-3 text-sm font-semibold"
+                  className="mc-cta-cyan mt-8 rounded-md px-6 py-3 text-sm font-medium"
                   onClick={() => navigateToPage("excel-automation")}
                 >
                   Open Excel Automation
@@ -4153,8 +4153,8 @@ export default function App() {
                   { h: "Preview and map", p: "Preview detected columns and start row, then adjust the mapping." },
                   { h: "Preserves the original", p: "Outputs Sorted_Output, Formula_Guide, and Error_Report sheets." },
                 ].map((card) => (
-                  <div key={card.h} className="mc-glass mc-card-interactive rounded-2xl p-5 hover:border-[#14B8A6]/40">
-                    <h3 className="mc-display text-lg font-semibold text-white">{card.h}</h3>
+                  <div key={card.h} className="mc-glass mc-card-interactive rounded-lg p-5 hover:border-[rgb(var(--accent))]/40">
+                    <h3 className="mc-display text-lg font-medium text-white">{card.h}</h3>
                     <p className="mt-2 text-sm text-white/60">{card.p}</p>
                   </div>
                 ))}
@@ -4163,12 +4163,12 @@ export default function App() {
           </div>
         </section>
 
-        <section id="services" className="relative overflow-hidden bg-white py-20 text-slate-950">
+        <section id="services" className="relative overflow-hidden bg-canvas py-20 text-ink">
           <div className="mx-auto max-w-7xl px-5 lg:px-8">
             <div className="max-w-3xl">
-              <p className="mc-mono text-sm font-semibold uppercase tracking-[0.28em] text-[#0877e8]">New platform services</p>
-              <h2 className="mc-display mt-4 text-4xl font-semibold tracking-[-0.04em] sm:text-5xl">A faster local engine for the work behind every clean dataset.</h2>
-              <p className="mt-5 text-lg leading-8 text-slate-500">MarqClean now separates heavy data work from the interface: WebAssembly for analytics, workers for CSV parsing, specialist validation libraries for data quality, and a CORS-aware enrichment layer that never requires a scraping API.</p>
+              <p className="mc-mono text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">New platform services</p>
+              <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] sm:text-5xl">A faster local engine for the work behind every clean dataset.</h2>
+              <p className="mt-5 text-lg leading-8 text-ink-3">MarqClean now separates heavy data work from the interface: WebAssembly for analytics, workers for CSV parsing, specialist validation libraries for data quality, and a CORS-aware enrichment layer that never requires a scraping API.</p>
             </div>
             <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
               {[
@@ -4177,22 +4177,22 @@ export default function App() {
                 { icon: "✓", title: "Schema Guard", text: "Define and enforce browser-local validation rules with Zod and produce a reviewable Error Report.", action: "Validate data", page: "data-engine" as AppPageKey },
                 { icon: "☎", title: "Phone Intelligence", text: "Detect country, validate numbers and format international or national output using libphonenumber-js.", action: "Fix phone data", page: "data-engine" as AppPageKey },
               ].map((item) => (
-                <button key={item.title} type="button" onClick={() => navigateToPage(item.page)} className="group rounded-2xl border border-slate-200 bg-slate-50 p-6 text-left shadow-sm transition hover:-translate-y-1 hover:border-sky-200 hover:bg-white hover:shadow-xl">
-                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-sky-50 text-xl">{item.icon}</span>
-                  <h3 className="mc-display mt-5 text-xl font-semibold">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-slate-500">{item.text}</p>
-                  <span className="mt-5 inline-flex text-sm font-bold text-[#0877e8]">{item.action} →</span>
+                <button key={item.title} type="button" onClick={() => navigateToPage(item.page)} className="group rounded-lg border border-line bg-surface p-6 text-left transition hover:-translate-y-1 hover:border-sky-200 hover:bg-canvas hover:shadow-xl">
+                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-lg bg-sky-50 text-xl">{item.icon}</span>
+                  <h3 className="mc-display mt-5 text-xl font-medium">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-ink-3">{item.text}</p>
+                  <span className="mt-5 inline-flex text-sm font-medium text-[rgb(var(--accent))]">{item.action} →</span>
                 </button>
               ))}
             </div>
           </div>
         </section>
 
-        <section id="free-tools" className="bg-[#0a0b16] py-20 text-white">
+        <section id="free-tools" className="bg-[rgb(var(--surface))] py-20 text-white">
           <div className="mx-auto max-w-7xl px-5 lg:px-8">
             <div className="max-w-3xl">
-              <p className="mc-mono text-sm font-semibold uppercase tracking-[0.28em] text-[#0D9488]">Free data tools</p>
-              <h2 className="mc-display mt-4 text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl">
+              <p className="mc-mono text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">Free data tools</p>
+              <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-white sm:text-5xl">
                 One engine for CSV, Excel, data cleaning and reconciliation workflows.
               </h2>
               <p className="mc-prose mt-5 text-lg leading-relaxed text-white/70">
@@ -4207,13 +4207,13 @@ export default function App() {
           </div>
         </section>
 
-        <section id="workflow" className="relative overflow-hidden bg-[#08090f] py-20 text-white">
+        <section id="workflow" className="relative overflow-hidden bg-[rgb(var(--canvas))] py-20 text-white">
           <div className="mc-grid-overlay pointer-events-none absolute inset-0 opacity-30" aria-hidden="true" />
           <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
             <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
               <div>
-                <p className="mc-mono text-sm font-semibold uppercase tracking-[0.28em] text-[#0D9488]">CSV to Excel workflow</p>
-                <h2 className="mc-display mt-4 text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl">
+                <p className="mc-mono text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">CSV to Excel workflow</p>
+                <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-white sm:text-5xl">
                   A passive automation tool for repetitive spreadsheet cleaning.
                 </h2>
                 <p className="mt-5 text-lg leading-8 text-white/70">
@@ -4222,24 +4222,24 @@ export default function App() {
                 </p>
               </div>
               <div className="space-y-6">
-                <div className="mc-glass rounded-2xl p-6">
-                  <span className="mc-mono inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#0D9488]/40 bg-[#0D9488]/10 text-xs font-bold text-[#5EEAD4]">01</span>
-                  <h3 className="mc-display mt-4 text-xl font-semibold tracking-[-0.02em] text-white">Upload CSV or XLSX</h3>
+                <div className="mc-glass rounded-lg p-6">
+                  <span className="mc-mono inline-flex h-8 w-8 items-center justify-center rounded-md border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/10 text-xs font-medium text-[rgb(var(--accent-hover))]">01</span>
+                  <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-white">Upload CSV or XLSX</h3>
                   <p className="mt-3 text-[15px] leading-6 text-white/65">
                     Import a messy lead list from an ad platform, CRM export, event attendee list, or spreadsheet vendor.
                   </p>
                 </div>
-                <div className="mc-glass rounded-2xl p-6">
-                  <span className="mc-mono inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#0D9488]/40 bg-[#0D9488]/10 text-xs font-bold text-[#5EEAD4]">02</span>
-                  <h3 className="mc-display mt-4 text-xl font-semibold tracking-[-0.02em] text-white">Clean and standardize fields</h3>
+                <div className="mc-glass rounded-lg p-6">
+                  <span className="mc-mono inline-flex h-8 w-8 items-center justify-center rounded-md border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/10 text-xs font-medium text-[rgb(var(--accent-hover))]">02</span>
+                  <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-white">Clean and standardize fields</h3>
                   <p className="mt-3 text-[15px] leading-6 text-white/65">
                     {PRODUCT_NAME} normalizes headers, fixes casing, splits full names, validates emails, formats phone numbers,
                     and flags missing data for review.
                   </p>
                 </div>
-                <div className="mc-glass rounded-2xl p-6">
-                  <span className="mc-mono inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#0D9488]/40 bg-[#0D9488]/10 text-xs font-bold text-[#5EEAD4]">03</span>
-                  <h3 className="mc-display mt-4 text-xl font-semibold tracking-[-0.02em] text-white">Download a pristine Excel file</h3>
+                <div className="mc-glass rounded-lg p-6">
+                  <span className="mc-mono inline-flex h-8 w-8 items-center justify-center rounded-md border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/10 text-xs font-medium text-[rgb(var(--accent-hover))]">03</span>
+                  <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-white">Download a pristine Excel file</h3>
                   <p className="mt-3 text-[15px] leading-6 text-white/65">
                     Export a clean normal Excel workbook or CSV file for segmentation, enrichment, reporting, and campaign
                     activation.
@@ -4250,10 +4250,10 @@ export default function App() {
           </div>
         </section>
 
-        <section id="faq" className="bg-[#08090f] py-20 text-white">
+        <section id="faq" className="bg-[rgb(var(--canvas))] py-20 text-white">
           <div className="mx-auto max-w-3xl px-5 lg:px-8">
-            <p className="mc-mono text-sm font-semibold uppercase tracking-[0.28em] text-[#0D9488]">Frequently asked questions</p>
-            <h2 className="mc-display mt-4 text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl">Questions, answered honestly.</h2>
+            <p className="mc-mono text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">Frequently asked questions</p>
+            <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-white sm:text-5xl">Questions, answered honestly.</h2>
             <div className="mt-10 divide-y divide-white/10 border-y border-white/10">
               {[
                 {
@@ -4286,7 +4286,7 @@ export default function App() {
                 },
               ].map((item) => (
                 <details key={item.q} className="group py-5">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left text-base font-semibold text-white marker:content-none">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left text-base font-medium text-white marker:content-none">
                     {item.q}
                     <svg className="h-5 w-5 shrink-0 text-white/40 transition group-open:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                       <path d="M12 5v14M5 12h14" />
