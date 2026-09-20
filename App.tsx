@@ -2430,7 +2430,7 @@ function ToolsDirectory() {
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search data and Excel tools..."
             aria-label="Search data and Excel tools"
-            className="w-full rounded-md border border-line bg-canvas/[0.04] py-2.5 pl-10 pr-4 text-sm text-ink placeholder:text-ink-2 outline-none transition focus-visible:border-[rgb(var(--accent))] focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/40"
+            className="w-full rounded-md border border-line bg-canvas py-2.5 pl-10 pr-4 text-sm text-ink placeholder:text-ink-2 outline-none transition focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent/40"
           />
         </div>
         <p className="text-xs text-ink-2">{filtered.length} of {allTools.length} tools</p>
@@ -2443,7 +2443,7 @@ function ToolsDirectory() {
             type="button"
             aria-pressed={category === c}
             onClick={() => setCategory(c)}
-            className={`rounded-md border px-3.5 py-1.5 text-xs font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/50 ${
+            className={`rounded-md border px-3.5 py-1.5 text-xs font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 ${
               category === c
                 ? "border-[rgb(var(--accent))] bg-[rgb(var(--accent))]/20 text-ink"
                 : "border-line text-ink-3 hover:border-line hover:text-ink"
@@ -2455,7 +2455,7 @@ function ToolsDirectory() {
       </div>
 
       {filtered.length === 0 ? (
-        <div className="mt-10 rounded-lg border border-dashed border-line bg-canvas/[0.02] p-10 text-center">
+        <div className="mt-10 rounded-lg border border-dashed border-line bg-canvas p-10 text-center">
           <p className="text-sm font-medium text-ink">No tools match "{query}"{category !== "All" ? ` in ${category}` : ""}.</p>
           <p className="mt-2 text-sm text-ink-3">Try a different search term, or clear the category filter.</p>
           <button
@@ -2471,7 +2471,7 @@ function ToolsDirectory() {
             <PageLink
               key={tool.slug}
               page={tool.slug}
-              className="group mc-card-interactive flex flex-col rounded-lg border border-line bg-canvas p-5 text-sm hover:border-[rgb(var(--accent))]/50 hover:bg-surface  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/50"
+              className="group mc-card-interactive flex flex-col rounded-lg border border-line bg-canvas p-5 text-sm hover:border-accent hover:bg-surface  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
             >
               <div className="flex items-center justify-between gap-2">
                 <span className="text-2xl" aria-hidden="true">{tool.icon}</span>
@@ -3174,7 +3174,7 @@ export default function App() {
             <div className="relative" ref={productsMenuRef}>
               <button
                 type="button"
-                className="flex items-center gap-1 transition hover:text-[rgb(var(--accent))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/50"
+                className="flex items-center gap-1 transition hover:text-[rgb(var(--accent))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
                 aria-haspopup="true"
                 aria-expanded={isWorkspacesOpen}
                 aria-controls="workspaces-menu"
@@ -3193,7 +3193,7 @@ export default function App() {
                       key={item.label}
                       role="menuitem"
                       href={item.href}
-                      className="block rounded-lg px-3 py-2.5 font-medium text-ink-2 transition hover:bg-canvas/5 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/50"
+                      className="block rounded-lg px-3 py-2.5 font-medium text-ink-2 transition hover:bg-canvas/5 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
                       onClick={(e) => { e.preventDefault(); setIsWorkspacesOpen(false); item.onClick(); }}
                     >
                       {item.label}
@@ -3955,7 +3955,7 @@ export default function App() {
               <motion.div
                 variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0 } }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className="mc-glass mc-card-interactive group relative overflow-hidden rounded-lg p-7 hover:border-[rgb(var(--accent))]/50  lg:col-span-2 lg:row-span-2"
+                className="mc-glass mc-card-interactive group relative overflow-hidden rounded-lg p-7 hover:border-accent  lg:col-span-2 lg:row-span-2"
               >
                 <div className=" pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-md bg-[rgb(var(--accent))]/20  transition group-hover:bg-[rgb(var(--accent))]/30" aria-hidden="true" />
                 <span className="mc-mono relative inline-flex rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-3 py-1 text-[11px] font-medium text-[rgb(var(--accent-hover))]">DATA CLEANING</span>
