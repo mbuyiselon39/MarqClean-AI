@@ -28,6 +28,11 @@ export type FunctionKey =
   | "averageifs"
   | "maxifs"
   | "minifs"
+  | "correl"
+  | "stdev-s"
+  | "var-s"
+  | "forecast-linear"
+  | "forecast-ets"
   | "sumproduct"
   | "round"
   | "aggregate"
@@ -48,6 +53,13 @@ export type FunctionKey =
   | "networkdays"
   | "eomonth"
   | "text-date"
+  | "datevalue"
+  | "timevalue"
+  | "regexreplace"
+  | "regextest"
+  | "regexextract"
+  | "formulatext"
+  | "error-type"
   | "if"
   | "ifs"
   | "and-or"
@@ -58,6 +70,9 @@ export type FunctionKey =
   | "sequence"
   | "filter"
   | "unique"
+  | "choosecols"
+  | "vstack"
+  | "tocol"
   | "sort"
   | "let"
   | "xnpv"
@@ -86,6 +101,11 @@ export const EXCEL_FUNCTIONS: FunctionDef[] = [
   { key: "averageifs", label: "AVERAGEIFS", category: "Conditional Mathematics", description: "Average a column where multiple criteria across columns are met.", syntax: "AVERAGEIFS(avg_column, criteria_col1, crit1, ...)" },
   { key: "maxifs", label: "MAXIFS", category: "Conditional Mathematics", description: "Return the largest value in a column among rows meeting all selected criteria.", syntax: "MAXIFS(max_column, criteria_col1, crit1, ...)" },
   { key: "minifs", label: "MINIFS", category: "Conditional Mathematics", description: "Return the smallest value in a column among rows meeting all selected criteria.", syntax: "MINIFS(min_column, criteria_col1, crit1, ...)" },
+  { key: "correl", label: "CORREL", category: "Statistical & Math", description: "Return the Pearson correlation coefficient between two numeric columns.", syntax: "CORREL(array1, array2)" },
+  { key: "stdev-s", label: "STDEV.S", category: "Statistical & Math", description: "Estimate sample standard deviation from a numeric column.", syntax: "STDEV.S(column)" },
+  { key: "var-s", label: "VAR.S", category: "Statistical & Math", description: "Estimate sample variance from a numeric column.", syntax: "VAR.S(column)" },
+  { key: "forecast-linear", label: "FORECAST.LINEAR", category: "Statistical & Math", description: "Project a future numeric value using linear regression.", syntax: "FORECAST.LINEAR(x, known_y, known_x)" },
+  { key: "forecast-ets", label: "FORECAST.ETS", category: "Statistical & Math", description: "Forecast a future value with seasonal exponential smoothing.", syntax: "FORECAST.ETS(target, values, timeline, [seasonality])" },
   { key: "sumproduct", label: "SUMPRODUCT", category: "Conditional Mathematics", description: "Multiply two columns row by row and sum the products (weighted totals).", syntax: "SUMPRODUCT(column_a, column_b)" },
   { key: "round", label: "ROUND / ROUNDUP / ROUNDDOWN", category: "Statistical & Math", description: "Round every value in a numeric column to a set number of decimals.", syntax: "ROUND(column, decimals)" },
   { key: "aggregate", label: "SUM / AVERAGE / MIN / MAX / MEDIAN", category: "Statistical & Math", description: "Compute a single aggregate over a numeric column, including MEDIAN, STDEV, and VAR.", syntax: "AGGREGATE(function, column)" },
@@ -98,6 +118,9 @@ export const EXCEL_FUNCTIONS: FunctionDef[] = [
   { key: "trim-clean", label: "TRIM / CLEAN", category: "Text", description: "Remove extra spaces and non-printable characters from a text column.", syntax: "TRIM(CLEAN(column))" },
   { key: "upper-lower-proper", label: "UPPER / LOWER / PROPER", category: "Text", description: "Change the case of a text column.", syntax: "PROPER(column)" },
   { key: "substitute", label: "SUBSTITUTE / REPLACE", category: "Text", description: "Replace occurrences of text within a column.", syntax: "SUBSTITUTE(column, old, new)" },
+  { key: "regexreplace", label: "REGEXREPLACE", category: "Text", description: "Replace text matching a regular expression.", syntax: "REGEXREPLACE(text, pattern, replacement)" },
+  { key: "regextest", label: "REGEXTEST", category: "Text", description: "Test whether text matches a regular expression.", syntax: "REGEXTEST(text, pattern)" },
+  { key: "regexextract", label: "REGEXEXTRACT", category: "Text", description: "Extract the first text match for a regular expression.", syntax: "REGEXEXTRACT(text, pattern)" },
   { key: "len", label: "LEN", category: "Text", description: "Return the character length of every value in a text column.", syntax: "LEN(column)" },
   { key: "textbefore-after", label: "TEXTBEFORE / TEXTAFTER", category: "Text", description: "Return the text before or after a delimiter in a column.", syntax: "TEXTBEFORE(column, delimiter) / TEXTAFTER(column, delimiter)" },
   { key: "datedif", label: "DATEDIF", category: "Date & Time", description: "Difference between two date columns in days, months, or years.", syntax: "DATEDIF(start_date, end_date, unit)" },
@@ -105,17 +128,24 @@ export const EXCEL_FUNCTIONS: FunctionDef[] = [
   { key: "weekday", label: "WEEKDAY / TEXT weekday", category: "Date & Time", description: "Return the day of week name for a date column.", syntax: "TEXT(column, \"dddd\")" },
   { key: "networkdays", label: "NETWORKDAYS", category: "Date & Time", description: "Count working days (excluding weekends) between two date columns.", syntax: "NETWORKDAYS(start_date, end_date)" },
   { key: "eomonth", label: "EOMONTH", category: "Date & Time", description: "Return the last day of the month a given number of months from each date.", syntax: "EOMONTH(column, months)" },
-  { key: "text-date", label: "TEXT (format dates)", category: "Date & Time", description: "Format a date column into a chosen text pattern.", syntax: "TEXT(column, \"yyyy-mm-dd\")" },
+  { key: "text-date", label: "TEXT (format dates)", category: "Date & Time", description: "Format a date column into a chosen text pattern.", syntax: "TEXT(column, "yyyy-mm-dd")" },
+  { key: "datevalue", label: "DATEVALUE", category: "Date & Time", description: "Convert a recognizable date string into an Excel-style serial date.", syntax: "DATEVALUE(date_text)" },
+  { key: "timevalue", label: "TIMEVALUE", category: "Date & Time", description: "Convert a recognizable time string into an Excel-style fractional day.", syntax: "TIMEVALUE(time_text)" },
   { key: "if", label: "IF", category: "Logical", description: "Return one value when a condition is met and another when it is not, as a new column.", syntax: "IF(column op value, if_true, if_false)" },
   { key: "ifs", label: "IFS (banding)", category: "Logical", description: "Assign a label based on numeric thresholds, like grade or tier banding.", syntax: "IFS(value >= a, \"A\", value >= b, \"B\", ...)" },
   { key: "and-or", label: "AND / OR", category: "Logical", description: "Test whether all or any of several criteria are met, per row.", syntax: "AND(cond1, cond2) / OR(cond1, cond2)" },
   { key: "iferror", label: "IFERROR", category: "Logical", description: "Replace blank or error values in a column with a safe default.", syntax: "IFERROR(column, default)" },
   { key: "switch", label: "SWITCH", category: "Logical", description: "Map exact values in a column to new labels using a lookup list.", syntax: "SWITCH(column, val1, res1, val2, res2, ...)" },
   { key: "is-type", label: "ISBLANK / ISNUMBER / ISTEXT", category: "Logical", description: "Flag every row TRUE or FALSE based on whether a cell is blank, a number, or text, useful for validating a column before running other formulas.", syntax: "ISBLANK(column) / ISNUMBER(column) / ISTEXT(column)" },
+  { key: "formulatext", label: "FORMULATEXT", category: "Logical", description: "Return the formula text stored in a cell when the imported value contains an Excel formula.", syntax: "FORMULATEXT(cell)" },
+  { key: "error-type", label: "ERROR.TYPE", category: "Logical", description: "Return the Excel error code number for a recognized error value.", syntax: "ERROR.TYPE(value)" },
   { key: "indirect", label: "INDIRECT (dynamic column)", category: "Lookup & Reference", description: "For each row, use the text in a selector column as a column name and pull that row's value from the matching column, the same way INDIRECT resolves a text string into a live reference.", syntax: "INDIRECT(selector_column) -> value from the named column" },
   { key: "sequence", label: "SEQUENCE", category: "Dynamic Arrays", description: "Generate a column of sequential numbers, such as row IDs or a running count, starting at a chosen number with a chosen step.", syntax: "SEQUENCE(rows, [start], [step])" },
   { key: "filter", label: "FILTER", category: "Dynamic Arrays", description: "Return only the rows that meet a condition on a chosen column.", syntax: "FILTER(table, column operator value)" },
   { key: "unique", label: "UNIQUE", category: "Dynamic Arrays", description: "Return a list of unique values from a column (or unique rows).", syntax: "UNIQUE(column)" },
+  { key: "choosecols", label: "CHOOSECOLS", category: "Dynamic Arrays", description: "Return only selected columns from the imported table.", syntax: "CHOOSECOLS(array, col_num1, col_num2, ...)" },
+  { key: "vstack", label: "VSTACK", category: "Dynamic Arrays", description: "Append the rows of a second imported table below the first.", syntax: "VSTACK(array1, array2)" },
+  { key: "tocol", label: "TOCOL", category: "Dynamic Arrays", description: "Flatten a table into one column.", syntax: "TOCOL(array, [ignore])" },
   { key: "sort", label: "SORT", category: "Dynamic Arrays", description: "Sort the table by a column, ascending or descending.", syntax: "SORT(table, by column, asc/desc)" },
   { key: "let", label: "LET (named calc)", category: "Advanced Logic", description: "Compute a named intermediate result and a final expression for readable calculations.", syntax: "LET(name = aggregate(column), name operator value)" },
   { key: "xnpv", label: "XNPV", category: "Financial & Forecasting", description: "Net present value for cash flows on irregular dates.", syntax: "XNPV(rate, values_column, dates_column)" },
@@ -255,6 +285,63 @@ export function minifs(table: DataTable, minCol: number, criteria: Criterion[]):
   return { ok: true, message: `Minimum across ${values.length} matching rows.`, scalar: formatNumber(Math.min(...values)), formula: buildConditionalFormula("MINIFS", table, minCol, criteria) };
 }
 
+export function correl(table: DataTable, colA: number, colB: number): FunctionResult {
+  const pairs = table.rows.map(r => [toNumber(r[colA] ?? ""), toNumber(r[colB] ?? "")]).filter(([a,b]) => Number.isFinite(a) && Number.isFinite(b));
+  if (pairs.length < 2) return { ok: false, message: "CORREL needs at least two numeric pairs." };
+  const mx = pairs.reduce((a,p)=>a+p[0],0)/pairs.length, my = pairs.reduce((a,p)=>a+p[1],0)/pairs.length;
+  const num = pairs.reduce((a,p)=>a+(p[0]-mx)*(p[1]-my),0);
+  const den = Math.sqrt(pairs.reduce((a,p)=>a+(p[0]-mx)**2,0)*pairs.reduce((a,p)=>a+(p[1]-my)**2,0));
+  if (!den) return { ok:false, message:"CORREL is undefined when one column has no variation." };
+  return { ok:true, message:`Pearson correlation across ${pairs.length} pairs.`, scalar: num/den.toFixed ? String((num/den).toFixed(6)) : String(num/den), formula:`=CORREL(${table.headers[colA]}, ${table.headers[colB]})` };
+}
+
+export function stdevS(table: DataTable, col: number): FunctionResult {
+  const nums = colValues(table,col).map(toNumber).filter(Number.isFinite);
+  if (nums.length < 2) return { ok:false, message:"STDEV.S needs at least two numeric values." };
+  const mean=nums.reduce((a,b)=>a+b,0)/nums.length;
+  const value=Math.sqrt(nums.reduce((a,b)=>a+(b-mean)**2,0)/(nums.length-1));
+  return { ok:true, message:`Sample standard deviation across ${nums.length} values.`, scalar:formatNumber(value), formula:`=STDEV.S(${table.headers[col]})` };
+}
+
+export function varS(table: DataTable, col: number): FunctionResult {
+  const nums=colValues(table,col).map(toNumber).filter(Number.isFinite);
+  if (nums.length < 2) return { ok:false, message:"VAR.S needs at least two numeric values." };
+  const mean=nums.reduce((a,b)=>a+b,0)/nums.length;
+  const value=nums.reduce((a,b)=>a+(b-mean)**2,0)/(nums.length-1);
+  return { ok:true, message:`Sample variance across ${nums.length} values.`, scalar:formatNumber(value), formula:`=VAR.S(${table.headers[col]})` };
+}
+
+function linearRegression(xs:number[], ys:number) {
+  const n=xs.length, mx=xs.reduce((a,b)=>a+b,0)/n, my=ys.reduce((a,b)=>a+b,0)/n;
+  const denom=xs.reduce((a,x)=>a+(x-mx)**2,0);
+  if(!denom) return null;
+  const slope=xs.reduce((a,x,i)=>a+(x-mx)*(ys[i]-my),0)/denom;
+  return { slope, intercept: my-slope*mx };
+}
+
+export function forecastLinear(table: DataTable, xCol:number, yCol:number, targetX:number): FunctionResult {
+  const pairs=table.rows.map(r=>[toNumber(r[xCol]??""),toNumber(r[yCol]??"")]).filter(([x,y])=>Number.isFinite(x)&&Number.isFinite(y));
+  if(pairs.length<2) return {ok:false,message:"FORECAST.LINEAR needs at least two numeric x/y pairs."};
+  const fit=linearRegression(pairs.map(p=>p[0]),pairs.map(p=>p[1]));
+  if(!fit) return {ok:false,message:"FORECAST.LINEAR needs variation in known_x."};
+  const value=fit.slope*targetX+fit.intercept;
+  return {ok:true,message:`Linear forecast for x=${targetX} from ${pairs.length} observations.`,scalar:formatNumber(value),formula:`=FORECAST.LINEAR(${targetX}, ${table.headers[yCol]}, ${table.headers[xCol]})`};
+}
+
+export function forecastETS(table: DataTable, timelineCol:number, valueCol:number, target:number, seasonality:number): FunctionResult {
+  const points=table.rows.map(r=>({t:toNumber(r[timelineCol]??""),y:toNumber(r[valueCol]??"")})).filter(p=>Number.isFinite(p.t)&&Number.isFinite(p.y)).sort((a,b)=>a.t-b.t);
+  if(points.length<4) return {ok:false,message:"FORECAST.ETS needs at least four numeric observations."};
+  const period=Math.max(1,Math.floor(seasonality));
+  const alpha=0.35, beta=0.1;
+  let level=points[0].y, trend=points.length>1?points[1].y-points[0].y:0;
+  const season=Array.from({length:period},(_,i)=>points[i]?.y-(level+i*trend));
+  points.forEach((p,i)=>{ const s=season[i%period]??0; const prev=level; level=alpha*(p.y-s)+(1-alpha)*(level+trend); trend=beta*(level-prev)+(1-beta)*trend; season[i%period]=(1-alpha)*s+alpha*(p.y-level); });
+  const steps=Math.max(1,Math.round(target-points[points.length-1].t));
+  const idx=(points.length+steps-1)%period;
+  const value=level+steps*trend+(season[idx]??0);
+  return {ok:true,message:`ETS-style seasonal forecast for target ${target} using seasonality ${period}.`,scalar:formatNumber(value),formula:`=FORECAST.ETS(${target}, ${table.headers[valueCol]}, ${table.headers[timelineCol]}, ${period})`};
+}
+
 export function sumproduct(table: DataTable, colA: number, colB: number): FunctionResult {
   let total = 0;
   table.rows.forEach((row) => { total += toNumber(row[colA] ?? "") * toNumber(row[colB] ?? ""); });
@@ -287,6 +374,23 @@ export function uniqueValues(table: DataTable, col: number): FunctionResult {
   };
 }
 
+export function chooseCols(table:DataTable,columns:number[]):FunctionResult {
+  const valid=columns.map(n=>n-1).filter(n=>n>=0&&n<table.headers.length);
+  if(!valid.length)return {ok:false,message:"Choose at least one valid column number."};
+  const headers=valid.map(i=>table.headers[i]), rows=table.rows.map(r=>valid.map(i=>r[i]??""));
+  return {ok:true,message:`Selected ${valid.length} columns.`,table:{headers,rows,sourceName:"choosecols"},formula:`=CHOOSECOLS(table, ${columns.join(", ")})`};
+}
+export function vstackTables(table:DataTable,other:DataTable|null):FunctionResult {
+  if(!other)return {ok:false,message:"Import a second table to use VSTACK."};
+  const width=Math.max(table.headers.length,other.headers.length);
+  const headers=table.headers.length>=other.headers.length?table.headers:other.headers;
+  const pad=(r:string[])=>Array.from({length:width},(_,i)=>r[i]??"");
+  return {ok:true,message:`Stacked ${table.rows.length+other.rows.length} rows from two tables.`,table:{headers:[...headers],rows:[...table.rows.map(pad),...other.rows.map(pad)],sourceName:"vstack"},formula:`=VSTACK(${table.sourceName}, ${other.sourceName})`};
+}
+export function tocol(table:DataTable,col:number,ignoreBlanks=true):FunctionResult {
+  const values=table.rows.flatMap(r=>r).filter(v=>!ignoreBlanks||String(v).trim()!=="");
+  return {ok:true,message:`Flattened ${values.length} values into one column.`,table:singleColumnTable("TOCOL",values,"tocol"),formula:`=TOCOL(table, ${ignoreBlanks?1:0})`};
+}
 export function sortTableByColumn(table: DataTable, col: number, dir: "asc" | "desc"): FunctionResult {
   const numeric = table.rows.every((row) => !row[col] || /^-?[\d,.]+$/.test((row[col] ?? "").trim()));
   const rows = [...table.rows].sort((a, b) => {
@@ -573,6 +677,21 @@ export function caseColumn(table: DataTable, col: number, mode: CaseMode): Funct
   return { ok: true, message: `Applied ${mode} case.`, table: { headers: table.headers, rows, sourceName: "cased" }, formula: `=${mode.toUpperCase()}(${table.headers[col]})` };
 }
 
+export function regexReplaceColumn(table:DataTable,col:number,pattern:string,replacement:string):FunctionResult {
+  let re:RegExp; try{re=new RegExp(pattern,"g");}catch{return {ok:false,message:"Invalid regular expression."};}
+  const values=table.rows.map(r=>{try{return (r[col]??"").replace(re,replacement)}catch{return r[col]??""}});
+  return {ok:true,message:`Applied REGEXREPLACE to ${values.length} rows.`,table:addColumn(table,`REGEXREPLACE(${table.headers[col]})`,values),formula:`=REGEXREPLACE(${table.headers[col]}, "${pattern}", "${replacement}")`};
+}
+export function regexTestColumn(table:DataTable,col:number,pattern:string):FunctionResult {
+  let re:RegExp; try{re=new RegExp(pattern);}catch{return {ok:false,message:"Invalid regular expression."};}
+  const values=table.rows.map(r=>String(re.test(r[col]??"")).toUpperCase());
+  return {ok:true,message:`Tested ${values.length} rows with REGEXTEST.`,table:addColumn(table,`REGEXTEST(${table.headers[col]})`,values),formula:`=REGEXTEST(${table.headers[col]}, "${pattern}")`};
+}
+export function regexExtractColumn(table:DataTable,col:number,pattern:string):FunctionResult {
+  let re:RegExp; try{re=new RegExp(pattern);}catch{return {ok:false,message:"Invalid regular expression."};}
+  const values=table.rows.map(r=>{const m=String(r[col]??"").match(re); return m?.[0]??""});
+  return {ok:true,message:`Extracted regex matches from ${values.length} rows.`,table:addColumn(table,`REGEXEXTRACT(${table.headers[col]})`,values),formula:`=REGEXEXTRACT(${table.headers[col]}, "${pattern}")`};
+}
 export function substituteColumn(table: DataTable, col: number, oldText: string, newText: string): FunctionResult {
   const rows = table.rows.map((row) => { const copy = [...row]; copy[col] = (row[col] ?? "").split(oldText).join(newText); return copy; });
   return { ok: true, message: `Replaced "${oldText}" with "${newText}".`, table: { headers: table.headers, rows, sourceName: "substituted" }, formula: `=SUBSTITUTE(${table.headers[col]}, "${oldText}", "${newText}")` };
@@ -604,6 +723,14 @@ function toDate(value: string): Date | null {
 
 const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
+export function dateValue(table: DataTable, col:number): FunctionResult {
+  const values=table.rows.map(r=>{const d=toDate(r[col]??""); return d?String(Math.floor(d.getTime()/86400000)+25569):"";});
+  return {ok:true,message:"Converted date text to Excel-style serials.",table:addColumn(table,"DATEVALUE",values),formula:`=DATEVALUE(${table.headers[col]})`};
+}
+export function timeValue(table: DataTable, col:number): FunctionResult {
+  const values=table.rows.map(r=>{const m=(r[col]??"").trim().match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?\s*(AM|PM)?$/i); if(!m)return ""; let h=Number(m[1]),mi=Number(m[2]),sec=Number(m[3]||0); const ap=(m[4]||"").toUpperCase(); if(ap==="PM"&&h<12)h+=12;if(ap==="AM"&&h===12)h=0; return String((h*3600+mi*60+sec)/86400);});
+  return {ok:true,message:"Converted time text to Excel-style fractional days.",table:addColumn(table,"TIMEVALUE",values),formula:`=TIMEVALUE(${table.headers[col]})`};
+}
 export function datedif(table: DataTable, startCol: number, endCol: number, unit: "days" | "months" | "years"): FunctionResult {
   const values = table.rows.map((row) => {
     const a = toDate(row[startCol] ?? "");
@@ -718,6 +845,15 @@ export function switchColumn(table: DataTable, col: number, maps: SwitchMap[]): 
 
 export type TypeCheckMode = "blank" | "number" | "text";
 
+export function formulaTextColumn(table:DataTable,col:number):FunctionResult {
+  const values=table.rows.map(r=>{const v=String(r[col]??""); return v.startsWith("=")?v:"#N/A";});
+  return {ok:true,message:"Returned formula text where imported cells contain formulas.",table:addColumn(table,"FORMULATEXT",values),formula:`=FORMULATEXT(${table.headers[col]})`};
+}
+const ERROR_CODES:Record<string,number>={"#NULL!":1,"#DIV/0!":2,"#VALUE!":3,"#REF!":4,"#NAME?":5,"#NUM!":6,"#N/A":7,"#GETTING_DATA":8};
+export function errorTypeColumn(table:DataTable,col:number):FunctionResult {
+  const values=table.rows.map(r=>String(ERROR_CODES[String(r[col]??"").trim().toUpperCase()]??"#N/A"));
+  return {ok:true,message:"Identified Excel-style error codes in the selected column.",table:addColumn(table,"ERROR.TYPE",values),formula:`=ERROR.TYPE(${table.headers[col]})`};
+}
 export function typeCheckColumn(table: DataTable, col: number, mode: TypeCheckMode): FunctionResult {
   const label = mode === "blank" ? "ISBLANK" : mode === "number" ? "ISNUMBER" : "ISTEXT";
   const values = table.rows.map((row) => {
