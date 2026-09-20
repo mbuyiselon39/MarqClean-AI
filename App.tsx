@@ -9,6 +9,7 @@ const ClientFunds = lazy(() => import("./reconciliation/ClientFunds"));
 const AcademyHub = lazy(() => import("./academy/AcademyHub"));
 const HeroCarousel = lazy(() => import("./HeroCarousel"));
 const DataEngineStudio = lazy(() => import("./DataEngineStudio"));
+import SmartDropzone, { type SmartPipelineAction, type SmartRecommendation } from "./SmartDropzone";
 
 type RawRow = Record<string, unknown>;
 type CleanRow = Record<string, string>;
@@ -2712,7 +2713,7 @@ export default function App() {
     }
   }, [currentPage]);
 
-  async function handleFile(file: File) {
+  async function handleFile(file: File, pipelineActions: SmartPipelineAction[] = []) {
     setError("");
     setIsProcessing(true);
 
@@ -2736,7 +2737,47 @@ export default function App() {
         throw new Error("The file did not contain readable rows. Try a CSV or Excel workbook with a header row.");
       }
 
-      setResult(cleanDataset(usableRows, file.name));
+      let cleaned = cleanDataset(usableRows, file.name);
+
+      if (pipelineActions.some((action) => action.id === "trim")) {
+        cleaned = {
+          ...cleaned,
+          rows: cleaned.rows.map((row) => Object.fromEntries(Object.entries(row).map(([key, value]) => [key, value.trim()]))),
+        };
+      }
+
+      if (pipelineActions.some((action) => action.id === "group-reference")) {
+        const referenceHeader = cleaned.headers.find((header) => /reference|transaction|account|client|customer/i.test(header));
+        if (referenceHeader) {
+          const grouped = [...cleaned.rows].sort((a, b) => String(a[referenceHeader] ?? "").localeCompare(String(b[referenceHeader] ?? "")));
+          cleaned = { ...cleaned, rows: grouped };
+        }
+      }
+
+      if (pipelineActions.some((action) => action.id === "subtotals")) {
+        const amountHeader = cleaned.headers.find((header) => /amount|value|total|debit|credit/i.test(header));
+        if (amountHeader) {
+          const numericTotal = cleaned.rows.reduce((sum, row) => {
+            const value = Number(String(row[amountHeader] ?? "").replace(/[^0-9.-]/g, ""));
+            return Number.isFinite(value) ? sum + value : sum;
+          }, 0);
+          cleaned = {
+            ...cleaned,
+            rows: [
+              ...cleaned.rows,
+              Object.fromEntries(cleaned.headers.map((header, index) => [header, index === 0 ? "Pipeline subtotal" : header === amountHeader ? numericTotal.toFixed(2) : ""])),
+            ],
+          };
+        }
+      }
+
+      setResult(cleaned);
+      if (pipelineActions.some((action) => action.id === "export-xlsx")) {
+        window.setTimeout(() => {
+          const workbook = createExcelWorkbook(cleaned.rows, cleaned.headers);
+          downloadBlob(workbook, createDownloadName(cleaned.fileName, "xlsx"), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        }, 0);
+      }
     } catch (caughtError) {
       setError(caughtError instanceof Error ? caughtError.message : "The file could not be cleaned.");
     } finally {
@@ -2745,10 +2786,33 @@ export default function App() {
     }
   }
 
-  function handleFileInput(files: FileList | null) {
+  function handleSmartRecommendation(recommendation: SmartRecommendation) {
+    if (recommendation.id === "bank") {
+      setWorkspaceTab("bank");
+      window.setTimeout(() => document.getElementById("cleaner")?.scrollIntoView({ behavior: "smooth" }), 50);
+      return;
+    }
+    if (recommendation.id === "reconciliation") {
+      navigateToPage("reconciliation-hub");
+      return;
+    }
+    if (recommendation.id === "cleaner") {
+      setWorkspaceTab("leads");
+      window.setTimeout(() => document.getElementById("cleaner")?.scrollIntoView({ behavior: "smooth" }), 50);
+      return;
+    }
+    if (recommendation.id === "formulas") {
+      setWorkspaceTab("formulas");
+      window.setTimeout(() => document.getElementById("cleaner")?.scrollIntoView({ behavior: "smooth" }), 50);
+      return;
+    }
+    navigateToPage("data-engine");
+  }
+
+  function handleFileInput(files: FileList | null, pipelineActions: SmartPipelineAction[] = []) {
     const file = files?.[0];
 
-    if (file) void handleFile(file);
+    if (file) void handleFile(file, pipelineActions);
   }
 
   function loadSampleData() {
@@ -3258,6 +3322,11 @@ export default function App() {
               </motion.div>
             ))}
           </motion.div>
+        </section>
+
+        <section className="bg-white px-5 py-14 lg:px-8" aria-labelledby="smart-drop-heading">
+          <div id="smart-drop-heading" className="sr-only">Smart Drop data ingestion</div>
+          <SmartDropzone onFile={(file, actions) => void handleFile(file, actions)} onRecommendation={handleSmartRecommendation} />
         </section>
 
         <section ref={workspaceRef} id="cleaner" className="ws-root ws-scope relative">
