@@ -158,7 +158,7 @@ export default function SmartDropzone({
           <div className="mt-5 flex flex-wrap justify-center gap-2">
             {["CSV", "XLSX", "PDF"].map((format) => <span key={format} className="rounded-md bg-surface px-3 py-1 text-xs font-medium text-ink-2">{format}</span>)}
           </div>
-          <button type="button" className="mt-6 rounded-md bg-[rgb(var(--accent))] px-6 py-3 text-sm font-medium text-white shadow-blue-200 transition hover:bg-[rgb(var(--accent-hover))]" onClick={() => inputRef.current?.click()}>Choose a file</button>
+          <button type="button" className="mt-6 rounded-md bg-[rgb(var(--accent))] px-6 py-3 text-sm font-medium text-ink shadow-blue-200 transition hover:bg-[rgb(var(--accent-hover))]" onClick={() => inputRef.current?.click()}>Choose a file</button>
           <div className="mt-5 inline-flex items-center gap-2 rounded-md border border-line bg-surface px-4 py-2 text-xs font-medium text-ink-2">
             <span aria-hidden="true">🔒</span> 100% Secure Client-Side Execution — your files never leave this browser.
           </div>
@@ -205,7 +205,7 @@ export default function SmartDropzone({
                 </label>
               ))}
             </div>
-            <button type="button" disabled={fileType === "PDF"} onClick={run} className="mt-4 w-full rounded-md bg-ink px-5 py-3 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-40">Run workflow locally</button>
+            <button type="button" disabled={fileType === "PDF"} onClick={run} className="mt-4 w-full rounded-md bg-ink px-5 py-3 text-sm font-medium text-ink disabled:cursor-not-allowed disabled:opacity-40">Run workflow locally</button>
             {fileType === "PDF" ? <p className="mt-2 text-xs text-ink-3">Open Bank Ledger X for PDF extraction before running a data workflow.</p> : null}
           </div>
         </div>
