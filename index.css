@@ -598,3 +598,34 @@ body {
   .ws-scope > div.relative.mx-auto { padding-top:5.8rem !important; }
   .ws-scope .ws-surface nav { padding-left:14px !important;padding-right:14px !important; }
 }
+
+
+/* Smart Drop: unified ingestion and diagnostics surface */
+.smart-dropzone { position:relative; z-index:2; }
+.smart-dropzone__target {
+  border:1.5px dashed #b9cce0;
+  border-radius:24px;
+  background:linear-gradient(180deg,#fafdff 0%,#f4f9fd 100%);
+  padding:3rem 1.5rem;
+  transition:border-color .2s ease, box-shadow .2s ease, transform .2s ease, background .2s ease;
+}
+.smart-dropzone__target:hover,
+.smart-dropzone__target.is-dragging {
+  border-color:#0877e8;
+  background:linear-gradient(180deg,#f5fbff 0%,#eef7ff 100%);
+  box-shadow:0 0 0 5px rgba(8,119,232,.07), 0 20px 55px rgba(8,119,232,.08);
+}
+.smart-dropzone__icon {
+  display:flex;
+  width:4.25rem;
+  height:4.25rem;
+  align-items:center;
+  justify-content:center;
+  border-radius:1.25rem;
+  background:#10233f;
+  color:#fff;
+  font-size:2rem;
+  font-weight:800;
+  box-shadow:0 14px 30px rgba(16,35,63,.18);
+}
+.smart-dropzone input[type="checkbox"] { accent-color:#0877e8; }
