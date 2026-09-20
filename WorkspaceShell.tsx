@@ -53,7 +53,7 @@ export function GlobalHeader() {
   return (
     <>
       <a
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-slate-950"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-canvas focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-ink"
         href="#main-content"
       >
         Skip to content
@@ -62,19 +62,19 @@ export function GlobalHeader() {
       <nav className="mx-auto flex max-w-[100rem] items-center justify-between gap-4 px-5 py-3.5 lg:px-8" aria-label="Primary navigation">
         <a
           href="/"
-          className="mc-display flex items-center gap-2 text-lg font-extrabold tracking-tight text-white"
+          className="mc-display flex items-center gap-2 text-lg font-medium tracking-tight text-white"
           onClick={(e) => { e.preventDefault(); go("/"); }}
         >
           <img src="/brand-logo-dark.svg" alt="MarqClean AI" className="h-9 w-auto" />
         </a>
-        <div className="hidden items-center gap-6 text-[13px] font-medium text-[#b0bacb] xl:flex">
-          <a href={SIMPLE_NAV[0].path} className="transition hover:text-[#0D9488]" onClick={(e) => { e.preventDefault(); go(SIMPLE_NAV[0].path); }}>{SIMPLE_NAV[0].label}</a>
-          <a href={SIMPLE_NAV[1].path} className="transition hover:text-[#0D9488]" onClick={(e) => { e.preventDefault(); go(SIMPLE_NAV[1].path); }}>{SIMPLE_NAV[1].label}</a>
-          <a href={SIMPLE_NAV[2].path} className="transition hover:text-[#0D9488]" onClick={(e) => { e.preventDefault(); go(SIMPLE_NAV[2].path); }}>{SIMPLE_NAV[2].label}</a>
+        <div className="hidden items-center gap-6 text-[13px] font-medium text-[rgb(var(--ink-2))] xl:flex">
+          <a href={SIMPLE_NAV[0].path} className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); go(SIMPLE_NAV[0].path); }}>{SIMPLE_NAV[0].label}</a>
+          <a href={SIMPLE_NAV[1].path} className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); go(SIMPLE_NAV[1].path); }}>{SIMPLE_NAV[1].label}</a>
+          <a href={SIMPLE_NAV[2].path} className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); go(SIMPLE_NAV[2].path); }}>{SIMPLE_NAV[2].label}</a>
           <div className="relative" ref={productsMenuRef}>
             <button
               type="button"
-              className="flex items-center gap-1 transition hover:text-[#0D9488] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0D9488]/50"
+              className="flex items-center gap-1 transition hover:text-[rgb(var(--accent))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/50"
               aria-haspopup="true"
               aria-expanded={isWorkspacesOpen}
               aria-controls="ws-products-menu"
@@ -86,14 +86,14 @@ export function GlobalHeader() {
                 id="ws-workspaces-menu"
                 role="menu"
                 aria-label="Workspaces"
-                className="absolute left-1/2 top-full mt-3 w-80 -translate-x-1/2 rounded-2xl border border-slate-200 bg-white p-2 text-sm shadow-2xl"
+                className="absolute left-1/2 top-full mt-3 w-80 -translate-x-1/2 rounded-lg border border-line bg-canvas p-2 text-sm"
               >
                 {PRODUCTS_MENU.map((item) => (
                   <a
                     key={item.label}
                     role="menuitem"
                     href={item.path}
-                    className="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 transition hover:bg-sky-50 hover:text-[#0877e8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0877e8]/30"
+                    className="block rounded-lg px-3 py-2.5 font-medium text-ink-2 transition hover:bg-sky-50 hover:text-[rgb(var(--accent))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/30"
                     onClick={(e) => { e.preventDefault(); setIsWorkspacesOpen(false); go(item.path); }}
                   >
                     {item.label}
@@ -102,18 +102,18 @@ export function GlobalHeader() {
               </div>
             ) : null}
           </div>
-          <a href="/contact" className="transition hover:text-[#0D9488]" onClick={(e) => { e.preventDefault(); go("/contact"); }}>Contact</a>
+          <a href="/contact" className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); go("/contact"); }}>Contact</a>
         </div>
         <div className="flex items-center gap-2">
           <button
-            className="ws-btn-primary hidden rounded-full px-5 py-2 text-sm font-semibold sm:inline-flex"
+            className="ws-btn-primary hidden rounded-md px-5 py-2 text-sm font-medium sm:inline-flex"
             onClick={() => go("/#cleaner")}
           >
             Start Free
           </button>
           <button
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-700 transition hover:border-[#0877e8]/60 hover:text-[#0877e8] xl:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-line text-ink-2 transition hover:border-[rgb(var(--accent))]/60 hover:text-[rgb(var(--accent))] xl:hidden"
             aria-label={isMobileNavOpen ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={isMobileNavOpen}
             aria-controls="ws-mobile-nav-panel"
@@ -132,13 +132,13 @@ export function GlobalHeader() {
         </div>
       </nav>
       {isMobileNavOpen ? (
-        <div id="ws-mobile-nav-panel" className="border-t border-slate-200 bg-white px-5 py-4 xl:hidden">
-          <div className="flex flex-col gap-1 text-[15px] font-medium text-slate-600">
+        <div id="ws-mobile-nav-panel" className="border-t border-line bg-canvas px-5 py-4 xl:hidden">
+          <div className="flex flex-col gap-1 text-[15px] font-medium text-ink-2">
             {SIMPLE_NAV.map((item) => (
               <a
                 key={item.label}
                 href={item.path}
-                className="rounded-xl px-3 py-2.5 transition hover:bg-sky-50 hover:text-[#0877e8]"
+                className="rounded-lg px-3 py-2.5 transition hover:bg-sky-50 hover:text-[rgb(var(--accent))]"
                 onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); go(item.path); }}
               >
                 {item.label}
@@ -146,19 +146,19 @@ export function GlobalHeader() {
             ))}
             <button
               type="button"
-              className="flex items-center justify-between rounded-lg px-3 py-2.5 text-left transition hover:bg-white/5 hover:text-[#0D9488]"
+              className="flex items-center justify-between rounded-lg px-3 py-2.5 text-left transition hover:bg-canvas/5 hover:text-[rgb(var(--accent))]"
               aria-expanded={isMobileWorkspacesOpen}
               aria-controls="ws-mobile-products-menu"
               onClick={() => setIsMobileWorkspacesOpen((open) => !open)}
             >Workspaces<svg className={`h-4 w-4 transition ${isMobileWorkspacesOpen ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
             </button>
             {isMobileWorkspacesOpen ? (
-              <div id="ws-mobile-products-menu" className="ml-3 flex flex-col gap-1 border-l border-slate-200 pl-3">
+              <div id="ws-mobile-products-menu" className="ml-3 flex flex-col gap-1 border-l border-line pl-3">
                 {PRODUCTS_MENU.map((item) => (
                   <a
                     key={item.label}
                     href={item.path}
-                    className="rounded-xl px-3 py-2 text-sm text-slate-600 transition hover:bg-sky-50 hover:text-[#0877e8]"
+                    className="rounded-lg px-3 py-2 text-sm text-ink-2 transition hover:bg-sky-50 hover:text-[rgb(var(--accent))]"
                     onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); setIsMobileWorkspacesOpen(false); go(item.path); }}
                   >
                     {item.label}
@@ -167,14 +167,14 @@ export function GlobalHeader() {
               </div>
             ) : null}
             <a
-              className="rounded-lg px-3 py-2.5 transition hover:bg-white/5 hover:text-[#0D9488]"
+              className="rounded-lg px-3 py-2.5 transition hover:bg-canvas/5 hover:text-[rgb(var(--accent))]"
               href="/contact"
               onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); go("/contact"); }}
             >
               Contact
             </a>
             <button
-              className="ws-btn-primary mt-2 rounded-full px-5 py-2.5 text-sm font-semibold sm:hidden"
+              className="ws-btn-primary mt-2 rounded-md px-5 py-2.5 text-sm font-medium sm:hidden"
               onClick={() => { setIsMobileNavOpen(false); go("/#cleaner"); }}
             >
               Start Free
@@ -190,24 +190,24 @@ export function GlobalHeader() {
 export type StatusTone = "idle" | "processing" | "success" | "warning" | "error";
 
 const TONE_STYLES: Record<StatusTone, string> = {
-  idle: "bg-white/5 text-[#b0bacb] border-white/12",
-  processing: "bg-[#0D9488]/10 text-[#5EEAD4] border-[#0D9488]/40",
-  success: "bg-[#FB6F58]/12 text-[#FFCCC2] border-[#FB6F58]/40",
-  warning: "bg-[#f59e0b]/12 text-[#fbbf24] border-[#f59e0b]/40",
-  error: "bg-[#ef4444]/12 text-[#f87171] border-[#ef4444]/40",
+  idle: "bg-canvas/5 text-[rgb(var(--ink-2))] border-white/12",
+  processing: "bg-[rgb(var(--accent))]/10 text-[rgb(var(--accent-hover))] border-[rgb(var(--accent))]/40",
+  success: "bg-[rgb(var(--error))]/12 text-[rgb(var(--error))] border-[rgb(var(--error))]/40",
+  warning: "bg-[rgb(var(--ink-3))]/12 text-[rgb(var(--ink-3))] border-[rgb(var(--ink-3))]/40",
+  error: "bg-[rgb(var(--error))]/12 text-[rgb(var(--error))] border-[rgb(var(--error))]/40",
 };
 
 export function StatusBadge({ tone, label }: { tone: StatusTone; label: string }) {
   return (
-    <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold ${TONE_STYLES[tone]}`}>
-      <span className={`h-1.5 w-1.5 rounded-full ${tone === "processing" ? "animate-pulse bg-[#0D9488]" : tone === "success" ? "bg-[#FB6F58]" : tone === "warning" ? "bg-[#f59e0b]" : tone === "error" ? "bg-[#ef4444]" : "bg-[#b0bacb]"}`} />
+    <span className={`inline-flex items-center gap-1.5 rounded-md border px-3 py-1 text-xs font-medium ${TONE_STYLES[tone]}`}>
+      <span className={`h-1.5 w-1.5 rounded-md ${tone === "processing" ? "animate-pulse bg-[rgb(var(--accent))]" : tone === "success" ? "bg-[rgb(var(--error))]" : tone === "warning" ? "bg-[rgb(var(--ink-3))]" : tone === "error" ? "bg-[rgb(var(--error))]" : "bg-[rgb(var(--ink-2))]"}`} />
       {label}
     </span>
   );
 }
 
 export function FormatBadge({ label }: { label: string }) {
-  return <span className="ws-badge inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide">{label}</span>;
+  return <span className="ws-badge inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide">{label}</span>;
 }
 
 export function WorkspaceShell({
@@ -234,15 +234,15 @@ export function WorkspaceShell({
 
       <div className="relative mx-auto max-w-[110rem] px-5 pb-20 pt-24 lg:px-8">
         {/* Module page header */}
-        <div className="ws-surface ws-module-header flex flex-wrap items-start justify-between gap-4 rounded-2xl p-6">
+        <div className="ws-surface ws-module-header flex flex-wrap items-start justify-between gap-4 rounded-lg p-6">
           <div className="flex items-start gap-4">
-            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#0D9488]/20 to-[#14B8A6]/20 text-2xl ring-1 ring-inset ring-white/10">{icon}</span>
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[rgb(var(--accent))]/20 to-[rgb(var(--accent))]/20 text-2xl ring-1 ring-inset ring-white/10">{icon}</span>
             <div>
-              <h1 className="mc-display text-2xl font-bold tracking-tight text-white sm:text-3xl">{title}</h1>
-              <p className="mt-1 max-w-3xl text-justify text-sm leading-6 text-[#b0bacb] [hyphens:auto]">{description}</p>
+              <h1 className="mc-display text-2xl font-medium tracking-tight text-white sm:text-3xl">{title}</h1>
+              <p className="mt-1 max-w-3xl text-justify text-sm leading-6 text-[rgb(var(--ink-2))] [hyphens:auto]">{description}</p>
               <div className="mt-3 flex flex-wrap items-center gap-2">
                 {formats?.map((f) => <FormatBadge key={f} label={f} />)}
-                {engine ? <span className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-semibold text-[#5EEAD4]">Engine: {engine}</span> : null}
+                {engine ? <span className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-medium text-[rgb(var(--accent-hover))]">Engine: {engine}</span> : null}
               </div>
             </div>
           </div>
@@ -465,11 +465,11 @@ export function ToolLaunchpad<T extends string>({
 
 export function EmptyState({ title, note }: { title: string; note?: string }) {
   return (
-    <div className="ws-surface rounded-2xl border-dashed p-10 text-center">
-      <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-white/5 text-2xl ring-1 ring-inset ring-white/10">🗂️</div>
-      <h3 className="mc-display text-lg font-semibold text-white">{title}</h3>
-      {note ? <p className="mx-auto mt-2 max-w-md text-sm text-[#b0bacb]">{note}</p> : null}
-      <div className="mt-4 flex flex-wrap justify-center gap-2 text-xs text-[#b0bacb]">
+    <div className="ws-surface rounded-lg border-dashed p-10 text-center">
+      <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-canvas/5 text-2xl ring-1 ring-inset ring-white/10">🗂️</div>
+      <h3 className="mc-display text-lg font-medium text-white">{title}</h3>
+      {note ? <p className="mx-auto mt-2 max-w-md text-sm text-[rgb(var(--ink-2))]">{note}</p> : null}
+      <div className="mt-4 flex flex-wrap justify-center gap-2 text-xs text-[rgb(var(--ink-2))]">
         <span>✓ Data Validation</span>
         <span>✓ Reconciliation</span>
         <span>✓ Cleansing</span>
