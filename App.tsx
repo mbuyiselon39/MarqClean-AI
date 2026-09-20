@@ -10,6 +10,8 @@ const AcademyHub = lazy(() => import("./academy/AcademyHub"));
 const HeroCarousel = lazy(() => import("./HeroCarousel"));
 const DataEngineStudio = lazy(() => import("./DataEngineStudio"));
 import SmartDropzone, { type SmartPipelineAction, type SmartRecommendation } from "./SmartDropzone";
+import Logo from "./Logo";
+import ThemeToggle from "./ThemeToggle";
 
 type RawRow = Record<string, unknown>;
 type CleanRow = Record<string, string>;
@@ -3162,9 +3164,9 @@ export default function App() {
               navigateToHomeSection("top");
             }}
           >
-            <img src="/brand-logo-dark.svg" alt="MarqClean AI" className="h-10 w-auto" />
+            <Logo className="shrink-0" />
           </a>
-          <div className="hidden items-center gap-6 text-[13px] font-semibold text-slate-600 xl:flex">
+          <div className="hidden items-center gap-6 text-[13px] font-medium text-ink-2 xl:flex">
             <a href="/#top" className="transition hover:text-[#0D9488]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("top"); }}>Home</a>
             <a href="/#features" className="transition hover:text-[#0D9488]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("features"); }}>Platform</a>
             <a href="/#services" className="transition hover:text-[#0D9488]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("services"); }}>Services</a>
@@ -4303,7 +4305,7 @@ export default function App() {
           <div className="mc-site-footer__top">
             <div className="mc-site-footer__brand">
               <a href="/" aria-label="MarqClean AI home" onClick={(event)=>{event.preventDefault();navigateToPage("home");}}>
-                <img src="/brand-logo-dark.svg" alt="MarqClean AI" width="220" height="52" />
+                <Logo className="shrink-0" />
               </a>
               <p>Browser-local tools for cleaning, validating, transforming and reconciling Excel, CSV and PDF data.</p>
               <div className="mc-site-footer__trust"><span aria-hidden="true">●</span> Files stay in your browser during processing</div>
