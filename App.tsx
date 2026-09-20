@@ -2430,7 +2430,7 @@ function ToolsDirectory() {
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search data and Excel tools..."
             aria-label="Search data and Excel tools"
-            className="w-full rounded-md border border-white/12 bg-canvas/[0.04] py-2.5 pl-10 pr-4 text-sm text-ink placeholder:text-ink/35 outline-none transition focus-visible:border-[rgb(var(--accent))] focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/40"
+            className="w-full rounded-md border border-line bg-canvas/[0.04] py-2.5 pl-10 pr-4 text-sm text-ink placeholder:text-ink/35 outline-none transition focus-visible:border-[rgb(var(--accent))] focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/40"
           />
         </div>
         <p className="text-xs text-ink/45">{filtered.length} of {allTools.length} tools</p>
@@ -2446,7 +2446,7 @@ function ToolsDirectory() {
             className={`rounded-md border px-3.5 py-1.5 text-xs font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/50 ${
               category === c
                 ? "border-[rgb(var(--accent))] bg-[rgb(var(--accent))]/20 text-ink"
-                : "border-white/12 text-ink-3 hover:border-white/30 hover:text-ink"
+                : "border-line text-ink-3 hover:border-line hover:text-ink"
             }`}
           >
             {c}
@@ -2460,7 +2460,7 @@ function ToolsDirectory() {
           <p className="mt-2 text-sm text-ink-3">Try a different search term, or clear the category filter.</p>
           <button
             onClick={() => { setQuery(""); setCategory("All"); }}
-            className="mt-4 rounded-md border border-white/20 px-4 py-2 text-xs font-medium text-ink hover:border-white/50"
+            className="mt-4 rounded-md border border-line px-4 py-2 text-xs font-medium text-ink hover:border-line"
           >
             Clear search and filters
           </button>
@@ -2555,7 +2555,7 @@ function ToolContentPage({ page }: { page: SeoToolPage }) {
           >
             Use the free cleaner
           </a>
-          <PageLink className="rounded-md border border-white/20 px-6 py-3 text-center text-sm font-medium text-ink transition hover:border-white/50" page="lead-list-cleaner">
+          <PageLink className="rounded-md border border-line px-6 py-3 text-center text-sm font-medium text-ink transition hover:border-line" page="lead-list-cleaner">
             Explore lead list cleanup
           </PageLink>
         </div>
@@ -3365,7 +3365,7 @@ export default function App() {
                   type="button"
                   role="tab"
                   aria-selected={workspaceTab === key}
-                  className={`rounded-md border px-5 py-2.5 text-sm font-medium transition ${workspaceTab === key ? "border-[rgb(var(--accent))]/60 bg-[rgb(var(--accent))]/10 text-ink" : "border-white/12 bg-canvas text-[rgb(var(--ink-2))] hover:border-white/30 hover:text-ink"}`}
+                  className={`rounded-md border px-5 py-2.5 text-sm font-medium transition ${workspaceTab === key ? "border-[rgb(var(--accent))]/60 bg-[rgb(var(--accent))]/10 text-ink" : "border-line bg-canvas text-[rgb(var(--ink-2))] hover:border-line hover:text-ink"}`}
                   onClick={() => setWorkspaceTab(key)}
                 >
                   {label}
@@ -3965,7 +3965,7 @@ export default function App() {
                   readable values for CRM imports and email personalization.
                 </p>
                 <div className="relative mt-6 flex flex-wrap gap-2 font-mono text-xs text-ink/40">
-                  <span className="rounded-md border border-line bg-black/20 px-2 py-1 line-through decoration-error">john SMITH</span>
+                  <span className="rounded-md border border-line bg-ink/20 px-2 py-1 line-through decoration-error">john SMITH</span>
                   <span className="self-center text-[rgb(var(--accent-hover))]">→</span>
                   <span className="rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-2 py-1 text-[rgb(var(--accent-hover))]">John Smith</span>
                 </div>
@@ -4059,7 +4059,7 @@ export default function App() {
                   >
                     Open Reconciliation Hub
                   </button>
-                  <PageLink className="rounded-md border border-white/30 px-6 py-3 text-sm font-medium text-ink transition hover:border-white hover:bg-canvas hover:text-ink" page="data-reconciliation-tool">
+                  <PageLink className="rounded-md border border-line px-6 py-3 text-sm font-medium text-ink transition hover:border-line hover:bg-canvas hover:text-ink" page="data-reconciliation-tool">
                     Learn about reconciliation
                   </PageLink>
                 </div>
