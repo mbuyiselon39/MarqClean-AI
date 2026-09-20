@@ -9,6 +9,8 @@ import {
   aggregateColumn,
   andOrColumn,
   averageifs,
+  maxifs,
+  minifs,
   caseColumn,
   concatColumns,
   countifs,
@@ -91,7 +93,7 @@ import {
 type ToolKey = "functions" | "power-query" | "data-model" | "dax-reference" | "merge" | "dedupe" | "fuzzy" | "clarity" | "explorer" | "predict" | "extract" | "timesheet";
 
 const TOOLS: Array<{ key: ToolKey; label: string; blurb: string; icon: string }> = [
-  { key: "functions", label: "Advanced Excel Functions", blurb: "Lookup, text, date, logical, stats, and finance functions, automated.", icon: "📊" },
+  { key: "functions", label: "Advanced Excel Functions", blurb: "Workbook-backed cleanup, analysis, reconciliation, statistics, and finance formulas.", icon: "📊" },
   { key: "power-query", label: "Power Query-Style Workflow", blurb: "Import, preview, transform, combine, and export with a step-by-step log.", icon: "🧩" },
   { key: "data-model", label: "Data Model & Relationships", blurb: "Link tables, validate keys, and build cross-table measures, Power Pivot-style.", icon: "🕸️" },
   { key: "dax-reference", label: "DAX Formula Reference", blurb: "Look up common DAX patterns, their equivalent here, and check formula syntax.", icon: "🧮" },
@@ -1288,6 +1290,8 @@ function FunctionsTool() {
       case "sumifs": r = sumifs(table, sumCol, criteria); break;
       case "countifs": r = countifs(table, criteria); break;
       case "averageifs": r = averageifs(table, sumCol, criteria); break;
+      case "maxifs": r = maxifs(table, valueCol, criteria); break;
+      case "minifs": r = minifs(table, valueCol, criteria); break;
       case "sumproduct": r = sumproduct(table, valueCol, colB); break;
       case "round": r = roundColumn(table, valueCol, decimals, roundMode); break;
       case "aggregate": r = aggregateColumn(table, valueCol, aggFn); break;
@@ -1321,7 +1325,9 @@ function FunctionsTool() {
       case "sort": r = sortTableByColumn(table, valueCol, sortDir); break;
       case "let": r = letCalc(table, valueCol, letAgg, letOp, letValue); break;
       case "xnpv": r = xnpv(table, valueCol, dateCol, rate); break;
+      case "npv": r = npv(table, valueCol, rate); break;
       case "xirr": r = xirr(table, valueCol, dateCol); break;
+      case "irr": r = irr(table, valueCol); break;
       case "pmt": r = pmt(rate, periods, presentValue); break;
       case "ipmt": r = ipmt(rate, period, periods, presentValue); break;
       default: r = { ok: false, message: "Unknown function." };
@@ -1422,6 +1428,7 @@ function FunctionsTool() {
               ) : null}
 
               {(fnKey === "xnpv" || fnKey === "xirr") ? (<><ColSelect label="Values column" value={valueCol} onChange={setValueCol} /><ColSelect label="Dates column" value={dateCol} onChange={setDateCol} /></>) : null}
+              {(fnKey === "npv" || fnKey === "irr") ? <ColSelect label="Cash flow column" value={valueCol} onChange={setValueCol} /> : null}
               {fnKey === "xnpv" ? <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Discount rate %<input type="number" className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={rate} onChange={(e) => setRate(Number(e.target.value))} /></label> : null}
 
               {(fnKey === "pmt" || fnKey === "ipmt") ? (
@@ -1442,6 +1449,7 @@ function FunctionsTool() {
               ) : null}
 
               {fnKey === "averageifs" ? <ColSelect label="Average column" value={sumCol} onChange={setSumCol} /> : null}
+              {(fnKey === "maxifs" || fnKey === "minifs") ? <ColSelect label={fnKey === "maxifs" ? "Max column" : "Min column"} value={valueCol} onChange={setValueCol} /> : null}
 
               {fnKey === "round" ? (
                 <>
