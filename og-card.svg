@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+<rect width="1200" height="630" fill="#FFFFFF"/>
+<g transform="translate(470 245)">
+<path d="M64 0H36C16.118 0 0 16.118 0 36v68c0 19.882 16.118 36 36 36h68c19.882 0 36-16.118 36-36V70" stroke="#09090B" stroke-width="4.5" stroke-linecap="butt"/>
+<rect x="60" y="36" width="32" height="32" rx="6" fill="#5B21B6"/>
+<text x="208" y="80" font-family="Geist, Inter, Arial, sans-serif" font-size="58" letter-spacing="-2.3"><tspan font-weight="500" fill="#09090B">Marq</tspan><tspan font-weight="400" fill="#52525B">Clean AI</tspan></text>
+</g>
+<text x="600" y="425" text-anchor="middle" font-family="Geist, Inter, Arial, sans-serif" font-size="28" font-weight="400" fill="#52525B">Clean data. Clear decisions.</text>
+</svg>
