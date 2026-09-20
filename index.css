@@ -93,7 +93,7 @@ html {
   min-height: 100%;
   scroll-behavior: smooth;
   background: rgb(var(--canvas));
-  color-scheme: light;
+  color-scheme: light dark;
   font-family: var(--font-sans);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
