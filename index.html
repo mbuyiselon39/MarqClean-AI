@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#030908" />
-    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#09090B" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
     <meta name="robots" content="index, follow" />
     <meta name="author" content="Vertex Stream Technologies" />
     <meta name="publisher" content="Vertex Stream Technologies" />
@@ -14,54 +15,39 @@
     <link rel="canonical" href="https://www.marqcleanai.vertexsg.co.za/" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet" />
-
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/favicon.svg" />
-
     <meta property="og:site_name" content="MarqClean AI" />
     <meta property="og:title" content="MarqClean AI — Clean data. Clear decisions." />
     <meta property="og:description" content="Clean, validate, transform and reconcile Excel, CSV and PDF data with a browser-first data operations platform." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.marqcleanai.vertexsg.co.za/" />
-    <meta property="og:image" content="https://www.marqcleanai.vertexsg.co.za/brand-logo-dark.svg" />
+    <meta property="og:image" content="https://www.marqcleanai.vertexsg.co.za/og-card.svg" />
     <meta property="og:locale" content="en_ZA" />
-
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="MarqClean AI — Clean data. Clear decisions." />
     <meta name="twitter:description" content="A browser-first platform for data cleaning, validation, transformation and reconciliation." />
-    <meta name="twitter:image" content="https://www.marqcleanai.vertexsg.co.za/brand-logo-dark.svg" />
+    <meta name="twitter:image" content="https://www.marqcleanai.vertexsg.co.za/og-card.svg" />
 
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@graph": [
-          {
-            "@type": "Organization",
-            "@id": "https://www.marqcleanai.vertexsg.co.za/#organization",
-            "name": "Vertex Stream Technologies",
-            "url": "https://www.marqcleanai.vertexsg.co.za/",
-            "logo": "https://www.marqcleanai.vertexsg.co.za/brand-logo-dark.svg"
-          },
-          {
-            "@type": "WebSite",
-            "@id": "https://www.marqcleanai.vertexsg.co.za/#website",
-            "name": "MarqClean AI",
-            "url": "https://www.marqcleanai.vertexsg.co.za/",
-            "publisher": { "@id": "https://www.marqcleanai.vertexsg.co.za/#organization" },
-            "inLanguage": "en-ZA"
-          },
-          {
-            "@type": "SoftwareApplication",
-            "name": "MarqClean AI",
-            "url": "https://www.marqcleanai.vertexsg.co.za/",
-            "applicationCategory": ["BusinessApplication", "ProductivityApplication", "FinanceApplication"],
-            "operatingSystem": "Web",
-            "isAccessibleForFree": true,
-            "description": "Browser-first data operations software for cleaning, validating, transforming and reconciling Excel, CSV and PDF data.",
-            "featureList": ["Data cleaning", "CSV Studio", "Excel automation", "Reconciliation Hub", "Data Toolbox", "PDF data extraction"]
+    <script>
+      (() => {
+        try {
+          const key = "marqclean:theme";
+          const stored = localStorage.getItem(key);
+          if (stored === "light" || stored === "dark") {
+            document.documentElement.setAttribute("data-theme", stored);
           }
+        } catch {}
+      })();
+    </script>
+    <script type="application/ld+json" id="marqclean-schema">
+      {
+        "@context":"https://schema.org",
+        "@graph":[
+          {"@type":"Organization","@id":"https://www.marqcleanai.vertexsg.co.za/#organization","name":"Vertex Stream Technologies","url":"https://www.marqcleanai.vertexsg.co.za/","logo":"https://www.marqcleanai.vertexsg.co.za/og-card.svg"},
+          {"@type":"WebSite","@id":"https://www.marqcleanai.vertexsg.co.za/#website","name":"MarqClean AI","url":"https://www.marqcleanai.vertexsg.co.za/","publisher":{"@id":"https://www.marqcleanai.vertexsg.co.za/#organization"},"inLanguage":"en-ZA"}
         ]
       }
     </script>
