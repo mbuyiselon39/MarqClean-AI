@@ -1101,9 +1101,7 @@ body[data-mc-workspace-sidebar="collapsed"] .ws-root:has(.ws-sidebar) > .relativ
   border: 1px solid rgb(var(--line));
 }
 
-.ws-scope thead,
-.ws-scope thead.bg-slate-50,
-.ws-scope thead .bg-slate-50 {
+.ws-scope thead {
   background: rgb(var(--surface)) !important;
 }
 
@@ -1141,75 +1139,6 @@ body[data-mc-workspace-sidebar="collapsed"] .ws-root:has(.ws-sidebar) > .relativ
 .ws-scope textarea:focus {
   border-color: rgb(var(--accent)) !important;
   box-shadow: none !important;
-}
-
-.ws-scope .bg-white,
-.ws-scope .bg-slate-50,
-.ws-scope .bg-slate-100,
-.ws-scope .bg-gray-50 {
-  background: rgb(var(--surface)) !important;
-}
-
-.ws-scope .text-slate-950,
-.ws-scope .text-slate-900,
-.ws-scope .text-slate-800 {
-  color: rgb(var(--ink)) !important;
-}
-
-.ws-scope .text-slate-700,
-.ws-scope .text-slate-600 {
-  color: rgb(var(--ink-2)) !important;
-}
-
-.ws-scope .text-slate-500,
-.ws-scope .text-slate-400 {
-  color: rgb(var(--ink-3)) !important;
-}
-
-.ws-scope .border-slate-200,
-.ws-scope .border-slate-300 {
-  border-color: rgb(var(--line)) !important;
-}
-
-.ws-scope .shadow-lg,
-.ws-scope .shadow-xl,
-.ws-scope .shadow-2xl {
-  box-shadow: var(--shadow-popover) !important;
-}
-
-.ws-scope .text-emerald-800,
-.ws-scope .text-emerald-700,
-.ws-scope .text-cyan-700,
-.ws-scope .text-teal-700,
-.ws-scope .text-blue-700,
-.ws-scope .text-violet-700 {
-  color: rgb(var(--accent)) !important;
-}
-
-.ws-scope .text-red-700,
-.ws-scope .text-red-600 {
-  color: rgb(var(--error)) !important;
-}
-
-.ws-scope .bg-emerald-50,
-.ws-scope .bg-cyan-50,
-.ws-scope .bg-teal-50,
-.ws-scope .bg-blue-50,
-.ws-scope .bg-violet-50 {
-  background: rgb(var(--accent-tint)) !important;
-}
-
-.ws-scope .bg-red-50 {
-  background: transparent !important;
-}
-
-.ws-scope .border-emerald-200,
-.ws-scope .border-cyan-200,
-.ws-scope .border-teal-200,
-.ws-scope .border-blue-200,
-.ws-scope .border-violet-200,
-.ws-scope .border-red-200 {
-  border-color: rgb(var(--line)) !important;
 }
 
 /* Primary product-card/grid treatment. */
