@@ -128,7 +128,7 @@ export const EXCEL_FUNCTIONS: FunctionDef[] = [
   { key: "weekday", label: "WEEKDAY / TEXT weekday", category: "Date & Time", description: "Return the day of week name for a date column.", syntax: "TEXT(column, \"dddd\")" },
   { key: "networkdays", label: "NETWORKDAYS", category: "Date & Time", description: "Count working days (excluding weekends) between two date columns.", syntax: "NETWORKDAYS(start_date, end_date)" },
   { key: "eomonth", label: "EOMONTH", category: "Date & Time", description: "Return the last day of the month a given number of months from each date.", syntax: "EOMONTH(column, months)" },
-  { key: "text-date", label: "TEXT (format dates)", category: "Date & Time", description: "Format a date column into a chosen text pattern.", syntax: "TEXT(column, "yyyy-mm-dd")" },
+  { key: "text-date", label: "TEXT (format dates)", category: "Date & Time", description: "Format a date column into a chosen text pattern.", syntax: "TEXT(column, \"yyyy-mm-dd\")" },
   { key: "datevalue", label: "DATEVALUE", category: "Date & Time", description: "Convert a recognizable date string into an Excel-style serial date.", syntax: "DATEVALUE(date_text)" },
   { key: "timevalue", label: "TIMEVALUE", category: "Date & Time", description: "Convert a recognizable time string into an Excel-style fractional day.", syntax: "TIMEVALUE(time_text)" },
   { key: "if", label: "IF", category: "Logical", description: "Return one value when a condition is met and another when it is not, as a new column.", syntax: "IF(column op value, if_true, if_false)" },
@@ -292,7 +292,7 @@ export function correl(table: DataTable, colA: number, colB: number): FunctionRe
   const num = pairs.reduce((a,p)=>a+(p[0]-mx)*(p[1]-my),0);
   const den = Math.sqrt(pairs.reduce((a,p)=>a+(p[0]-mx)**2,0)*pairs.reduce((a,p)=>a+(p[1]-my)**2,0));
   if (!den) return { ok:false, message:"CORREL is undefined when one column has no variation." };
-  return { ok:true, message:`Pearson correlation across ${pairs.length} pairs.`, scalar: num/den.toFixed ? String((num/den).toFixed(6)) : String(num/den), formula:`=CORREL(${table.headers[colA]}, ${table.headers[colB]})` };
+  return { ok:true, message:`Pearson correlation across ${pairs.length} pairs.`, scalar: (num/den).toFixed(6), formula:`=CORREL(${table.headers[colA]}, ${table.headers[colB]})` };
 }
 
 export function stdevS(table: DataTable, col: number): FunctionResult {
