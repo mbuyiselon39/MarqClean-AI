@@ -255,33 +255,211 @@ export function WorkspaceShell({
   );
 }
 
-// Responsive tool launchpad grid: shows every tool as a card, no scrolling to
-// discover them. Desktop 4-col, tablet 2-col, mobile 1-col.
+// ---------------------------------------------------------------------------
+// Unified workspace navigation: the former launchpad is now a real product
+// sidebar with persistent collapse state, grouped tools and a global command
+// palette. The existing tool contract remains compatible with every module.
+// ---------------------------------------------------------------------------
+
+type WorkspaceTool<T extends string> = {
+  key: T;
+  label: string;
+  blurb: string;
+  icon: string;
+  category?: string;
+};
+
+function toolGroup(tool: WorkspaceTool<string>) {
+  if (tool.category) return tool.category;
+  const value = tool.key + " " + tool.label;
+  if (/(bank|reconcil|statement|fund|verify|comparison)/i.test(value)) return "Control";
+  if (/(formula|excel|xlookup|sumifs|gpt|automation)/i.test(value)) return "Automation";
+  if (/(chart|statistic|analyst|analysis|toolbox)/i.test(value)) return "Intelligence";
+  return "Data preparation";
+}
+
+function SidebarIcon({ children }: { children: ReactNode }) {
+  return <span className="ws-sidebar-icon" aria-hidden="true">{children}</span>;
+}
+
+export function CommandPalette<T extends string>({
+  tools,
+  active,
+  onSelect,
+  open,
+  onClose,
+}: {
+  tools: Array<WorkspaceTool<T>>;
+  active: T;
+  onSelect: (key: T) => void;
+  open: boolean;
+  onClose: () => void;
+}) {
+  const [query, setQuery] = useState("");
+  const [cursor, setCursor] = useState(0);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const results = tools.filter((tool) => {
+    const haystack = (tool.label + " " + tool.blurb + " " + tool.key + " " + (tool.category ?? "")).toLowerCase();
+    return haystack.includes(query.trim().toLowerCase());
+  });
+
+  useEffect(() => {
+    if (!open) return;
+    setQuery("");
+    setCursor(0);
+    requestAnimationFrame(() => inputRef.current?.focus());
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onClose();
+      } else if (event.key === "ArrowDown") {
+        event.preventDefault();
+        setCursor((value) => Math.min(value + 1, Math.max(results.length - 1, 0)));
+      } else if (event.key === "ArrowUp") {
+        event.preventDefault();
+        setCursor((value) => Math.max(value - 1, 0));
+      } else if (event.key === "Enter" && results[cursor]) {
+        event.preventDefault();
+        onSelect(results[cursor].key);
+        onClose();
+      }
+    }
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [open, onClose, onSelect, results, cursor]);
+
+  useEffect(() => {
+    if (cursor >= results.length) setCursor(Math.max(results.length - 1, 0));
+  }, [cursor, results.length]);
+
+  if (!open) return null;
+
+  return (
+    <div className="ws-command-overlay" role="presentation" onMouseDown={onClose}>
+      <div className="ws-command" role="dialog" aria-modal="true" aria-label="Search workspace" onMouseDown={(event) => event.stopPropagation()}>
+        <div className="ws-command__search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></svg>
+          <input ref={inputRef} value={query} onChange={(event) => { setQuery(event.target.value); setCursor(0); }} placeholder="Search tools, workflows and capabilities…" aria-label="Search tools" />
+          <kbd>ESC</kbd>
+        </div>
+        <div className="ws-command__meta"><span>{results.length} workspace tools</span><span>↑ ↓ navigate · Enter open</span></div>
+        <div className="ws-command__results" role="listbox" aria-label="Workspace tools">
+          {results.map((tool, index) => (
+            <button
+              key={tool.key}
+              type="button"
+              role="option"
+              aria-selected={active === tool.key}
+              className={"ws-command__item " + (index === cursor ? "is-highlighted " : "") + (active === tool.key ? "is-active" : "")}
+              onMouseEnter={() => setCursor(index)}
+              onClick={() => { onSelect(tool.key); onClose(); }}
+            >
+              <span className="ws-command__item-icon">{tool.icon}</span>
+              <span className="ws-command__item-copy"><strong>{tool.label}</strong><small>{tool.blurb}</small></span>
+              <span className="ws-command__item-group">{toolGroup(tool)}</span>
+            </button>
+          ))}
+          {!results.length ? <div className="ws-command__empty">No matching workspace tools. Try “clean”, “reconcile”, “formula” or “analysis”.</div> : null}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function ToolLaunchpad<T extends string>({
   tools,
   active,
   onSelect,
 }: {
-  tools: Array<{ key: T; label: string; blurb: string; icon: string }>;
+  tools: Array<WorkspaceTool<T>>;
   active: T;
   onSelect: (key: T) => void;
 }) {
+  const [collapsed, setCollapsed] = useState(() => {
+    try { return window.localStorage.getItem("marqclean:workspace-sidebar") === "collapsed"; } catch { return false; }
+  });
+  const [paletteOpen, setPaletteOpen] = useState(false);
+
+  useEffect(() => {
+    try { window.localStorage.setItem("marqclean:workspace-sidebar", collapsed ? "collapsed" : "expanded"); } catch {}
+    document.body.dataset.mcWorkspaceSidebar = collapsed ? "collapsed" : "expanded";
+    return () => { delete document.body.dataset.mcWorkspaceSidebar; };
+  }, [collapsed]);
+
+  useEffect(() => {
+    function handleShortcut(event: KeyboardEvent) {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        setPaletteOpen((open) => !open);
+      }
+    }
+    document.addEventListener("keydown", handleShortcut);
+    return () => document.removeEventListener("keydown", handleShortcut);
+  }, []);
+
+  const groups = ["Data preparation", "Automation", "Control", "Intelligence"].map((name) => ({
+    name,
+    items: tools.filter((tool) => toolGroup(tool) === name),
+  })).filter((group) => group.items.length);
+
   return (
-    <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-      {tools.map((t) => (
-        <button
-          key={t.key}
-          onClick={() => onSelect(t.key)}
-          className={`group flex items-start gap-3 rounded-xl border p-4 text-left transition ${active === t.key ? "border-[#0D9488]/60 bg-[#0D9488]/10" : "border-white/8 bg-white/[0.03] hover:border-[#0D9488]/40 hover:bg-white/[0.06]"}`}
-        >
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/5 text-lg ring-1 ring-inset ring-white/10">{t.icon}</span>
-          <span className="min-w-0">
-            <span className="block truncate text-sm font-semibold text-white">{t.label}</span>
-            <span className="mt-0.5 block text-xs leading-5 text-[#8a94a8]">{t.blurb}</span>
-          </span>
-        </button>
-      ))}
-    </div>
+    <>
+      <aside className={"ws-sidebar " + (collapsed ? "is-collapsed" : "")} aria-label="MarqClean workspace">
+        <div className="ws-sidebar__top">
+          <button type="button" className="ws-sidebar__search" onClick={() => setPaletteOpen(true)} aria-label="Search workspace">
+            <SidebarIcon><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></svg></SidebarIcon>
+            <span>Search workspace</span><kbd>⌘K</kbd>
+          </button>
+          <button type="button" className="ws-sidebar__collapse" onClick={() => setCollapsed((value) => !value)} aria-label={collapsed ? "Expand workspace sidebar" : "Collapse workspace sidebar"} title={collapsed ? "Expand sidebar" : "Collapse sidebar"}>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d={collapsed ? "m9 18 6-6-6-6" : "m15 18-6-6 6-6"} /></svg>
+          </button>
+        </div>
+
+        <div className="ws-sidebar__scroll">
+          <div className="ws-sidebar__workspace">
+            <div className="ws-sidebar__workspace-mark">M</div>
+            <div className="ws-sidebar__workspace-copy"><strong>MarqClean AI</strong><small>Unified workspace</small></div>
+          </div>
+
+          {groups.map((group) => (
+            <section className="ws-sidebar__group" key={group.name}>
+              <div className="ws-sidebar__label">{group.name}</div>
+              {group.items.map((tool) => (
+                <button
+                  type="button"
+                  key={tool.key}
+                  className={"ws-sidebar__item " + (active === tool.key ? "is-active" : "")}
+                  onClick={() => onSelect(tool.key)}
+                  title={collapsed ? tool.label : undefined}
+                  aria-current={active === tool.key ? "page" : undefined}
+                >
+                  <SidebarIcon>{tool.icon}</SidebarIcon>
+                  <span className="ws-sidebar__item-copy"><strong>{tool.label}</strong><small>{tool.blurb}</small></span>
+                </button>
+              ))}
+            </section>
+          ))}
+        </div>
+
+        <div className="ws-sidebar__footer">
+          <div className="ws-sidebar__local"><span className="ws-local-dot" /><span><strong>Processed locally</strong><small>Your files stay in this browser</small></span></div>
+          <button type="button" className="ws-sidebar__shortcut" onClick={() => setPaletteOpen(true)}>
+            <span>Command palette</span><kbd>⌘K</kbd>
+          </button>
+        </div>
+      </aside>
+
+      <div className="ws-sidebar-mobile-bar">
+        <button type="button" onClick={() => setPaletteOpen(true)} aria-label="Open command palette"><SidebarIcon><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></svg></SidebarIcon><span>Search workspace</span><kbd>⌘K</kbd></button>
+      </div>
+
+      <CommandPalette tools={tools} active={active} onSelect={onSelect} open={paletteOpen} onClose={() => setPaletteOpen(false)} />
+    </>
   );
 }
 
