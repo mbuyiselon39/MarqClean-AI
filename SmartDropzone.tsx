@@ -141,7 +141,7 @@ export default function SmartDropzone({
   }
 
   return (
-    <section className="smart-dropzone mx-auto max-w-6xl rounded-[28px] border border-slate-200 bg-white p-4 shadow-[0_24px_70px_rgba(16,35,63,.10)] sm:p-6" aria-label="Smart file ingestion">
+    <section className="smart-dropzone mx-auto max-w-6xl rounded-[28px] border border-line bg-canvas p-4 sm:p-6" aria-label="Smart file ingestion">
       <div
         className={`smart-dropzone__target ${dragging ? "is-dragging" : ""}`}
         onDragEnter={(e) => { e.preventDefault(); setDragging(true); }}
@@ -152,61 +152,61 @@ export default function SmartDropzone({
         <input ref={inputRef} className="sr-only" type="file" accept=".csv,.xlsx,.pdf,text/csv,application/pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onChange={(e) => { const file = e.target.files?.[0]; if (file) chooseFile(file); }} />
         <div className="flex flex-col items-center text-center">
           <span className="smart-dropzone__icon" aria-hidden="true">↥</span>
-          <p className="mt-4 text-xs font-bold uppercase tracking-[.2em] text-[#0877e8]">Smart Drop</p>
-          <h2 className="mt-2 text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">Drop your data. MarqClean AI finds the right workflow.</h2>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">Upload CSV, XLSX or PDF. The first scan happens locally in your browser before any workflow is started.</p>
+          <p className="mt-4 text-xs font-medium uppercase tracking-[.2em] text-[rgb(var(--accent))]">Smart Drop</p>
+          <h2 className="mt-2 text-2xl font-medium tracking-tight text-ink sm:text-3xl">Drop your data. MarqClean AI finds the right workflow.</h2>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-ink-2">Upload CSV, XLSX or PDF. The first scan happens locally in your browser before any workflow is started.</p>
           <div className="mt-5 flex flex-wrap justify-center gap-2">
-            {["CSV", "XLSX", "PDF"].map((format) => <span key={format} className="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600">{format}</span>)}
+            {["CSV", "XLSX", "PDF"].map((format) => <span key={format} className="rounded-md bg-surface px-3 py-1 text-xs font-medium text-ink-2">{format}</span>)}
           </div>
-          <button type="button" className="mt-6 rounded-full bg-[#0877e8] px-6 py-3 text-sm font-bold text-white shadow-lg shadow-blue-200 transition hover:bg-[#0759b5]" onClick={() => inputRef.current?.click()}>Choose a file</button>
-          <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-xs font-semibold text-emerald-800">
+          <button type="button" className="mt-6 rounded-md bg-[rgb(var(--accent))] px-6 py-3 text-sm font-medium text-white shadow-blue-200 transition hover:bg-[rgb(var(--accent-hover))]" onClick={() => inputRef.current?.click()}>Choose a file</button>
+          <div className="mt-5 inline-flex items-center gap-2 rounded-md border border-emerald-200 bg-emerald-50 px-4 py-2 text-xs font-medium text-emerald-800">
             <span aria-hidden="true">🔒</span> 100% Secure Client-Side Execution — your files never leave this browser.
           </div>
         </div>
       </div>
 
-      {message ? <p className="mt-4 rounded-2xl bg-red-50 p-4 text-sm font-medium text-red-700">{message}</p> : null}
+      {message ? <p className="mt-4 rounded-lg bg-red-50 p-4 text-sm font-medium text-red-700">{message}</p> : null}
 
       {diagnostics ? (
         <div className="mt-5 grid gap-4 lg:grid-cols-[1.15fr_.85fr]">
-          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+          <div className="rounded-lg border border-line bg-surface p-5">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
-                <p className="text-xs font-bold uppercase tracking-[.18em] text-slate-500">Smart Scan Diagnostics</p>
-                <h3 className="mt-1 text-lg font-bold text-slate-950">{fileName}</h3>
+                <p className="text-xs font-medium uppercase tracking-[.18em] text-ink-3">Smart Scan Diagnostics</p>
+                <h3 className="mt-1 text-lg font-medium text-ink">{fileName}</h3>
               </div>
-              <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-slate-600">{fileType}</span>
+              <span className="rounded-md bg-canvas px-3 py-1 text-xs font-medium text-ink-2">{fileType}</span>
             </div>
             <div className="mt-4 grid gap-3 sm:grid-cols-3">
-              <div className="rounded-xl bg-white p-4"><p className="text-2xl font-bold text-slate-950">{diagnostics.corruptedRows}</p><p className="text-xs text-slate-500">Corrupted/inconsistent rows</p></div>
-              <div className="rounded-xl bg-white p-4"><p className="text-2xl font-bold text-slate-950">{diagnostics.nonStandardDates}</p><p className="text-xs text-slate-500">Non-standard date values</p></div>
-              <div className="rounded-xl bg-white p-4"><p className="text-2xl font-bold text-slate-950">{diagnostics.rows.toLocaleString()}</p><p className="text-xs text-slate-500">Data rows detected</p></div>
+              <div className="rounded-lg bg-canvas p-4"><p className="text-2xl font-medium text-ink">{diagnostics.corruptedRows}</p><p className="text-xs text-ink-3">Corrupted/inconsistent rows</p></div>
+              <div className="rounded-lg bg-canvas p-4"><p className="text-2xl font-medium text-ink">{diagnostics.nonStandardDates}</p><p className="text-xs text-ink-3">Non-standard date values</p></div>
+              <div className="rounded-lg bg-canvas p-4"><p className="text-2xl font-medium text-ink">{diagnostics.rows.toLocaleString()}</p><p className="text-xs text-ink-3">Data rows detected</p></div>
             </div>
-            {largeWarning ? <div className="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm font-medium text-amber-900">Large dataset detected. Processing locally may take roughly ~15 seconds depending on your computer and browser capacity.</div> : null}
-            {diagnostics.headers.length ? <p className="mt-4 text-xs leading-5 text-slate-500"><strong>Detected columns:</strong> {diagnostics.headers.slice(0, 12).join(" · ")}{diagnostics.headers.length > 12 ? " · …" : ""}</p> : null}
+            {largeWarning ? <div className="mt-4 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm font-medium text-amber-900">Large dataset detected. Processing locally may take roughly ~15 seconds depending on your computer and browser capacity.</div> : null}
+            {diagnostics.headers.length ? <p className="mt-4 text-xs leading-5 text-ink-3"><strong>Detected columns:</strong> {diagnostics.headers.slice(0, 12).join(" · ")}{diagnostics.headers.length > 12 ? " · …" : ""}</p> : null}
           </div>
 
-          <div className="rounded-2xl border border-slate-200 bg-white p-5">
-            <p className="text-xs font-bold uppercase tracking-[.18em] text-slate-500">Recommended Automations</p>
+          <div className="rounded-lg border border-line bg-canvas p-5">
+            <p className="text-xs font-medium uppercase tracking-[.18em] text-ink-3">Recommended Automations</p>
             <div className="mt-3 space-y-2">
               {diagnostics.recommendations.map((item) => (
-                <button key={item.id} type="button" onClick={() => onRecommendation?.(item)} className="w-full rounded-xl border border-slate-200 bg-slate-50 p-3 text-left transition hover:border-blue-200 hover:bg-blue-50">
-                  <span className="block text-sm font-bold text-slate-900">▶ {item.label}</span>
-                  <span className="mt-1 block text-xs leading-5 text-slate-500">{item.reason}</span>
+                <button key={item.id} type="button" onClick={() => onRecommendation?.(item)} className="w-full rounded-lg border border-line bg-surface p-3 text-left transition hover:border-blue-200 hover:bg-blue-50">
+                  <span className="block text-sm font-medium text-ink">▶ {item.label}</span>
+                  <span className="mt-1 block text-xs leading-5 text-ink-3">{item.reason}</span>
                 </button>
               ))}
             </div>
-            <p className="mt-5 text-xs font-bold uppercase tracking-[.18em] text-slate-500">Workflow Macro</p>
+            <p className="mt-5 text-xs font-medium uppercase tracking-[.18em] text-ink-3">Workflow Macro</p>
             <div className="mt-3 space-y-2">
               {ACTIONS.map((action) => (
-                <label key={action.id} className="flex cursor-pointer items-center gap-3 rounded-xl border border-slate-200 px-3 py-2.5 text-sm text-slate-700">
+                <label key={action.id} className="flex cursor-pointer items-center gap-3 rounded-lg border border-line px-3 py-2.5 text-sm text-ink-2">
                   <input type="checkbox" checked={selectedActions.includes(action.id)} onChange={() => toggleAction(action.id)} />
                   <span>{action.label}</span>
                 </label>
               ))}
             </div>
-            <button type="button" disabled={fileType === "PDF"} onClick={run} className="mt-4 w-full rounded-full bg-slate-950 px-5 py-3 text-sm font-bold text-white disabled:cursor-not-allowed disabled:opacity-40">Run workflow locally</button>
-            {fileType === "PDF" ? <p className="mt-2 text-xs text-slate-500">Open Bank Ledger X for PDF extraction before running a data workflow.</p> : null}
+            <button type="button" disabled={fileType === "PDF"} onClick={run} className="mt-4 w-full rounded-md bg-slate-950 px-5 py-3 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-40">Run workflow locally</button>
+            {fileType === "PDF" ? <p className="mt-2 text-xs text-ink-3">Open Bank Ledger X for PDF extraction before running a data workflow.</p> : null}
           </div>
         </div>
       ) : null}
