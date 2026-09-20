@@ -4298,226 +4298,51 @@ export default function App() {
       </main>
       )}
 
-      <footer className="bg-slate-950 text-white" aria-labelledby="footer-heading">
-        <div className="mx-auto max-w-7xl px-5 py-14 lg:px-8">
-          <div className="grid gap-10 border-b border-white/10 pb-10 md:grid-cols-2 lg:grid-cols-6">
-            <div>
-              <h2 id="footer-heading" className="text-2xl font-semibold tracking-[-0.03em]">
-                {PRODUCT_NAME}
-              </h2>
-              <p className="mt-4 max-w-md text-sm leading-6 text-white/68">
-                {PRODUCT_NAME} is an AI-powered data automation platform for cleaning, validating, transforming and
-                reconciling Excel, CSV, PDF and financial datasets. Built for operations, compliance, finance and data
-                teams. A product of {COMPANY_NAME}, a division of {GROUP_NAME}.
-              </p>
+      <footer className="mc-site-footer" aria-labelledby="footer-heading">
+        <div className="mc-site-footer__inner">
+          <div className="mc-site-footer__top">
+            <div className="mc-site-footer__brand">
+              <a href="/" aria-label="MarqClean AI home" onClick={(event)=>{event.preventDefault();navigateToPage("home");}}>
+                <img src="/brand-logo-dark.svg" alt="MarqClean AI" width="220" height="52" />
+              </a>
+              <p>Browser-local tools for cleaning, validating, transforming and reconciling Excel, CSV and PDF data.</p>
+              <div className="mc-site-footer__trust"><span aria-hidden="true">●</span> Files stay in your browser during processing</div>
             </div>
 
-            <div>
-              <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-teal-200">Platform</h3>
-              <ul className="mt-4 space-y-3 text-sm text-white/68">
-                <li>
-                  <a
-                    className="transition hover:text-white"
-                    href="/data-cleaner"
-                    onClick={(event) => {
-                      event.preventDefault();
-                      openWorkspaceTab("leads");
-                    }}
-                  >
-                    Quick Data &amp; CSV Cleaner
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="transition hover:text-white"
-                    href="/excel-automation"
-                    onClick={(event) => {
-                      event.preventDefault();
-                      navigateToPage("excel-automation");
-                    }}
-                  >
-                    Excel Automation
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="transition hover:text-white"
-                    href="/reconciliation-hub"
-                    onClick={(event) => {
-                      event.preventDefault();
-                      navigateToPage("reconciliation-hub");
-                    }}
-                  >
-                    Reconciliation Hub
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="transition hover:text-white"
-                    href="/data-toolbox"
-                    onClick={(event) => {
-                      event.preventDefault();
-                      navigateToPage("data-toolbox");
-                    }}
-                  >
-                    Data Toolbox
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="transition hover:text-white"
-                    href="/excel-academy"
-                    onClick={(event) => {
-                      event.preventDefault();
-                      navigateToPage("excel-academy");
-                    }}
-                  >
-                    Free Excel Academy
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="transition hover:text-white"
-                    href="/#features"
-                    onClick={(event) => {
-                      event.preventDefault();
-                      navigateToHomeSection("features");
-                    }}
-                  >
-                    Features
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="transition hover:text-white"
-                    href="/#workflow"
-                    onClick={(event) => {
-                      event.preventDefault();
-                      navigateToHomeSection("workflow");
-                    }}
-                  >
-                    Workflow
-                  </a>
-                </li>
-                <li>
-                  <PageLink className="transition hover:text-white" page="about">
-                    About
-                  </PageLink>
-                </li>
-              </ul>
+            <div className="mc-site-footer__column">
+              <h3>Platform</h3>
+              <PageLink page="about">About MarqClean AI</PageLink>
+              <a href="/data-cleaner" onClick={(event)=>{event.preventDefault();openWorkspaceTab("leads");}}>Quick Data &amp; CSV Cleaner</a>
+              <a href="/excel-automation" onClick={(event)=>{event.preventDefault();navigateToPage("excel-automation");}}>Excel Automation</a>
+              <a href="/reconciliation-hub" onClick={(event)=>{event.preventDefault();navigateToPage("reconciliation-hub");}}>Reconciliation Hub</a>
+              <a href="/data-toolbox" onClick={(event)=>{event.preventDefault();navigateToPage("data-toolbox");}}>Data Toolbox</a>
+              <a href="/data-engine" onClick={(event)=>{event.preventDefault();navigateToPage("data-engine");}}>Local Data Engine</a>
             </div>
 
-            <div>
-              <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-teal-200">Exports</h3>
-              <ul className="mt-4 space-y-3 text-sm text-white/68">
-                <li>Excel (.xlsx) Export</li>
-                <li>CSV Export</li>
-                <li>CRM-Ready Datasets</li>
-                <li>Validation Reports</li>
-                <li>Reconciliation Reports</li>
-                <li>Audit Reports</li>
-              </ul>
+            <div className="mc-site-footer__column">
+              <h3>Tools</h3>
+              <PageLink page="clean-csv-file-online">CSV Cleaner</PageLink>
+              <PageLink page="csv-to-excel-cleaner">CSV to Excel Converter</PageLink>
+              <PageLink page="fix-csv-capitalization">Spreadsheet Formatter</PageLink>
+              <PageLink page="remove-duplicates-excel">Duplicate Removal</PageLink>
+              <PageLink page="document-validation-tool">Data Validation</PageLink>
+              <PageLink page="advanced-excel-functions">Advanced Excel Functions</PageLink>
             </div>
 
-            <div>
-              <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-teal-200">Trust</h3>
-              <ul className="mt-4 space-y-3 text-sm text-white/68">
-                <li>Browser-Based Processing</li>
-                <li>No Server Uploads Required</li>
-                <li>Microsoft 365 Compatible Files</li>
-                <li>Data Processed Locally</li>
-                <li>Privacy-First Design</li>
-                <li>Secure File Handling</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-teal-200">Free Tools</h3>
-              <ul className="mt-4 space-y-3 text-sm text-white/68">
-                <li>
-                  <PageLink className="transition hover:text-white" page="clean-csv-file-online">
-                    CSV Cleaner
-                  </PageLink>
-                </li>
-                <li>
-                  <PageLink className="transition hover:text-white" page="csv-to-excel-cleaner">
-                    CSV to Excel Converter
-                  </PageLink>
-                </li>
-                <li>
-                  <a
-                    className="transition hover:text-white"
-                    href="/excel-automation"
-                    onClick={(event) => {
-                      event.preventDefault();
-                      navigateToPage("excel-automation");
-                    }}
-                  >
-                    Excel Automation Tools
-                  </a>
-                </li>
-                <li>
-                  <PageLink className="transition hover:text-white" page="fix-csv-capitalization">
-                    Spreadsheet Formatter
-                  </PageLink>
-                </li>
-                <li>
-                  <PageLink className="transition hover:text-white" page="remove-duplicates-excel">
-                    Duplicate Removal
-                  </PageLink>
-                </li>
-                <li>
-                  <PageLink className="transition hover:text-white" page="document-validation-tool">
-                    Data Validation Tools
-                  </PageLink>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-teal-200">Legal</h3>
-              <ul className="mt-4 space-y-3 text-sm text-white/68">
-                <li>
-                  <PageLink className="transition hover:text-white" page="privacy">
-                    Privacy Policy
-                  </PageLink>
-                </li>
-                <li>
-                  <PageLink className="transition hover:text-white" page="terms">
-                    Terms of Service
-                  </PageLink>
-                </li>
-                <li>
-                  <PageLink className="transition hover:text-white" page="cookies">
-                    Cookie Policy
-                  </PageLink>
-                </li>
-                <li>
-                  <PageLink className="transition hover:text-white" page="contact">
-                    Contact
-                  </PageLink>
-                </li>
-                <li>
-                  <PageLink className="transition hover:text-white" page="accessibility">
-                    Accessibility
-                  </PageLink>
-                </li>
-              </ul>
+            <div className="mc-site-footer__column">
+              <h3>Trust &amp; legal</h3>
+              <PageLink page="privacy">Privacy Policy</PageLink>
+              <PageLink page="terms">Terms of Service</PageLink>
+              <PageLink page="cookies">Cookie Policy</PageLink>
+              <PageLink page="accessibility">Accessibility</PageLink>
+              <PageLink page="contact">Contact &amp; Support</PageLink>
+              <a href="mailto:support@vertexstreamtechnologies.com">support@vertexstreamtechnologies.com</a>
             </div>
           </div>
 
-          <div className="flex flex-col gap-3 pt-8 text-sm text-white/55">
-            <p className="font-medium text-white/75">
-              {PRODUCT_NAME} is a product of {GROUP_NAME} (
-              <a href="https://www.vertexsg.co.za" target="_blank" rel="noopener noreferrer" className="text-[#5EEAD4] underline-offset-2 transition hover:text-white hover:underline">
-                www.vertexsg.co.za
-              </a>
-              ).
-            </p>
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-              <p>Copyright {new Date().getFullYear()} {PRODUCT_NAME}. All rights reserved.</p>
-              <p>Based in Johannesburg, South Africa. Serving teams worldwide.</p>
-            </div>
+          <div className="mc-site-footer__bottom">
+            <p>© {new Date().getFullYear()} MarqClean AI. All rights reserved.</p>
+            <p>A product of <a href="https://www.vertexsg.co.za" target="_blank" rel="noopener noreferrer">Vertex Stream Group</a> · Vertex Stream Technologies · Johannesburg, South Africa</p>
           </div>
         </div>
       </footer>
