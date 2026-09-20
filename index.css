@@ -1509,3 +1509,10 @@ footer,
     color: rgb(var(--ink-2)) !important;
   }
 }
+
+/* Final component-level token normalization */
+:where(.mc-card-interactive,.mc-data-grid,.mc-upload-zone,.mc-local-privacy,.mc-linear-preview__drop,.smart-dropzone__target,.ws-surface,.ws-sidebar,.ws-command,.ws-command__input,.ws-command__item) { box-shadow: none; }
+:where(.mc-card-interactive,.mc-data-grid,.mc-upload-zone,.mc-local-privacy,.mc-linear-preview__drop,.smart-dropzone__target) { border-width: 1px; }
+:where(.mc-card-interactive,.tool-card) svg { color: rgb(var(--ink-2)); }
+:where(.tool-card) { background: rgb(var(--canvas)); border: 1px solid rgb(var(--line)); box-shadow: var(--shadow-hairline); }
+:where(.tool-card:hover) { border-color: rgb(var(--ink-4)); background: rgb(var(--canvas)); }
