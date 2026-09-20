@@ -134,10 +134,10 @@ export default function DataToolbox({ onExit }: { onExit: () => void }) {
 
       <div className="relative mx-auto mb-2 flex max-w-[110rem] flex-wrap items-center justify-between gap-3 px-5 pt-24 lg:px-8">
         <div className="flex items-center gap-3">
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-canvas from-[rgb(var(--accent))]/20 to-[rgb(var(--accent))]/20 text-xl ring-1 ring-inset ring-white/10">🧰</span>
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-canvas /20 /20 text-xl ring-1 ring-inset ring-white/10">🧰</span>
           <div>
             <h2 className="mc-display text-xl font-medium text-ink">Data Toolbox</h2>
-            <p className="text-xs text-[#b0bacb]">Advanced Excel functions, cleansing, matching and transformation. All tools free, browser-based.</p>
+            <p className="text-xs text-[rgb(var(--ink-2))]">Advanced Excel functions, cleansing, matching and transformation. All tools free, browser-based.</p>
           </div>
         </div>
         <button className="ws-btn-secondary rounded-md px-4 py-2 text-sm font-medium" onClick={onExit}>Back to MarqClean AI</button>
@@ -145,7 +145,7 @@ export default function DataToolbox({ onExit }: { onExit: () => void }) {
 
       <div className="relative mx-auto max-w-[110rem] px-5 pb-16 pt-4 lg:px-8">
         <div className="mb-2 flex items-center justify-between">
-          <p className="mc-mono text-[11px] uppercase tracking-[0.2em] text-[#8a94a8]">Tools Available ({TOOLS.length})</p>
+          <p className="mc-mono text-[11px] uppercase tracking-[0.2em] text-[rgb(var(--ink-3))]">Tools Available ({TOOLS.length})</p>
         </div>
         <ToolLaunchpad tools={TOOLS} active={tool} onSelect={setTool} />
 
@@ -237,7 +237,7 @@ function DownloadButtons({ table, name }: { table: DataTable; name: string }) {
   return (
     <div className="mt-4 flex flex-wrap gap-2">
       <button className="rounded-md bg-accent-tint px-4 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={() => downloadTableExcel(table, `${name}.xlsx`, name)}>Download Excel</button>
-      <button className="rounded-md border border-line px-4 py-2 text-xs font-medium text-ink-2 transition hover:border-slate-950" onClick={() => downloadTableCsv(table, `${name}.csv`)}>Download CSV</button>
+      <button className="rounded-md border border-line px-4 py-2 text-xs font-medium text-ink-2 transition hover:border-ink" onClick={() => downloadTableCsv(table, `${name}.csv`)}>Download CSV</button>
     </div>
   );
 }
@@ -522,7 +522,7 @@ function PowerQueryTool() {
             <p className="text-sm text-ink-2">Preview after {steps.length} step{steps.length === 1 ? "" : "s"}: {currentTable.rows.length} rows, {currentTable.headers.length} columns.</p>
             <TablePreview table={currentTable} />
             <DownloadButtons table={currentTable} name="power-query-output" />
-            <button className="mt-2 rounded-md border border-line px-4 py-2 text-xs font-medium text-ink-2 transition hover:border-slate-950" onClick={downloadSummary}>Download transformation summary</button>
+            <button className="mt-2 rounded-md border border-line px-4 py-2 text-xs font-medium text-ink-2 transition hover:border-ink" onClick={downloadSummary}>Download transformation summary</button>
           </div>
         </>
       ) : null}
@@ -782,8 +782,8 @@ function RelationshipDiagram({ sources, relationships, conflictsByRel }: { sourc
         const hasError = (conflictsByRel.get(rel.id) ?? []).some((c) => c.severity === "error");
         return (
           <g key={rel.id}>
-            <line x1={from.x} y1={from.y} x2={to.x} y2={to.y} stroke={hasError ? "#e11d48" : "rgb(var(--accent))"} strokeWidth={2} />
-            <text x={(from.x + to.x) / 2} y={from.y - 8} textAnchor="middle" fontSize="10" fill="#64748b">{rel.cardinality}</text>
+            <line x1={from.x} y1={from.y} x2={to.x} y2={to.y} stroke={hasError ? "rgb(var(--error))" : "rgb(var(--accent))"} strokeWidth={2} />
+            <text x={(from.x + to.x) / 2} y={from.y - 8} textAnchor="middle" fontSize="10" fill="rgb(var(--ink-2))">{rel.cardinality}</text>
           </g>
         );
       })}
@@ -793,8 +793,8 @@ function RelationshipDiagram({ sources, relationships, conflictsByRel }: { sourc
         return (
           <g key={name}>
             <rect x={pos.x - nodeWidth / 2} y={pos.y - 24} width={nodeWidth} height={48} rx={10} fill="rgb(var(--ink))" />
-            <text x={pos.x} y={pos.y - 4} textAnchor="middle" fontSize="12" fill="#ffffff" fontWeight="600">{name.length > 20 ? name.slice(0, 18) + "…" : name}</text>
-            <text x={pos.x} y={pos.y + 14} textAnchor="middle" fontSize="10" fill="#94a3b8">{table?.rows.length ?? 0} rows</text>
+            <text x={pos.x} y={pos.y - 4} textAnchor="middle" fontSize="12" fill="rgb(var(--canvas))" fontWeight="600">{name.length > 20 ? name.slice(0, 18) + "…" : name}</text>
+            <text x={pos.x} y={pos.y + 14} textAnchor="middle" fontSize="10" fill="rgb(var(--ink-3))">{table?.rows.length ?? 0} rows</text>
           </g>
         );
       })}
@@ -979,7 +979,7 @@ function DedupeTool() {
               <label>Similarity</label>
               <input type="range" min={0.6} max={0.98} step={0.01} value={threshold} onChange={(e) => setThreshold(Number(e.target.value))} />
               <span>{Math.round(threshold * 100)}%</span>
-              <button className="rounded-md border border-line px-4 py-2 text-xs font-medium text-ink-2 transition hover:border-slate-950" onClick={() => setFuzzyPairs(findFuzzyDuplicates(up.table!, fuzzyCol, threshold))}>Find near-duplicates</button>
+              <button className="rounded-md border border-line px-4 py-2 text-xs font-medium text-ink-2 transition hover:border-ink" onClick={() => setFuzzyPairs(findFuzzyDuplicates(up.table!, fuzzyCol, threshold))}>Find near-duplicates</button>
             </div>
             {fuzzyPairs ? (
               <div className="mt-3 max-h-64 overflow-auto text-sm">
@@ -1076,12 +1076,12 @@ function ClarityTool() {
               <select className="rounded border border-line px-2 py-1" value={col} onChange={(e) => setCol(Number(e.target.value))}>
                 {up.table.headers.map((h, i) => <option key={i} value={i}>{h}</option>)}
               </select>
-              <button className="rounded-md border border-line px-3 py-1.5 text-xs font-medium text-ink-2 transition hover:border-slate-950" onClick={() => { const r = smartFill(up.table!, col); recompute(r.table); }}>Fill gaps (mode)</button>
+              <button className="rounded-md border border-line px-3 py-1.5 text-xs font-medium text-ink-2 transition hover:border-ink" onClick={() => { const r = smartFill(up.table!, col); recompute(r.table); }}>Fill gaps (mode)</button>
               <select className="rounded border border-line px-2 py-1" value={fmt} onChange={(e) => setFmt(e.target.value as FormatMode)}>
                 <option value="title">Title Case</option><option value="upper">UPPERCASE</option><option value="lower">lowercase</option><option value="trim">Trim</option>
               </select>
-              <button className="rounded-md border border-line px-3 py-1.5 text-xs font-medium text-ink-2 transition hover:border-slate-950" onClick={() => recompute(autoFormatColumn(up.table!, col, fmt))}>Auto format</button>
-              <button className="rounded-md border border-line px-3 py-1.5 text-xs font-medium text-ink-2 transition hover:border-slate-950" onClick={() => { const r = removeDuplicatesByColumns(up.table!, []); recompute(r.table); }}>Remove duplicate rows</button>
+              <button className="rounded-md border border-line px-3 py-1.5 text-xs font-medium text-ink-2 transition hover:border-ink" onClick={() => recompute(autoFormatColumn(up.table!, col, fmt))}>Auto format</button>
+              <button className="rounded-md border border-line px-3 py-1.5 text-xs font-medium text-ink-2 transition hover:border-ink" onClick={() => { const r = removeDuplicatesByColumns(up.table!, []); recompute(r.table); }}>Remove duplicate rows</button>
             </div>
           </div>
 
@@ -1405,7 +1405,7 @@ function FunctionsTool() {
           </div>
         ))}
       </div>
-      {(fnKey !== "filter") ? <button className="mt-2 rounded-md border border-line px-3 py-1 text-xs font-medium text-ink-2 transition hover:border-slate-950" onClick={addCriterion}>Add criterion</button> : null}
+      {(fnKey !== "filter") ? <button className="mt-2 rounded-md border border-line px-3 py-1 text-xs font-medium text-ink-2 transition hover:border-ink" onClick={addCriterion}>Add criterion</button> : null}
     </div>
   );
 
@@ -1614,7 +1614,7 @@ function FunctionsTool() {
             <div className={`rounded-xl border p-5 ${result.ok ? "border-line bg-canvas" : "border-line bg-surface"}`}>
               {result.scalar !== undefined ? <p className="text-3xl font-medium text-ink">{result.scalar}</p> : null}
               <p className={`mt-1 text-sm ${result.ok ? "text-ink-2" : "text-error"}`}>{result.message}</p>
-              {result.formula ? <p className="mt-2 rounded-lg bg-slate-900 px-3 py-2 font-mono text-xs text-accent">{result.formula}</p> : null}
+              {result.formula ? <p className="mt-2 rounded-lg bg-ink px-3 py-2 font-mono text-xs text-accent">{result.formula}</p> : null}
               {result.table ? (<><TablePreview table={result.table} /><DownloadButtons table={result.table} name="result" /></>) : null}
             </div>
           ) : null}
@@ -1657,7 +1657,7 @@ function TimesheetTool() {
             </tbody>
           </table>
         </div>
-        <button className="mt-3 rounded-md border border-line px-4 py-2 text-xs font-medium text-ink-2 transition hover:border-slate-950" onClick={addRow}>Add row</button>
+        <button className="mt-3 rounded-md border border-line px-4 py-2 text-xs font-medium text-ink-2 transition hover:border-ink" onClick={addRow}>Add row</button>
       </div>
 
       <div className="mt-4 grid gap-4 sm:grid-cols-3">
