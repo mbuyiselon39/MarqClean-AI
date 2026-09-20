@@ -141,7 +141,7 @@ export default function SmartDropzone({
   }
 
   return (
-    <section className="smart-dropzone mx-auto max-w-6xl rounded-[28px] border border-line bg-canvas p-4 sm:p-6" aria-label="Smart file ingestion">
+    <section className="smart-dropzone mx-auto max-w-6xl rounded-lg border border-line bg-canvas p-4 sm:p-6" aria-label="Smart file ingestion">
       <div
         className={`smart-dropzone__target ${dragging ? "is-dragging" : ""}`}
         onDragEnter={(e) => { e.preventDefault(); setDragging(true); }}
@@ -152,20 +152,20 @@ export default function SmartDropzone({
         <input ref={inputRef} className="sr-only" type="file" accept=".csv,.xlsx,.pdf,text/csv,application/pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onChange={(e) => { const file = e.target.files?.[0]; if (file) chooseFile(file); }} />
         <div className="flex flex-col items-center text-center">
           <span className="smart-dropzone__icon" aria-hidden="true">↥</span>
-          <p className="mt-4 text-xs font-medium uppercase tracking-[.2em] text-[rgb(var(--accent))]">Smart Drop</p>
+          <p className="mt-4 text-xs font-medium uppercase tracking-[.2em] text-accent">Smart Drop</p>
           <h2 className="mt-2 text-2xl font-medium tracking-tight text-ink sm:text-3xl">Drop your data. MarqClean AI finds the right workflow.</h2>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-ink-2">Upload CSV, XLSX or PDF. The first scan happens locally in your browser before any workflow is started.</p>
           <div className="mt-5 flex flex-wrap justify-center gap-2">
             {["CSV", "XLSX", "PDF"].map((format) => <span key={format} className="rounded-md bg-surface px-3 py-1 text-xs font-medium text-ink-2">{format}</span>)}
           </div>
           <button type="button" className="mt-6 rounded-md bg-[rgb(var(--accent))] px-6 py-3 text-sm font-medium text-white shadow-blue-200 transition hover:bg-[rgb(var(--accent-hover))]" onClick={() => inputRef.current?.click()}>Choose a file</button>
-          <div className="mt-5 inline-flex items-center gap-2 rounded-md border border-emerald-200 bg-emerald-50 px-4 py-2 text-xs font-medium text-emerald-800">
+          <div className="mt-5 inline-flex items-center gap-2 rounded-md border border-line bg-surface px-4 py-2 text-xs font-medium text-ink-2">
             <span aria-hidden="true">🔒</span> 100% Secure Client-Side Execution — your files never leave this browser.
           </div>
         </div>
       </div>
 
-      {message ? <p className="mt-4 rounded-lg bg-red-50 p-4 text-sm font-medium text-red-700">{message}</p> : null}
+      {message ? <p className="mt-4 rounded-lg bg-surface p-4 text-sm font-medium text-error">{message}</p> : null}
 
       {diagnostics ? (
         <div className="mt-5 grid gap-4 lg:grid-cols-[1.15fr_.85fr]">
@@ -182,7 +182,7 @@ export default function SmartDropzone({
               <div className="rounded-lg bg-canvas p-4"><p className="text-2xl font-medium text-ink">{diagnostics.nonStandardDates}</p><p className="text-xs text-ink-3">Non-standard date values</p></div>
               <div className="rounded-lg bg-canvas p-4"><p className="text-2xl font-medium text-ink">{diagnostics.rows.toLocaleString()}</p><p className="text-xs text-ink-3">Data rows detected</p></div>
             </div>
-            {largeWarning ? <div className="mt-4 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm font-medium text-amber-900">Large dataset detected. Processing locally may take roughly ~15 seconds depending on your computer and browser capacity.</div> : null}
+            {largeWarning ? <div className="mt-4 rounded-lg border border-line bg-surface p-4 text-sm font-medium text-ink-2">Large dataset detected. Processing locally may take roughly ~15 seconds depending on your computer and browser capacity.</div> : null}
             {diagnostics.headers.length ? <p className="mt-4 text-xs leading-5 text-ink-3"><strong>Detected columns:</strong> {diagnostics.headers.slice(0, 12).join(" · ")}{diagnostics.headers.length > 12 ? " · …" : ""}</p> : null}
           </div>
 
@@ -190,7 +190,7 @@ export default function SmartDropzone({
             <p className="text-xs font-medium uppercase tracking-[.18em] text-ink-3">Recommended Automations</p>
             <div className="mt-3 space-y-2">
               {diagnostics.recommendations.map((item) => (
-                <button key={item.id} type="button" onClick={() => onRecommendation?.(item)} className="w-full rounded-lg border border-line bg-surface p-3 text-left transition hover:border-blue-200 hover:bg-blue-50">
+                <button key={item.id} type="button" onClick={() => onRecommendation?.(item)} className="w-full rounded-lg border border-line bg-surface p-3 text-left transition hover:border-line hover:bg-accent-tint">
                   <span className="block text-sm font-medium text-ink">▶ {item.label}</span>
                   <span className="mt-1 block text-xs leading-5 text-ink-3">{item.reason}</span>
                 </button>
@@ -205,7 +205,7 @@ export default function SmartDropzone({
                 </label>
               ))}
             </div>
-            <button type="button" disabled={fileType === "PDF"} onClick={run} className="mt-4 w-full rounded-md bg-slate-950 px-5 py-3 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-40">Run workflow locally</button>
+            <button type="button" disabled={fileType === "PDF"} onClick={run} className="mt-4 w-full rounded-md bg-ink px-5 py-3 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-40">Run workflow locally</button>
             {fileType === "PDF" ? <p className="mt-2 text-xs text-ink-3">Open Bank Ledger X for PDF extraction before running a data workflow.</p> : null}
           </div>
         </div>
