@@ -1,1 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 104" role="img" aria-labelledby="t d"><title id="t">MarqClean AI</title><desc id="d">MarqClean AI M mark and wordmark</desc><defs><linearGradient id="m" x1="12" y1="86" x2="86" y2="14"><stop stop-color="#56CFE1"/><stop offset="1" stop-color="#6FFFC1"/></linearGradient></defs><rect x="6" y="6" width="92" height="92" rx="24" fill="#061513"/><path d="M24 75V29h10l16 22 16-22h10v46H66V47L50 69 34 47v28Z" fill="url(#m)"/><text x="116" y="65" font-family="Inter,Arial,sans-serif" font-size="42" font-weight="750" letter-spacing="-1.5" fill="#fff">MarqClean</text><text x="354" y="65" font-family="Inter,Arial,sans-serif" font-size="42" font-weight="750" fill="#6FFFC1"> AI</text></svg>
+<svg width="240" height="40" viewBox="0 0 240 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M20 5H11a6 6 0 0 0-6 6v10a6 6 0 0 0 6 6h10a6 6 0 0 0 6-6v-5" stroke="#FAFAFA" stroke-width="2.25" stroke-linecap="butt"/>
+  <rect x="15" y="11" width="8" height="8" rx="1.5" fill="#A78BFA"/>
+  <text x="52" y="25" font-family="Geist, Inter, Arial, sans-serif" font-size="15" letter-spacing="-0.3"><tspan font-weight="500" fill="#FAFAFA">Marq</tspan><tspan font-weight="400" fill="#A1A1AA">Clean AI</tspan></text>
+</svg>
