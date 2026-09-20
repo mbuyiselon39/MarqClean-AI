@@ -193,7 +193,7 @@ export function GlobalHeader() {
 export type StatusTone = "idle" | "processing" | "success" | "warning" | "error";
 
 const TONE_STYLES: Record<StatusTone, string> = {
-  idle: "bg-canvas/5 text-[rgb(var(--ink-2))] border-white/12",
+  idle: "bg-canvas/5 text-[rgb(var(--ink-2))] border-line",
   processing: "bg-[rgb(var(--accent))]/10 text-[rgb(var(--accent-hover))] border-[rgb(var(--accent))]/40",
   success: "bg-[rgb(var(--error))]/12 text-[rgb(var(--error))] border-[rgb(var(--error))]/40",
   warning: "bg-[rgb(var(--ink-3))]/12 text-[rgb(var(--ink-3))] border-[rgb(var(--ink-3))]/40",
@@ -241,7 +241,7 @@ export function WorkspaceShell({
           <div className="flex items-start gap-4">
             <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-canvas /20 /20 text-2xl ring-1 ring-inset ring-white/10">{icon}</span>
             <div>
-              <h1 className="mc-display text-2xl font-medium tracking-tight text-white sm:text-3xl">{title}</h1>
+              <h1 className="mc-display text-2xl font-medium tracking-tight text-ink sm:text-3xl">{title}</h1>
               <p className="mt-1 max-w-3xl text-justify text-sm leading-6 text-[rgb(var(--ink-2))] [hyphens:auto]">{description}</p>
               <div className="mt-3 flex flex-wrap items-center gap-2">
                 {formats?.map((f) => <FormatBadge key={f} label={f} />)}
@@ -470,7 +470,7 @@ export function EmptyState({ title, note }: { title: string; note?: string }) {
   return (
     <div className="ws-surface rounded-lg border-dashed p-10 text-center">
       <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-canvas/5 text-2xl ring-1 ring-inset ring-white/10">🗂️</div>
-      <h3 className="mc-display text-lg font-medium text-white">{title}</h3>
+      <h3 className="mc-display text-lg font-medium text-ink">{title}</h3>
       {note ? <p className="mx-auto mt-2 max-w-md text-sm text-[rgb(var(--ink-2))]">{note}</p> : null}
       <div className="mt-4 flex flex-wrap justify-center gap-2 text-xs text-[rgb(var(--ink-2))]">
         <span>✓ Data Validation</span>
