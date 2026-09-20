@@ -3205,6 +3205,7 @@ export default function App() {
             <a href="/contact" className="transition hover:text-[#0D9488]" onClick={(e) => { e.preventDefault(); navigateToPage("contact"); }}>Contact</a>
           </div>
           <div className="flex items-center gap-2">
+            <ThemeToggle compact />
             <button
               className="mc-cta-cyan hidden rounded-full px-5 py-2 text-sm font-semibold sm:inline-flex"
               onClick={() => navigateToHomeSection("cleaner")}
