@@ -162,10 +162,10 @@ export default function ClientFunds({ onExit }: { onExit: () => void }) {
       <main id="main-content" className="relative mx-auto max-w-6xl px-5 pb-20 pt-24 lg:px-8">
         <div className="ws-surface mb-6 flex flex-wrap items-start justify-between gap-4 rounded-xl p-6">
           <div className="flex items-start gap-4">
-            <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-canvas from-[rgb(var(--accent))]/20 to-[rgb(var(--accent))]/20 text-2xl ring-1 ring-inset ring-white/10">📊</span>
+            <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-canvas /20 /20 text-2xl ring-1 ring-inset ring-white/10">📊</span>
             <div>
               <h1 className="mc-display text-2xl font-medium tracking-tight text-ink sm:text-3xl">Excel Automation</h1>
-              <p className="mt-1 max-w-2xl text-sm text-[#b0bacb]">Automate Excel sorting, subtotals, formulas and workbook generation. Includes the Sort &amp; Subtotal Engine, number formatting and error reporting.</p>
+              <p className="mt-1 max-w-2xl text-sm text-[rgb(var(--ink-2))]">Automate Excel sorting, subtotals, formulas and workbook generation. Includes the Sort &amp; Subtotal Engine, number formatting and error reporting.</p>
               <div className="mt-2 flex flex-wrap gap-2">
                 <span className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-medium uppercase">XLSX</span>
                 <span className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-medium uppercase">XLS</span>
@@ -203,14 +203,14 @@ export default function ClientFunds({ onExit }: { onExit: () => void }) {
                   <span className="ws-badge rounded-md px-2 py-0.5 font-medium uppercase">XLSX</span>
                   <span className="ws-badge rounded-md px-2 py-0.5 font-medium uppercase">XLS</span>
                 </div>
-                <p className="mt-2 text-xs text-[#8a94a8]">Maximum file size: 2GB &middot; Browser-based secure processing</p>
+                <p className="mt-2 text-xs text-[rgb(var(--ink-3))]">Maximum file size: 2GB &middot; Browser-based secure processing</p>
               </div>
             )}
             <div className="mt-4 flex flex-wrap justify-center gap-2">
               <button className="rounded-md bg-ink px-5 py-2.5 text-sm font-medium text-ink transition hover:bg-accent-tint" onClick={() => inputRef.current?.click()} disabled={busy}>
                 {busy ? "Reading..." : workbook ? "Replace file" : "Upload Excel File"}
               </button>
-              {workbook ? <button className="rounded-md border border-line px-5 py-2.5 text-sm font-medium text-ink-2 transition hover:border-slate-950" onClick={reset}>Reset Upload</button> : null}
+              {workbook ? <button className="rounded-md border border-line px-5 py-2.5 text-sm font-medium text-ink-2 transition hover:border-ink" onClick={reset}>Reset Upload</button> : null}
             </div>
           </div>
         </section>
@@ -220,7 +220,7 @@ export default function ClientFunds({ onExit }: { onExit: () => void }) {
           <section className="mt-6 rounded-xl border border-line bg-canvas p-5">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <h2 className="text-lg font-medium">2. Configure &amp; Preview Data</h2>
-              <button className="rounded-md border border-line px-4 py-2 text-xs font-medium text-ink-2 transition hover:border-slate-950" onClick={reautoDetect}>Auto detect</button>
+              <button className="rounded-md border border-line px-4 py-2 text-xs font-medium text-ink-2 transition hover:border-ink" onClick={reautoDetect}>Auto detect</button>
             </div>
 
             <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -287,7 +287,7 @@ export default function ClientFunds({ onExit }: { onExit: () => void }) {
         <section className="mt-6 rounded-xl border border-line bg-canvas p-5">
           <h2 className="text-lg font-medium">Diagnostics</h2>
           <p className="mt-1 text-sm text-ink-2">Generate a minimal test workbook to confirm the Excel export mechanism produces valid files that open in Microsoft Excel.</p>
-          <button className="mt-3 rounded-md border border-line px-5 py-2.5 text-sm font-medium text-ink-2 transition hover:border-slate-950" onClick={runTestWorkbook} disabled={busy}>Generate Test Workbook</button>
+          <button className="mt-3 rounded-md border border-line px-5 py-2.5 text-sm font-medium text-ink-2 transition hover:border-ink" onClick={runTestWorkbook} disabled={busy}>Generate Test Workbook</button>
           {testResult ? (
             <div className={`mt-3 rounded-xl p-3 text-sm ${testResult.validation.ok ? "bg-surface text-ink-2" : "bg-surface text-error"}`}>
               <p className="font-medium">{testResult.validation.ok ? "Test workbook is valid and reopened successfully." : "Test workbook failed validation."}</p>
@@ -331,7 +331,7 @@ export default function ClientFunds({ onExit }: { onExit: () => void }) {
             </div>
             <div className="mt-4 flex flex-wrap gap-2">
               <button className="rounded-md bg-ink px-6 py-3 text-sm font-medium text-ink transition hover:bg-accent-tint" onClick={download}>Download Sorted Workbook</button>
-              {processed.errors.length ? <button className="rounded-md border border-line px-5 py-3 text-sm font-medium text-ink-2 transition hover:border-slate-950" onClick={() => setShowErrors((s) => !s)}>{showErrors ? "Hide" : "View"} Error Report ({processed.errors.length})</button> : null}
+              {processed.errors.length ? <button className="rounded-md border border-line px-5 py-3 text-sm font-medium text-ink-2 transition hover:border-ink" onClick={() => setShowErrors((s) => !s)}>{showErrors ? "Hide" : "View"} Error Report ({processed.errors.length})</button> : null}
             </div>
             <p className="mt-2 text-xs text-ink-2">Validated: the generated .xlsx was re-opened successfully ({validation.size} bytes, sheets: {validation.sheetSummaries.map((s) => s.name).join(", ")}). Safe to download.</p>
             <p className="mt-1 text-xs text-ink-3">Output file: {downloadInfo.fileName}. Contains the original worksheet, Sorted_Output{createFormulaGuide ? ", Formula_Guide" : ""}{processed.errors.length && createErrorReport ? ", Error_Report" : ""}.</p>
@@ -354,7 +354,7 @@ export default function ClientFunds({ onExit }: { onExit: () => void }) {
               <h3 className="text-sm font-medium text-ink">Sorted output preview</h3>
               <div className="mt-2 overflow-auto rounded-xl border border-line" style={{ maxHeight: "26rem" }}>
                 <table className="min-w-full text-left text-sm">
-                  <thead className="bg-[#1a1b3a] text-xs uppercase tracking-wide text-ink"><tr><th className="px-3 py-2">Date / Note</th><th className="px-3 py-2">Client Name</th><th className="px-3 py-2">SRN</th><th className="px-3 py-2 text-right">Amount</th></tr></thead>
+                  <thead className="bg-[rgb(var(--ink))] text-xs uppercase tracking-wide text-ink"><tr><th className="px-3 py-2">Date / Note</th><th className="px-3 py-2">Client Name</th><th className="px-3 py-2">SRN</th><th className="px-3 py-2 text-right">Amount</th></tr></thead>
                   <tbody className="divide-y divide-slate-100">
                     {processed.groups.slice(0, 30).flatMap((g, gi) => [
                       ...g.rows.map((row, ri) => (
