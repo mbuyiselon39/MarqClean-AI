@@ -9,6 +9,11 @@ import {
   aggregateColumn,
   andOrColumn,
   averageifs,
+  correl,
+  stdevS,
+  varS,
+  forecastLinear,
+  forecastETS,
   maxifs,
   minifs,
   caseColumn,
@@ -16,6 +21,8 @@ import {
   countifs,
   datedif,
   datePart,
+  dateValue,
+  timeValue,
   eomonth,
   filterTableByCriterion,
   formatDateColumn,
@@ -34,6 +41,11 @@ import {
   pmt,
   rankColumn,
   roundColumn,
+  regexReplaceColumn,
+  regexTestColumn,
+  regexExtractColumn,
+  formulaTextColumn,
+  errorTypeColumn,
   sortTableByColumn,
   substituteColumn,
   substringColumn,
@@ -48,6 +60,9 @@ import {
   indirectColumn,
   sequenceColumn,
   uniqueValues,
+  chooseCols,
+  vstackTables,
+  tocol,
   vlookup,
   weekdayColumn,
   xirr,
@@ -1255,10 +1270,22 @@ function FunctionsTool() {
   const [typeCheckMode, setTypeCheckMode] = useState<TypeCheckMode>("blank");
   const [sequenceStart, setSequenceStart] = useState(1);
   const [sequenceStep, setSequenceStep] = useState(1);
+  const [secondTable, setSecondTable] = useState<DataTable | null>(null);
+  const secondUploadRef = useRef<HTMLInputElement>(null);
+  const [targetX, setTargetX] = useState(0);
+  const [seasonality, setSeasonality] = useState(12);
+  const [otherColumns, setOtherColumns] = useState("1,3,5");
+  const [regexPattern, setRegexPattern] = useState("[^A-Za-z0-9 ]");
+  const [regexReplacement, setRegexReplacement] = useState("");
 
   const table = up.table;
   const headers = table?.headers ?? [];
   const currentDef = EXCEL_FUNCTIONS.find((f) => f.key === fnKey)!;
+
+  async function onSecondFile(file: File) {
+    try { const t = await extractToTable(file); if (!t.headers.length) throw new Error("No readable data found."); setSecondTable(t); }
+    catch { setSecondTable(null); }
+  }
 
   function runInterpret() {
     if (!table) return;
@@ -1292,6 +1319,11 @@ function FunctionsTool() {
       case "sumifs": r = sumifs(table, sumCol, criteria); break;
       case "countifs": r = countifs(table, criteria); break;
       case "averageifs": r = averageifs(table, sumCol, criteria); break;
+      case "correl": r = correl(table, valueCol, colB); break;
+      case "stdev-s": r = stdevS(table, valueCol); break;
+      case "var-s": r = varS(table, valueCol); break;
+      case "forecast-linear": r = forecastLinear(table, valueCol, colB, targetX); break;
+      case "forecast-ets": r = forecastETS(table, dateCol, valueCol, targetX, seasonality); break;
       case "maxifs": r = maxifs(table, valueCol, criteria); break;
       case "minifs": r = minifs(table, valueCol, criteria); break;
       case "sumproduct": r = sumproduct(table, valueCol, colB); break;
@@ -1314,6 +1346,13 @@ function FunctionsTool() {
       case "networkdays": r = networkdays(table, valueCol, endDateCol); break;
       case "eomonth": r = eomonth(table, valueCol, monthsOffset); break;
       case "text-date": r = formatDateColumn(table, valueCol, dateFormat); break;
+      case "datevalue": r = dateValue(table, valueCol); break;
+      case "timevalue": r = timeValue(table, valueCol); break;
+      case "regexreplace": r = regexReplaceColumn(table, valueCol, regexPattern, regexReplacement); break;
+      case "regextest": r = regexTestColumn(table, valueCol, regexPattern); break;
+      case "regexextract": r = regexExtractColumn(table, valueCol, regexPattern); break;
+      case "formulatext": r = formulaTextColumn(table, valueCol); break;
+      case "error-type": r = errorTypeColumn(table, valueCol); break;
       case "if": r = ifColumn(table, valueCol, ifOp, ifValue, ifTrue, ifFalse); break;
       case "ifs": r = ifsBanding(table, valueCol, bands); break;
       case "and-or": r = andOrColumn(table, criteria, andOrMode); break;
@@ -1324,6 +1363,9 @@ function FunctionsTool() {
       case "sequence": r = sequenceColumn(table, sequenceStart, sequenceStep); break;
       case "filter": r = filterTableByCriterion(table, criteria[0]); break;
       case "unique": r = uniqueValues(table, valueCol); break;
+      case "choosecols": r = chooseCols(table, otherColumns.split(",").map(v => Number(v.trim())).filter(Number.isFinite)); break;
+      case "vstack": r = vstackTables(table, secondTable); break;
+      case "tocol": r = tocol(table, valueCol, true); break;
       case "sort": r = sortTableByColumn(table, valueCol, sortDir); break;
       case "let": r = letCalc(table, valueCol, letAgg, letOp, letValue); break;
       case "xnpv": r = xnpv(table, valueCol, dateCol, rate); break;
@@ -1368,7 +1410,7 @@ function FunctionsTool() {
   );
 
   return (
-    <Panel centered title="Advanced Excel Functions" description="Transform a spreadsheet into a data analysis engine. Upload a file, then pick from 40+ Excel functions across lookup, conditional maths, statistics, text, date, logical, dynamic arrays, and finance, or type what you want in plain English. Results appear in seconds and each shows the equivalent Excel formula.">
+    <Panel centered title="Advanced Excel Functions" description="Transform a spreadsheet into a data analysis engine. Upload a file, then pick from 50+ Excel functions across lookup, conditional maths, statistics, text, date, logical, dynamic arrays, and finance, or type what you want in plain English. Results appear in seconds and each shows the equivalent Excel formula.">
       <UploadBox label="Upload file" table={up.table} refEl={up.ref} onFile={up.onFile} />
       {up.error ? <p className="mt-3 text-sm text-red-700">{up.error}</p> : null}
 
@@ -1418,7 +1460,12 @@ function FunctionsTool() {
 
               {fnKey === "sumifs" ? <ColSelect label="Sum column" value={sumCol} onChange={setSumCol} /> : null}
               {fnKey === "sumproduct" ? (<><ColSelect label="Column A" value={valueCol} onChange={setValueCol} /><ColSelect label="Column B" value={colB} onChange={setColB} /></>) : null}
-              {(fnKey === "unique" || fnKey === "sort") ? <ColSelect label="Column" value={valueCol} onChange={setValueCol} /> : null}
+              {(fnKey === "unique" || fnKey === "sort" || fnKey === "stdev-s" || fnKey === "var-s" || fnKey === "datevalue" || fnKey === "timevalue" || fnKey === "regexreplace" || fnKey === "regextest" || fnKey === "regexextract" || fnKey === "formulatext" || fnKey === "error-type" || fnKey === "tocol") ? <ColSelect label="Column" value={valueCol} onChange={setValueCol} /> : null}
+              {fnKey === "correl" ? (<><ColSelect label="Column A" value={valueCol} onChange={setValueCol} /><ColSelect label="Column B" value={colB} onChange={setColB} /></>) : null}
+              {fnKey === "forecast-linear" ? (<><ColSelect label="Known X" value={valueCol} onChange={setValueCol} /><ColSelect label="Known Y" value={colB} onChange={setColB} /><label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Forecast X<input type="number" className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={targetX} onChange={e=>setTargetX(Number(e.target.value))} /></label></>) : null}
+              {fnKey === "forecast-ets" ? (<><ColSelect label="Timeline" value={dateCol} onChange={setDateCol} /><ColSelect label="Values" value={valueCol} onChange={setValueCol} /><label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Target period<input type="number" className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={targetX} onChange={e=>setTargetX(Number(e.target.value))} /></label><label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Seasonality<input type="number" min="1" className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={seasonality} onChange={e=>setSeasonality(Number(e.target.value))} /></label></>) : null}
+              {fnKey === "choosecols" ? <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Columns (1-based, comma-separated)<input className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={otherColumns} onChange={e=>setOtherColumns(e.target.value)} /></label> : null}
+              {(fnKey === "regexreplace" || fnKey === "regextest" || fnKey === "regexextract") ? (<><label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Regex pattern<input className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal font-mono" value={regexPattern} onChange={e=>setRegexPattern(e.target.value)} /></label>{fnKey === "regexreplace" ? <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Replacement<input className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={regexReplacement} onChange={e=>setRegexReplacement(e.target.value)} /></label> : null}</>) : null}
               {fnKey === "sort" ? <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Direction<select className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={sortDir} onChange={(e) => setSortDir(e.target.value as "asc" | "desc")}><option value="asc">Ascending</option><option value="desc">Descending</option></select></label> : null}
 
               {fnKey === "let" ? (
@@ -1431,6 +1478,7 @@ function FunctionsTool() {
 
               {(fnKey === "xnpv" || fnKey === "xirr") ? (<><ColSelect label="Values column" value={valueCol} onChange={setValueCol} /><ColSelect label="Dates column" value={dateCol} onChange={setDateCol} /></>) : null}
               {(fnKey === "npv" || fnKey === "irr") ? <ColSelect label="Cash flow column" value={valueCol} onChange={setValueCol} /> : null}
+              {fnKey === "vstack" ? (<div className="sm:col-span-2 lg:col-span-3 rounded-xl border border-slate-200 bg-slate-50 p-3"><input ref={secondUploadRef} type="file" className="sr-only" accept=".csv,.xlsx,.xls" onChange={e=>{const file=e.target.files?.[0]; if(file) void onSecondFile(file); if(secondUploadRef.current) secondUploadRef.current.value="";}} /><button className="rounded-full border border-slate-300 px-3 py-1.5 text-xs font-semibold" onClick={()=>secondUploadRef.current?.click()}>{secondTable ? \`Second table: \${secondTable.rows.length} rows\` : "Import second table for VSTACK"}</button></div>) : null}
               {fnKey === "xnpv" ? <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Discount rate %<input type="number" className="mt-1 block w-full rounded border border-slate-300 px-2 py-1.5 text-sm font-normal" value={rate} onChange={(e) => setRate(Number(e.target.value))} /></label> : null}
 
               {(fnKey === "pmt" || fnKey === "ipmt") ? (
