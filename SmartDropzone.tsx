@@ -3,7 +3,7 @@ import Papa from "papaparse";
 import * as XLSX from "xlsx";
 
 export type SmartRecommendation = {
-  id: "cleaner" | "reconciliation" | "converter" | "formulas" | "bank";
+  id: "cleaner" | "reconciliation" | "converter" | "formulas" | "bank" | "data-toolbox";
   label: string;
   reason: string;
 };
