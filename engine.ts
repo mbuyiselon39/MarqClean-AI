@@ -1,4 +1,6 @@
 import Papa from "papaparse";
+import * as XLSX from "xlsx";
+import { extractPdfTextInWorker as extractPdfText } from "./pdfWorkerClient";
 import { strFromU8, strToU8, unzipSync, zipSync } from "fflate";
 
 // ---------------------------------------------------------------------------
@@ -83,27 +85,35 @@ function readCellValue(cell: Element, shared: string[]): string {
 
 export async function readWorkbookMatrix(file: File): Promise<string[][]> {
   const buffer = await file.arrayBuffer();
-  const files = unzipSync(new Uint8Array(buffer));
-  const sheetPath = files["xl/worksheets/sheet1.xml"]
-    ? "xl/worksheets/sheet1.xml"
-    : Object.keys(files).find((path) => path.startsWith("xl/worksheets/sheet"));
-
-  if (!sheetPath) throw new Error("The Excel workbook does not contain a readable worksheet.");
-
-  const shared = parseSharedStrings(files["xl/sharedStrings.xml"] ? strFromU8(files["xl/sharedStrings.xml"]) : "");
-  const doc = new DOMParser().parseFromString(strFromU8(files[sheetPath]), "application/xml");
-
-  return Array.from(doc.getElementsByTagName("row")).map((rowEl) => {
-    const values: string[] = [];
-    Array.from(rowEl.getElementsByTagName("c")).forEach((cell) => {
-      const ref = cell.getAttribute("r") ?? "A1";
-      values[columnReferenceToIndex(ref)] = readCellValue(cell, shared);
-    });
-    return values;
+  const workbook = XLSX.read(buffer, {
+    type: "array",
+    dense: true,
+    cellDates: true,
+    raw: false,
+    dateNF: "yyyy-mm-dd",
   });
+  const sheet = workbook.Sheets[workbook.SheetNames[0]];
+  if (!sheet) throw new Error("The Excel workbook does not contain a readable worksheet.");
+  const matrix = XLSX.utils.sheet_to_json<unknown[]>(sheet, { header: 1, defval: "", raw: false });
+  return matrix.map((row) => row.map((value) => {
+    if (value instanceof Date) {
+      return `${value.getFullYear()}-${String(value.getMonth() + 1).padStart(2, "0")}-${String(value.getDate()).padStart(2, "0")}`;
+    }
+    return sanitize(value);
+  }));
 }
 
-export { extractPdfTextInWorker as extractPdfText } from "./pdfWorkerClient";
+function decodeText(bytes: Uint8Array): string {
+  if (bytes[0] === 0xff && bytes[1] === 0xfe) return new TextDecoder("utf-16le").decode(bytes.slice(2));
+  if (bytes[0] === 0xfe && bytes[1] === 0xff) return new TextDecoder("utf-16be").decode(bytes.slice(2));
+  try { return new TextDecoder("utf-8", { fatal: true }).decode(bytes); }
+  catch { return new TextDecoder("windows-1252").decode(bytes); }
+}
+
+function textToMatrix(text: string): string[][] {
+  const parsed = Papa.parse<string[]>(text, { skipEmptyLines: "greedy" });
+  return (parsed.data as string[][]).filter((row) => row.some((value) => sanitize(value)));
+}
 
 
 export function matrixToTable(matrix: string[][], sourceName: string): DataTable {
@@ -153,7 +163,7 @@ export async function extractToTable(file: File): Promise<DataTable> {
     return matrixToTable(await readWorkbookMatrix(file), file.name);
   }
   if (kind === "csv" || kind === "text") {
-    return matrixToTable(textToMatrix(await file.text()), file.name);
+    return matrixToTable(textToMatrix(decodeText(new Uint8Array(await file.arrayBuffer()))), file.name);
   }
   if (kind === "pdf") {
     return matrixToTable(textToMatrix(await extractPdfText(file)), file.name);
