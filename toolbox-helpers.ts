@@ -13,7 +13,7 @@ function cellXml(ref: string, value: string, style: number): string {
 }
 
 export function buildStyledWorkbookFromMatrix(matrix: string[][], sheetName: string): Uint8Array {
-  const cols = Math.max(1, ...matrix.map((r) => r.length));
+  const cols = matrix.reduce((max, row) => Math.max(max, row.length), 1);
   const body = matrix
     .map((row, r) => {
       const cells = Array.from({ length: cols }, (_, c) => cellXml(`${columnIndexToReference(c)}${r + 1}`, row[c] ?? "", r === 0 ? 1 : 0)).join("");
