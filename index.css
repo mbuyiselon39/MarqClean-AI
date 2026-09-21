@@ -1,5 +1,6 @@
 @config "./tailwind.config.js";
 @import "tailwindcss";
+@import url("/fonts/fonts.css");
 
 /* MarqClean AI — beehiiv-inspired visual language, without beehiiv assets/copy. */
 
@@ -426,7 +427,7 @@ textarea { min-height: 88px; resize: vertical; }
 .mc-linear-preview__cards { display:grid; gap:8px; margin-top:16px; }
 .mc-linear-preview__cards > div { min-height:48px; display:grid; grid-template-columns:24px minmax(0,1fr) 20px; align-items:center; gap:8px; padding:0 12px; border:1px solid rgb(var(--line)); border-radius:6px; background:rgb(var(--canvas)); }
 .mc-linear-preview__cards > div > span { color:rgb(var(--accent)); }
-.mc-linear-preview__cards em { color:rgb(var(--ink-3)); font-style:normal; }
+.mc-linear-preview__cards em { color:rgb(var(--ink-3)); font-style:normal; display:grid; place-items:center; }\n.mc-linear-preview__cards em svg { width:16px; height:16px; }\n.mc-linear-preview__body aside svg { width:16px; height:16px; }\n.mc-drop-icon svg { width:20px; height:20px; }\n.tool-card__icon { width:40px; height:40px; display:grid; place-items:center; border:1px solid rgb(var(--line)); border-radius:8px; background:rgb(var(--surface-2)); color:rgb(var(--accent)); }\n.tool-card__icon svg { width:20px; height:20px; }
 .mc-linear-preview__cards b { font-size:13px; font-weight:600; }
 
 .mc-minimal-hero__tabs {
@@ -576,7 +577,7 @@ section[id],main[id],article[id] { scroll-margin-top:88px; }
 .tool-card,.tool-grid > *,[class*="tool-card"] { min-height:100%; }
 .tool-grid > *,[class*="tool-grid"] > * { display:flex; flex-direction:column; }
 
-.shadow-hairline,.shadow-popover { box-shadow:none !important; }
+.shadow-hairline,.shadow-popover { box-shadow:none; }
 
 @media (max-width:1023px) {
   :root { --gutter:24px; }
@@ -622,5 +623,5 @@ section[id],main[id],article[id] { scroll-margin-top:88px; }
 }
 @media (prefers-reduced-motion:reduce) {
   html { scroll-behavior:auto; }
-  *,*::before,*::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+  *,*::before,*::after { animation-duration:.01ms; animation-iteration-count:1; transition-duration:.01ms; }
 }
