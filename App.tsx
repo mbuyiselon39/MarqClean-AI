@@ -13,6 +13,7 @@ const HeroCarousel = lazy(() => import("./HeroCarousel"));
 import SmartDropzone, { type SmartPipelineAction, type SmartRecommendation } from "./SmartDropzone";
 import Logo from "./Logo";
 import ThemeToggle from "./ThemeToggle";
+import { extractPdfTextInWorker } from "./pdfWorkerClient";
 
 type RawRow = Record<string, unknown>;
 type CleanRow = Record<string, string>;
@@ -1817,41 +1818,6 @@ function bankTransactionsToQif(transactions: BankTransaction[]): string {
   });
 
   return lines.join("\n");
-}
-
-async function extractPdfText(file: File): Promise<string> {
-  const pdfjs = await import("pdfjs-dist");
-  // Import the worker module for its side effects so pdf.js runs on the main thread.
-  // This keeps everything in a single inlined bundle with no external worker file.
-  await import("pdfjs-dist/build/pdf.worker.min.mjs");
-
-  const buffer = await file.arrayBuffer();
-  const pdf = await pdfjs.getDocument({ data: buffer }).promise;
-  const pages: string[] = [];
-
-  for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
-    const page = await pdf.getPage(pageNumber);
-    const content = await page.getTextContent();
-    const items = content.items as Array<{ str: string; transform: number[] }>;
-
-    // Group text items into lines by their vertical position
-    const lineMap = new Map<number, Array<{ x: number; str: string }>>();
-    items.forEach((item) => {
-      if (!item.str.trim()) return;
-      const y = Math.round(item.transform[5]);
-      const bucket = lineMap.get(y) ?? [];
-      bucket.push({ x: item.transform[4], str: item.str });
-      lineMap.set(y, bucket);
-    });
-
-    const sortedLines = Array.from(lineMap.entries())
-      .sort((a, b) => b[0] - a[0])
-      .map(([, parts]) => parts.sort((a, b) => a.x - b.x).map((part) => part.str).join(" "));
-
-    pages.push(sortedLines.join("\n"));
-  }
-
-  return pages.join("\n");
 }
 
 function escapeXml(value: string) {
