@@ -153,9 +153,9 @@ export default function ClientFunds({ onExit }: { onExit: () => void }) {
               <h1 className="mc-display text-2xl font-medium tracking-tight text-ink sm:text-3xl">Excel Automation</h1>
               <p className="mt-1 max-w-2xl text-sm text-[rgb(var(--ink-2))]">Automate Excel sorting, subtotals, formulas and workbook generation. Includes the Sort &amp; Subtotal Engine, number formatting and error reporting.</p>
               <div className="mt-2 flex flex-wrap gap-2">
-                <span className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-medium uppercase">XLSX</span>
-                <span className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-medium uppercase">XLS</span>
-                <span className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-medium text-[rgb(var(--accent-hover))]">Engine: MarqClean AI Structure Engine</span>
+                <span className="ws-badge rounded-md px-2 py-0.5 text-xs font-medium uppercase">XLSX</span>
+                <span className="ws-badge rounded-md px-2 py-0.5 text-xs font-medium uppercase">XLS</span>
+                <span className="ws-badge rounded-md px-2 py-0.5 text-xs font-medium text-[rgb(var(--accent-hover))]">Engine: MarqClean AI Structure Engine</span>
               </div>
             </div>
           </div>
