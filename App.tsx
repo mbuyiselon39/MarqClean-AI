@@ -2230,10 +2230,28 @@ function isToolPageKey(value: string): value is ToolPageKey {
 
 let pendingWorkspaceTab: "leads" | null = null;
 
+function normalizeRoute(value: string) {
+  try {
+    return decodeURIComponent(value)
+      .replace(/^\/+|\/+$/g, "")
+      .replace(/\/{2,}/g, "/")
+      .trim()
+      .toLowerCase();
+  } catch {
+    return value.replace(/^\/+|\/+$/g, "").trim().toLowerCase();
+  }
+}
+
 function getCurrentPage(): AppPageKey {
-  const hashRoute = window.location.hash.startsWith("#/") ? window.location.hash.replace("#/", "") : "";
-  const pathRoute = window.location.pathname.replace(/^\//, "").replace(/\/$/, "");
-  const route = hashRoute || (pathRoute && pathRoute !== "index.html" ? pathRoute : "");
+  const hashRoute = window.location.hash.startsWith("#/")
+    ? normalizeRoute(window.location.hash.slice(2))
+    : "";
+  const pathRoute = normalizeRoute(window.location.pathname || "/");
+  const route = hashRoute || (pathRoute !== "index.html" ? pathRoute : "");
+
+  // The site root is a first-class application route. This explicit check
+  // prevents static-host rewrites from falling through to the 404 screen.
+  if (!route) return "home";
 
   // Deep links to the workspace: open the home workspace on the cleaner tab.
   const WORKSPACE_SLUGS: Record<string, "leads"> = {
