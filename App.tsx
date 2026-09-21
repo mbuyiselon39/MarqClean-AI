@@ -4299,7 +4299,7 @@ export default function App() {
                 },
                 {
                   q: "How large a file can I upload?",
-                  a: "Because processing happens in your browser rather than on a server, the practical limit is your device's available memory rather than a fixed file-size cap. Very large workbooks (tens of thousands of rows) will process more slowly on lower-powered devices.",
+                  a: "The browser-safe upload cap is 100 MB. Actual processing capacity still depends on available device memory, so very large workbooks may take longer or need to be split before processing.",
                 },
                 {
                   q: "Does this replace Excel, Power Query, or Power BI?",
