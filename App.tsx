@@ -2504,7 +2504,7 @@ function FooterContentPage({ page }: { page: FooterPage }) {
 
         <div className="mt-12 space-y-10">
           {page.sections.map((section) => (
-            <section id={`legal-${section.heading.toLowerCase().replace(/[^a-z0-9]+/g, "-")`} key={section.heading} className="border-t border-line pt-8 mc-legal-copy">
+            <section id={`legal-${section.heading.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`} key={section.heading} className="border-t border-line pt-8 mc-legal-copy">
               <h2 className="text-3xl font-medium tracking-[-0.04em] text-ink">{section.heading}</h2>
               <div className="mt-4 space-y-4">
                 {section.body.map((paragraph) => (
