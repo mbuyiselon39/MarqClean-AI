@@ -93,7 +93,11 @@ jobs:
             console.error("Mixed www/non-www production hostnames detected.");
             process.exit(1);
           }
-          if (css.includes("box-shadow:") && /box-shadow:\s*(?!none)/.test(css)) {\n            console.error("Non-zero CSS shadows remain.");\n            process.exit(1);\n          }\n          console.log("Routing, visual-system, font, and production hostname checks passed.");
+          if (css.includes("box-shadow:") && /box-shadow:\s*(?!none)/.test(css)) {
+            console.error("Non-zero CSS shadows remain.");
+            process.exit(1);
+          }
+          console.log("Routing, visual-system, font, and production hostname checks passed.");
           NODE
       - name: Cloudflare Pages asset-size guard
         run: |
