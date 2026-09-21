@@ -91,7 +91,7 @@ export function GlobalHeader() {
     return () => document.removeEventListener("keydown", shortcut);
   }, []);
 
-  useEffect(() => { const openSearch = () => setSearchOpen(true); window.addEventListener("marqclean:open-command-palette", openSearch); return () => window.removeEventListener("marqclean:open-command-palette", openSearch); }, []);
+  useEffect(() => { const openSearch = () => setSearchOpen(true); const openWorkspaces = () => setWorkspacesOpen(true); window.addEventListener("marqclean:open-command-palette", openSearch); window.addEventListener("marqclean:open-workspaces", openWorkspaces); return () => { window.removeEventListener("marqclean:open-command-palette", openSearch); window.removeEventListener("marqclean:open-workspaces", openWorkspaces); }; }, []);
   useEffect(() => () => { if (workspaceTimer.current) window.clearTimeout(workspaceTimer.current); }, []);
 
   const closeAll = () => { setMobileOpen(false); setWorkspacesOpen(false); setWorkspaceAccordion(false); };
