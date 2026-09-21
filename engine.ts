@@ -61,21 +61,28 @@ export function downloadBlob(content: string | Uint8Array, fileName: string, typ
 
 
 
+function isExcelDateFormat(format: unknown): boolean {
+  if (typeof format !== "string" || !format) return false;
+  const cleaned = format.replace(/"[^"]*"/g, "").replace(/\[[^\]]*\]/g, "").replace(/\\./g, "");
+  return /(^|[^a-z])(?:d{1,4}|m{1,4}|y{2,4})(?:[^a-z]|$)/i.test(cleaned);
+}
+
+function excelSerialToIsoDate(serial: number): string {
+  const date = new Date(Date.UTC(1899, 11, 30) + Math.round(serial) * 86400000);
+  return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, "0")}-${String(date.getUTCDate()).padStart(2, "0")}`;
+}
+
 export async function readWorkbookMatrix(file: File): Promise<string[][]> {
   const buffer = await file.arrayBuffer();
-  const workbook = XLSX.read(buffer, {
-    type: "array",
-    dense: true,
-    cellDates: true,
-    raw: false,
-    dateNF: "yyyy-mm-dd",
-  });
+  const workbook = XLSX.read(buffer, { type: "array", dense: true, cellDates: true, raw: true, dateNF: "yyyy-mm-dd" });
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
   if (!sheet) throw new Error("The Excel workbook does not contain a readable worksheet.");
-  const matrix = XLSX.utils.sheet_to_json<unknown[]>(sheet, { header: 1, defval: "", raw: false });
-  return matrix.map((row) => row.map((value) => {
-    if (value instanceof Date) {
-      return `${value.getFullYear()}-${String(value.getMonth() + 1).padStart(2, "0")}-${String(value.getDate()).padStart(2, "0")}`;
+  const matrix = XLSX.utils.sheet_to_json<unknown[]>(sheet, { header: 1, defval: "", raw: true });
+  return matrix.map((row, rowIndex) => row.map((value, columnIndex) => {
+    if (value instanceof Date) return `${value.getUTCFullYear()}-${String(value.getUTCMonth() + 1).padStart(2, "0")}-${String(value.getUTCDate()).padStart(2, "0")}`;
+    if (typeof value === "number") {
+      const cell = sheet[XLSX.utils.encode_cell({ r: rowIndex, c: columnIndex })];
+      if (cell && isExcelDateFormat(cell.z)) return excelSerialToIsoDate(value);
     }
     return sanitize(value);
   }));
