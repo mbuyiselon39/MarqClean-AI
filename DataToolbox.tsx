@@ -165,7 +165,7 @@ function Panel({ title, description, children, centered }: { title: string; desc
   return (
     <section>
       <div className={centered ? "mx-auto max-w-3xl text-center" : undefined}>
-        <h1 className="text-3xl font-medium tracking-[-0.03em]">{title}</h1>
+        <h2 className="text-2xl font-semibold tracking-[-0.02em]">{title}</h2>
         <p className={centered ? "mt-2 text-left leading-7 text-ink-2 [hyphens:none]" : "mt-2 max-w-3xl text-ink-2"}>{description}</p>
       </div>
       <div className="mt-6">{children}</div>
@@ -201,7 +201,7 @@ function UploadBox({ label, table, refEl, onFile }: { label: string; table: Data
     >
       <input ref={refEl} className="sr-only" type="file" accept=".pdf,.xlsx,.xls,.csv,.txt,.docx,.doc" onChange={(e) => { const f = e.target.files?.[0]; if (f) onFile(f); if (refEl.current) refEl.current.value = ""; }} />
       <h3 className="text-sm font-medium text-ink">{label}</h3>
-      <p className="mt-1 text-xs text-ink-3">{table ? `${table.sourceName} - ${table.rows.length} rows` : "Drop or choose a CSV, Excel, PDF, or Word file."}</p>
+      <p className="mt-1 text-xs text-ink-3">{table ? `${table.sourceName} - ${table.rows.length} rows` : "Drop or choose a CSV, Excel, PDF, or Word file."}</p><p className="mt-2 text-[11px] text-ink-3">Maximum file size: 100 MB. Large files perform best in Chrome or Edge.</p>
       <button className="mt-3 rounded-md bg-inverse px-4 py-2 text-xs font-medium text-on-inverse transition hover:bg-accent-tint" onClick={() => refEl.current?.click()}>
         {table ? "Replace" : "Choose file"}
       </button>
