@@ -4,8 +4,28 @@ import Logo from "./Logo";
 import ThemeToggle from "./ThemeToggle";
 
 function go(path: string) {
-  window.history.pushState({}, "", path);
-  window.dispatchEvent(new PopStateEvent("popstate"));
+  const target = new URL(path, window.location.origin);
+  const sameDocument = target.pathname === window.location.pathname && target.search === window.location.search;
+
+  if (sameDocument && target.hash) {
+    // Hash navigation must update the real hash so the browser performs its
+    // native anchor scroll. pushState alone does not trigger hashchange or
+    // scroll the target into view.
+    window.location.hash = target.hash.slice(1);
+    requestAnimationFrame(() => {
+      document.getElementById(target.hash.slice(1))?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  } else {
+    window.history.pushState({}, "", target.pathname + target.search + target.hash);
+    window.dispatchEvent(new PopStateEvent("popstate"));
+    if (target.hash) {
+      requestAnimationFrame(() => {
+        document.getElementById(target.hash.slice(1))?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
 }
 
 function Icon({ name, size = 20 }: { name: string; size?: number }) {
