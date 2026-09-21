@@ -1719,3 +1719,85 @@ footer,
     padding: 14px;
   }
 }
+
+
+/* ==========================================================================
+   FINAL UX / UI POLISH
+   ========================================================================== */
+
+/* Professional long-form text rhythm: headings and controls remain intentional,
+   while readable content uses consistent full justification. */
+:where(p, li, td, th, dd, dt, blockquote, .mc-prose, .ws-side-widget__description, .ws-side-widget__tip, .mc-site-footer__brand p) {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+
+.mc-site-footer {
+  background: rgb(var(--accent-tint)) !important;
+  color: rgb(var(--ink-2)) !important;
+  border-top: 1px solid rgb(var(--line)) !important;
+}
+
+.mc-site-footer__trust {
+  background: rgb(var(--canvas));
+}
+
+[data-theme="dark"] .mc-site-footer,
+:root:not([data-theme]) .mc-site-footer {
+  /* Dark/system-dark token is applied below through the media query. */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .mc-site-footer {
+    background: rgb(var(--accent-tint)) !important;
+  }
+}
+
+.mc-site-footer__inner {
+  padding-top: 44px;
+  padding-bottom: 22px;
+}
+
+.mc-site-footer__top {
+  gap: 48px;
+}
+
+.excel-automation-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 28px;
+  align-items: start;
+}
+
+.excel-automation-main {
+  min-width: 0;
+}
+
+.excel-automation-widget {
+  position: sticky;
+  top: 88px;
+}
+
+.mc-hero-copy {
+  max-width: 600px;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+@media (max-width: 1023px) {
+  .excel-automation-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .excel-automation-widget {
+    position: static;
+    order: -1;
+  }
+}
+
+@media (max-width: 640px) {
+  .mc-hero-copy {
+    max-width: none;
+  }
+}
