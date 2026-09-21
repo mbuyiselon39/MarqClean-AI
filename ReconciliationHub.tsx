@@ -77,7 +77,7 @@ type HistoryEntry = {
   matchPct: number;
 };
 
-export default function ReconciliationHub({ onExit }: { onExit: () => void }) {
+export default function ReconciliationHub({ onExit: _onExit }: { onExit: () => void }) {
   const [nav, setNavState] = useState<NavKey>(() => { const value = new URLSearchParams(window.location.hash.replace(/^#/, "")).get("recon"); return (NAV_ITEMS.some((item) => item.key === value) ? value : "mailing") as NavKey; });
   useEffect(() => { const sync = () => { const value = new URLSearchParams(window.location.hash.replace(/^#/, "")).get("recon"); if (NAV_ITEMS.some((item) => item.key === value)) setNavState(value as NavKey); }; window.addEventListener("popstate", sync); return () => window.removeEventListener("popstate", sync); }, []);
   const setNav = (next: NavKey) => { window.history.pushState({}, "", `/reconciliation-hub#recon=${next}`); setNavState(next); };
