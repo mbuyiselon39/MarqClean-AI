@@ -608,9 +608,9 @@ function UploadCard({
           <p className="text-xs text-ink-3">{table.rows.length} rows, {table.headers.length} columns</p>
         </div>
       ) : (
-        <p className="mt-2 text-xs text-ink-3">Drop PDF, Excel, CSV, or Word, or choose a file.</p>
+        <p className="mt-2 text-xs text-ink-3">Drop a supported file or choose one. Accepted formats vary by reconciliation mode. Maximum file size: 100 MB. Large files perform best in Chrome or Edge.</p>
       )}
-      <button className="mt-4 rounded-md bg-inverse px-4 py-2 text-xs font-medium text-on-inverse transition hover:bg-accent-tint" onClick={onPick}>
+      <button className="ws-btn-primary" onClick={onPick}>
         {table ? "Replace file" : "Choose file"}
       </button>
     </div>
