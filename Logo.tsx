@@ -43,7 +43,7 @@ export default function Logo({ markOnly = false, className = "", label = "MarqCl
       role="img"
     >
       <Mark className="block h-8 w-8 shrink-0" />
-      <span className="ml-4 flex items-baseline whitespace-nowrap text-[15px] leading-5">
+      <span className="ml-4 flex items-baseline whitespace-nowrap text-base leading-5">
         <span className="font-medium text-ink">Marq</span>
         <span className="font-normal text-ink-2">Clean AI</span>
       </span>
