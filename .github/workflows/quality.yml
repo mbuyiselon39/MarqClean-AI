@@ -93,7 +93,8 @@ jobs:
             console.error("Mixed www/non-www production hostnames detected.");
             process.exit(1);
           }
-          if (css.includes("box-shadow:") && /box-shadow:\s*(?!none)/.test(css)) {
+          const shadows = [...css.matchAll(/box-shadow:\s*([^;}]*)/g)].map((match) => match[1].trim()).filter((value) => value && value !== "none");
+          if (shadows.length) {
             console.error("Non-zero CSS shadows remain.");
             process.exit(1);
           }
