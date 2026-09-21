@@ -6,6 +6,7 @@ export default {
       colors: {
         canvas: "rgb(var(--canvas) / <alpha-value>)",
         surface: "rgb(var(--surface) / <alpha-value>)",
+        "surface-2": "rgb(var(--surface-2) / <alpha-value>)",
         line: "rgb(var(--line) / <alpha-value>)",
         ink: {
           DEFAULT: "rgb(var(--ink) / <alpha-value>)",
@@ -18,28 +19,35 @@ export default {
         accent: {
           DEFAULT: "rgb(var(--accent) / <alpha-value>)",
           hover: "rgb(var(--accent-hover) / <alpha-value>)",
+          pressed: "rgb(var(--accent-pressed) / <alpha-value>)",
           tint: "rgb(var(--accent-tint) / <alpha-value>)",
           ink: "rgb(var(--accent-ink) / <alpha-value>)",
         },
+        magenta: "rgb(var(--magenta) / <alpha-value>)",
         success: "rgb(var(--success) / <alpha-value>)",
         error: "rgb(var(--error) / <alpha-value>)",
       },
       fontFamily: {
-        sans: ["Geist", "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-        mono: ["Geist Mono", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+        sans: ["Satoshi", "system-ui", "Arial", "sans-serif"],
+        display: ["Clash Grotesk", "system-ui", "Arial", "sans-serif"],
+        mono: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       fontWeight: {
         normal: "400",
         medium: "500",
+        semibold: "600",
+        bold: "700",
       },
       borderRadius: {
         DEFAULT: "6px",
-        lg: "8px",
+        lg: "12px",
         xl: "12px",
+        pill: "999px",
       },
       boxShadow: {
-        hairline: "0 1px 2px rgb(9 9 11 / 0.04)",
-        popover: "0 4px 12px rgb(9 9 11 / 0.06), 0 1px 2px rgb(9 9 11 / 0.04)",
+        none: "none",
+        hairline: "none",
+        popover: "none",
       },
     },
   },
