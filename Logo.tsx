@@ -1,5 +1,3 @@
-import type { SVGProps } from "react";
-
 type LogoProps = {
   markOnly?: boolean;
   className?: string;
