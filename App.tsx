@@ -4407,7 +4407,7 @@ export default function App() {
                     {isOpen ? <div id={id} className="mc-faq-answer"><p>{item.a}</p></div> : null}
                   </div>
                 );
-              })
+              })}
             </div>
           </div>
         </section>
