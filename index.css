@@ -577,7 +577,7 @@ section[id],main[id],article[id] { scroll-margin-top:88px; }
 .tool-card,.tool-grid > *,[class*="tool-card"] { min-height:100%; }
 .tool-grid > *,[class*="tool-grid"] > * { display:flex; flex-direction:column; }
 
-.shadow-hairline,.shadow-popover { box-shadow:none; }
+[class*="shadow-"] { box-shadow:none; }
 
 @media (max-width:1023px) {
   :root { --gutter:24px; }
