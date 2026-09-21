@@ -3162,6 +3162,9 @@ export default function App() {
               navigateToHomeSection("free-tools");
             }}
             onOpenReconciliation={() => navigateToPage("reconciliation-hub")}
+            onOpenExcelAutomation={() => navigateToPage("excel-automation")}
+            onOpenDataToolbox={() => navigateToPage("data-toolbox")}
+            onFileDrop={(file) => { void handleFile(file); }}
           />
         </Suspense>
 
