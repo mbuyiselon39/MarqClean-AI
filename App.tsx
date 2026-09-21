@@ -4197,7 +4197,7 @@ export default function App() {
                 },
                 {
                   title: "Browser support",
-                  body: "Use a current version of Chrome, Edge, Firefox or Safari for the best experience. Large workbooks may require more memory than smaller files.",
+                  body: "Use a current version of Chrome, Edge, Firefox or Safari. Large files perform best in Chrome or Edge, and practical capacity also depends on available device memory.",
                 },
                 {
                   title: "AI, explained",
@@ -4209,7 +4209,7 @@ export default function App() {
                 },
                 {
                   title: "Enterprise",
-                  body: "For team onboarding, workflow design or enterprise discussions, use Contact Support at support@vertexstreamtechnologies.com with "Enterprise enquiry" in the subject.",
+                  body: "For team onboarding, workflow design or enterprise discussions, use Contact Support at support@vertexstreamtechnologies.com with 'Enterprise enquiry' in the subject.",
                 },
               ].map((item) => (
                 <article key={item.title} className="mc-glass mc-card-interactive rounded-lg p-6">
