@@ -3156,9 +3156,6 @@ export default function App() {
               navigateToHomeSection("cleaner");
               window.setTimeout(() => fileInputRef.current?.click(), 400);
             }}
-            onViewTools={() => {
-              navigateToHomeSection("free-tools");
-            }}
             onOpenReconciliation={() => navigateToPage("reconciliation-hub")}
             onOpenExcelAutomation={() => navigateToPage("excel-automation")}
             onFileDrop={(file) => { void handleFile(file); }}
