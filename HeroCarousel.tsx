@@ -44,13 +44,13 @@ function WorkspacePreview() {
   );
 }
 
-export default function HeroCarousel({ onCleanFile, onOpenReconciliation, onViewTools }: HeroActions) {
+export default function HeroCarousel({ onCleanFile }: HeroActions) {
   const [active, setActive] = useState(0);
   const tabs = [
-    { label: "Data Cleaning", href: "#cleaner", action: onCleanFile },
-    { label: "Excel Automation", href: "/excel-automation", action: undefined },
-    { label: "Reconciliation", href: "/reconciliation-hub", action: onOpenReconciliation },
-    { label: "Data Toolbox", href: "/data-toolbox", action: undefined },
+    { label: "Data Cleaning", href: "#cleaner" },
+    { label: "Excel Automation", href: "/excel-automation" },
+    { label: "Reconciliation", href: "/reconciliation-hub" },
+    { label: "Data Toolbox", href: "/data-toolbox" },
   ];
 
   return (
@@ -71,11 +71,11 @@ export default function HeroCarousel({ onCleanFile, onOpenReconciliation, onView
           <p className="mc-hero-copy">Clean, transform, reconcile and analyse CSV, Excel and PDF data without sending your files to a server.</p>
           <div className="mc-minimal-hero__actions">
             <button onClick={onCleanFile}>Launch Workspace <span>↗</span></button>
-            <a className="secondary" href="#free-tools" onClick={(event) => { event.preventDefault(); onViewTools(); }}>33 free tools</a>
+            <a className="secondary" href="#free-tools">33 free tools</a>
           </div>
           <div className="mc-minimal-hero__trust"><span>✓</span> Processed locally in your browser <i /> No upload required</div>
         </div>
-        <div className="mc-minimal-hero__product"><WorkspacePreview /></div>
+        <div className="mc-minimal-hero__product" aria-label="MarqClean AI workspace preview"><WorkspacePreview /></div>
       </div>
       <nav className="mc-minimal-hero__tabs" aria-label="Product workspaces">
         {tabs.map((tab, i) => (
@@ -84,13 +84,7 @@ export default function HeroCarousel({ onCleanFile, onOpenReconciliation, onView
             className={active === i ? "is-active" : ""}
             href={tab.href}
             aria-current={active === i ? "page" : undefined}
-            onClick={(event) => {
-              setActive(i);
-              if (tab.action) {
-                event.preventDefault();
-                tab.action();
-              }
-            }}
+            onClick={() => setActive(i)}
           >
             {tab.label}
           </a>
