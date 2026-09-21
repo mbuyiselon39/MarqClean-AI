@@ -145,10 +145,10 @@ export default function ClientFunds({ onExit: _onExit }: { onExit: () => void })
       <GlobalHeader />
       <div className="ws-grid pointer-events-none absolute inset-x-0 top-0 h-[38rem]" aria-hidden="true" />
 
-      <main id="main-content" className="relative mx-auto max-w-6xl px-5 pb-20 pt-24 lg:px-8">
+      <main id="main-content" className="relative mx-auto max-w-7xl px-5 pb-20 pt-24 lg:px-8">
         <PageHeader workspace="Excel Automation" title="Excel Automation" description="Automate Excel sorting, subtotals, formulas and workbook generation. Everything runs in your browser." />
-        <div className="mb-5 flex flex-wrap items-center gap-2"><span className="ws-format-badge">XLSX</span><span className="ws-format-badge">XLS</span></div>
-        <p className="mt-3 max-w-3xl text-ink-2">
+        <div className="mb-5 flex flex-wrap items-center gap-2"><span className="ws-format-badge">XLSX</span><span className="ws-format-badge">XLS</span><span className="ws-format-badge">100 MB max</span><span className="text-xs text-ink-3">Large files perform best in Chrome or Edge.</span></div>
+        <div className="ws-workspace-layout mt-5"><div className="ws-workspace-main"><p className="max-w-3xl text-ink-2">
           Upload an Excel workbook, preview the detected data, then click Execute Sorting. The tool groups related
           records by the root SRN or reference before the first slash, subtotals each group, inserts a blank spacer row,
           and produces a new workbook with a Sorted_Output sheet, a Formula_Guide, and an Error_Report when needed.
