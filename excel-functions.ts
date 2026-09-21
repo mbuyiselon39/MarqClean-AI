@@ -311,7 +311,7 @@ export function varS(table: DataTable, col: number): FunctionResult {
   return { ok:true, message:`Sample variance across ${nums.length} values.`, scalar:formatNumber(value), formula:`=VAR.S(${table.headers[col]})` };
 }
 
-function linearRegression(xs:number[], ys:number) {
+function linearRegression(xs:number[], ys:number[]) {
   const n=xs.length, mx=xs.reduce((a,b)=>a+b,0)/n, my=ys.reduce((a,b)=>a+b,0)/n;
   const denom=xs.reduce((a,x)=>a+(x-mx)**2,0);
   if(!denom) return null;
@@ -388,7 +388,7 @@ export function vstackTables(table:DataTable,other:DataTable|null):FunctionResul
   return {ok:true,message:`Stacked ${table.rows.length+other.rows.length} rows from two tables.`,table:{headers:[...headers],rows:[...table.rows.map(pad),...other.rows.map(pad)],sourceName:"vstack"},formula:`=VSTACK(${table.sourceName}, ${other.sourceName})`};
 }
 export function tocol(table:DataTable,col:number,ignoreBlanks=true):FunctionResult {
-  const values=table.rows.flatMap(r=>r).filter(v=>!ignoreBlanks||String(v).trim()!=="");
+  const values=table.rows.map(r=>r[col] ?? "").filter(v=>!ignoreBlanks||String(v).trim()!=="");
   return {ok:true,message:`Flattened ${values.length} values into one column.`,table:singleColumnTable("TOCOL",values,"tocol"),formula:`=TOCOL(table, ${ignoreBlanks?1:0})`};
 }
 export function sortTableByColumn(table: DataTable, col: number, dir: "asc" | "desc"): FunctionResult {
