@@ -1776,19 +1776,6 @@ input[type="submit"] {
   min-height: var(--control-height);
 }
 
-.bg-ink.text-ink,
-button.bg-ink.text-ink,
-a.bg-ink.text-ink {
-  background: rgb(var(--surface-inverse));
-  color: rgb(var(--on-inverse));
-}
-.bg-ink.text-ink:hover,
-button.bg-ink.text-ink:hover,
-a.bg-ink.text-ink:hover {
-  background: rgb(var(--ink));
-  color: rgb(var(--on-inverse));
-}
-
 .bg-inverse { background: rgb(var(--surface-inverse)); }
 .text-on-inverse { color: rgb(var(--on-inverse)); }
 
