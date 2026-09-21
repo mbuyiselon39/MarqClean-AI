@@ -394,11 +394,12 @@ const FOOTER_PAGES: Record<FooterPageKey, FooterPage> = {
   },
   privacy: {
     title: "Privacy Policy",
-    description: `This Privacy Policy explains how ${PRODUCT_NAME} handles uploaded spreadsheets, statements and datasets, browser processing, contact requests, and basic website information.`,
+    description: `This Privacy Policy explains how ${PRODUCT_NAME} handles uploaded spreadsheets, statements and datasets, browser processing, contact requests, and basic website information. ${PRODUCT_NAME} is designed in South Africa and aligned with POPIA and GDPR principles.`,
     sections: [
       {
         heading: "Data Processing",
         body: [
+          "MarqClean AI by Vertex Stream Technologies is designed in South Africa - aligned with POPIA and GDPR.",
           "Uploaded CSV, Excel and PDF files are processed locally in your browser. The current version does not require files to be sent to a server for cleaning, conversion, or reconciliation.",
           "You are responsible for making sure you have the right to process any personal or financial data contained in lead lists, CRM exports, bank statements, ledgers, or other datasets you upload.",
         ],
