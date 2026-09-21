@@ -1,0 +1,15 @@
+{
+  "name": "MarqClean AI",
+  "short_name": "MarqClean",
+  "description": "Free browser-based data cleaning, conversion, reconciliation, and reporting platform by Vertex Stream Group.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#5B21B6",
+  "lang": "en",
+  "icons": [
+    { "src": "/favicon.svg", "type": "image/svg+xml", "sizes": "any", "purpose": "any" },
+    { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "any maskable" }
+  ]
+}
