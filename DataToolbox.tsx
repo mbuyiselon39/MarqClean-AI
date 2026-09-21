@@ -3,7 +3,7 @@ import { extractToTable, downloadBlob, type DataTable } from "./engine";
 import { runQueryPipeline, buildTransformationSummary, type QueryStep, type QueryStepType, type DataTypeTarget } from "./query-engine";
 import { validateRelationship, computeMeasure, type Relationship, type Cardinality, type Measure, type MeasureAggFn, type RelationshipConflict } from "./data-model";
 import { DAX_PATTERNS, DAX_CATEGORIES, checkDaxSyntaxShape, type DaxCategory } from "./dax-patterns";
-import { GlobalHeader, ToolLaunchpad } from "./WorkspaceShell";
+import { GlobalHeader, PageHeader, ToolLaunchpad } from "./WorkspaceShell";
 import {
   EXCEL_FUNCTIONS,
   aggregateColumn,
@@ -110,18 +110,18 @@ import {
 type ToolKey = "functions" | "power-query" | "data-model" | "dax-reference" | "merge" | "dedupe" | "fuzzy" | "clarity" | "explorer" | "predict" | "extract" | "timesheet";
 
 const TOOLS: Array<{ key: ToolKey; label: string; blurb: string; icon: string }> = [
-  { key: "functions", label: "Advanced Excel Functions", blurb: "Workbook-backed cleanup, analysis, reconciliation, statistics, and finance formulas.", icon: "📊" },
-  { key: "power-query", label: "Power Query-Style Workflow", blurb: "Import, preview, transform, combine, and export with a step-by-step log.", icon: "🧩" },
-  { key: "data-model", label: "Data Model & Relationships", blurb: "Link tables, validate keys, and build cross-table measures, Power Pivot-style.", icon: "🕸️" },
-  { key: "dax-reference", label: "DAX Formula Reference", blurb: "Look up common DAX patterns, their equivalent here, and check formula syntax.", icon: "🧮" },
-  { key: "merge", label: "Merge & Combine", blurb: "Merge and join multiple CSV or Excel files by column.", icon: "🔗" },
-  { key: "dedupe", label: "Remove Duplicates", blurb: "Exact and fuzzy duplicate detection and removal.", icon: "🧹" },
-  { key: "fuzzy", label: "Fuzzy Match Search", blurb: "Similarity searching for names and addresses.", icon: "🔍" },
-  { key: "clarity", label: "Data Health & Clarity Score", blurb: "Deduplicate, gap-fill, autoformat, and score data quality.", icon: "✅" },
-  { key: "explorer", label: "Data Explorer", blurb: "Filter, query, and view distributions visually.", icon: "📈" },
-  { key: "predict", label: "Smart Predict", blurb: "One-click prediction and classification from your data.", icon: "🤖" },
-  { key: "extract", label: "Web Table Extractor", blurb: "Turn pasted HTML tables or lists into structured data.", icon: "🌐" },
-  { key: "timesheet", label: "Timesheet Builder", blurb: "Track hours and generate billable time reports.", icon: "⏱️" },
+  { key: "functions", label: "Advanced Excel Functions", blurb: "Workbook-backed cleanup, analysis, reconciliation, statistics, and finance formulas.", icon: "clean" },
+  { key: "power-query", label: "Power Query-Style Workflow", blurb: "Import, preview, transform, combine, and export with a step-by-step log.", icon: "tool" },
+  { key: "data-model", label: "Data Model & Relationships", blurb: "Link tables, validate keys, and build cross-table measures, Power Pivot-style.", icon: "tool" },
+  { key: "dax-reference", label: "DAX Formula Reference", blurb: "Look up common DAX patterns, their equivalent here, and check formula syntax.", icon: "tool" },
+  { key: "merge", label: "Merge & Combine", blurb: "Merge and join multiple CSV or Excel files by column.", icon: "tool" },
+  { key: "dedupe", label: "Remove Duplicates", blurb: "Exact and fuzzy duplicate detection and removal.", icon: "tool" },
+  { key: "fuzzy", label: "Fuzzy Match Search", blurb: "Similarity searching for names and addresses.", icon: "tool" },
+  { key: "clarity", label: "Data Health & Clarity Score", blurb: "Deduplicate, gap-fill, autoformat, and score data quality.", icon: "tool" },
+  { key: "explorer", label: "Data Explorer", blurb: "Filter, query, and view distributions visually.", icon: "tool" },
+  { key: "predict", label: "Smart Predict", blurb: "One-click prediction and classification from your data.", icon: "tool" },
+  { key: "extract", label: "Web Table Extractor", blurb: "Turn pasted HTML tables or lists into structured data.", icon: "tool" },
+  { key: "timesheet", label: "Timesheet Builder", blurb: "Track hours and generate billable time reports.", icon: "tool" },
 ];
 
 export default function DataToolbox({ onExit }: { onExit: () => void }) {
@@ -132,20 +132,11 @@ export default function DataToolbox({ onExit }: { onExit: () => void }) {
       <GlobalHeader />
       <div className="ws-grid pointer-events-none absolute inset-x-0 top-0 h-[38rem]" aria-hidden="true" />
 
-      <div className="mc-site-container relative mb-2 flex flex-wrap items-center justify-between gap-3 pt-32">
-        <div className="flex items-center gap-3">
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-canvas /20 /20 text-xl ring-1 ring-inset ring-white/10">🧰</span>
-          <div>
-            <h2 className="mc-display text-xl font-medium text-ink">Data Toolbox</h2>
-            <p className="text-xs text-[rgb(var(--ink-2))]">Advanced Excel functions, cleansing, matching and transformation. All tools free, browser-based.</p>
-          </div>
-        </div>
-        <a href="/" className="ws-btn-secondary rounded-md px-4 py-2 text-sm font-medium" onClick={(event) => { event.preventDefault(); onExit(); }}>Workspace home</a>
-      </div>
-
-      <div className="mc-site-container relative pb-16 pt-4">
-        <div className="mb-2 flex items-center justify-between">
-          <p className="mc-mono text-xs uppercase tracking-[0.2em] text-[rgb(var(--ink-3))]">Tools Available ({TOOLS.length})</p>
+      <div className="mc-site-container relative pb-16 pt-28">
+        <PageHeader workspace="Data Toolbox" title="Data Toolbox" description="Advanced Excel functions, cleansing, matching and transformation. All tools run in your browser." onBack={onExit} />
+        <div className="mb-5 flex items-center gap-3">
+          <h2 className="text-lg font-semibold text-ink">Available tools</h2>
+          <span className="ws-format-badge">TOOLS.length tools</span>
         </div>
         <ToolLaunchpad tools={TOOLS} active={tool} onSelect={setTool} />
 
