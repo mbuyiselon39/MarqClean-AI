@@ -1784,15 +1784,23 @@ function extractBankTransactions(text: string): BankTransaction[] {
 
     const lastToken = tokenMatches[tokenMatches.length - 1];
     const trailing = remainder.slice(lastToken.end).trim();
-    // Amounts/balances must be in the trailing numeric portion of the statement.
-    // A number embedded in a description (e.g. "POS PURCHASE 1234 WOOLWORTHS")
-    // is therefore not treated as a transaction amount.
+    // Only the numeric suffix of a statement line can contain amount/balance.
+    // This prevents values embedded in descriptions such as "POS PURCHASE 1234"
+    // from becoming financial amounts.
     if (trailing && !/^(?:CR|DR)$/i.test(trailing)) continue;
 
-    const candidates = tokenMatches.slice(-2);
-    const firstCandidate = candidates[0];
-    const amountToken = candidates.length > 1 ? firstCandidate : lastToken;
-    const balanceToken = candidates.length > 1 ? candidates[1] : undefined;
+    const suffix: typeof tokenMatches = [lastToken];
+    for (let i = tokenMatches.length - 2; i >= 0; i -= 1) {
+      const current = tokenMatches[i];
+      const next = suffix[0];
+      const between = remainder.slice(current.end, next.index);
+      if (!/^\s*$/.test(between)) break;
+      suffix.unshift(current);
+      if (suffix.length === 2) break;
+    }
+
+    const amountToken = suffix.length === 2 ? suffix[0] : suffix[0];
+    const balanceToken = suffix.length === 2 ? suffix[1] : undefined;
 
     const descriptionEnd = amountToken.index;
     const description = remainder.slice(0, descriptionEnd).replace(/[.\-\s]+$/, "").trim();
