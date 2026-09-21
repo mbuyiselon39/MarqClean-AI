@@ -3394,45 +3394,50 @@ export default function App() {
         <section ref={workspaceRef} id="cleaner" className="ws-root ws-scope relative">
           <div className="ws-grid pointer-events-none absolute inset-x-0 top-0 h-[30rem]" aria-hidden="true" />
           <div className="relative mx-auto max-w-[100rem] px-5 py-16 lg:px-8">
-            {/* Module header card (matches Excel Automation / Reconciliation Hub / Data Toolbox) */}
-            <div className="ws-surface mb-8 flex flex-wrap items-start justify-between gap-4 rounded-lg p-6">
-              <div className="flex items-start gap-4">
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-accent-tint text-2xl ring-1 ring-inset ring-line">{WORKSPACE_MODULES[workspaceTab].icon}</span>
-                <div>
+            <div className="ws-module-header ws-surface mb-5 rounded-lg p-5 sm:p-6">
+              <div className="ws-module-header__identity">
+                <span className="ws-module-header__icon" aria-hidden="true">{WORKSPACE_MODULES[workspaceTab].icon}</span>
+                <div className="min-w-0">
+                  <div className="ws-module-header__eyebrow">Workspace module</div>
                   <h2 className="mc-display text-2xl font-medium tracking-tight text-ink sm:text-3xl">{WORKSPACE_MODULES[workspaceTab].title}</h2>
-                  <p className="mc-prose mt-1 text-justify text-sm leading-relaxed text-[rgb(var(--ink-2))] [hyphens:auto]">{WORKSPACE_MODULES[workspaceTab].description}</p>
-                  <div className="mt-3 flex flex-wrap items-center gap-2">
-                    {WORKSPACE_MODULES[workspaceTab].formats.map((f) => (
-                      <span key={f} className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide">{f}</span>
-                    ))}
-                  </div>
+                  <p className="mc-prose mt-1 max-w-3xl text-sm leading-6 text-[rgb(var(--ink-2))] [hyphens:auto]">{WORKSPACE_MODULES[workspaceTab].description}</p>
                 </div>
+              </div>
+              <div className="ws-module-header__formats" aria-label="Supported formats">
+                <span className="ws-module-header__formats-label">Supports</span>
+                <div className="flex flex-wrap gap-2">
+                  {WORKSPACE_MODULES[workspaceTab].formats.map((f) => (
+                    <span key={f} className="ws-badge rounded-md px-2.5 py-1 text-[11px] font-medium uppercase tracking-wide">{f}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="ws-module-tabs">
+              <div className="ws-module-tabs__label">Modules available <span>04</span></div>
+              <div className="ws-module-tabs__list" role="tablist" aria-label="Data tools">
+                {([
+                  ["leads", "Quick Data & CSV Cleaner"],
+                  ["converter", "CSV to Excel Converter"],
+                  ["formulas", "Excel Formulas"],
+                  ["bank", "Bank Ledger X"],
+                ] as const).map(([key, label]) => (
+                  <button
+                    key={key}
+                    type="button"
+                    role="tab"
+                    aria-selected={workspaceTab === key}
+                    className={`ws-module-tab ${workspaceTab === key ? "is-active" : ""}`}
+                    onClick={() => setWorkspaceTab(key)}
+                  >
+                    {label}
+                  </button>
+                ))}
               </div>
             </div>
 
             <div className="ws-workspace-layout">
               <div className="ws-workspace-main">
-            <p className="mc-mono mb-2 text-[11px] uppercase tracking-[0.2em] text-[rgb(var(--ink-3))]">Modules Available ({4})</p>
-            <div className="mb-8 flex flex-wrap gap-2" role="tablist" aria-label="Data tools">
-              {([
-                ["leads", "Quick Data & CSV Cleaner"],
-                ["converter", "CSV to Excel Converter"],
-                ["formulas", "Excel Formulas"],
-                ["bank", "Bank Ledger X"],
-              ] as const).map(([key, label]) => (
-                <button
-                  key={key}
-                  type="button"
-                  role="tab"
-                  aria-selected={workspaceTab === key}
-                  className={`rounded-md border px-5 py-2.5 text-sm font-medium transition ${workspaceTab === key ? "border-[rgb(var(--accent))]/60 bg-[rgb(var(--accent))]/10 text-ink" : "border-line bg-canvas text-[rgb(var(--ink-2))] hover:border-line hover:text-ink"}`}
-                  onClick={() => setWorkspaceTab(key)}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-
           {workspaceTab === "leads" ? (
           <motion.div
             className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-start"
