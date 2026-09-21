@@ -135,10 +135,10 @@ export default function DataToolbox({ onExit: _onExit }: { onExit: () => void })
       <div className="ws-grid pointer-events-none absolute inset-x-0 top-0 h-[38rem]" aria-hidden="true" />
 
       <div className="mc-site-container relative pb-16 pt-28">
-        <PageHeader workspace="Data Toolbox" title="Data Toolbox" description="Advanced Excel functions, cleansing, matching and transformation. All tools run in your browser." />
+        <PageHeader workspace="Data Toolbox" title="Data Toolbox" description="Advanced Excel functions, cleansing, matching and transformation. All tools run in your browser. Supported formats vary by tool and are shown before processing. Large files perform best in Chrome or Edge." />
         <div className="mb-5 flex items-center gap-3">
           <h2 className="text-lg font-semibold text-ink">Available tools</h2>
-          <span className="ws-format-badge">{TOOLS.length} tools</span>
+          <span className="ws-format-badge">33+ free data & Excel tools</span>
         </div>
         <ToolLaunchpad tools={TOOLS} active={tool} onSelect={setTool} />
 
@@ -343,11 +343,11 @@ function PowerQueryTool() {
   const otherSources = sources.filter((s) => s.name !== primaryName);
 
   return (
-    <Panel title="Power Query-Style Workflow" description="Import one or more files, then build a repeatable pipeline of steps — choose columns, change types, split or merge columns, remove duplicates or blanks, filter, sort, append, or join — with a full step-by-step log, the same way Power Query's Applied Steps pane works.">
+    <Panel title="Power Query-Style Workflow" description="Import one or more files, then build a repeatable pipeline of steps - choose columns, change types, split or merge columns, remove duplicates or blanks, filter, sort, append, or join - with a full step-by-step log, the same way Power Query's Applied Steps pane works.">
       <div className="rounded-xl border border-line bg-accent-tint p-4 text-sm text-accent">
         <p className="font-medium">What this actually is</p>
         <p className="mt-1 text-accent">
-          This reproduces the <em>result</em> of a Power Query transformation — cleaned, combined, reshaped data with a
+          This reproduces the <em>result</em> of a Power Query transformation - cleaned, combined, reshaped data with a
           full step log you can export. It does not generate real Power Query "M" code, and a saved pipeline will not
           appear as a live, refreshable query inside Excel's own Data → Queries &amp; Connections pane.
         </p>
@@ -385,7 +385,7 @@ function PowerQueryTool() {
           <div className="mt-4 rounded-xl border border-line bg-canvas p-5">
             <p className="text-sm font-medium text-ink">Applied steps ({steps.length})</p>
             {steps.length === 0 ? (
-              <p className="mt-2 text-sm text-ink-3">No steps yet — add one below.</p>
+              <p className="mt-2 text-sm text-ink-3">No steps yet - add one below.</p>
             ) : (
               <ol className="mt-3 space-y-1.5 text-sm">
                 {steps.map((s, i) => (
@@ -612,7 +612,7 @@ function DataModelTool() {
         <p className="mt-1 text-accent">
           This is not an in-memory columnar database and does not support dynamic, arbitrary filter-context
           re-aggregation the way real Power Pivot measures do inside Excel. Measures here are computed once when you
-          build the model, grouped by the matching key — recalculating after new data arrives means rebuilding.
+          build the model, grouped by the matching key - recalculating after new data arrives means rebuilding.
         </p>
       </div>
 
@@ -683,7 +683,7 @@ function DataModelTool() {
                           ))}
                         </ul>
                       ) : (
-                        <p className="mt-1 text-xs text-ink-2">✓ No conflicts found — every key on the "one" side is unique, and every row matches.</p>
+                        <p className="mt-1 text-xs text-ink-2">✓ No conflicts found - every key on the "one" side is unique, and every row matches.</p>
                       )}
                     </li>
                   );
@@ -817,10 +817,10 @@ function DaxReferenceTool() {
         <p className="font-medium">What this actually is</p>
         <p className="mt-1 text-accent">
           This is a DAX formula reference and pattern library, not a DAX engine. Formulas are explained and mapped to
-          an equivalent calculation this platform can run — they are not parsed, executed, or validated as real DAX,
+          an equivalent calculation this platform can run - they are not parsed, executed, or validated as real DAX,
           and are not guaranteed to work if pasted into Power BI or Excel's Power Pivot without adjustment. The syntax
           checker below only verifies shape (balanced parentheses, a recognized function name, a plausible argument
-          count) — it does not evaluate row or filter context.
+          count) - it does not evaluate row or filter context.
         </p>
       </div>
 
