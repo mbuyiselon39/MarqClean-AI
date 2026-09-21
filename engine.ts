@@ -103,56 +103,8 @@ export async function readWorkbookMatrix(file: File): Promise<string[][]> {
   });
 }
 
-export async function extractPdfText(file: File): Promise<string> {
-  const pdfjs = await import("pdfjs-dist");
-  await import("pdfjs-dist/build/pdf.worker.min.mjs");
+export { extractPdfTextInWorker as extractPdfText } from "./pdfWorkerClient";
 
-  const buffer = await file.arrayBuffer();
-  const pdf = await pdfjs.getDocument({ data: buffer }).promise;
-  const pages: string[] = [];
-
-  for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
-    const page = await pdf.getPage(pageNumber);
-    const content = await page.getTextContent();
-    const items = content.items as Array<{ str: string; transform: number[] }>;
-    const lineMap = new Map<number, Array<{ x: number; str: string }>>();
-
-    items.forEach((item) => {
-      if (!item.str.trim()) return;
-      const y = Math.round(item.transform[5]);
-      const bucket = lineMap.get(y) ?? [];
-      bucket.push({ x: item.transform[4], str: item.str });
-      lineMap.set(y, bucket);
-    });
-
-    const lines = Array.from(lineMap.entries())
-      .sort((a, b) => b[0] - a[0])
-      .map(([, parts]) => parts.sort((a, b) => a.x - b.x).map((p) => p.str).join(" "));
-
-    pages.push(lines.join("\n"));
-  }
-
-  return pages.join("\n");
-}
-
-function textToMatrix(text: string): string[][] {
-  const lines = text.split(/\r?\n/).filter((line) => line.trim());
-  if (!lines.length) return [];
-
-  const commaCount = lines[0].split(",").length;
-  const tabCount = lines[0].split("\t").length;
-  const pipeCount = lines[0].split("|").length;
-
-  // Structured delimiter detection
-  if (commaCount > 1 || tabCount > 1 || pipeCount > 1) {
-    const delimiter = tabCount >= commaCount && tabCount >= pipeCount ? "\t" : pipeCount > commaCount ? "|" : ",";
-    const parsed = Papa.parse<string[]>(text, { delimiter, skipEmptyLines: "greedy" });
-    return (parsed.data as string[][]).filter((row) => row.some((v) => sanitize(v)));
-  }
-
-  // Whitespace separated table (typical of PDF text): split on runs of 2+ spaces
-  return lines.map((line) => line.split(/\s{2,}/).map(sanitize)).filter((row) => row.some(Boolean));
-}
 
 export function matrixToTable(matrix: string[][], sourceName: string): DataTable {
   const usable = matrix.filter((row) => row.some((v) => sanitize(v)));
