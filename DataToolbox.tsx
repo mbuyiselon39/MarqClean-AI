@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { extractToTable, downloadBlob, type DataTable } from "./engine";
 import { runQueryPipeline, buildTransformationSummary, type QueryStep, type QueryStepType, type DataTypeTarget } from "./query-engine";
 import { validateRelationship, computeMeasure, type Relationship, type Cardinality, type Measure, type MeasureAggFn, type RelationshipConflict } from "./data-model";
@@ -125,7 +125,9 @@ const TOOLS: Array<{ key: ToolKey; label: string; blurb: string; icon: string }>
 ];
 
 export default function DataToolbox({ onExit }: { onExit: () => void }) {
-  const [tool, setTool] = useState<ToolKey>("functions");
+  const [tool, setToolState] = useState<ToolKey>(() => { const value = new URLSearchParams(window.location.hash.replace(/^#/, "")).get("toolbox"); return (TOOLS.some((item) => item.key === value) ? value : "functions") as ToolKey; });
+  useEffect(() => { const sync = () => { const value = new URLSearchParams(window.location.hash.replace(/^#/, "")).get("toolbox"); if (TOOLS.some((item) => item.key === value)) setToolState(value as ToolKey); }; window.addEventListener("popstate", sync); return () => window.removeEventListener("popstate", sync); }, []);
+  const setTool = (next: ToolKey) => { window.history.pushState({}, "", `/data-toolbox#toolbox=${next}`); setToolState(next); };
 
   return (
     <div className="ws-root ws-scope relative min-h-screen">
