@@ -3399,7 +3399,7 @@ export default function App() {
                 transition={{ duration: 0.4, ease: "easeOut" }}
                 className="text-center"
               >
-                <p className="mc-display bg-canvas from-[rgb(var(--accent-hover))] to-[rgb(var(--accent))] bg-clip-text text-3xl font-medium tracking-tight text-transparent sm:text-4xl">{stat.value}</p>
+                <p className="mc-display text-accent text-3xl font-medium tracking-tight sm:text-4xl">{stat.value}</p>
                 <p className="mt-1 text-xs text-ink-3 sm:text-sm">{stat.label}</p>
               </motion.div>
             ))}
@@ -3417,7 +3417,7 @@ export default function App() {
             {/* Module header card (matches Excel Automation / Reconciliation Hub / Data Toolbox) */}
             <div className="ws-surface mb-8 flex flex-wrap items-start justify-between gap-4 rounded-lg p-6">
               <div className="flex items-start gap-4">
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-canvas from-[rgb(var(--accent))]/20 to-[rgb(var(--accent))]/20 text-2xl ring-1 ring-inset ring-line">{WORKSPACE_MODULES[workspaceTab].icon}</span>
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-accent-tint text-2xl ring-1 ring-inset ring-line">{WORKSPACE_MODULES[workspaceTab].icon}</span>
                 <div>
                   <h2 className="mc-display text-2xl font-medium tracking-tight text-ink sm:text-3xl">{WORKSPACE_MODULES[workspaceTab].title}</h2>
                   <p className="mc-prose mt-1 text-justify text-sm leading-relaxed text-[rgb(var(--ink-2))] [hyphens:auto]">{WORKSPACE_MODULES[workspaceTab].description}</p>
@@ -3473,9 +3473,9 @@ export default function App() {
               </p>
             </div>
 
-            <div className="rounded-[2rem] border border-line bg-canvas p-4 shadow-slate-900/10 sm:p-6" aria-busy={isProcessing}>
+            <div className="rounded-lg border border-line bg-canvas p-4 shadow-hairline sm:p-6" aria-busy={isProcessing}>
               <div
-                className="rounded-[1.5rem] border border-dashed border-line bg-surface p-6 text-center transition hover:border-accent hover:bg-accent-tint"
+                className="rounded-lg border border-dashed border-line bg-surface p-6 text-center transition hover:border-accent hover:bg-accent-tint"
                 onDragOver={(event) => event.preventDefault()}
                 onDrop={(event) => {
                   event.preventDefault();
@@ -3598,7 +3598,7 @@ export default function App() {
                               ))}
                             </tr>
                           </thead>
-                          <tbody className="divide-y divide-slate-100 bg-canvas">
+                          <tbody className="divide-y divide-line bg-canvas">
                             {previewRows.map((row, rowIndex) => (
                               <motion.tr
                                 key={`${row.Email}-${rowIndex}`}
@@ -3647,9 +3647,9 @@ export default function App() {
                 <p className="mt-4 text-sm text-ink-3">Maximum file size is {MAX_FILE_SIZE_LABEL}.</p>
               </div>
 
-              <div className="rounded-[2rem] border border-line bg-canvas p-4 shadow-slate-900/10 sm:p-6" aria-busy={converterProcessing}>
+              <div className="rounded-lg border border-line bg-canvas p-4 shadow-hairline sm:p-6" aria-busy={converterProcessing}>
                 <div
-                  className="rounded-[1.5rem] border border-dashed border-line bg-surface p-6 text-center transition hover:border-accent hover:bg-accent-tint"
+                  className="rounded-lg border border-dashed border-line bg-surface p-6 text-center transition hover:border-accent hover:bg-accent-tint"
                   onDragOver={(event) => event.preventDefault()}
                   onDrop={(event) => {
                     event.preventDefault();
@@ -3736,7 +3736,7 @@ export default function App() {
                       </div>
                       <div className="max-h-72 overflow-auto">
                         <table className="min-w-full text-left text-sm">
-                          <tbody className="divide-y divide-slate-100 bg-canvas">
+                          <tbody className="divide-y divide-line bg-canvas">
                             {converterPreviewMatrix.slice(0, 8).map((row, rowIndex) => (
                               <tr key={rowIndex}>
                                 {row.map((value, columnIndex) => (
@@ -3794,9 +3794,9 @@ export default function App() {
                 <p className="mt-4 text-sm text-ink-3">Maximum file size is {MAX_FILE_SIZE_LABEL}.</p>
               </div>
 
-              <div className="rounded-[2rem] border border-line bg-canvas p-4 shadow-slate-900/10 sm:p-6" aria-busy={formulaProcessing}>
+              <div className="rounded-lg border border-line bg-canvas p-4 shadow-hairline sm:p-6" aria-busy={formulaProcessing}>
                 <div
-                  className="rounded-[1.5rem] border border-dashed border-line bg-surface p-6 text-center transition hover:border-accent hover:bg-accent-tint"
+                  className="rounded-lg border border-dashed border-line bg-surface p-6 text-center transition hover:border-accent hover:bg-accent-tint"
                   onDragOver={(event) => event.preventDefault()}
                   onDrop={(event) => {
                     event.preventDefault();
@@ -3902,9 +3902,9 @@ export default function App() {
                 </ul>
               </div>
 
-              <div className="rounded-[2rem] border border-line bg-canvas p-4 shadow-slate-900/10 sm:p-6" aria-busy={bankProcessing}>
+              <div className="rounded-lg border border-line bg-canvas p-4 shadow-hairline sm:p-6" aria-busy={bankProcessing}>
                 <div
-                  className="rounded-[1.5rem] border border-dashed border-line bg-surface p-6 text-center transition hover:border-accent hover:bg-accent-tint"
+                  className="rounded-lg border border-dashed border-line bg-surface p-6 text-center transition hover:border-accent hover:bg-accent-tint"
                   onDragOver={(event) => event.preventDefault()}
                   onDrop={(event) => {
                     event.preventDefault();
@@ -3981,7 +3981,7 @@ export default function App() {
                               <th className="px-4 py-2 font-medium">Balance</th>
                             </tr>
                           </thead>
-                          <tbody className="divide-y divide-slate-100 bg-canvas">
+                          <tbody className="divide-y divide-line bg-canvas">
                             {bankTransactions.slice(0, 12).map((transaction, index) => (
                               <tr key={index}>
                                 <td className="whitespace-nowrap px-4 py-2 text-ink-2">{transaction.date}</td>
