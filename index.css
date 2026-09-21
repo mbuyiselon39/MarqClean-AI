@@ -1929,9 +1929,9 @@ footer,
 }
 
 .ws-cleaner-copy p {
-  text-align: justify;
-  text-align-last: left;
-  text-justify: inter-word;
+  text-align: start;
+  text-align-last: auto;
+  text-justify: auto;
   hyphens: auto;
 }
 
