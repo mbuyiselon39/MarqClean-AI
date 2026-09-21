@@ -2582,7 +2582,7 @@ function ModuleIcon({ name }: { name: string }) {
       ? <><path d="M7 7h10" /><path d="m14 4 3 3-3 3" /><path d="M17 17H7" /><path d="m10 14-3 3 3 3" /></>
       : name === "formula"
         ? <><path d="M5 7h14M5 12h14M5 17h14" /><path d="m9 5 6 14" /></>
-        : <><path d="M5 5h14v14H5z" /><path d="M8 9h8M8 13h5M8 17h8" /></>;
+        : <><rect x="4" y="4" width="16" height="16" rx="2" /><path d="M8 8h8M8 12h5M8 16h8" /></>;
   return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{path}</svg>;
 }
 
