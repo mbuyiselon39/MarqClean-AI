@@ -108,28 +108,28 @@ const PRODUCT_NAME = "MarqClean AI";
 
 const WORKSPACE_MODULES: Record<"leads" | "converter" | "formulas" | "bank", { icon: string; title: string; description: string; formats: string[]; engine: string }> = {
   leads: {
-    icon: "🧹",
+    icon: "clean",
     title: "Quick Data & CSV Cleaner",
     description: "Clean, standardize, validate and transform Excel, CSV and spreadsheet data. Remove duplicates, fix formatting, normalize names and validate records.",
     formats: ["XLSX", "XLS", "CSV"],
     engine: "MarqClean AI Data Quality Engine",
   },
   converter: {
-    icon: "🔄",
+    icon: "convert",
     title: "CSV to Excel Converter",
     description: "Split delimited text into columns using the same delimiter and text-qualifier logic as the Excel Text to Columns wizard, then export a clean Excel workbook.",
     formats: ["CSV", "TXT", "XLSX"],
     engine: "MarqClean AI Structure Engine",
   },
   formulas: {
-    icon: "📊",
+    icon: "formula",
     title: "Excel Formulas and Formatting",
     description: "Detect numeric, currency, percentage and date columns, then generate a formatted Excel workbook with totals, number formatting and real formulas.",
     formats: ["CSV", "XLSX"],
     engine: "MarqClean AI Formula Engine",
   },
   bank: {
-    icon: "🏦",
+    icon: "bank",
     title: "Bank Ledger X",
     description: "Convert PDF bank statements into clean Excel, CSV and QIF files with normalized dates and amounts, ready for ledger reconciliation.",
     formats: ["PDF", "XLSX", "CSV", "QIF"],
@@ -2575,6 +2575,17 @@ function ToolContentPage({ page }: { page: SeoToolPage }) {
   );
 }
 
+function ModuleIcon({ name }: { name: string }) {
+  const path = name === "clean"
+    ? <><path d="M4 7h16M4 12h16M4 17h10" /><path d="m16 16 2 2 3-3" /></>
+    : name === "convert"
+      ? <><path d="M7 7h10" /><path d="m14 4 3 3-3 3" /><path d="M17 17H7" /><path d="m10 14-3 3 3 3" /></>
+      : name === "formula"
+        ? <><path d="M5 7h14M5 12h14M5 17h14" /><path d="m9 5 6 14" /></>
+        : <><path d="M5 5h14v14H5z" /><path d="M8 9h8M8 13h5M8 17h8" /></>;
+  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{path}</svg>;
+}
+
 type WorkspaceSideWidgetProps = {
   tab: "leads" | "converter" | "formulas" | "bank";
   processing?: boolean;
@@ -2771,7 +2782,7 @@ export default function App() {
     updatePageMetadata(currentPage);
     setIsMobileNavOpen(false);
     setIsWorkspacesOpen(false);
-    setIsMobileWorkspacesOpen(false);
+    
   }, [currentPage]);
 
   useEffect(() => {
@@ -3328,7 +3339,7 @@ export default function App() {
                       key={item.label}
                       href={item.href}
                       className="rounded-lg px-3 py-2 text-sm text-ink-2 transition hover:bg-surface hover:text-[rgb(var(--accent))]"
-                      onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); setIsMobileWorkspacesOpen(false); item.onClick(); }}
+                      onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); item.onClick(); }}
                     >
                       {item.label}
                     </a>
@@ -3411,7 +3422,7 @@ export default function App() {
           <div className="relative mx-auto max-w-[100rem] px-5 py-16 lg:px-8">
             <div className="ws-module-header ws-surface mb-5 rounded-lg p-5 sm:p-6">
               <div className="ws-module-header__identity">
-                <span className="ws-module-header__icon" aria-hidden="true">{WORKSPACE_MODULES[workspaceTab].icon}</span>
+                <span className="ws-module-header__icon" aria-hidden="true"><ModuleIcon name={WORKSPACE_MODULES[workspaceTab].icon} /></span>
                 <div className="min-w-0">
                   <div className="ws-module-header__eyebrow">Workspace module</div>
                   <h2 className="mc-display text-2xl font-medium tracking-tight text-ink sm:text-3xl">{WORKSPACE_MODULES[workspaceTab].title}</h2>
@@ -4445,13 +4456,17 @@ export default function App() {
             </div>
 
             <div className="mc-site-footer__column">
-              <h3>Trust &amp; legal</h3>
+              <h3>Resources</h3>
+              <PageLink page="contact">Contact &amp; Support</PageLink>
+              <PageLink page="accessibility">Accessibility</PageLink>
+              <PageLink page="about">About MarqClean AI</PageLink>
+              <a href="mailto:support@vertexstreamtechnologies.com">Support email</a>
+            </div>
+            <div className="mc-site-footer__column">
+              <h3>Legal</h3>
               <PageLink page="privacy">Privacy Policy</PageLink>
               <PageLink page="terms">Terms of Service</PageLink>
               <PageLink page="cookies">Cookie Policy</PageLink>
-              <PageLink page="accessibility">Accessibility</PageLink>
-              <PageLink page="contact">Contact &amp; Support</PageLink>
-              <a href="mailto:support@vertexstreamtechnologies.com">support@vertexstreamtechnologies.com</a>
             </div>
           </div>
 
