@@ -4282,8 +4282,8 @@ export default function App() {
               <a href="/" aria-label="MarqClean AI home" onClick={(event)=>{event.preventDefault();navigateToPage("home");}}>
                 <Logo className="shrink-0" />
               </a>
-              <p>Browser-local tools for cleaning, validating, transforming and reconciling Excel, CSV and PDF data.</p>
-              <div className="mc-site-footer__trust"><span className="mc-status-dot" aria-hidden="true"></span> Files stay in your browser during processing</div>
+              <p>MarqClean AI by Vertex Stream Technologies. Browser-local tools for cleaning, validating, transforming and reconciling Excel, CSV and PDF data.</p>
+              <div className="mc-site-footer__trust"><span className="mc-status-dot" aria-hidden="true"></span> Files stay in your browser during processing<br />Designed in South Africa - aligned with POPIA and GDPR</div>
             </div>
 
             <div className="mc-site-footer__column">
@@ -4310,7 +4310,7 @@ export default function App() {
               <PageLink page="contact">Contact &amp; Support</PageLink>
               <PageLink page="accessibility">Accessibility</PageLink>
               <PageLink page="about">About MarqClean AI</PageLink>
-              <a href="mailto:support@vertexstreamtechnologies.com">Support email</a>
+              <a href="mailto:support@vertexstreamtechnologies.com">Contact Support</a>
             </div>
             <div className="mc-site-footer__column">
               <h3>Legal</h3>
