@@ -606,7 +606,7 @@ function cellXml(ref: string, cell: Cell): string {
 }
 
 function sheetXml(rows: Cell[][]): string {
-  const cols = Math.max(1, ...rows.map((r) => r.length));
+  const cols = rows.reduce((max, row) => Math.max(max, row.length), 1);
   const body = rows
     .map((row, r) => `<row r="${r + 1}">${row.map((cell, c) => cellXml(`${columnIndexToReference(c)}${r + 1}`, cell)).join("")}</row>`)
     .join("");
