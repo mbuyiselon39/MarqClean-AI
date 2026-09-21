@@ -2743,22 +2743,6 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (!isWorkspacesOpen) return;
-    function handleOutside(event: MouseEvent) {
-      if (productsMenuRef.current && !productsMenuRef.current.contains(event.target as Node)) {
-              }
-    }
-    function handleKey(event: KeyboardEvent) {
-      if (event.key === "Escape")     }
-    document.addEventListener("mousedown", handleOutside);
-    document.addEventListener("keydown", handleKey);
-    return () => {
-      document.removeEventListener("mousedown", handleOutside);
-      document.removeEventListener("keydown", handleKey);
-    };
-  }, [isWorkspacesOpen]);
-
-  useEffect(() => {
     let ticking = false;
     const onScroll = () => {
       if (ticking) return;
