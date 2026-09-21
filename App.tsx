@@ -1702,7 +1702,7 @@ async function parseExcelFile(file: File) {
     throw new Error("The Excel worksheet is empty.");
   }
 
-  const maxColumns = Math.max(...table.map((row) => row.length));
+  const maxColumns = table.reduce((max, row) => Math.max(max, row.length), 0);
   const headers = Array.from({ length: maxColumns }, (_, index) => sanitizeCell(table[headerRowIndex][index]) || `Column ${index + 1}`);
 
   return table.slice(headerRowIndex + 1).map((row) =>
@@ -2148,7 +2148,7 @@ function computeAggregateValue(aggregate: AggregateType, values: number[]) {
     case "min":
       return Math.min(...finiteValues);
     case "max":
-      return Math.max(...finiteValues);
+      return finiteValues.reduce((max, value) => Math.max(max, value), -Infinity);
     default:
       return 0;
   }
@@ -2189,7 +2189,7 @@ const STYLED_STYLES_XML = `<?xml version="1.0" encoding="UTF-8" standalone="yes"
 function buildStyledWorkbook(matrix: string[][], options?: { aggregates?: Record<number, AggregateChoice>; sheetName?: string }) {
   const headers = matrix[0] ?? [];
   const dataRows = matrix.slice(1);
-  const columnCount = Math.max(headers.length, ...dataRows.map((row) => row.length), 1);
+  const columnCount = dataRows.reduce((max, row) => Math.max(max, row.length), Math.max(headers.length, 1));
   const columnTypes = Array.from({ length: columnCount }, (_, columnIndex) =>
     detectColumnType(dataRows.map((row) => row[columnIndex] ?? ""))
   );
