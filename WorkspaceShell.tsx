@@ -72,37 +72,15 @@ export function GlobalHeader() {
           <a href={SIMPLE_NAV[0].path} className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); go(SIMPLE_NAV[0].path); }}>{SIMPLE_NAV[0].label}</a>
           <a href={SIMPLE_NAV[1].path} className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); go(SIMPLE_NAV[1].path); }}>{SIMPLE_NAV[1].label}</a>
           <a href={SIMPLE_NAV[2].path} className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); go(SIMPLE_NAV[2].path); }}>{SIMPLE_NAV[2].label}</a>
-          <div className="relative" ref={productsMenuRef}>
-            <button
-              type="button"
-              className="flex items-center gap-1 transition hover:text-[rgb(var(--accent))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/50"
-              aria-haspopup="true"
-              aria-expanded={isWorkspacesOpen}
-              aria-controls="ws-products-menu"
-              onClick={() => setIsWorkspacesOpen((open) => !open)}
-            >Workspaces<svg className={`h-3.5 w-3.5 transition ${isWorkspacesOpen ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
-            </button>
-            {isWorkspacesOpen ? (
-              <div
-                id="ws-workspaces-menu"
-                role="menu"
-                aria-label="Workspaces"
-                className="absolute left-1/2 top-full mt-3 w-80 -translate-x-1/2 rounded-lg border border-line bg-canvas p-2 text-sm"
-              >
-                {PRODUCTS_MENU.map((item) => (
-                  <a
-                    key={item.label}
-                    role="menuitem"
-                    href={item.path}
-                    className="block rounded-lg px-3 py-2.5 font-medium text-ink-2 transition hover:bg-surface hover:text-[rgb(var(--accent))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]/30"
-                    onClick={(e) => { e.preventDefault(); setIsWorkspacesOpen(false); go(item.path); }}
-                  >
-                    {item.label}
-                  </a>
-                ))}
-              </div>
-            ) : null}
-          </div>
+          <button
+            type="button"
+            className="ws-global-search hidden xl:inline-flex items-center gap-2 rounded-md border border-line bg-canvas px-3 py-2 text-sm font-medium text-ink-2 transition hover:border-[rgb(var(--accent))]/60 hover:text-[rgb(var(--accent))]"
+            onClick={() => window.dispatchEvent(new CustomEvent("marqclean:open-command-palette"))}
+            aria-label="Open command palette"
+          >
+            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></svg>
+            Search workspace <kbd>⌘K</kbd>
+          </button>
           <a href="/contact" className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); go("/contact"); }}>Contact</a>
         </div>
         <div className="flex items-center gap-2">
@@ -149,25 +127,11 @@ export function GlobalHeader() {
             <button
               type="button"
               className="flex items-center justify-between rounded-lg px-3 py-2.5 text-left transition hover:bg-canvas/5 hover:text-[rgb(var(--accent))]"
-              aria-expanded={isMobileWorkspacesOpen}
-              aria-controls="ws-mobile-products-menu"
-              onClick={() => setIsMobileWorkspacesOpen((open) => !open)}
-            >Workspaces<svg className={`h-4 w-4 transition ${isMobileWorkspacesOpen ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+              onClick={() => { setIsMobileNavOpen(false); window.dispatchEvent(new CustomEvent("marqclean:open-command-palette")); }}
+              aria-label="Open command palette"
+            >
+              <span>Search workspace</span><kbd>⌘K</kbd>
             </button>
-            {isMobileWorkspacesOpen ? (
-              <div id="ws-mobile-products-menu" className="ml-3 flex flex-col gap-1 border-l border-line pl-3">
-                {PRODUCTS_MENU.map((item) => (
-                  <a
-                    key={item.label}
-                    href={item.path}
-                    className="rounded-lg px-3 py-2 text-sm text-ink-2 transition hover:bg-surface hover:text-[rgb(var(--accent))]"
-                    onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); setIsMobileWorkspacesOpen(false); go(item.path); }}
-                  >
-                    {item.label}
-                  </a>
-                ))}
-              </div>
-            ) : null}
             <a
               className="rounded-lg px-3 py-2.5 transition hover:bg-canvas/5 hover:text-[rgb(var(--accent))]"
               href="/contact"
@@ -394,6 +358,12 @@ export function ToolLaunchpad<T extends string>({
   }, [collapsed]);
 
   useEffect(() => {
+    const openFromHeader = () => setPaletteOpen(true);
+    window.addEventListener("marqclean:open-command-palette", openFromHeader);
+    return () => window.removeEventListener("marqclean:open-command-palette", openFromHeader);
+  }, []);
+
+  useEffect(() => {
     function handleShortcut(event: KeyboardEvent) {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
         event.preventDefault();
@@ -413,10 +383,10 @@ export function ToolLaunchpad<T extends string>({
     <>
       <aside className={"ws-sidebar " + (collapsed ? "is-collapsed" : "")} aria-label="MarqClean workspace">
         <div className="ws-sidebar__top">
-          <button type="button" className="ws-sidebar__search" onClick={() => setPaletteOpen(true)} aria-label="Search workspace">
+          <div className="ws-sidebar__search-hint" aria-hidden="true">
             <SidebarIcon><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></svg></SidebarIcon>
-            <span>Search workspace</span><kbd>⌘K</kbd>
-          </button>
+            <span>Command palette</span><kbd>⌘K</kbd>
+          </div>
           <button type="button" className="ws-sidebar__collapse" onClick={() => setCollapsed((value) => !value)} aria-label={collapsed ? "Expand workspace sidebar" : "Collapse workspace sidebar"} title={collapsed ? "Expand sidebar" : "Collapse sidebar"}>
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d={collapsed ? "m9 18 6-6-6-6" : "m15 18-6-6 6-6"} /></svg>
           </button>
