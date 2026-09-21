@@ -2474,17 +2474,37 @@ function FooterContentPage({ page }: { page: FooterPage }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
-        <PageLink className="text-sm font-medium text-[rgb(var(--accent-hover))] transition hover:text-ink" page="home">
-          Back to product
-        </PageLink>
+        <nav className="text-sm" aria-label="Breadcrumb">
+          <PageLink className="font-medium text-[rgb(var(--accent-hover))] transition hover:text-ink" page="home">MarqClean AI</PageLink>
+          <span className="mx-2 text-ink-3" aria-hidden="true">/</span>
+          <span className="text-ink-2">{page.title}</span>
+        </nav>
         <p className="mt-8 text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">{COMPANY_NAME}</p>
         <h1 className="mt-4 text-5xl font-medium tracking-[-0.05em] text-ink sm:text-6xl">{page.title}</h1>
-        <p className="mt-6 text-lg leading-8 text-ink-2">{page.description}</p>
+        <p className="mt-6 max-w-[68ch] text-lg leading-8 text-ink-2">{page.description}</p>
+        {page.sections.length > 2 ? (
+          <nav className="mc-legal-toc mt-8" aria-label="On this page">
+            <h2 className="text-base font-medium text-ink">On this page</h2>
+            <div className="mt-2">
+              {page.sections.map((section) => (
+                <a key={section.heading} href={`#legal-${section.heading.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}>
+                  {section.heading}
+                </a>
+              ))}
+            </div>
+          </nav>
+        ) : null}
+        {page.title === "Contact" ? (
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a className="mc-cta-cyan rounded-md px-5 py-2.5 text-sm font-medium" href="mailto:support@vertexstreamtechnologies.com">Email support</a>
+            <span className="inline-flex min-h-10 items-center rounded-md border border-line px-4 py-2 text-sm text-ink-2">Typical response: within 2 business days</span>
+          </div>
+        ) : null}
         <p className="mt-4 text-sm text-ink-2">Last updated: June 29, 2026</p>
 
         <div className="mt-12 space-y-10">
           {page.sections.map((section) => (
-            <section key={section.heading} className="border-t border-line pt-8">
+            <section id={`legal-${section.heading.toLowerCase().replace(/[^a-z0-9]+/g, "-")`} key={section.heading} className="border-t border-line pt-8 mc-legal-copy">
               <h2 className="text-3xl font-medium tracking-[-0.04em] text-ink">{section.heading}</h2>
               <div className="mt-4 space-y-4">
                 {section.body.map((paragraph) => (
@@ -4337,6 +4357,10 @@ export default function App() {
                 {
                   q: "Does this replace Excel, Power Query, or Power BI?",
                   a: "No. MarqClean AI automates the repetitive cleaning, formatting, and reconciliation work that normally happens before or after using Excel. The Power Query-style workflow and Power Pivot-style data modelling tools in Data Toolbox reproduce the result of those workflows, not the native Microsoft engines — see each tool's in-product notice for exactly what is and isn't preserved.",
+                },
+                {
+                  q: "What does the AI in MarqClean AI do?",
+                  a: "The core cleaning and reconciliation workflows currently use deterministic rules, validation and matching logic rather than a generative model. The AI name reflects the product direction; outputs remain reviewable before export.",
                 },
                 {
                   q: "How accurate is the automatic name, industry, or field detection?",
