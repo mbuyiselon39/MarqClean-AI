@@ -2311,7 +2311,7 @@ function updatePageMetadata(page: AppPageKey) {
     ? "Excel Automation | Sorting, Subtotals, Formulas and Spreadsheet Processing"
     : isAcademy
     ? "Free Excel Academy | Learn Excel Formulas, Functions and Shortcuts"
-    : toolPage?.title ?? (footerPage ? `${footerPage.title} | ${PRODUCT_NAME}` : "MarqClean AI | AI Data, Excel, CSV and Reconciliation Automation Platform");
+    : toolPage?.title ?? (footerPage ? `${footerPage.title} | ${PRODUCT_NAME}` : "MarqClean AI | Browser-first data cleaning, Excel, CSV and reconciliation platform");
   const description = isHub
     ? "Browser-first reconciliation, record matching and validation platform. Reconcile client, investor, account and banking datasets across Excel, CSV and PDF files, including the Bank Ledger X bank statement and ledger reconciliation module, with exception reporting."
     : isToolbox
