@@ -3,9 +3,7 @@ import { useRef, useState } from "react";
 type HeroActions = {
   onCleanFile: () => void;
   onOpenReconciliation: () => void;
-  onViewTools: () => void;
   onOpenExcelAutomation?: () => void;
-  onOpenDataToolbox?: () => void;
   onFileDrop?: (file: File) => void;
 };
 
