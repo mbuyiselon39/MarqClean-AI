@@ -60,7 +60,7 @@ function WorkspacePreview({ onCleanFile, onOpenReconciliation, onOpenExcelAutoma
   </div>;
 }
 
-export default function HeroCarousel({ onCleanFile, onOpenReconciliation, onOpenExcelAutomation, onOpenDataToolbox, onFileDrop }: HeroActions) {
+export default function HeroCarousel({ onCleanFile, onOpenReconciliation, onOpenExcelAutomation, onFileDrop }: HeroActions) {
   const [active, setActive] = useState(0);
   const tabs = [
     { label: "Data Cleaning", href: "#cleaner" },
