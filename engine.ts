@@ -158,7 +158,7 @@ export function matrixToTable(matrix: string[][], sourceName: string): DataTable
   const usable = matrix.filter((row) => row.some((v) => sanitize(v)));
   if (!usable.length) return { headers: [], rows: [], sourceName };
 
-  const columnCount = Math.max(...usable.map((row) => row.length));
+  const columnCount = usable.reduce((max, row) => Math.max(max, row.length), 0);
   const headers = Array.from({ length: columnCount }, (_, i) => sanitize(usable[0][i]) || `Column ${i + 1}`);
   const rows = usable.slice(1).map((row) => Array.from({ length: columnCount }, (_, i) => sanitize(row[i] ?? "")));
 
