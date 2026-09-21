@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { ReactNode } from "react";
+import type { ReactNode, KeyboardEvent as ReactKeyboardEvent } from "react";
 import Logo from "./Logo";
 import ThemeToggle from "./ThemeToggle";
 
@@ -64,6 +64,14 @@ function isCurrent(path: string) {
   return pathname === path;
 }
 
+function handleWorkspaceMenuKey(event: ReactKeyboardEvent<HTMLAnchorElement>, close: () => void) {
+  const items = Array.from(document.querySelectorAll<HTMLElement>(".ws-workspace-menu [role=menuitem]"));
+  const index = items.indexOf(event.currentTarget);
+  if (event.key === "ArrowDown") { event.preventDefault(); items[(index + 1) % items.length]?.focus(); }
+  if (event.key === "ArrowUp") { event.preventDefault(); items[(index - 1 + items.length) % items.length]?.focus(); }
+  if (event.key === "Escape") { event.preventDefault(); close(); document.querySelector<HTMLElement>(".ws-nav-dropdown > button")?.focus(); }
+}
+
 export function GlobalHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [workspacesOpen, setWorkspacesOpen] = useState(false);
@@ -107,7 +115,7 @@ export function GlobalHeader() {
             <div className="ws-nav-dropdown" onMouseEnter={() => { if (workspaceTimer.current) clearTimeout(workspaceTimer.current); setWorkspacesOpen(true); }} onMouseLeave={() => { workspaceTimer.current = window.setTimeout(() => setWorkspacesOpen(false), 160); }}>
               <button type="button" aria-haspopup="menu" aria-expanded={workspacesOpen} onKeyDown={(e) => { if (e.key === "ArrowDown") { e.preventDefault(); setWorkspacesOpen(true); requestAnimationFrame(() => document.querySelector<HTMLElement>(".ws-workspace-menu [role=menuitem]")?.focus()); } if (e.key === "Escape") { e.preventDefault(); setWorkspacesOpen(false); } }} onClick={() => setWorkspacesOpen((v) => !v)}>Workspaces <Icon name="down" size={16} /></button>
               {workspacesOpen ? <div className="ws-workspace-menu" role="menu" aria-label="Workspaces">
-                {WORKSPACES.map((workspace) => <a role="menuitem" key={workspace.label} tabIndex={0} onKeyDown={(e) => { const items = Array.from(document.querySelectorAll<HTMLElement>(".ws-workspace-menu [role=menuitem]")); const index = items.indexOf(e.currentTarget); if (e.key === "ArrowDown") { e.preventDefault(); items[(index + 1) % items.length]?.focus(); } if (e.key === "ArrowUp") { e.preventDefault(); items[(index - 1 + items.length) % items.length]?.focus(); } if (e.key === "Escape") { e.preventDefault(); setWorkspacesOpen(false); document.querySelector<HTMLElement>(".ws-nav-dropdown > button")?.focus(); } } href={workspace.path} aria-current={isCurrent(workspace.path) ? "page" : undefined} onClick={(e) => { e.preventDefault(); go(workspace.path); closeAll(); }}><span className="ws-menu-icon"><Icon name={workspace.icon} size={19} /></span><span><strong>{workspace.label}</strong><small>{workspace.description}</small></span></a>)}
+{WORKSPACES.map((workspace) => <a role="menuitem" key={workspace.label} tabIndex={0} onKeyDown={(e) => handleWorkspaceMenuKey(e, () => setWorkspacesOpen(false))} href={workspace.path} aria-current={isCurrent(workspace.path) ? "page" : undefined} onClick={(e) => { e.preventDefault(); go(workspace.path); closeAll(); }}><span className="ws-menu-icon"><Icon name={workspace.icon} size={19} /></span><span><strong>{workspace.label}</strong><small>{workspace.description}</small></span></a>)}
               </div> : null}
             </div>
             {NAV.slice(1).map((item) => <a key={item.label} href={item.path} aria-current={isCurrent(item.path) ? "page" : undefined} onClick={(e) => { e.preventDefault(); go(item.path); }}>{item.label}</a>)}
