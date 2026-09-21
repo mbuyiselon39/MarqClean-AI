@@ -41,8 +41,8 @@ const preloads = localNames
   .map((name) => `    <link rel="preload" href="/fonts/${name}" as="font" type="font/woff2" crossorigin />`)
   .join("\n");
 index = index.replace(
-  /<!-- FONT_PRELOADS_START -->[\\s\\S]*?<!-- FONT_PRELOADS_END -->/,
-  `<!-- FONT_PRELOADS_START -->\\n${preloads}\\n    <!-- FONT_PRELOADS_END -->`
+  /<!-- FONT_PRELOADS_START -->[\s\S]*?<!-- FONT_PRELOADS_END -->/,
+  `<!-- FONT_PRELOADS_START -->\n${preloads}\n    <!-- FONT_PRELOADS_END -->`
 );
 await writeFile(indexPath, index, "utf8");
 
