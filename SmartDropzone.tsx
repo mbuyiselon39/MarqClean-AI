@@ -32,14 +32,6 @@ const ACTIONS: SmartPipelineAction[] = [
 
 const normalise = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, "");
 
-function detectDate(value: string) {
-  const v = value.trim();
-  if (!v) return false;
-  if (/^\d{4}[-/]\d{1,2}[-/]\d{1,2}$/.test(v)) return true;
-  if (/^\d{1,2}[./-]\d{1,2}[./-]\d{2,4}$/.test(v)) return true;
-  return false;
-}
-
 function analyseMatrix(matrix: unknown[][]): Diagnostics {
   const rows = matrix.filter((row) => row.some((v) => String(v ?? "").trim() !== ""));
   const headers = (rows[0] ?? []).map((v) => String(v ?? "").trim());
