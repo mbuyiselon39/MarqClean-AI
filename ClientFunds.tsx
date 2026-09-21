@@ -55,6 +55,7 @@ export default function ClientFunds({ onExit }: { onExit: () => void }) {
     setDownloadInfo(null);
     try {
       const ext = file.name.split(".").pop()?.toLowerCase();
+      if (file.size > 100 * 1024 * 1024) throw new Error("This workbook is larger than the 100 MB browser-safe limit. Split the workbook before processing.");
       if (ext !== "xlsx" && ext !== "xls") throw new Error("Please upload an .xlsx or .xls workbook.");
       const wb = await readWorkbook(file);
       if (!wb.sheetNames.length) throw new Error("No worksheets found in the workbook.");
@@ -203,7 +204,7 @@ export default function ClientFunds({ onExit }: { onExit: () => void }) {
                   <span className="ws-badge rounded-md px-2 py-0.5 font-medium uppercase">XLSX</span>
                   <span className="ws-badge rounded-md px-2 py-0.5 font-medium uppercase">XLS</span>
                 </div>
-                <p className="mt-2 text-xs text-[rgb(var(--ink-3))]">Maximum file size: 2GB &middot; Browser-based secure processing</p>
+                <p className="mt-2 text-xs text-[rgb(var(--ink-3))]">Maximum file size: 100 MB &middot; Browser-based secure processing</p>
               </div>
             )}
             <div className="mt-4 flex flex-wrap justify-center gap-2">
