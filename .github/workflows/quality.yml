@@ -19,7 +19,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v5
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
@@ -37,6 +37,15 @@ jobs:
           const redirects = fs.readFileSync("public/_redirects", "utf8");
           const sitemap = fs.readFileSync("public/sitemap.xml", "utf8");
           const robots = fs.readFileSync("public/robots.txt", "utf8");
+          const css = fs.readFileSync("index.css", "utf8");
+          const clientFunds = fs.readFileSync("ClientFunds.tsx", "utf8");
+          const hero = fs.readFileSync("HeroCarousel.tsx", "utf8");
+          const faqApp = fs.readFileSync("App.tsx", "utf8");
+          const og = fs.readFileSync("public/og-card.png");
+
+
+          const ogWidth = og.readUInt32BE(16);
+          const ogHeight = og.readUInt32BE(20);
 
           const checks = [
             [app.includes('if (!route) return "home";'), "root route guard"],
@@ -46,6 +55,12 @@ jobs:
             [redirects.includes("/*                          /index.html           200"), "SPA fallback rewrite"],
             [sitemap.includes("https://marqcleanai.vertexsg.co.za/"), "sitemap hostname"],
             [robots.includes("https://marqcleanai.vertexsg.co.za/sitemap.xml"), "robots sitemap"],
+            [css.includes("--surface-inverse") && css.includes("--on-inverse"), "inverse surface tokens"],
+            [css.includes(".mc-faq-trigger") && faqApp.includes('aria-expanded={isOpen}'), "accessible FAQ disclosures"],
+            [!clientFunds.includes(">Diagnostics<") && !clientFunds.includes("Diagnostics: Test Workbook"), "customer diagnostics removed"],
+            [hero.includes('href="/excel-automation"') && !hero.includes('role="tab"'), "hero navigation links"],
+            [og.slice(0, 8).equals(Buffer.from([137,80,78,71,13,10,26,10])) && ogWidth === 1200 && ogHeight === 630, "1200x630 PNG OG image"],
+            [!css.includes("text-align: justify") && !css.includes("hyphens: auto") && !css.includes("!important"), "no legacy text/important overrides"],
           ];
 
           const failures = checks.filter(([ok]) => !ok).map(([, name]) => name);
@@ -53,6 +68,16 @@ jobs:
             console.error("Smoke checks failed:", failures.join(", "));
             process.exit(1);
           }
+          const allSource = [app, css, clientFunds, hero].join("\n");
+          if (/bg-ink[^\n]*text-ink/.test(allSource)) {
+            console.error("Matching bg-ink/text-ink colour tokens remain.");
+            process.exit(1);
+          }
+          if (app.includes("text-justify") || clientFunds.includes("text-justify") || hero.includes("text-justify")) {
+            console.error("Justified body copy utility remains.");
+            process.exit(1);
+          }
+
           if (app.includes("https://www.marqcleanai.vertexsg.co.za") ||
               index.includes("https://www.marqcleanai.vertexsg.co.za") ||
               seo.includes("https://www.marqcleanai.vertexsg.co.za") ||
