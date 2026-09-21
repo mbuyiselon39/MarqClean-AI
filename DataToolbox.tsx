@@ -124,7 +124,7 @@ const TOOLS: Array<{ key: ToolKey; label: string; blurb: string; icon: string }>
   { key: "timesheet", label: "Timesheet Builder", blurb: "Track hours and generate billable time reports.", icon: "tool" },
 ];
 
-export default function DataToolbox({ onExit }: { onExit: () => void }) {
+export default function DataToolbox({ onExit: _onExit }: { onExit: () => void }) {
   const [tool, setToolState] = useState<ToolKey>(() => { const value = new URLSearchParams(window.location.hash.replace(/^#/, "")).get("toolbox"); return (TOOLS.some((item) => item.key === value) ? value : "functions") as ToolKey; });
   useEffect(() => { const sync = () => { const value = new URLSearchParams(window.location.hash.replace(/^#/, "")).get("toolbox"); if (TOOLS.some((item) => item.key === value)) setToolState(value as ToolKey); }; window.addEventListener("popstate", sync); return () => window.removeEventListener("popstate", sync); }, []);
   const setTool = (next: ToolKey) => { window.history.pushState({}, "", `/data-toolbox#toolbox=${next}`); setToolState(next); };
