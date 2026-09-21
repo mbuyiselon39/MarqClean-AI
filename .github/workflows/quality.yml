@@ -42,6 +42,9 @@ jobs:
           const hero = fs.readFileSync("HeroCarousel.tsx", "utf8");
           const faqApp = fs.readFileSync("App.tsx", "utf8");
           const og = fs.readFileSync("public/og-card.png");
+          const docs = fs.existsSync("docs/design-reference.md");
+          const distFonts = fs.existsSync("dist/fonts") ? fs.readdirSync("dist/fonts").filter((name) => name.endsWith(".woff2")) : [];
+          const fontBytes = distFonts.reduce((sum, name) => sum + fs.statSync(`dist/fonts/${name}`).size, 0);
 
 
           const ogWidth = og.readUInt32BE(16);
@@ -61,6 +64,10 @@ jobs:
             [hero.includes('label: "Excel Automation", href: "/excel-automation"') && !hero.includes('role="tab"'), "hero navigation links"],
             [og.slice(0, 8).equals(Buffer.from([137,80,78,71,13,10,26,10])) && ogWidth === 1200 && ogHeight === 630, "1200x630 PNG OG image"],
             [!css.includes("text-align: justify") && !css.includes("hyphens: auto") && !css.includes("!important"), "no legacy text/important overrides"],
+            [css.includes("Clash Grotesk") && css.includes("Satoshi"), "brand font families"],
+            [docs, "design reference documentation"],
+            [distFonts.length >= 4 && fontBytes < 150000, "self-hosted font budget"],
+            [index.includes("/fonts/") && !index.includes("fonts.googleapis.com"), "local font preloads"],
           ];
 
           const failures = checks.filter(([ok]) => !ok).map(([, name]) => name);
@@ -86,7 +93,7 @@ jobs:
             console.error("Mixed www/non-www production hostnames detected.");
             process.exit(1);
           }
-          console.log("Routing, SPA fallback, and production hostname checks passed.");
+          if (css.includes("box-shadow:") && /box-shadow:\s*(?!none)/.test(css)) {\n            console.error("Non-zero CSS shadows remain.");\n            process.exit(1);\n          }\n          console.log("Routing, visual-system, font, and production hostname checks passed.");
           NODE
       - name: Cloudflare Pages asset-size guard
         run: |
