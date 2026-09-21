@@ -1,4 +1,4 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, writeFile, readFile } from "node:fs/promises";
 import { join, basename } from "node:path";
 
 const cssUrl = "https://api.fontshare.com/v2/css?f[]=clash-grotesk@700&f[]=satoshi@400,500,700&display=swap";
