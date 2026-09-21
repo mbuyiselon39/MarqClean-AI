@@ -3440,26 +3440,26 @@ export default function App() {
               <div className="ws-workspace-main">
           {workspaceTab === "leads" ? (
           <motion.div
-            className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-start"
+            className="ws-cleaner-content grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-stretch"
             initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            <div>
-              <p className="text-sm font-medium uppercase tracking-[0.28em] text-accent">Automated CSV cleaner</p>
-              <h3 className="mt-4 text-3xl font-medium tracking-[-0.03em] text-ink">
+            <div className="ws-cleaner-copy flex flex-col justify-center">
+              <p className="text-xs font-medium uppercase tracking-[0.22em] text-accent">Automated CSV cleaner</p>
+              <h3 className="mt-3 text-[2rem] font-medium leading-tight tracking-[-0.03em] text-ink">
                 Upload messy marketing data for free. Download a clean Excel workbook.
               </h3>
-              <p className="mt-5 text-lg leading-8 text-ink-2">
+              <p className="mt-4 max-w-xl text-[15px] leading-6 text-ink-2">
                 {PRODUCT_NAME} runs local browser-based cleaning for CSV and XLSX lead lists, giving marketing teams a
                 fast way to standardize outreach data without payment, signup, or repetitive spreadsheet edits.
               </p>
             </div>
 
-            <div className="rounded-lg border border-line bg-canvas p-4 shadow-hairline sm:p-6" aria-busy={isProcessing}>
+            <div className="ws-upload-card rounded-lg border border-line bg-canvas p-3 shadow-hairline sm:p-4" aria-busy={isProcessing}>
               <div
-                className="rounded-lg border border-dashed border-line bg-surface p-6 text-center transition hover:border-accent hover:bg-accent-tint"
+                className="ws-upload-zone rounded-lg border border-dashed border-line bg-surface p-6 text-center transition hover:border-accent hover:bg-accent-tint"
                 onDragOver={(event) => event.preventDefault()}
                 onDrop={(event) => {
                   event.preventDefault();
@@ -3474,7 +3474,7 @@ export default function App() {
                   aria-label="Upload CSV or Excel file for cleaning"
                   onChange={(event) => handleFileInput(event.target.files)}
                 />
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-md bg-ink text-ink">
+                <div className="ws-upload-icon mx-auto flex h-14 w-14 items-center justify-center rounded-lg bg-accent-tint text-accent">
                   <svg className="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                     <path d="M12 16V4" strokeLinecap="round" />
                     <path d="m7 9 5-5 5 5" strokeLinecap="round" strokeLinejoin="round" />
@@ -3488,7 +3488,7 @@ export default function App() {
                 </p>
                 <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
                   <button
-                    className="rounded-md bg-ink px-5 py-3 text-sm font-medium text-ink transition hover:bg-accent"
+                    className="rounded-md bg-accent px-5 py-3 text-sm font-medium text-[rgb(var(--accent-ink))] transition hover:bg-accent-hover"
                     onClick={() => fileInputRef.current?.click()}
                     disabled={isProcessing}
                   >
