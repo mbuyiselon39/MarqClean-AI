@@ -4236,7 +4236,7 @@ export default function App() {
                   </div>
                   <div className="grid gap-3 sm:grid-cols-2">
                     {[
-                      { h: "Group by root reference", p: "Groups rows by the SRN or reference before the first slash." },
+                      { h: "Group by reference", p: "Groups rows by the reference value before the first slash (for example, ACME-104/01 becomes ACME-104)." },
                       { h: "Subtotal each group", p: "Adds a bold SUM subtotal and a blank spacer row per group." },
                       { h: "Preview and map", p: "Preview detected columns and start row, then adjust the mapping." },
                       { h: "Preserves the original", p: "Outputs Sorted_Output, Formula_Guide, and Error_Report sheets." },
@@ -4328,6 +4328,54 @@ export default function App() {
                 <h3 className="mc-display mt-3 text-xl font-medium text-ink">Inspect before you rely on the output.</h3>
                 <p className="mt-3 text-[15px] leading-7 text-ink-2">Results remain reviewable before export, helping teams catch exceptions and confirm that the generated workbook or dataset matches the intended workflow.</p>
               </div>
+            </div>
+          </div>
+        </section>
+
+
+        <section id="trust" className="border-y border-line bg-[rgb(var(--canvas))] py-20 text-ink">
+          <div className="mx-auto max-w-7xl px-5 lg:px-8">
+            <div className="max-w-3xl">
+              <p className="mc-mono text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">Security, privacy and support</p>
+              <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-ink sm:text-5xl">Designed for controlled browser-first data work.</h2>
+              <p className="mc-prose mt-5 text-lg text-ink-2">
+                Core cleaning, validation, transformation and reconciliation workflows run locally in your browser.
+                MarqClean AI does not require an application server for those workflows, but you should still apply
+                your organisation's information-security, privacy and retention controls when processing sensitive data.
+              </p>
+            </div>
+            <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {[
+                {
+                  title: "Local processing",
+                  body: "Supported files are processed on your device. The current browser-safe upload limit is 100 MB, with practical capacity also dependent on available device memory.",
+                },
+                {
+                  title: "Privacy and compliance",
+                  body: "The platform is designed to support privacy-conscious workflows, including POPIA and GDPR considerations. Your organisation remains responsible for lawful processing, access controls and retention decisions.",
+                },
+                {
+                  title: "Browser support",
+                  body: "Use a current version of Chrome, Edge, Firefox or Safari for the best experience. Large workbooks may require more memory than smaller files.",
+                },
+                {
+                  title: "AI, explained",
+                  body: "The core cleaning and reconciliation workflows use deterministic rules, validation and matching logic. AI-related tools are clearly scoped rather than presented as an autonomous decision-maker.",
+                },
+                {
+                  title: "Help and support",
+                  body: "For support, privacy questions, accessibility feedback or business enquiries, email support@vertexstreamtechnologies.com. Typical response time is within 2 business days.",
+                },
+                {
+                  title: "Enterprise",
+                  body: "For team onboarding, workflow design or enterprise discussions, contact support@vertexstreamtechnologies.com with “Enterprise enquiry” in the subject.",
+                },
+              ].map((item) => (
+                <article key={item.title} className="mc-glass mc-card-interactive rounded-lg p-6">
+                  <h3 className="mc-display text-xl font-medium text-ink">{item.title}</h3>
+                  <p className="mt-3 text-[15px] leading-6 text-ink-2">{item.body}</p>
+                </article>
+              ))}
             </div>
           </div>
         </section>
