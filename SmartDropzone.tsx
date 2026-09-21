@@ -83,7 +83,7 @@ export default function SmartDropzone({
     setMessage("");
     const extension = file.name.split(".").pop()?.toLowerCase();
     if (!extension || !["csv", "xlsx", "xls", "pdf"].includes(extension)) {
-      setMessage("Supported files: CSV, XLSX, XLS and PDF.");
+      setMessage("Supported here: XLSX, XLS, CSV and PDF. TXT and QIF are available in dedicated modules.");
       return;
     }
     if (file.size > MAX_FILE_SIZE_BYTES) { setMessage("This file is larger than the 100 MB browser-safe limit. Split the file before processing."); return; }
@@ -201,7 +201,7 @@ export default function SmartDropzone({
               ))}
             </div>
             <button type="button" disabled={fileType === "PDF"} onClick={run} className="mt-4 w-full rounded-md bg-inverse px-5 py-3 text-sm font-medium text-on-inverse disabled:cursor-not-allowed disabled:opacity-40">Run workflow locally</button>
-            {fileType === "PDF" ? <p className="mt-2 text-xs text-ink-3">Open Bank Ledger X for PDF extraction before running a data workflow.</p> : null}
+            {fileType === "PDF" ? <p className="mt-2 text-xs text-ink-3">Open Bank Ledger for PDF extraction before running a data workflow.</p> : null}
           </div>
         </div>
       ) : null}
