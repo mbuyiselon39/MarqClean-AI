@@ -146,21 +146,8 @@ export default function ClientFunds({ onExit }: { onExit: () => void }) {
       <div className="ws-grid pointer-events-none absolute inset-x-0 top-0 h-[38rem]" aria-hidden="true" />
 
       <main id="main-content" className="relative mx-auto max-w-6xl px-5 pb-20 pt-24 lg:px-8">
-        <div className="ws-surface mb-6 flex flex-wrap items-start justify-between gap-4 rounded-xl p-6">
-          <div className="flex items-start gap-4">
-            <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-canvas /20 /20 text-2xl ring-1 ring-inset ring-white/10">📊</span>
-            <div>
-              <h1 className="mc-display text-2xl font-medium tracking-tight text-ink sm:text-3xl">Excel Automation</h1>
-              <p className="mt-1 max-w-2xl text-sm text-[rgb(var(--ink-2))]">Automate Excel sorting, subtotals, formulas and workbook generation. Includes the Sort &amp; Subtotal Engine, number formatting and error reporting.</p>
-              <div className="mt-2 flex flex-wrap gap-2">
-                <span className="ws-badge rounded-md px-2 py-0.5 text-xs font-medium uppercase">XLSX</span>
-                <span className="ws-badge rounded-md px-2 py-0.5 text-xs font-medium uppercase">XLS</span>
-                <span className="ws-badge rounded-md px-2 py-0.5 text-xs font-medium text-[rgb(var(--accent-hover))]">Engine: MarqClean AI Structure Engine</span>
-              </div>
-            </div>
-          </div>
-          <button className="ws-btn-secondary rounded-md px-4 py-2 text-sm font-medium" onClick={onExit}>Back to MarqClean AI</button>
-        </div>
+        <PageHeader workspace="Excel Automation" title="Excel Automation" description="Automate Excel sorting, subtotals, formulas and workbook generation. Everything runs in your browser." />
+        <div className="mb-5 flex flex-wrap items-center gap-2"><span className="ws-format-badge">XLSX</span><span className="ws-format-badge">XLS</span></div>
         <p className="mt-3 max-w-3xl text-ink-2">
           Upload an Excel workbook, preview the detected data, then click Execute Sorting. The tool groups related
           records by the root SRN or reference before the first slash, subtotals each group, inserts a blank spacer row,
