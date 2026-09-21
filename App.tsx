@@ -2493,7 +2493,7 @@ function FooterContentPage({ page }: { page: FooterPage }) {
           <div className="mt-2">{page.sections.map((section) => <a key={section.heading} href={`#legal-${section.heading.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}>{section.heading}</a>)}</div>
         </nav>
         ) : null}
-        {page.title === "Contact" ? <div className="mt-8 flex flex-wrap gap-3"><a className="mc-cta-cyan rounded-md px-5 py-2.5 text-sm font-medium" href="mailto:support@vertexstreamtechnologies.com">Email support</a><span className="inline-flex min-h-10 items-center rounded-md border border-line px-4 py-2 text-sm text-ink-2">Typical response: within 2 business days</span></div> : null}
+        {page.title === "Contact" ? <div className="mt-8 flex flex-wrap gap-3"><a className="mc-cta-cyan rounded-md px-5 py-2.5 text-sm font-medium" href="mailto:support@vertexstreamtechnologies.com">Contact Support</a><span className="inline-flex min-h-10 items-center rounded-md border border-line px-4 py-2 text-sm text-ink-2">Typical response: within 2 business days</span></div> : null}
         <div className="mt-12 space-y-10">{page.sections.map((section) => <section id={`legal-${section.heading.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`} key={section.heading} className="border-t border-line pt-8 mc-legal-copy"><h2 className="text-2xl font-semibold tracking-tight text-ink">{section.heading}</h2><div className="mt-4 space-y-4">{section.body.map((paragraph) => <p className="leading-7 text-ink-2" key={paragraph}>{paragraph}</p>)}</div></section>)}</div>
       </div>
     </main>
