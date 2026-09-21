@@ -188,6 +188,7 @@ function SidebarIcon({ name }: { name: string }) { return <span className="ws-si
 export function CommandPalette({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [query, setQuery] = useState("");
   const [cursor, setCursor] = useState(0);
+  const [recent, setRecent] = useState<SearchResult[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const results = useMemo(() => {
     const all = [
@@ -198,17 +199,30 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
       { group: "Functions", label: "Excel function reference", description: "Search functions and examples.", path: "/excel-academy", icon: "formula" },
     ];
     const q = query.trim().toLowerCase();
-    return q ? all.filter((r) => (r.label + " " + r.description + " " + r.group).toLowerCase().includes(q)) : all;
+    const filtered = q ? all.filter((r) => (r.label + " " + r.description + " " + r.group).toLowerCase().includes(q)) : all;
+    return q ? filtered : [...recent.map((r) => ({ ...r, group: "Recent" })), ...filtered.filter((r) => !recent.some((x) => x.path === r.path && x.label === r.label))];
   }, [query]);
-  useEffect(() => { if (!open) return; setQuery(""); setCursor(0); requestAnimationFrame(() => inputRef.current?.focus()); }, [open]);
-  useEffect(() => { if (!open) return; const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") { e.preventDefault(); onClose(); } if (e.key === "ArrowDown") { e.preventDefault(); setCursor((c) => Math.min(c + 1, results.length - 1)); } if (e.key === "ArrowUp") { e.preventDefault(); setCursor((c) => Math.max(c - 1, 0)); } if (e.key === "Enter" && results[cursor]) { e.preventDefault(); go(results[cursor].path); onClose(); } }; document.addEventListener("keydown", onKey); return () => document.removeEventListener("keydown", onKey); }, [open, onClose, results, cursor]);
+  useEffect(() => {
+    if (!open) return;
+    setQuery(""); setCursor(0);
+    try { const saved = JSON.parse(window.localStorage.getItem("marqclean:recent-searches") || "[]") as SearchResult[]; setRecent(saved.slice(0, 5)); } catch { setRecent([]); }
+    requestAnimationFrame(() => inputRef.current?.focus());
+  }, [open]);
+  useEffect(() => { if (!open) return; const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") { e.preventDefault(); onClose(); } if (e.key === "ArrowDown") { e.preventDefault(); setCursor((c) => Math.min(c + 1, results.length - 1)); } if (e.key === "ArrowUp") { e.preventDefault(); setCursor((c) => Math.max(c - 1, 0)); } if (e.key === "Enter" && results[cursor]) { e.preventDefault(); openResult(results[cursor]); } }; document.addEventListener("keydown", onKey); return () => document.removeEventListener("keydown", onKey); }, [open, onClose, results, cursor]);
   useEffect(() => { if (cursor >= results.length) setCursor(Math.max(results.length - 1, 0)); }, [cursor, results.length]);
+  const openResult = (item: SearchResult) => {
+    try {
+      const next = [item, ...recent.filter((r) => r.path !== item.path || r.label !== item.label)].slice(0, 5);
+      window.localStorage.setItem("marqclean:recent-searches", JSON.stringify(next));
+    } catch {}
+    go(item.path); onClose();
+  };
   if (!open) return null;
   const grouped = results.reduce<Record<string, SearchResult[]>>((acc, item) => { (acc[item.group] ||= []).push(item); return acc; }, {});
   return <div className="ws-command-overlay" onMouseDown={onClose}><div className="ws-command" role="dialog" aria-modal="true" aria-label="Search MarqClean AI" onMouseDown={(e) => e.stopPropagation()}>
     <div className="ws-command__search"><Icon name="search" size={18} /><input ref={inputRef} value={query} onChange={(e) => { setQuery(e.target.value); setCursor(0); }} placeholder="Search workspaces, tools, lessons and functions…" aria-label="Search MarqClean AI" /><kbd>ESC</kbd></div>
     <div className="ws-command__meta"><span>{results.length} results</span><span><kbd>↑</kbd> <kbd>↓</kbd> navigate · <kbd>Enter</kbd> open</span></div>
-    <div className="ws-command__results">{Object.entries(grouped).map(([group, items]) => <section key={group}><h3>{group}</h3>{items.map((item) => { const index = results.indexOf(item); return <button type="button" key={item.group + item.label} className={index === cursor ? "is-highlighted" : ""} onMouseEnter={() => setCursor(index)} onClick={() => { go(item.path); onClose(); }}><span className="ws-command__item-icon"><Icon name={item.icon} size={19} /></span><span className="ws-command__item-copy"><strong>{item.label}</strong><small>{item.description}</small></span><Icon name="arrow" size={17} /></button>; })}</section>)}</div>
+    <div className="ws-command__results">{Object.entries(grouped).map(([group, items]) => <section key={group}><h3>{group}</h3>{items.map((item) => { const index = results.indexOf(item); return <button type="button" key={item.group + item.label} className={index === cursor ? "is-highlighted" : ""} onMouseEnter={() => setCursor(index)} onClick={() => openResult(item)}><span className="ws-command__item-icon"><Icon name={item.icon} size={19} /></span><span className="ws-command__item-copy"><strong>{item.label}</strong><small>{item.description}</small></span><Icon name="arrow" size={17} /></button>; })}</section>)}</div>
   </div></div>;
 }
 
