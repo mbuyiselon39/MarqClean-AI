@@ -414,7 +414,7 @@ textarea { min-height: 88px; resize: vertical; }
 .mc-linear-preview__body aside div { display:flex; align-items:center; gap:8px; min-height:36px; padding:0 9px; border-radius:6px; color:rgb(var(--ink-2)); font-size:12px; }
 .mc-linear-preview__body aside div.is-active { background:rgb(var(--surface-2)); color:rgb(var(--ink)); }
 .mc-linear-preview__body aside div span { width:18px; color:rgb(var(--ink-3)); }
-.mc-linear-preview__group { margin-top:24px !important; }
+.mc-linear-preview__group { margin-top:24px; }
 .mc-linear-preview__body main { padding:24px; }
 .mc-linear-preview__heading { display:flex; justify-content:space-between; gap:16px; align-items:flex-start; }
 .mc-linear-preview__heading small { display:block; font-size:10px; font-weight:700; letter-spacing:.1em; }
