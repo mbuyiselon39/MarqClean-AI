@@ -6,7 +6,12 @@ const STORAGE_KEY = "marqclean:theme";
 
 function readPreference(): ThemePreference {
   if (typeof window === "undefined") return "system";
-  const value = window.localStorage.getItem(STORAGE_KEY);
+  let value: string | null = null;
+  try {
+    value = window.localStorage.getItem(STORAGE_KEY);
+  } catch {
+    return "system";
+  }
   return value === "light" || value === "dark" || value === "system" ? value : "system";
 }
 
@@ -29,7 +34,11 @@ export default function ThemeToggle({ compact = false }: { compact?: boolean }) 
 
   useEffect(() => {
     applyTheme(preference);
-    window.localStorage.setItem(STORAGE_KEY, preference);
+    try {
+      window.localStorage.setItem(STORAGE_KEY, preference);
+    } catch {
+      // Storage may be blocked; keep the current preference in memory.
+    }
   }, [preference]);
 
   const next: Record<ThemePreference, ThemePreference> = {
