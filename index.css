@@ -1516,3 +1516,206 @@ footer,
 :where(.mc-card-interactive,.tool-card) svg { color: rgb(var(--ink-2)); }
 :where(.tool-card) { background: rgb(var(--canvas)); border: 1px solid rgb(var(--line)); box-shadow: var(--shadow-hairline); }
 :where(.tool-card:hover) { border-color: rgb(var(--ink-4)); background: rgb(var(--canvas)); }
+
+
+/* ==========================================================================
+   WORKSPACE UX — contextual guidance panel and responsive two-column rhythm
+   ========================================================================== */
+
+.ws-workspace-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 24px;
+  align-items: start;
+}
+
+.ws-workspace-main {
+  min-width: 0;
+}
+
+.ws-side-widget {
+  position: sticky;
+  top: 88px;
+  min-width: 0;
+  border: 1px solid rgb(var(--line));
+  border-radius: var(--radius-lg);
+  background: rgb(var(--surface));
+  padding: 16px;
+  box-shadow: var(--shadow-hairline);
+}
+
+.ws-side-widget__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgb(var(--line));
+}
+
+.ws-side-widget__eyebrow,
+.ws-side-widget__section-title {
+  color: rgb(var(--ink-3));
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ws-side-widget__status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 8px;
+  border: 1px solid rgb(var(--line));
+  border-radius: var(--radius-sm);
+  color: rgb(var(--ink-2));
+  background: rgb(var(--canvas));
+  font-size: 11px;
+  line-height: 16px;
+}
+
+.ws-side-widget__status.is-processing {
+  border-color: rgb(var(--accent));
+  color: rgb(var(--accent));
+  background: rgb(var(--accent-tint));
+}
+
+.ws-side-widget__status.is-complete {
+  border-color: rgb(var(--success));
+  color: rgb(var(--success));
+}
+
+.ws-side-widget h3 {
+  margin-top: 16px;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+}
+
+.ws-side-widget__description {
+  margin-top: 6px;
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.ws-side-widget__section {
+  margin-top: 18px;
+}
+
+.ws-side-widget__section-title {
+  margin-bottom: 9px;
+}
+
+.ws-side-widget__steps {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ws-side-widget__steps li {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  color: rgb(var(--ink-3));
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.ws-side-widget__steps li > span {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border: 1px solid rgb(var(--line));
+  border-radius: var(--radius-sm);
+  background: rgb(var(--canvas));
+  color: rgb(var(--ink-3));
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.ws-side-widget__steps li.is-current {
+  color: rgb(var(--ink));
+}
+
+.ws-side-widget__steps li.is-current > span {
+  border-color: rgb(var(--accent));
+  background: rgb(var(--accent-tint));
+  color: rgb(var(--accent));
+}
+
+.ws-side-widget__steps strong {
+  font-weight: 500;
+}
+
+.ws-side-widget__tip {
+  padding: 10px 12px;
+  border-left: 1px solid rgb(var(--accent));
+  background: rgb(var(--canvas));
+  color: rgb(var(--ink-2));
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.ws-side-widget__privacy {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid rgb(var(--line));
+}
+
+.ws-side-widget__privacy > span {
+  flex: none;
+  color: rgb(var(--success));
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.ws-side-widget__privacy strong,
+.ws-side-widget__privacy small {
+  display: block;
+}
+
+.ws-side-widget__privacy strong {
+  color: rgb(var(--ink));
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+}
+
+.ws-side-widget__privacy small {
+  margin-top: 2px;
+  color: rgb(var(--ink-3));
+  font-size: 11px;
+  line-height: 16px;
+}
+
+@media (max-width: 1023px) {
+  .ws-workspace-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .ws-side-widget {
+    position: static;
+    order: -1;
+  }
+}
+
+@media (max-width: 639px) {
+  .ws-workspace-layout {
+    gap: 16px;
+  }
+
+  .ws-side-widget {
+    padding: 14px;
+  }
+}
