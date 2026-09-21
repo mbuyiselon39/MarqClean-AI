@@ -1608,7 +1608,7 @@ async function parseCsvFile(file: File) {
           }
           resolve(result.data);
         },
-        error: (error) => reject(error),
+        error: (error: Error) => reject(error),
       });
     }).catch(reject);
   });
@@ -1822,6 +1822,17 @@ function bankTransactionsToQif(transactions: BankTransaction[]): string {
   });
 
   return lines.join("\n");
+}
+
+function columnIndexToReference(index: number) {
+  let dividend = index + 1;
+  let reference = "";
+  while (dividend > 0) {
+    const modulo = (dividend - 1) % 26;
+    reference = String.fromCharCode(65 + modulo) + reference;
+    dividend = Math.floor((dividend - 1) / 26);
+  }
+  return reference;
 }
 
 function escapeXml(value: string) {
