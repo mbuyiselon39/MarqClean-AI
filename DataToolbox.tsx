@@ -1100,7 +1100,7 @@ function ExplorerTool() {
   const [value, setValue] = useState("");
   const [view, setView] = useState<DataTable | null>(null);
   const dist = useMemo(() => (up.table ? columnDistribution(up.table, col) : []), [up.table, col]);
-  const distMax = Math.max(1, ...dist.map((d) => d.count));
+  const distMax = dist.reduce((max, d) => Math.max(max, d.count), 1);
 
   return (
     <Panel title="Data Explorer" description="Visually explore your data. Filter and query rows, and view auto-updating distributions for any column.">
