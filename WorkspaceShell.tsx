@@ -29,28 +29,6 @@ const PRODUCTS_MENU: Array<{ label: string; path: string }> = [
 
 export function GlobalHeader() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
-  const [isWorkspacesOpen, setIsWorkspacesOpen] = useState(false);
-  const [isMobileWorkspacesOpen, setIsMobileWorkspacesOpen] = useState(false);
-  const productsMenuRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!isWorkspacesOpen) return;
-    function handleOutside(event: MouseEvent) {
-      if (productsMenuRef.current && !productsMenuRef.current.contains(event.target as Node)) {
-        setIsWorkspacesOpen(false);
-      }
-    }
-    function handleKey(event: KeyboardEvent) {
-      if (event.key === "Escape") setIsWorkspacesOpen(false);
-    }
-    document.addEventListener("mousedown", handleOutside);
-    document.addEventListener("keydown", handleKey);
-    return () => {
-      document.removeEventListener("mousedown", handleOutside);
-      document.removeEventListener("keydown", handleKey);
-    };
-  }, [isWorkspacesOpen]);
-
   return (
     <>
       <a
