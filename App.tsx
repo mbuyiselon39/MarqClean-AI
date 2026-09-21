@@ -1,6 +1,8 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { strFromU8, strToU8, unzipSync, zipSync } from "fflate";
+import { strToU8, zipSync } from "fflate";
 import Papa from "papaparse";
+import * as XLSX from "xlsx";
+import { parsePhoneNumberFromString } from "libphonenumber-js";
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 
 const ReconciliationHub = lazy(() => import("./reconciliation/ReconciliationHub"));
@@ -73,7 +75,7 @@ type ToolPageKey =
   | "advanced-excel-functions"
   | "xlookup-online"
   | "sumifs-countifs-tool";
-type AppPageKey = "home" | "reconciliation-hub" | "data-toolbox" | "excel-automation" | "excel-academy" | FooterPageKey | ToolPageKey;
+type AppPageKey = "home" | "not-found" | "reconciliation-hub" | "data-toolbox" | "excel-automation" | "excel-academy" | FooterPageKey | ToolPageKey;
 
 type FooterPage = {
   title: string;
@@ -136,9 +138,9 @@ const WORKSPACE_MODULES: Record<"leads" | "converter" | "formulas" | "bank", { i
 };
 const SITE_URL = "https://www.marqcleanai.vertexsg.co.za";
 const BASE_META_DESCRIPTION = `${PRODUCT_NAME} is an AI-powered data automation platform for cleaning, validating, transforming and reconciling Excel, CSV, PDF and financial datasets. Built for operations, compliance, finance and data teams.`;
-const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024 * 1024;
-const MAX_FILE_SIZE_LABEL = "2 GB";
-const SUPPORTED_EXTENSIONS = new Set(["csv", "xlsx"]);
+const MAX_FILE_SIZE_BYTES = 100 * 1024 * 1024;
+const MAX_FILE_SIZE_LABEL = "100 MB";
+const SUPPORTED_EXTENSIONS = new Set(["csv", "xlsx", "xls"]);
 const CONVERTER_SUPPORTED_EXTENSIONS = new Set(["csv", "txt", "xlsx"]);
 
 type DelimiterOption = "tab" | "semicolon" | "comma" | "space" | "other";
@@ -1387,27 +1389,29 @@ function normalizeHeader(header: string, index: number) {
 }
 
 function isLikelyPhone(value: string) {
-  const digits = value.replace(/\D/g, "");
-  return digits.length >= 7 && digits.length <= 15 && /^[+()\d\s.-]+$/.test(value);
+  const candidate = sanitizeCell(value);
+  if (!candidate || !/[0-9]/.test(candidate) || !/^[+()\d\s.-]+(?:\s*(?:ext|x)\s*\d+)?$/i.test(candidate)) return false;
+  const parsed = parsePhoneNumberFromString(candidate, { defaultCountry: "ZA", extract: false });
+  return Boolean(parsed?.isPossible());
 }
 
 function formatPhone(value: string) {
-  const digits = value.replace(/\D/g, "");
-
-  if (digits.length === 10) {
-    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
-  }
-
-  if (digits.length === 11 && digits.startsWith("1")) {
-    return `+1 (${digits.slice(1, 4)}) ${digits.slice(4, 7)}-${digits.slice(7)}`;
-  }
-
-  return value.startsWith("+") ? value : digits;
+  const candidate = sanitizeCell(value);
+  const parsed = parsePhoneNumberFromString(candidate, { defaultCountry: "ZA", extract: false });
+  if (!parsed || !parsed.isPossible()) return candidate;
+  return parsed.formatInternational();
 }
 
 function cleanWebsite(value: string) {
-  const trimmed = sanitizeCell(value).replace(/^https?:\/\//i, "").replace(/\/$/, "").toLowerCase();
-  return trimmed ? `https://${trimmed}` : "";
+  const candidate = sanitizeCell(value);
+  if (!candidate) return "";
+  try {
+    const url = new URL(/^https?:\/\//i.test(candidate) ? candidate : `https://${candidate}`);
+    url.hash = url.hash;
+    return url.toString().replace(/\/$/, "");
+  } catch {
+    return candidate;
+  }
 }
 
 function splitName(fullName: string) {
@@ -1473,58 +1477,60 @@ function cleanDataset(inputRows: RawRow[], fileName: string): CleanResult {
       Object.entries(rawRow).forEach(([rawHeader, rawValue], index) => {
         const value = sanitizeCell(rawValue);
         const normalizedHeader = normalizeHeader(rawHeader, index);
-
         if (normalizedHeader !== sanitizeCell(rawHeader)) stats.headerFixes += 1;
         if (!value) return;
 
-        const lowerValue = value.toLowerCase();
-
-        if (emailPattern.test(lowerValue)) {
-          if (normalizedHeader !== "Email") stats.fieldRepairs += 1;
-          cleanRow.Email = lowerValue;
-          return;
+        let cleanedValue = value;
+        switch (normalizedHeader) {
+          case "Email":
+            cleanedValue = value.toLowerCase();
+            if (cleanedValue !== value) stats.fieldRepairs += 1;
+            break;
+          case "Phone":
+            if (isLikelyPhone(value)) {
+              cleanedValue = formatPhone(value);
+              if (cleanedValue !== value) stats.fieldRepairs += 1;
+            } else {
+              addNote(cleanRow, "Phone needs review");
+            }
+            break;
+          case "Website":
+            cleanedValue = cleanWebsite(value);
+            if (cleanedValue !== value) stats.fieldRepairs += 1;
+            break;
+          case "Full Name":
+          case "First Name":
+          case "Last Name":
+            cleanedValue = titleCasePerson(value);
+            if (cleanedValue !== value) stats.fieldRepairs += 1;
+            break;
+          case "Company":
+          case "Job Title":
+          case "City":
+          case "State":
+          case "Country":
+          case "Industry":
+            cleanedValue = smartTitleCase(value);
+            if (cleanedValue !== value) stats.fieldRepairs += 1;
+            break;
+          default:
+            break;
         }
 
-        if (isLikelyPhone(value)) {
-          if (normalizedHeader !== "Phone") stats.fieldRepairs += 1;
-          cleanRow.Phone = formatPhone(value);
-          return;
-        }
-
-        if (urlPattern.test(value) && normalizedHeader !== "Email") {
-          cleanRow.Website = cleanWebsite(value);
-          return;
-        }
-
-        if (!cleanRow[normalizedHeader]) {
-          cleanRow[normalizedHeader] = value;
-        }
+        if (!cleanRow[normalizedHeader]) cleanRow[normalizedHeader] = cleanedValue;
       });
 
       if (cleanRow["Full Name"]) {
         const fullName = titleCasePerson(cleanRow["Full Name"]);
         const split = splitName(fullName);
         cleanRow["Full Name"] = fullName;
-        cleanRow["First Name"] = cleanRow["First Name"] ? titleCasePerson(cleanRow["First Name"]) : split.firstName;
-        cleanRow["Last Name"] = cleanRow["Last Name"] ? titleCasePerson(cleanRow["Last Name"]) : split.lastName;
-        stats.fieldRepairs += 1;
+        cleanRow["First Name"] = cleanRow["First Name"] || split.firstName;
+        cleanRow["Last Name"] = cleanRow["Last Name"] || split.lastName;
       } else if (cleanRow["First Name"] || cleanRow["Last Name"]) {
         cleanRow["First Name"] = titleCasePerson(cleanRow["First Name"] ?? "");
         cleanRow["Last Name"] = titleCasePerson(cleanRow["Last Name"] ?? "");
         cleanRow["Full Name"] = `${cleanRow["First Name"]} ${cleanRow["Last Name"]}`.trim();
-        stats.fieldRepairs += 1;
       }
-
-      ["Company", "Job Title", "City", "State", "Country"].forEach((header) => {
-        if (cleanRow[header]) {
-          const formatted = smartTitleCase(cleanRow[header]);
-          if (formatted !== cleanRow[header]) stats.fieldRepairs += 1;
-          cleanRow[header] = formatted;
-        }
-      });
-
-      if (cleanRow.Email) cleanRow.Email = cleanRow.Email.toLowerCase();
-      if (cleanRow.Website) cleanRow.Website = cleanWebsite(cleanRow.Website);
 
       const industry = detectIndustry(cleanRow);
       if (!cleanRow.Industry) stats.industriesAdded += 1;
@@ -1538,19 +1544,15 @@ function cleanDataset(inputRows: RawRow[], fileName: string): CleanResult {
         addNote(cleanRow, "Email needs review");
         stats.missingFlags += 1;
       }
-
       if (!cleanRow["Full Name"]) {
         addNote(cleanRow, "Missing contact name");
         stats.missingFlags += 1;
       }
-
       if (!cleanRow.Company) {
         addNote(cleanRow, "Missing company");
         stats.missingFlags += 1;
       }
-
       if (!cleanRow["Data Quality Notes"]) cleanRow["Data Quality Notes"] = "Ready for outreach";
-
       return cleanRow;
     })
     .filter((row) => Object.values(row).some(Boolean));
@@ -1568,35 +1570,99 @@ function cleanDataset(inputRows: RawRow[], fileName: string): CleanResult {
   });
 
   stats.cleanedRows = rows.length;
-
   const discoveredHeaders = Array.from(new Set(rows.flatMap((row) => Object.keys(row))));
   const headers = [
     ...PRIORITY_HEADERS.filter((header) => discoveredHeaders.includes(header)),
     ...discoveredHeaders.filter((header) => !PRIORITY_HEADERS.includes(header)),
   ];
-
   return { fileName, rows, headers, stats, originalHeaders };
 }
+function decodeDelimitedText(bytes: Uint8Array): string {
+  if (bytes[0] === 0xff && bytes[1] === 0xfe) return new TextDecoder("utf-16le").decode(bytes.slice(2));
+  if (bytes[0] === 0xfe && bytes[1] === 0xff) return new TextDecoder("utf-16be").decode(bytes.slice(2));
+  try {
+    return new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+  } catch {
+    return new TextDecoder("windows-1252").decode(bytes);
+  }
+}
 
-function parseCsvFile(file: File) {
+async function parseCsvFile(file: File) {
   return new Promise<RawRow[]>((resolve, reject) => {
-    Papa.parse<RawRow>(file, {
-      header: true,
-      skipEmptyLines: "greedy",
-      transformHeader: (header) => sanitizeCell(header),
-      complete: (result) => {
-        const blockingError = result.errors.find((parseError) => parseError.type === "Delimiter" || parseError.code === "UndetectableDelimiter");
-
-        if (blockingError) {
-          reject(new Error(`CSV parsing failed: ${blockingError.message}`));
-          return;
-        }
-
-        resolve(result.data);
-      },
-      error: (error) => reject(error),
-    });
+    file.arrayBuffer().then((buffer) => {
+      const text = decodeDelimitedText(new Uint8Array(buffer));
+      Papa.parse<RawRow>(text, {
+        header: true,
+        skipEmptyLines: "greedy",
+        transformHeader: (header) => sanitizeCell(header),
+        complete: (result) => {
+          const blockingError = result.errors.find((parseError) => parseError.code !== "UndetectableDelimiter");
+          if (blockingError) {
+            reject(new Error(`CSV parsing failed: ${blockingError.message}`));
+            return;
+          }
+          if (!result.data.length) {
+            reject(new Error("The CSV file did not contain readable rows."));
+            return;
+          }
+          resolve(result.data);
+        },
+        error: (error) => reject(error),
+      });
+    }).catch(reject);
   });
+}
+
+async function readWorkbookMatrix(file: File): Promise<string[][]> {
+  const buffer = await file.arrayBuffer();
+  const workbook = XLSX.read(buffer, {
+    type: "array",
+    dense: true,
+    cellDates: true,
+    raw: false,
+    dateNF: "yyyy-mm-dd",
+  });
+  const sheet = workbook.Sheets[workbook.SheetNames[0]];
+  if (!sheet) throw new Error("The Excel workbook does not contain a readable worksheet.");
+  const matrix = XLSX.utils.sheet_to_json<unknown[]>(sheet, { header: 1, defval: "", raw: false });
+  return matrix.map((row) => row.map((value) => {
+    if (value instanceof Date) {
+      const year = value.getFullYear();
+      const month = String(value.getMonth() + 1).padStart(2, "0");
+      const day = String(value.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
+    return sanitizeCell(value);
+  }));
+}
+
+async function parseExcelFile(file: File) {
+  const table = await readWorkbookMatrix(file);
+  const headerRowIndex = table.findIndex((row) => row.some((value) => sanitizeCell(value)));
+  if (headerRowIndex === -1) throw new Error("The Excel worksheet is empty.");
+
+  const maxColumns = table.reduce((max, row) => Math.max(max, row.length), 0);
+  const headers = Array.from({ length: maxColumns || 1 }, (_, index) => sanitizeCell(table[headerRowIndex][index]) || `Column ${index + 1}`);
+
+  return table.slice(headerRowIndex + 1).map((row) =>
+    headers.reduce<RawRow>((record, header, index) => {
+      record[header] = sanitizeCell(row[index]);
+      return record;
+    }, {})
+  );
+}
+
+async function readFileMatrix(file: File): Promise<string[][]> {
+  const extension = file.name.split(".").pop()?.toLowerCase();
+  if (extension === "xlsx" || extension === "xls") return readWorkbookMatrix(file);
+  const text = decodeDelimitedText(new Uint8Array(await file.arrayBuffer()));
+  const parsed = Papa.parse<string[]>(text, { skipEmptyLines: "greedy" });
+  return (parsed.data as string[][]).filter((row) => row.some((value) => sanitizeCell(value)));
+}
+
+function createConvertedFileName(fileName: string, extension: string) {
+  const baseName = fileName.replace(/\.[^.]+$/, "") || "converted-data";
+  return `${baseName}-marqclean.${extension}`;
 }
 
 async function readWorkbookMatrix(file: File): Promise<string[][]> {
@@ -2303,14 +2369,14 @@ function getCurrentPage(): AppPageKey {
     return target;
   }
 
-  if (route === "data-engine") return "home";
+  if (route === "data-engine") return "not-found";
   if (route === "reconciliation-hub") return "reconciliation-hub";
   if (route === "data-toolbox") return "data-toolbox";
   if (route === "excel-automation") return "excel-automation";
   if (route === "excel-academy" || route === "free-excel-academy") return "excel-academy";
   if (isFooterPageKey(route) || isToolPageKey(route)) return route;
 
-  return "home";
+  return "not-found";
 }
 
 function updateMetaTag(selector: string, attribute: "content" | "href", value: string) {
@@ -2356,9 +2422,11 @@ function updatePageMetadata(page: AppPageKey) {
     ? `${toolPage.keyword}, AI data automation, Excel automation, CSV processing, data reconciliation, data validation, data quality`
     : "AI data automation, data cleaning software, Excel automation, CSV processing, data reconciliation, spreadsheet automation, data validation, data quality, financial reconciliation, Excel data cleaning, CSV to Excel conversion, data transformation, record matching, exception reporting, PDF to Excel, bank statement reconciliation";
   const canonicalUrl = page === "home" ? `${SITE_URL}/` : `${SITE_URL}/${page}`;
+  const robots = page === "not-found" ? "noindex, nofollow" : "index, follow";
 
   document.title = title;
   updateMetaTag('meta[name="description"]', "content", description);
+  updateMetaTag('meta[name="robots"]', "content", robots);
   updateMetaTag('meta[name="keywords"]', "content", keywords);
   updateMetaTag('meta[property="og:title"]', "content", title);
   updateMetaTag('meta[property="og:description"]', "content", description);
@@ -3153,6 +3221,22 @@ export default function App() {
           <path d="M12 19V5M5 12l7-7 7 7" />
         </svg>
       </button>
+    );
+  }
+
+  if (currentPage === "not-found") {
+    return (
+      <>
+        <main id="main-content" className="min-h-screen bg-[rgb(var(--canvas))] px-5 pb-20 pt-40 text-ink lg:px-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="mc-mono text-sm uppercase tracking-[0.24em] text-[rgb(var(--accent))]">404 · Page not found</p>
+            <h1 className="mt-4 text-5xl font-medium tracking-[-0.04em] sm:text-6xl">That page does not exist.</h1>
+            <p className="mx-auto mt-5 max-w-xl text-lg leading-8 text-ink-2">The address may be outdated or incorrect. Return to MarqClean AI and choose a workspace or tool.</p>
+            <button type="button" className="mt-8 rounded-md bg-accent px-6 py-3 text-sm font-medium text-[rgb(var(--accent-ink))]" onClick={() => navigateToPage("home")}>Return home</button>
+          </div>
+        </main>
+        {renderBackToTop()}
+      </>
     );
   }
 
