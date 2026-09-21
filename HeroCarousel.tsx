@@ -22,7 +22,7 @@ function LineIcon({ type }: { type: "home" | "upload" | "clean" | "format" | "re
   return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths}</svg>;
 }
 
-function WorkspacePreview({ onCleanFile, onOpenReconciliation, onOpenExcelAutomation, onOpenDataToolbox, onFileDrop }: HeroActions) {
+function WorkspacePreview({ onCleanFile, onOpenReconciliation, onOpenExcelAutomation, onFileDrop }: Pick<HeroActions, "onCleanFile" | "onOpenReconciliation" | "onOpenExcelAutomation" | "onFileDrop">) {
   const [active, setActive] = useState("Smart Drop");
   const [dragging, setDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -84,7 +84,7 @@ export default function HeroCarousel({ onCleanFile, onOpenReconciliation, onOpen
           </div>
           <div className="mc-minimal-hero__trust"><span className="mc-status-icon" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="m3 8 3 3 7-7" /></svg></span> Runs locally in your browser <i /> No sign-up <i /> No credit card</div>
         </div>
-        <div className="mc-minimal-hero__product" aria-label="MarqClean AI workspace preview"><WorkspacePreview onCleanFile={onCleanFile} onOpenReconciliation={onOpenReconciliation} onOpenExcelAutomation={onOpenExcelAutomation} onOpenDataToolbox={onOpenDataToolbox} onFileDrop={onFileDrop} /></div>
+        <div className="mc-minimal-hero__product" aria-label="MarqClean AI workspace preview"><WorkspacePreview onCleanFile={onCleanFile} onOpenReconciliation={onOpenReconciliation} onOpenExcelAutomation={onOpenExcelAutomation} onFileDrop={onFileDrop} /></div>
       </div>
       <nav className="mc-minimal-hero__tabs" aria-label="Product workspaces">
         {tabs.map((tab, i) => (
