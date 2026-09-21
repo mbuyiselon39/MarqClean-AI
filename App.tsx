@@ -104,7 +104,6 @@ type SeoToolPage = {
 };
 
 const COMPANY_NAME = "Vertex Stream Technologies";
-const GROUP_NAME = "Vertex Stream Group";
 const PRODUCT_NAME = "MarqClean AI";
 
 const WORKSPACE_MODULES: Record<"leads" | "converter" | "formulas" | "bank", { icon: string; title: string; description: string; formats: string[]; engine: string }> = {
@@ -138,7 +137,7 @@ const WORKSPACE_MODULES: Record<"leads" | "converter" | "formulas" | "bank", { i
   },
 };
 const SITE_URL = "https://marqcleanai.vertexsg.co.za";
-const BASE_META_DESCRIPTION = `${PRODUCT_NAME} is an AI-powered data automation platform for cleaning, validating, transforming and reconciling Excel, CSV, PDF and financial datasets. Built for operations, compliance, finance and data teams.`;
+const BASE_META_DESCRIPTION = `${PRODUCT_NAME} is a browser-first data automation platform for cleaning, validating, transforming and reconciling Excel, CSV, PDF and financial datasets. Core cleaning and reconciliation workflows use deterministic rules and run locally in the browser.`;
 const MAX_FILE_SIZE_BYTES = 100 * 1024 * 1024;
 const MAX_FILE_SIZE_LABEL = "100 MB";
 const SUPPORTED_EXTENSIONS = new Set(["csv", "xlsx", "xls"]);
@@ -368,7 +367,7 @@ const SAMPLE_ROWS: RawRow[] = [
 const FOOTER_PAGES: Record<FooterPageKey, FooterPage> = {
   about: {
     title: `About ${PRODUCT_NAME}`,
-    description: `${PRODUCT_NAME} is a browser-based Excel, CSV, data-cleaning, automation and reconciliation engine, built by ${COMPANY_NAME}, a division of ${GROUP_NAME}.`,
+    description: `${PRODUCT_NAME} is a browser-based Excel, CSV, data-cleaning, automation and reconciliation engine, built by ${COMPANY_NAME}.`,
     sections: [
       {
         heading: "Our Mission",
@@ -380,7 +379,7 @@ const FOOTER_PAGES: Record<FooterPageKey, FooterPage> = {
       {
         heading: "Product Ownership",
         body: [
-          `${PRODUCT_NAME} is a product of ${COMPANY_NAME}, a division of ${GROUP_NAME}.`,
+          `${PRODUCT_NAME} is a product of ${COMPANY_NAME}.`,
           "Vertex Stream Technologies builds practical data workflow tools that support marketers, operators, founders, agencies, finance teams, and growth teams.",
         ],
       },
@@ -470,7 +469,7 @@ const FOOTER_PAGES: Record<FooterPageKey, FooterPage> = {
       {
         heading: "Ownership",
         body: [
-          `${PRODUCT_NAME} is operated by ${COMPANY_NAME}, a division of ${GROUP_NAME}. Product names, interface content, and platform assets belong to their respective owners.`,
+          `${PRODUCT_NAME} is operated by ${COMPANY_NAME}. Product names, interface content, and platform assets belong to their respective owners.`,
         ],
       },
     ],
@@ -515,7 +514,7 @@ const FOOTER_PAGES: Record<FooterPageKey, FooterPage> = {
       {
         heading: "Company",
         body: [
-          `${PRODUCT_NAME} is a product of ${COMPANY_NAME}, a division of ${GROUP_NAME}.`,
+          `${PRODUCT_NAME} is a product of ${COMPANY_NAME}.`,
           "Business inquiries can include partnerships, enterprise licensing, agency workflows, Microsoft 365 spreadsheet automation, reconciliation projects, and marketing or finance data operations.",
         ],
       },
@@ -2489,7 +2488,7 @@ function FooterContentPage({ page }: { page: FooterPage }) {
               <h2 className="text-3xl font-medium tracking-[-0.04em] text-ink">{section.heading}</h2>
               <div className="mt-4 space-y-4">
                 {section.body.map((paragraph) => (
-                  <p className="text-justify leading-7 text-ink-2 [hyphens:auto]" key={paragraph}>
+                  <p className="leading-7 text-ink-2 " key={paragraph}>
                     {paragraph}
                   </p>
                 ))}
@@ -2537,7 +2536,7 @@ function ToolContentPage({ page }: { page: SeoToolPage }) {
         <section className="mt-16 border-t border-line pt-10">
           <p className="text-sm font-medium uppercase tracking-[0.24em] text-[rgb(var(--accent))]">{page.keyword}</p>
           <h2 className="mt-4 text-4xl font-medium tracking-[-0.04em] text-ink">{page.h2}</h2>
-          <p className="mt-5 max-w-3xl text-justify leading-7 text-ink-2 [hyphens:auto]">
+          <p className="mt-5 max-w-3xl leading-7 text-ink-2 ">
             This page is powered by the same modular MarqClean AI cleaning engine used across every free CSV cleaner,
             Excel converter, lead list cleaner, CRM data cleanup tool, duplicate checker, and spreadsheet formatting workflow.
           </p>
@@ -3340,9 +3339,8 @@ export default function App() {
               navigateToHomeSection("cleaner");
               window.setTimeout(() => fileInputRef.current?.click(), 400);
             }}
-            onSampleLeads={() => {
-              navigateToHomeSection("cleaner");
-              window.setTimeout(() => loadSampleData(), 400);
+            onViewTools={() => {
+              navigateToHomeSection("free-tools");
             }}
             onOpenReconciliation={() => navigateToPage("reconciliation-hub")}
           />
@@ -3354,7 +3352,7 @@ export default function App() {
               <span className="mc-anim-glow-pulse absolute inline-flex h-full w-full rounded-md bg-[rgb(var(--accent))]" />
               <span className="relative inline-flex h-2 w-2 rounded-md bg-[rgb(var(--accent))]" />
             </span>
-            Engine live and processing in your browser right now
+            Browser-local processing · No server upload required
           </div>
           <motion.div
             className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-5 sm:grid-cols-4 lg:px-8"
@@ -3376,7 +3374,7 @@ export default function App() {
                 className="text-center"
               >
                 <p className="mc-display text-accent text-3xl font-medium tracking-tight sm:text-4xl">{stat.value}</p>
-                <p className="mt-1 text-xs text-ink-3 sm:text-sm">{stat.label}</p>
+                <p className="mt-1 text-sm text-ink-3">{stat.label}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -3396,7 +3394,7 @@ export default function App() {
                 <div className="min-w-0">
                   <div className="ws-module-header__eyebrow">Workspace module</div>
                   <h2 className="mc-display text-2xl font-medium tracking-tight text-ink sm:text-3xl">{WORKSPACE_MODULES[workspaceTab].title}</h2>
-                  <p className="mc-prose mt-1 max-w-3xl text-sm leading-6 text-[rgb(var(--ink-2))] [hyphens:auto]">{WORKSPACE_MODULES[workspaceTab].description}</p>
+                  <p className="mc-prose mt-1 max-w-3xl text-sm leading-6 text-[rgb(var(--ink-2))] ">{WORKSPACE_MODULES[workspaceTab].description}</p>
                 </div>
               </div>
               <div className="ws-module-header__formats" aria-label="Supported formats">
@@ -4408,7 +4406,7 @@ export default function App() {
 
           <div className="mc-site-footer__bottom">
             <p>© {new Date().getFullYear()} MarqClean AI. All rights reserved.</p>
-            <p>A product of <a href="https://www.vertexsg.co.za" target="_blank" rel="noopener noreferrer">Vertex Stream Group</a> · Vertex Stream Technologies · Johannesburg, South Africa</p>
+            <p>A product of <a href="https://www.vertexsg.co.za" target="_blank" rel="noopener noreferrer">Vertex Stream Technologies</a> · Vertex Stream Technologies · Johannesburg, South Africa</p>
           </div>
         </div>
       </footer>
