@@ -1,6 +1,7 @@
 import Papa from "papaparse";
 import * as XLSX from "xlsx";
 import { extractPdfTextInWorker as extractPdfText } from "./pdfWorkerClient";
+export { extractPdfText };
 import { strFromU8, strToU8, unzipSync, zipSync } from "fflate";
 
 // ---------------------------------------------------------------------------
@@ -32,10 +33,6 @@ export function columnIndexToReference(index: number): string {
   return reference;
 }
 
-function columnReferenceToIndex(reference: string): number {
-  const letters = reference.replace(/[^A-Z]/gi, "").toUpperCase();
-  return letters.split("").reduce((index, letter) => index * 26 + letter.charCodeAt(0) - 64, 0) - 1;
-}
 
 export function escapeXml(value: string): string {
   return value
@@ -62,26 +59,7 @@ export function downloadBlob(content: string | Uint8Array, fileName: string, typ
 // File extraction into a common structured dataset
 // ---------------------------------------------------------------------------
 
-function parseSharedStrings(xml: string): string[] {
-  if (!xml) return [];
-  const doc = new DOMParser().parseFromString(xml, "application/xml");
-  return Array.from(doc.getElementsByTagName("si")).map((item) =>
-    Array.from(item.getElementsByTagName("t"))
-      .map((node) => node.textContent ?? "")
-      .join("")
-  );
-}
 
-function readCellValue(cell: Element, shared: string[]): string {
-  const type = cell.getAttribute("t");
-  if (type === "inlineStr") {
-    return Array.from(cell.getElementsByTagName("t")).map((n) => n.textContent ?? "").join("");
-  }
-  const raw = cell.getElementsByTagName("v")[0]?.textContent ?? "";
-  if (type === "s") return shared[Number(raw)] ?? "";
-  if (type === "b") return raw === "1" ? "TRUE" : "FALSE";
-  return raw;
-}
 
 export async function readWorkbookMatrix(file: File): Promise<string[][]> {
   const buffer = await file.arrayBuffer();
