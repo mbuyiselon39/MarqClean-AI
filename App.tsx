@@ -2582,6 +2582,85 @@ function ToolContentPage({ page }: { page: SeoToolPage }) {
   );
 }
 
+type WorkspaceSideWidgetProps = {
+  tab: "leads" | "converter" | "formulas" | "bank";
+  processing?: boolean;
+  hasResult?: boolean;
+};
+
+function WorkspaceSideWidget({ tab, processing = false, hasResult = false }: WorkspaceSideWidgetProps) {
+  const config = {
+    leads: {
+      eyebrow: "Cleaner workflow",
+      title: "Clean → review → export",
+      description: "A focused workspace for preparing structured lead and spreadsheet data.",
+      steps: ["Choose CSV/XLSX", "Review detected fixes", "Export clean data"],
+      tip: "Use Sample CSV first if you want to see the complete workflow before uploading your own file.",
+    },
+    converter: {
+      eyebrow: "Conversion workflow",
+      title: "Split → preview → export",
+      description: "Keep the conversion settings and output format visible while you work.",
+      steps: ["Upload CSV/TXT/XLSX", "Confirm delimiter rules", "Export Excel or text"],
+      tip: "Match the delimiter and text qualifier to the source file before exporting.",
+    },
+    formulas: {
+      eyebrow: "Excel workflow",
+      title: "Inspect → format → calculate",
+      description: "Detect column types, choose calculations, then create a structured workbook.",
+      steps: ["Upload CSV/XLSX", "Review detected types", "Export formatted workbook"],
+      tip: "Use the calculation selector only on columns where a summary is meaningful.",
+    },
+    bank: {
+      eyebrow: "Ledger workflow",
+      title: "Extract → verify → export",
+      description: "Turn statement data into structured transactions while keeping review steps visible.",
+      steps: ["Upload or paste statement", "Review transactions", "Export Excel, CSV or QIF"],
+      tip: "Always review extracted values before using them for accounting or reconciliation.",
+    },
+  }[tab];
+
+  const currentStep = processing ? 1 : hasResult ? 3 : 1;
+
+  return (
+    <aside className="ws-side-widget" aria-label="Workspace guidance">
+      <div className="ws-side-widget__header">
+        <span className="ws-side-widget__eyebrow">{config.eyebrow}</span>
+        <span className={`ws-side-widget__status ${processing ? "is-processing" : hasResult ? "is-complete" : ""}`}>
+          {processing ? "Working" : hasResult ? "Ready" : "Ready"}
+        </span>
+      </div>
+      <h3>{config.title}</h3>
+      <p className="ws-side-widget__description">{config.description}</p>
+
+      <div className="ws-side-widget__section">
+        <div className="ws-side-widget__section-title">Workflow</div>
+        <ol className="ws-side-widget__steps">
+          {config.steps.map((step, index) => (
+            <li key={step} className={index + 1 <= currentStep ? "is-current" : ""}>
+              <span>{index + 1}</span>
+              <strong>{step}</strong>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div className="ws-side-widget__section">
+        <div className="ws-side-widget__section-title">Workspace tip</div>
+        <p className="ws-side-widget__tip">{config.tip}</p>
+      </div>
+
+      <div className="ws-side-widget__privacy">
+        <span aria-hidden="true">✓</span>
+        <div>
+          <strong>Browser-local processing</strong>
+          <small>Your files stay on this device while the workspace runs.</small>
+        </div>
+      </div>
+    </aside>
+  );
+}
+
 export default function App() {
   const [result, setResult] = useState<CleanResult | null>(null);
   const [error, setError] = useState("");
@@ -3352,6 +3431,8 @@ export default function App() {
               </div>
             </div>
 
+            <div className="ws-workspace-layout">
+              <div className="ws-workspace-main">
             <p className="mc-mono mb-2 text-[11px] uppercase tracking-[0.2em] text-[rgb(var(--ink-3))]">Modules Available ({4})</p>
             <div className="mb-8 flex flex-wrap gap-2" role="tablist" aria-label="Data tools">
               {([
@@ -3922,6 +4003,13 @@ export default function App() {
               </div>
             </motion.div>
           )}
+              </div>
+              <WorkspaceSideWidget
+                tab={workspaceTab}
+                processing={isProcessing || converterProcessing || formulaProcessing || bankProcessing}
+                hasResult={Boolean(result || converterFileName || formulaFileName || bankTransactions)}
+              />
+            </div>
           </div>
         </section>
 
