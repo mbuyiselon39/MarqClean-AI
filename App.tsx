@@ -4070,7 +4070,7 @@ export default function App() {
           </div>
         </section>
 
-        <section id="reconciliation" className="border-y border-line bg-ink py-20 text-ink">
+        <section id="reconciliation" className="border-y border-line bg-[rgb(var(--surface))] py-20 text-ink">
           <div className="mx-auto max-w-7xl px-5 lg:px-8">
             <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
               <div>
@@ -4157,7 +4157,7 @@ export default function App() {
           </div>
         </section>
 
-        <section id="excel-automation" className="relative overflow-hidden bg-ink py-20 text-ink">
+        <section id="excel-automation" className="relative overflow-hidden bg-[rgb(var(--surface))] py-20 text-ink">
           <div className="mx-auto max-w-7xl px-5 lg:px-8">
             <div className="excel-automation-layout">
               <div className="excel-automation-main">
