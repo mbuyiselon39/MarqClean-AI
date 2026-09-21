@@ -64,7 +64,7 @@ export default function HeroCarousel({ onCleanFile, onSampleLeads, onOpenReconci
         <div className="mc-minimal-hero__copy">
           <div className="mc-minimal-hero__eyebrow"><span /> Browser-local data workspace</div>
           <h1>Clean data.<br /><em>Clear decisions.</em></h1>
-          <p>Clean, transform, reconcile and analyse CSV, Excel and PDF data without sending your files to a server.</p>
+          <p className="mc-hero-copy">Clean, transform, reconcile and analyse CSV, Excel and PDF data without sending your files to a server.</p>
           <div className="mc-minimal-hero__actions">
             <button onClick={onCleanFile}>Launch Workspace <span>↗</span></button>
             <button className="secondary" onClick={onSampleLeads}>33+ free tools</button>
