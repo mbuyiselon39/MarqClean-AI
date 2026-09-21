@@ -32,9 +32,9 @@ function StatCard({ label, value, tone }: { label: string; value: number | strin
 }
 
 function VisibilityBadge({ visibility }: { visibility: SheetInfo["visibility"] }) {
-  if (visibility === "visible") return <span className="rounded-md bg-surface px-2 py-0.5 text-[11px] font-medium text-ink-2">Visible</span>;
-  if (visibility === "hidden") return <span className="rounded-md bg-surface px-2 py-0.5 text-[11px] font-medium text-ink-2">Hidden</span>;
-  return <span className="rounded-md bg-rose-100 px-2 py-0.5 text-[11px] font-medium text-rose-700">Very Hidden</span>;
+  if (visibility === "visible") return <span className="rounded-md bg-surface px-2 py-0.5 text-xs font-medium text-ink-2">Visible</span>;
+  if (visibility === "hidden") return <span className="rounded-md bg-surface px-2 py-0.5 text-xs font-medium text-ink-2">Hidden</span>;
+  return <span className="rounded-md bg-rose-100 px-2 py-0.5 text-xs font-medium text-rose-700">Very Hidden</span>;
 }
 
 export default function SmartSheetManager() {
@@ -399,8 +399,8 @@ export default function SmartSheetManager() {
                       </td>
                       <td className="py-2 pr-4 font-medium text-ink">
                         {sheet.name}
-                        {sheet.duplicateOf ? <span className="ml-2 rounded bg-rose-100 px-1.5 py-0.5 text-[10px] font-medium text-rose-700">Duplicate of {sheet.duplicateOf}</span> : null}
-                        {sheet.isEmpty ? <span className="ml-2 rounded bg-surface px-1.5 py-0.5 text-[10px] font-medium text-ink-2">Empty</span> : null}
+                        {sheet.duplicateOf ? <span className="ml-2 rounded bg-rose-100 px-1.5 py-0.5 text-xs font-medium text-rose-700">Duplicate of {sheet.duplicateOf}</span> : null}
+                        {sheet.isEmpty ? <span className="ml-2 rounded bg-surface px-1.5 py-0.5 text-xs font-medium text-ink-2">Empty</span> : null}
                       </td>
                       <td className="py-2 pr-4"><VisibilityBadge visibility={sheet.visibility} /></td>
                       <td className="py-2 pr-4 text-ink-3">{sheet.rowCount}×{sheet.colCount}</td>
