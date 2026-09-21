@@ -3297,7 +3297,6 @@ export default function App() {
             <div className="flex flex-col gap-1 text-[15px] font-medium text-ink-2">
               <a className="rounded-lg px-3 py-2.5 transition hover:bg-surface hover:text-[rgb(var(--accent))]" href="/#top" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("top"); }}>Home</a>
               <a className="rounded-lg px-3 py-2.5 transition hover:bg-canvas/5 hover:text-[rgb(var(--accent))]" href="/#features" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("features"); }}>Platform</a>
-              <a className="rounded-lg px-3 py-2.5 transition hover:bg-surface hover:text-[rgb(var(--accent))]" href="/#services" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("services"); }}>Services</a>\n              <a className="rounded-lg px-3 py-2.5 transition hover:bg-surface hover:text-[rgb(var(--accent))]" href="/#workflow" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("workflow"); }}>How it works</a>
               <button
                 type="button"
                 className="flex items-center justify-between rounded-lg px-3 py-2.5 text-left transition hover:bg-surface hover:text-[rgb(var(--accent))]"
@@ -4260,4 +4259,160 @@ export default function App() {
           </div>
         </section>
 
-        <section id="free-tools"
+        <section id="free-tools" className="bg-[rgb(var(--surface))] py-20 text-ink">
+          <div className="mx-auto max-w-7xl px-5 lg:px-8">
+            <div className="max-w-3xl">
+              <p className="mc-mono text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">Free data tools</p>
+              <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-ink sm:text-5xl">
+                One engine for CSV, Excel, data cleaning and reconciliation workflows.
+              </h2>
+              <p className="mc-prose mt-5 text-lg leading-relaxed text-ink-2">
+                MarqClean AI uses a modular data architecture, so teams can solve specific spreadsheet problems with
+                focused tools for CSV cleanup, Excel conversion, formatting, duplicates, validation, and reconciliation.
+              </p>
+            </div>
+
+            <div className="mt-10">
+              <ToolsDirectory />
+            </div>
+          </div>
+        </section>
+
+        <section id="workflow" className="relative overflow-hidden bg-[rgb(var(--canvas))] py-20 text-ink">
+          <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="mc-mono text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">How it works</p>
+              <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-ink sm:text-5xl">A clear path from raw files to decision-ready data.</h2>
+              <p className="mt-5 text-lg leading-8 text-ink-2">Every workflow follows the same simple operating model: bring your file into the workspace, review what MarqClean AI identifies, then export the structured result you need.</p>
+            </div>
+            <div className="mt-12 grid gap-5 lg:grid-cols-3">
+              {[
+                { number: "01", title: "Bring your data", text: "Upload CSV, Excel or PDF files directly into the relevant workspace. Supported formats and the next action remain visible." },
+                { number: "02", title: "Review the work", text: "Cleaning, conversion, formulas and reconciliation workflows show processing state and output previews before download." },
+                { number: "03", title: "Export and move forward", text: "Download structured Excel, CSV or reconciliation output and continue your normal CRM, reporting, finance or operations workflow." },
+              ].map((step) => (
+                <article key={step.number} className="mc-glass rounded-lg p-6">
+                  <span className="mc-mono inline-flex h-8 w-8 items-center justify-center rounded-md border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/10 text-xs font-medium text-[rgb(var(--accent-hover))]">{step.number}</span>
+                  <h3 className="mc-display mt-5 text-xl font-medium tracking-[-0.02em] text-ink">{step.title}</h3>
+                  <p className="mt-3 text-[15px] leading-7 text-ink-2">{step.text}</p>
+                </article>
+              ))}
+            </div>
+            <div className="mt-8 grid gap-5 lg:grid-cols-2">
+              <div className="rounded-lg border border-line bg-surface p-6">
+                <p className="mc-mono text-xs uppercase tracking-[0.18em] text-[rgb(var(--accent))]">Workspace principle</p>
+                <h3 className="mc-display mt-3 text-xl font-medium text-ink">One task, one focused workspace.</h3>
+                <p className="mt-3 text-[15px] leading-7 text-ink-2">Each workspace is organized around a specific business outcome, with contextual guidance beside the working area so users always know what to do next.</p>
+              </div>
+              <div className="rounded-lg border border-line bg-surface p-6">
+                <p className="mc-mono text-xs uppercase tracking-[0.18em] text-[rgb(var(--accent))]">Review principle</p>
+                <h3 className="mc-display mt-3 text-xl font-medium text-ink">Inspect before you rely on the output.</h3>
+                <p className="mt-3 text-[15px] leading-7 text-ink-2">Results remain reviewable before export, helping teams catch exceptions and confirm that the generated workbook or dataset matches the intended workflow.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="faq" className="bg-[rgb(var(--canvas))] py-20 text-ink">
+          <div className="mx-auto max-w-3xl px-5 lg:px-8">
+            <p className="mc-mono text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">Frequently asked questions</p>
+            <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-ink sm:text-5xl">Questions, answered honestly.</h2>
+            <div className="mt-10 divide-y divide-white/10 border-y border-line">
+              {[
+                {
+                  q: "Is MarqClean AI actually free?",
+                  a: "Yes. Every tool listed in the Free Data Tools directory, the Quick Data & CSV Cleaner, Excel Automation, Data Toolbox, and Free Excel Academy run at no cost, with no account or card required.",
+                },
+                {
+                  q: "Do my files ever leave my browser?",
+                  a: "No. Cleaning, conversion, reconciliation, and formula processing all run locally in your browser using JavaScript. Nothing is uploaded to a server, so your data never leaves your device during processing.",
+                },
+                {
+                  q: "What file types are supported?",
+                  a: "CSV, XLSX, and XLS across most tools. Reconciliation Hub and Bank Ledger X also accept PDF statements and mailing lists, which are parsed directly in the browser.",
+                },
+                {
+                  q: "How large a file can I upload?",
+                  a: "Because processing happens in your browser rather than on a server, the practical limit is your device's available memory rather than a fixed file-size cap. Very large workbooks (tens of thousands of rows) will process more slowly on lower-powered devices.",
+                },
+                {
+                  q: "Does this replace Excel, Power Query, or Power BI?",
+                  a: "No. MarqClean AI automates the repetitive cleaning, formatting, and reconciliation work that normally happens before or after using Excel. The Power Query-style workflow and Power Pivot-style data modelling tools in Data Toolbox reproduce the result of those workflows, not the native Microsoft engines — see each tool's in-product notice for exactly what is and isn't preserved.",
+                },
+                {
+                  q: "How accurate is the automatic name, industry, or field detection?",
+                  a: "Detection is rule- and keyword-based (not a black-box model), which makes it predictable and reviewable. Every tool shows its output before you download, so you can check and adjust results rather than trusting an opaque process.",
+                },
+                {
+                  q: "Can I use this for client or investor reconciliation work?",
+                  a: "Yes — Reconciliation Hub is built for exactly that: matching client, investor, account, and banking records across Excel, CSV, and PDF sources, with exception reporting and a colour-coded output.",
+                },
+              ].map((item) => (
+                <details key={item.q} className="group py-5">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left text-base font-medium text-ink marker:content-none">
+                    {item.q}
+                    <svg className="h-5 w-5 shrink-0 text-ink-2 transition group-open:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg>
+                  </summary>
+                  <p className="mt-3 max-w-2xl text-[15px] leading-7 text-ink-2">{item.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
+      )}
+
+      <footer className="mc-site-footer" aria-labelledby="footer-heading">
+        <div className="mc-site-footer__inner">
+          <div className="mc-site-footer__top">
+            <div className="mc-site-footer__brand">
+              <a href="/" aria-label="MarqClean AI home" onClick={(event)=>{event.preventDefault();navigateToPage("home");}}>
+                <Logo className="shrink-0" />
+              </a>
+              <p>Browser-local tools for cleaning, validating, transforming and reconciling Excel, CSV and PDF data.</p>
+              <div className="mc-site-footer__trust"><span aria-hidden="true">●</span> Files stay in your browser during processing</div>
+            </div>
+
+            <div className="mc-site-footer__column">
+              <h3>Platform</h3>
+              <PageLink page="about">About MarqClean AI</PageLink>
+              <a href="/data-cleaner" onClick={(event)=>{event.preventDefault();openWorkspaceTab("leads");}}>Quick Data &amp; CSV Cleaner</a>
+              <a href="/excel-automation" onClick={(event)=>{event.preventDefault();navigateToPage("excel-automation");}}>Excel Automation</a>
+              <a href="/reconciliation-hub" onClick={(event)=>{event.preventDefault();navigateToPage("reconciliation-hub");}}>Reconciliation Hub</a>
+              <a href="/data-toolbox" onClick={(event)=>{event.preventDefault();navigateToPage("data-toolbox");}}>Data Toolbox</a>
+            </div>
+
+            <div className="mc-site-footer__column">
+              <h3>Tools</h3>
+              <PageLink page="clean-csv-file-online">CSV Cleaner</PageLink>
+              <PageLink page="csv-to-excel-cleaner">CSV to Excel Converter</PageLink>
+              <PageLink page="fix-csv-capitalization">Spreadsheet Formatter</PageLink>
+              <PageLink page="remove-duplicates-excel">Duplicate Removal</PageLink>
+              <PageLink page="document-validation-tool">Data Validation</PageLink>
+              <PageLink page="advanced-excel-functions">Advanced Excel Functions</PageLink>
+            </div>
+
+            <div className="mc-site-footer__column">
+              <h3>Trust &amp; legal</h3>
+              <PageLink page="privacy">Privacy Policy</PageLink>
+              <PageLink page="terms">Terms of Service</PageLink>
+              <PageLink page="cookies">Cookie Policy</PageLink>
+              <PageLink page="accessibility">Accessibility</PageLink>
+              <PageLink page="contact">Contact &amp; Support</PageLink>
+              <a href="mailto:support@vertexstreamtechnologies.com">support@vertexstreamtechnologies.com</a>
+            </div>
+          </div>
+
+          <div className="mc-site-footer__bottom">
+            <p>© {new Date().getFullYear()} MarqClean AI. All rights reserved.</p>
+            <p>A product of <a href="https://www.vertexsg.co.za" target="_blank" rel="noopener noreferrer">Vertex Stream Group</a> · Vertex Stream Technologies · Johannesburg, South Africa</p>
+          </div>
+        </div>
+      </footer>
+
+      {renderBackToTop()}
+    </div>
+  );
+}
