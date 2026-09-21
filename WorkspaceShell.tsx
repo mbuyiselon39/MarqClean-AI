@@ -22,7 +22,6 @@ const SIMPLE_NAV: Array<{ label: string; path: string }> = [
 
 const PRODUCTS_MENU: Array<{ label: string; path: string }> = [
   { label: "Quick Data & CSV Cleaner", path: "/data-cleaner" },
-  { label: "Local Data Engine", path: "/data-engine" },
   { label: "Excel Automation", path: "/excel-automation" },
   { label: "Reconciliation Hub", path: "/reconciliation-hub" },
   { label: "Data Toolbox", path: "/data-toolbox" },
