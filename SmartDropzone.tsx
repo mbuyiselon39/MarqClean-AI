@@ -22,6 +22,7 @@ type Diagnostics = {
   recommendations: SmartRecommendation[];
 };
 
+const MAX_FILE_SIZE_BYTES = 100 * 1024 * 1024;
 const ACTIONS: SmartPipelineAction[] = [
   { id: "trim", label: "Trim whitespaces" },
   { id: "group-reference", label: "Group rows by reference" },
@@ -89,10 +90,11 @@ export default function SmartDropzone({
   async function inspect(file: File) {
     setMessage("");
     const extension = file.name.split(".").pop()?.toLowerCase();
-    if (!extension || !["csv", "xlsx", "pdf"].includes(extension)) {
-      setMessage("Supported files: CSV, XLSX and PDF.");
+    if (!extension || !["csv", "xlsx", "xls", "pdf"].includes(extension)) {
+      setMessage("Supported files: CSV, XLSX, XLS and PDF.");
       return;
     }
+    if (file.size > MAX_FILE_SIZE_BYTES) { setMessage("This file is larger than the 100 MB browser-safe limit. Split the file before processing."); return; }
     setFileName(file.name);
     setFileType(extension.toUpperCase());
 
@@ -115,7 +117,7 @@ export default function SmartDropzone({
         setDiagnostics(analyseMatrix(parsed));
       } else {
         const buffer = await file.arrayBuffer();
-        const workbook = XLSX.read(buffer, { type: "array", dense: true, cellDates: true, raw: false });
+        const workbook = XLSX.read(buffer, { type: "array", dense: true, cellDates: true, raw: false, dateNF: "yyyy-mm-dd" });
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
         const matrix = sheet ? XLSX.utils.sheet_to_json<unknown[]>(sheet, { header: 1, defval: "", raw: false }) : [];
         setDiagnostics(analyseMatrix(matrix));
@@ -149,7 +151,7 @@ export default function SmartDropzone({
         onDragLeave={(e) => { if (e.currentTarget === e.target) setDragging(false); }}
         onDrop={(e) => { e.preventDefault(); setDragging(false); const file = e.dataTransfer.files[0]; if (file) { if (inputRef.current) { const dt = new DataTransfer(); dt.items.add(file); inputRef.current.files = dt.files; } chooseFile(file); } }}
       >
-        <input ref={inputRef} className="sr-only" type="file" accept=".csv,.xlsx,.pdf,text/csv,application/pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onChange={(e) => { const file = e.target.files?.[0]; if (file) chooseFile(file); }} />
+        <input ref={inputRef} className="sr-only" type="file" accept=".csv,.xlsx,.xls,.pdf,text/csv,application/pdf,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onChange={(e) => { const file = e.target.files?.[0]; if (file) chooseFile(file); }} />
         <div className="flex flex-col items-center text-center">
           <span className="smart-dropzone__icon" aria-hidden="true">↥</span>
           <p className="mt-4 text-xs font-medium uppercase tracking-[.2em] text-accent">Smart Drop</p>
