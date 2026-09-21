@@ -90,7 +90,7 @@ export default function HeroCarousel({ onCleanFile }: HeroActions) {
             <button onClick={onCleanFile}>Start free <LineIcon type="arrow" /></button>
             <a className="secondary" href="#free-tools">See the tools</a>
           </div>
-          <div className="mc-minimal-hero__trust"><span>✓</span> Runs locally in your browser <i /> No sign-up</div>
+          <div className="mc-minimal-hero__trust"><span>✓</span> Runs locally in your browser <i /> No sign-up <i /> No credit card</div>
         </div>
         <div className="mc-minimal-hero__product" aria-label="MarqClean AI workspace preview"><WorkspacePreview /></div>
       </div>
