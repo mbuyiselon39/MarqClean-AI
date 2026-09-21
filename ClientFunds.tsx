@@ -17,7 +17,7 @@ import {
 } from "./client-funds";
 import { GlobalHeader, PageHeader } from "./WorkspaceShell";
 
-export default function ClientFunds({ onExit }: { onExit: () => void }) {
+export default function ClientFunds({ onExit: _onExit }: { onExit: () => void }) {
   const [workbook, setWorkbook] = useState<WorkbookData | null>(null);
   const [sheetName, setSheetName] = useState("");
   const [headerRow, setHeaderRow] = useState(1);
