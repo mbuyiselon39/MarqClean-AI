@@ -12,7 +12,6 @@ const AcademyHub = lazy(() => import("./academy/AcademyHub"));
 const HeroCarousel = lazy(() => import("./HeroCarousel"));
 import SmartDropzone, { type SmartPipelineAction, type SmartRecommendation } from "./SmartDropzone";
 import Logo from "./Logo";
-import ThemeToggle from "./ThemeToggle";
 import { extractPdfTextInWorker } from "./pdfWorkerClient";
 import { GlobalHeader, PageHeader } from "./WorkspaceShell";
 
@@ -2688,7 +2687,6 @@ export default function App() {
 
   useEffect(() => {
     updatePageMetadata(currentPage);
-    setIsMobileNavOpen(false);
         
   }, [currentPage]);
 
@@ -3163,7 +3161,6 @@ export default function App() {
             }}
             onOpenReconciliation={() => navigateToPage("reconciliation-hub")}
             onOpenExcelAutomation={() => navigateToPage("excel-automation")}
-            onOpenDataToolbox={() => navigateToPage("data-toolbox")}
             onFileDrop={(file) => { void handleFile(file); }}
           />
         </Suspense>
