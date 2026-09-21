@@ -74,7 +74,7 @@ type ToolPageKey =
   | "advanced-excel-functions"
   | "xlookup-online"
   | "sumifs-countifs-tool";
-type AppPageKey = "home" | "data-engine" | "reconciliation-hub" | "data-toolbox" | "excel-automation" | "excel-academy" | FooterPageKey | ToolPageKey;
+type AppPageKey = "home" | "reconciliation-hub" | "data-toolbox" | "excel-automation" | "excel-academy" | FooterPageKey | ToolPageKey;
 
 type FooterPage = {
   title: string;
@@ -2304,7 +2304,7 @@ function getCurrentPage(): AppPageKey {
     return target;
   }
 
-  if (route === "data-engine") return "data-engine";
+  if (route === "data-engine") return "home";
   if (route === "reconciliation-hub") return "reconciliation-hub";
   if (route === "data-toolbox") return "data-toolbox";
   if (route === "excel-automation") return "excel-automation";
@@ -2323,7 +2323,7 @@ function updateMetaTag(selector: string, attribute: "content" | "href", value: s
 function updatePageMetadata(page: AppPageKey) {
   const toolPage = isToolPageKey(page) ? SEO_TOOL_PAGES[page] : null;
   const footerPage = isFooterPageKey(page) ? FOOTER_PAGES[page] : null;
-  const isDataEngine = page === "data-engine";
+  const isDataEngine = false;
   const isHub = page === "reconciliation-hub";
   const isToolbox = page === "data-toolbox";
   const isExcelAuto = page === "excel-automation";
@@ -3248,7 +3248,6 @@ export default function App() {
           <div className="hidden items-center gap-6 text-[13px] font-medium text-ink-2 xl:flex">
             <a href="/#top" className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("top"); }}>Home</a>
             <a href="/#features" className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("features"); }}>Platform</a>
-            <a href="/#services" className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("services"); }}>Services</a>
             <a href="/#workflow" className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("workflow"); }}>How it works</a>
             <div className="relative" ref={productsMenuRef}>
               <button
@@ -3425,7 +3424,6 @@ export default function App() {
                     {WORKSPACE_MODULES[workspaceTab].formats.map((f) => (
                       <span key={f} className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide">{f}</span>
                     ))}
-                    <span className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-medium text-[rgb(var(--accent-hover))]">Engine: {WORKSPACE_MODULES[workspaceTab].engine}</span>
                   </div>
                 </div>
               </div>
@@ -3462,6 +3460,11 @@ export default function App() {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
+            <WorkspaceSideWidget
+              tab="leads"
+              processing={isProcessing}
+              hasResult={Boolean(result)}
+            />
             <div>
               <p className="text-sm font-medium uppercase tracking-[0.28em] text-accent">Automated CSV cleaner</p>
               <h3 className="mt-4 text-3xl font-medium tracking-[-0.03em] text-ink">
@@ -4214,6 +4217,8 @@ export default function App() {
 
         <section id="excel-automation" className="relative overflow-hidden bg-ink py-20 text-ink">
           <div className="mx-auto max-w-7xl px-5 lg:px-8">
+            <div className="excel-automation-layout">
+              <div className="excel-automation-main">
             <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
               <div>
                 <p className="mc-mono text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">Excel automation</p>
@@ -4247,198 +4252,32 @@ export default function App() {
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="services" className="relative overflow-hidden bg-canvas py-20 text-ink">
-          <div className="mx-auto max-w-7xl px-5 lg:px-8">
-            <div className="max-w-3xl">
-              <p className="mc-mono text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">New platform services</p>
-              <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] sm:text-5xl">A faster local engine for the work behind every clean dataset.</h2>
-              <p className="mt-5 text-lg leading-8 text-ink-3">MarqClean now separates heavy data work from the interface: WebAssembly for analytics, workers for CSV parsing, specialist validation libraries for data quality, and a CORS-aware enrichment layer that never requires a scraping API.</p>
-            </div>
-            <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-              {[
-                { icon: "⚡", title: "Local Data Engine", text: "Run joins, deduplication, grouping and aggregations in DuckDB-WASM without uploading rows.", action: "Open Data Engine", page: "data-engine" as AppPageKey },
-                { icon: "🌐", title: "Web Enrichment", text: "Extract company signals from permitted pages or saved HTML: emails, phones, schema.org, social links and metadata.", action: "Enrich locally", page: "data-engine" as AppPageKey },
-                { icon: "✓", title: "Schema Guard", text: "Define and enforce browser-local validation rules with Zod and produce a reviewable Error Report.", action: "Validate data", page: "data-engine" as AppPageKey },
-                { icon: "☎", title: "Phone Intelligence", text: "Detect country, validate numbers and format international or national output using libphonenumber-js.", action: "Fix phone data", page: "data-engine" as AppPageKey },
-              ].map((item) => (
-                <button key={item.title} type="button" onClick={() => navigateToPage(item.page)} className="group rounded-lg border border-line bg-surface p-6 text-left transition hover:-translate-y-1 hover:border-line hover:bg-canvas hover:shadow-xl">
-                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-lg bg-surface text-xl">{item.icon}</span>
-                  <h3 className="mc-display mt-5 text-xl font-medium">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-ink-3">{item.text}</p>
-                  <span className="mt-5 inline-flex text-sm font-medium text-[rgb(var(--accent))]">{item.action} →</span>
-                </button>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="free-tools" className="bg-[rgb(var(--surface))] py-20 text-ink">
-          <div className="mx-auto max-w-7xl px-5 lg:px-8">
-            <div className="max-w-3xl">
-              <p className="mc-mono text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">Free data tools</p>
-              <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-ink sm:text-5xl">
-                One engine for CSV, Excel, data cleaning and reconciliation workflows.
-              </h2>
-              <p className="mc-prose mt-5 text-lg leading-relaxed text-ink-2">
-                MarqClean AI uses a modular data architecture, so teams can solve specific spreadsheet problems with
-                focused tools for CSV cleanup, Excel conversion, formatting, duplicates, validation, and reconciliation.
-              </p>
-            </div>
-
-            <div className="mt-10">
-              <ToolsDirectory />
-            </div>
-          </div>
-        </section>
-
-        <section id="workflow" className="relative overflow-hidden bg-[rgb(var(--canvas))] py-20 text-ink">
-          <div className="mc-grid-overlay pointer-events-none absolute inset-0 opacity-30" aria-hidden="true" />
-          <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
-            <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-              <div>
-                <p className="mc-mono text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">CSV to Excel workflow</p>
-                <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-ink sm:text-5xl">
-                  A passive automation tool for repetitive spreadsheet cleaning.
-                </h2>
-                <p className="mt-5 text-lg leading-8 text-ink-2">
-                  Marketers can replace manual find-and-replace work with a repeatable browser workflow that cleans lists before
-                  they enter HubSpot, Salesforce, Mailchimp, Microsoft Excel, or Microsoft 365 reporting pipelines.
-                </p>
-              </div>
-              <div className="space-y-6">
-                <div className="mc-glass rounded-lg p-6">
-                  <span className="mc-mono inline-flex h-8 w-8 items-center justify-center rounded-md border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/10 text-xs font-medium text-[rgb(var(--accent-hover))]">01</span>
-                  <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-ink">Upload CSV or XLSX</h3>
-                  <p className="mt-3 text-[15px] leading-6 text-ink-2">
-                    Import a messy lead list from an ad platform, CRM export, event attendee list, or spreadsheet vendor.
-                  </p>
+get" aria-label="Excel Automation guidance">
+                <div className="ws-side-widget__header">
+                  <span className="ws-side-widget__eyebrow">Automation workflow</span>
+                  <span className="ws-side-widget__status">Ready</span>
                 </div>
-                <div className="mc-glass rounded-lg p-6">
-                  <span className="mc-mono inline-flex h-8 w-8 items-center justify-center rounded-md border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/10 text-xs font-medium text-[rgb(var(--accent-hover))]">02</span>
-                  <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-ink">Clean and standardize fields</h3>
-                  <p className="mt-3 text-[15px] leading-6 text-ink-2">
-                    {PRODUCT_NAME} normalizes headers, fixes casing, splits full names, validates emails, formats phone numbers,
-                    and flags missing data for review.
-                  </p>
+                <h3>Prepare → automate → review</h3>
+                <p className="ws-side-widget__description">Keep the Excel automation process structured from source workbook to final output.</p>
+                <div className="ws-side-widget__section">
+                  <div className="ws-side-widget__section-title">Workflow</div>
+                  <ol className="ws-side-widget__steps">
+                    <li className="is-current"><span>1</span><strong>Choose the workbook</strong></li>
+                    <li className="is-current"><span>2</span><strong>Map and run automation</strong></li>
+                    <li className="is-current"><span>3</span><strong>Review and export</strong></li>
+                  </ol>
                 </div>
-                <div className="mc-glass rounded-lg p-6">
-                  <span className="mc-mono inline-flex h-8 w-8 items-center justify-center rounded-md border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/10 text-xs font-medium text-[rgb(var(--accent-hover))]">03</span>
-                  <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-ink">Download a pristine Excel file</h3>
-                  <p className="mt-3 text-[15px] leading-6 text-ink-2">
-                    Export a clean normal Excel workbook or CSV file for segmentation, enrichment, reporting, and campaign
-                    activation.
-                  </p>
+                <div className="ws-side-widget__section">
+                  <div className="ws-side-widget__section-title">Workspace tip</div>
+                  <p className="ws-side-widget__tip">Review the detected grouping and column mapping before generating the final workbook.</p>
                 </div>
-              </div>
+                <div className="ws-side-widget__privacy">
+                  <span aria-hidden="true">✓</span>
+                  <div><strong>Browser-local processing</strong><small>Your workbook remains on this device while it is processed.</small></div>
+                </div>
+              </aside>
             </div>
           </div>
         </section>
 
-        <section id="faq" className="bg-[rgb(var(--canvas))] py-20 text-ink">
-          <div className="mx-auto max-w-3xl px-5 lg:px-8">
-            <p className="mc-mono text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">Frequently asked questions</p>
-            <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-ink sm:text-5xl">Questions, answered honestly.</h2>
-            <div className="mt-10 divide-y divide-white/10 border-y border-line">
-              {[
-                {
-                  q: "Is MarqClean AI actually free?",
-                  a: "Yes. Every tool listed in the Free Data Tools directory, the Quick Data & CSV Cleaner, Excel Automation, Data Toolbox, and Free Excel Academy run at no cost, with no account or card required.",
-                },
-                {
-                  q: "Do my files ever leave my browser?",
-                  a: "No. Cleaning, conversion, reconciliation, and formula processing all run locally in your browser using JavaScript. Nothing is uploaded to a server, so your data never leaves your device during processing.",
-                },
-                {
-                  q: "What file types are supported?",
-                  a: "CSV, XLSX, and XLS across most tools. Reconciliation Hub and Bank Ledger X also accept PDF statements and mailing lists, which are parsed directly in the browser.",
-                },
-                {
-                  q: "How large a file can I upload?",
-                  a: "Because processing happens in your browser rather than on a server, the practical limit is your device's available memory rather than a fixed file-size cap. Very large workbooks (tens of thousands of rows) will process more slowly on lower-powered devices.",
-                },
-                {
-                  q: "Does this replace Excel, Power Query, or Power BI?",
-                  a: "No. MarqClean AI automates the repetitive cleaning, formatting, and reconciliation work that normally happens before or after using Excel. The Power Query-style workflow and Power Pivot-style data modelling tools in Data Toolbox reproduce the result of those workflows, not the native Microsoft engines — see each tool's in-product notice for exactly what is and isn't preserved.",
-                },
-                {
-                  q: "How accurate is the automatic name, industry, or field detection?",
-                  a: "Detection is rule- and keyword-based (not a black-box model), which makes it predictable and reviewable. Every tool shows its output before you download, so you can check and adjust results rather than trusting an opaque process.",
-                },
-                {
-                  q: "Can I use this for client or investor reconciliation work?",
-                  a: "Yes — Reconciliation Hub is built for exactly that: matching client, investor, account, and banking records across Excel, CSV, and PDF sources, with exception reporting and a colour-coded output.",
-                },
-              ].map((item) => (
-                <details key={item.q} className="group py-5">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left text-base font-medium text-ink marker:content-none">
-                    {item.q}
-                    <svg className="h-5 w-5 shrink-0 text-ink-2 transition group-open:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d="M12 5v14M5 12h14" />
-                    </svg>
-                  </summary>
-                  <p className="mt-3 max-w-2xl text-[15px] leading-7 text-ink-2">{item.a}</p>
-                </details>
-              ))}
-            </div>
-          </div>
-        </section>
-      </main>
-      )}
-
-      <footer className="mc-site-footer" aria-labelledby="footer-heading">
-        <div className="mc-site-footer__inner">
-          <div className="mc-site-footer__top">
-            <div className="mc-site-footer__brand">
-              <a href="/" aria-label="MarqClean AI home" onClick={(event)=>{event.preventDefault();navigateToPage("home");}}>
-                <Logo className="shrink-0" />
-              </a>
-              <p>Browser-local tools for cleaning, validating, transforming and reconciling Excel, CSV and PDF data.</p>
-              <div className="mc-site-footer__trust"><span aria-hidden="true">●</span> Files stay in your browser during processing</div>
-            </div>
-
-            <div className="mc-site-footer__column">
-              <h3>Platform</h3>
-              <PageLink page="about">About MarqClean AI</PageLink>
-              <a href="/data-cleaner" onClick={(event)=>{event.preventDefault();openWorkspaceTab("leads");}}>Quick Data &amp; CSV Cleaner</a>
-              <a href="/excel-automation" onClick={(event)=>{event.preventDefault();navigateToPage("excel-automation");}}>Excel Automation</a>
-              <a href="/reconciliation-hub" onClick={(event)=>{event.preventDefault();navigateToPage("reconciliation-hub");}}>Reconciliation Hub</a>
-              <a href="/data-toolbox" onClick={(event)=>{event.preventDefault();navigateToPage("data-toolbox");}}>Data Toolbox</a>
-              <a href="/data-engine" onClick={(event)=>{event.preventDefault();navigateToPage("data-engine");}}>Local Data Engine</a>
-            </div>
-
-            <div className="mc-site-footer__column">
-              <h3>Tools</h3>
-              <PageLink page="clean-csv-file-online">CSV Cleaner</PageLink>
-              <PageLink page="csv-to-excel-cleaner">CSV to Excel Converter</PageLink>
-              <PageLink page="fix-csv-capitalization">Spreadsheet Formatter</PageLink>
-              <PageLink page="remove-duplicates-excel">Duplicate Removal</PageLink>
-              <PageLink page="document-validation-tool">Data Validation</PageLink>
-              <PageLink page="advanced-excel-functions">Advanced Excel Functions</PageLink>
-            </div>
-
-            <div className="mc-site-footer__column">
-              <h3>Trust &amp; legal</h3>
-              <PageLink page="privacy">Privacy Policy</PageLink>
-              <PageLink page="terms">Terms of Service</PageLink>
-              <PageLink page="cookies">Cookie Policy</PageLink>
-              <PageLink page="accessibility">Accessibility</PageLink>
-              <PageLink page="contact">Contact &amp; Support</PageLink>
-              <a href="mailto:support@vertexstreamtechnologies.com">support@vertexstreamtechnologies.com</a>
-            </div>
-          </div>
-
-          <div className="mc-site-footer__bottom">
-            <p>© {new Date().getFullYear()} MarqClean AI. All rights reserved.</p>
-            <p>A product of <a href="https://www.vertexsg.co.za" target="_blank" rel="noopener noreferrer">Vertex Stream Group</a> · Vertex Stream Technologies · Johannesburg, South Africa</p>
-          </div>
-        </div>
-      </footer>
-
-      {renderBackToTop()}
-    </div>
-  );
-}
+        <section id="free-tools"
