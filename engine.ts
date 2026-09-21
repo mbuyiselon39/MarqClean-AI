@@ -623,7 +623,7 @@ function cellXml(ref: string, cell: SheetCell): string {
 }
 
 function sheetFromRows(rows: SheetCell[][]): string {
-  const columnCount = Math.max(1, ...rows.map((r) => r.length));
+  const columnCount = rows.reduce((max, r) => Math.max(max, r.length), 1);
   const rowXml = rows
     .map((row, rowIndex) => {
       const cells = row.map((cell, colIndex) => cellXml(`${columnIndexToReference(colIndex)}${rowIndex + 1}`, cell)).join("");
