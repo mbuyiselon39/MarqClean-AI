@@ -547,7 +547,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "clean-csv-file-online",
     category: "Cleaners",
     cardTitle: "CSV File Cleaner",
-    icon: "🧹",
+    icon: "tool",
     title: `Free Clean CSV File Online | ${PRODUCT_NAME}`,
     h1: "Free Clean CSV File Online for Marketing Lead Lists",
     description:
@@ -573,7 +573,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "csv-to-excel-cleaner",
     category: "Converters",
     cardTitle: "CSV to Excel Cleaner",
-    icon: "🔄",
+    icon: "tool",
     title: `Free CSV to Excel Cleaner | ${PRODUCT_NAME}`,
     h1: "Free CSV to Excel Cleaner for Marketers",
     description:
@@ -599,7 +599,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "excel-data-cleaner-for-marketers",
     category: "Cleaners",
     cardTitle: "Excel Data Cleaner",
-    icon: "🧹",
+    icon: "tool",
     title: `Free Excel Data Cleaner for Marketers | ${PRODUCT_NAME}`,
     h1: "Free Excel Data Cleaner for Marketers",
     description:
@@ -625,7 +625,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "lead-list-cleaner",
     category: "Cleaners",
     cardTitle: "Marketing Lead List & CSV Cleaner",
-    icon: "🧹",
+    icon: "tool",
     title: `Free Lead List Cleaner | ${PRODUCT_NAME}`,
     h1: "Free Lead List Cleaner for CRM and Email Campaigns",
     description:
@@ -651,7 +651,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "remove-duplicates-from-csv",
     category: "Cleaners",
     cardTitle: "CSV Duplicate Remover",
-    icon: "🧹",
+    icon: "tool",
     title: `Free Remove Duplicates from CSV Tool | ${PRODUCT_NAME}`,
     h1: "Free Remove Duplicates from CSV Tool for Lead Lists",
     description:
@@ -677,7 +677,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "fix-csv-capitalization",
     category: "Formatters",
     cardTitle: "CSV Capitalization Fixer",
-    icon: "🎯",
+    icon: "tool",
     title: `Free Fix CSV Capitalization Tool | ${PRODUCT_NAME}`,
     h1: "Free Fix CSV Capitalization Tool for Names and Companies",
     description:
@@ -703,7 +703,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "categorize-company-industries-csv",
     category: "Formatters",
     cardTitle: "Company Industry Categorizer",
-    icon: "🎯",
+    icon: "tool",
     title: `Free Categorize Company Industries from CSV | ${PRODUCT_NAME}`,
     h1: "Free Categorize Company Industries from CSV",
     description:
@@ -729,7 +729,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "crm-data-cleanup-tool",
     category: "Cleaners",
     cardTitle: "CRM Data Cleanup Tool",
-    icon: "🧹",
+    icon: "tool",
     title: `Free CRM Data Cleanup Tool | ${PRODUCT_NAME}`,
     h1: "Free CRM Data Cleanup Tool for CSV and Excel Imports",
     description:
@@ -755,7 +755,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "email-list-data-cleaner",
     category: "Cleaners",
     cardTitle: "Email List Cleaner",
-    icon: "🧹",
+    icon: "tool",
     title: `Free Email List Data Cleaner | ${PRODUCT_NAME}`,
     h1: "Free Email List Data Cleaner for Marketing Campaigns",
     description:
@@ -781,7 +781,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "microsoft-excel-lead-cleaner",
     category: "Cleaners",
     cardTitle: "Excel Lead Cleaner",
-    icon: "🧹",
+    icon: "tool",
     title: `Free Microsoft Excel Lead Cleaner | ${PRODUCT_NAME}`,
     h1: "Free Microsoft Excel Lead Cleaner for Marketing Teams",
     description:
@@ -807,7 +807,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "csv-to-json-converter",
     category: "Converters",
     cardTitle: "CSV to JSON Converter",
-    icon: "🔄",
+    icon: "tool",
     title: `Free CSV to JSON Converter | ${PRODUCT_NAME}`,
     h1: "Free CSV to JSON Converter Online",
     description:
@@ -833,7 +833,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "csv-to-xml-converter",
     category: "Converters",
     cardTitle: "CSV to XML Converter",
-    icon: "🔄",
+    icon: "tool",
     title: `Free CSV to XML Converter | ${PRODUCT_NAME}`,
     h1: "Free CSV to XML Converter Online",
     description:
@@ -859,7 +859,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "ai-csv-editor-assistant",
     category: "AI Tools",
     cardTitle: "AI CSV Editor",
-    icon: "🤖",
+    icon: "tool",
     title: `Free AI CSV Editor and Assistant | ${PRODUCT_NAME}`,
     h1: "Free AI CSV Editor and Data Assistant",
     description:
@@ -885,7 +885,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "csv-statistics-and-charts",
     category: "Data Modelling",
     cardTitle: "CSV Statistics & Charts",
-    icon: "📊",
+    icon: "tool",
     title: `Free CSV Statistics and Charts Tool | ${PRODUCT_NAME}`,
     h1: "Free CSV Statistics and Charts Generator",
     description:
@@ -911,7 +911,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "gpt-for-spreadsheets",
     category: "AI Tools",
     cardTitle: "GPT for Spreadsheets",
-    icon: "🤖",
+    icon: "tool",
     title: `Free GPT for Spreadsheets Bulk Tools | ${PRODUCT_NAME}`,
     h1: "Free GPT for Spreadsheets Bulk Data Tools",
     description:
@@ -937,7 +937,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "ai-document-generator",
     category: "AI Tools",
     cardTitle: "AI Document Generator",
-    icon: "🤖",
+    icon: "tool",
     title: `Free AI Document Generator from CSV | ${PRODUCT_NAME}`,
     h1: "Free AI Document Generator from Spreadsheet Data",
     description:
@@ -963,7 +963,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "ai-business-analyst",
     category: "AI Tools",
     cardTitle: "AI Business Analyst",
-    icon: "🤖",
+    icon: "tool",
     title: `Free AI Business Analyst Artefacts | ${PRODUCT_NAME}`,
     h1: "Free AI Business Analyst Document Generator",
     description:
@@ -989,7 +989,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "bank-statement-converter",
     category: "Converters",
     cardTitle: "Bank Statement Converter",
-    icon: "🔄",
+    icon: "tool",
     title: `Free Bank Statement Converter to Excel | ${PRODUCT_NAME}`,
     h1: "Free Bank Statement Converter to Excel, CSV, and QIF",
     description:
@@ -1015,7 +1015,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "pdf-to-excel-converter",
     category: "Converters",
     cardTitle: "PDF to Excel Converter",
-    icon: "🔄",
+    icon: "tool",
     title: `Free PDF to Excel Converter for Statements | ${PRODUCT_NAME}`,
     h1: "Free PDF to Excel Converter for Bank Statements",
     description:
@@ -1041,7 +1041,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "pdf-bank-statement-to-csv",
     category: "Converters",
     cardTitle: "PDF Bank Statement to CSV",
-    icon: "🔄",
+    icon: "tool",
     title: `Free PDF Bank Statement to CSV | ${PRODUCT_NAME}`,
     h1: "Free PDF Bank Statement to CSV Converter",
     description:
@@ -1067,7 +1067,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "data-reconciliation-tool",
     category: "Reconciliation",
     cardTitle: "Data Reconciliation Tool",
-    icon: "⚖️",
+    icon: "tool",
     title: `Free Data Reconciliation Tool | ${PRODUCT_NAME}`,
     h1: "Free Data Reconciliation and Validation Tool",
     description:
@@ -1093,7 +1093,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "excel-file-comparison",
     category: "Reconciliation",
     cardTitle: "Excel & CSV File Comparison",
-    icon: "⚖️",
+    icon: "tool",
     title: `Free Excel File Comparison Tool | ${PRODUCT_NAME}`,
     h1: "Free Excel and CSV File Comparison Tool",
     description:
@@ -1119,7 +1119,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "document-validation-tool",
     category: "Reconciliation",
     cardTitle: "Document Validation Tool",
-    icon: "⚖️",
+    icon: "tool",
     title: `Free Document Validation Tool | ${PRODUCT_NAME}`,
     h1: "Free Document Validation and Data Quality Tool",
     description:
@@ -1145,7 +1145,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "pdf-vs-excel-verification",
     category: "Reconciliation",
     cardTitle: "PDF vs Excel Verification",
-    icon: "⚖️",
+    icon: "tool",
     title: `Free PDF vs Excel Verification | ${PRODUCT_NAME}`,
     h1: "Free PDF vs Excel Data Verification",
     description:
@@ -1171,7 +1171,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "mailing-list-verification",
     category: "Reconciliation",
     cardTitle: "Mailing List Verification",
-    icon: "⚖️",
+    icon: "tool",
     title: `Free Mailing List Verification Tool | ${PRODUCT_NAME}`,
     h1: "Free Mailing List Verification Against Excel Master Data",
     description:
@@ -1197,7 +1197,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "merge-spreadsheets",
     category: "Formatters",
     cardTitle: "Spreadsheet Merger",
-    icon: "🎯",
+    icon: "tool",
     title: `Free Merge Spreadsheets Tool | ${PRODUCT_NAME}`,
     h1: "Free Merge Spreadsheets and Combine CSV Files",
     description:
@@ -1214,7 +1214,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "remove-duplicates-excel",
     category: "Cleaners",
     cardTitle: "Excel Duplicate Remover",
-    icon: "🧹",
+    icon: "tool",
     title: `Free Remove Duplicates in Excel | ${PRODUCT_NAME}`,
     h1: "Free Remove Duplicates in Excel and CSV",
     description:
@@ -1231,7 +1231,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "fuzzy-name-matching",
     category: "Reconciliation",
     cardTitle: "Fuzzy Name & Address Matching",
-    icon: "⚖️",
+    icon: "tool",
     title: `Free Fuzzy Name Matching Tool | ${PRODUCT_NAME}`,
     h1: "Free Fuzzy Name and Address Matching",
     description:
@@ -1248,7 +1248,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "web-scraping-to-excel",
     category: "Converters",
     cardTitle: "Web Table Extractor",
-    icon: "🔄",
+    icon: "tool",
     title: `Free Web Table to Excel Extractor | ${PRODUCT_NAME}`,
     h1: "Free Web Table and List to Excel Extractor",
     description:
@@ -1265,7 +1265,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "timesheet-tool",
     category: "Data Modelling",
     cardTitle: "Timesheet & Billable Hours Tracker",
-    icon: "📊",
+    icon: "tool",
     title: `Free Timesheet Tool and Time Tracker | ${PRODUCT_NAME}`,
     h1: "Free Timesheet Tool and Billable Hours Tracker",
     description:
@@ -1282,7 +1282,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "advanced-excel-functions",
     category: "Excel Formulas",
     cardTitle: "Advanced Excel Functions",
-    icon: "🧮",
+    icon: "tool",
     title: `Free Advanced Excel Functions Tool | ${PRODUCT_NAME}`,
     h1: "Free Advanced Excel Functions and Formula Engine",
     description:
@@ -1299,7 +1299,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "xlookup-online",
     category: "Lookups",
     cardTitle: "XLOOKUP & INDEX MATCH Generator",
-    icon: "🔎",
+    icon: "tool",
     title: `Free XLOOKUP and INDEX MATCH Online | ${PRODUCT_NAME}`,
     h1: "Free XLOOKUP and INDEX MATCH Online Tool",
     description:
@@ -1316,7 +1316,7 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
     slug: "sumifs-countifs-tool",
     category: "Excel Formulas",
     cardTitle: "SUMIFS, COUNTIFS & FILTER Tool",
-    icon: "🧮",
+    icon: "tool",
     title: `Free SUMIFS and COUNTIFS Tool | ${PRODUCT_NAME}`,
     h1: "Free SUMIFS, COUNTIFS, and FILTER Tool",
     description:
@@ -2447,7 +2447,7 @@ function ToolsDirectory() {
               className="group mc-card-interactive flex flex-col rounded-lg border border-line bg-canvas p-5 text-sm hover:border-accent hover:bg-surface  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
             >
               <div className="flex items-center justify-between gap-2">
-                <span className="text-2xl" aria-hidden="true">{tool.icon}</span>
+                <span className="tool-card__icon" aria-hidden="true"><ModuleIcon name="tool" /></span>
                 <span className="rounded-md border border-line bg-surface px-2 py-0.5 text-xs font-medium uppercase tracking-wide text-ink-2">Free Tool</span>
               </div>
               <span className="mc-mono mt-3 block text-xs uppercase tracking-[0.18em] text-[rgb(var(--accent))]/80">{tool.category}</span>
