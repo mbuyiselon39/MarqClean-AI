@@ -13,6 +13,8 @@ export default {
           3: "rgb(var(--ink-3) / <alpha-value>)",
           4: "rgb(var(--ink-4) / <alpha-value>)",
         },
+        inverse: "rgb(var(--surface-inverse) / <alpha-value>)",
+        "on-inverse": "rgb(var(--on-inverse) / <alpha-value>)",
         accent: {
           DEFAULT: "rgb(var(--accent) / <alpha-value>)",
           hover: "rgb(var(--accent-hover) / <alpha-value>)",
