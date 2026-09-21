@@ -3,7 +3,7 @@ import Papa from "papaparse";
 import * as XLSX from "xlsx";
 
 export type SmartRecommendation = {
-  id: "cleaner" | "reconciliation" | "converter" | "formulas" | "bank" | "data-engine";
+  id: "cleaner" | "reconciliation" | "converter" | "formulas" | "bank";
   label: string;
   reason: string;
 };
@@ -58,7 +58,7 @@ function analyseMatrix(matrix: unknown[][]): Diagnostics {
   if (hasTransaction) recommendations.push({ id: "reconciliation", label: "Reconciliation Hub", reason: "Transaction/reference/amount fields detected." });
   if (hasLead) recommendations.push({ id: "cleaner", label: "Quick Data & CSV Cleaner", reason: "Lead/contact fields detected." });
   if (hasNumeric) recommendations.push({ id: "formulas", label: "Excel Automation", reason: "Numeric fields detected; formulas and totals may help." });
-  if (!recommendations.length) recommendations.push({ id: "data-engine", label: "Local Data Engine", reason: "Inspect the schema and choose a workflow from the local engine." });
+  if (!recommendations.length) recommendations.push({ id: "data-toolbox", label: "Data Toolbox", reason: "Inspect the schema and choose a structured data workflow." });
   return { rows: Math.max(0, rows.length - 1), columns: expected, corruptedRows, nonStandardDates, headers, recommendations: recommendations.slice(0, 3) };
 }
 
@@ -96,7 +96,7 @@ export default function SmartDropzone({
         recommendations: [
           { id: "bank", label: "Bank Ledger X", reason: "PDF detected. Bank Ledger X can be used for statement workflows." },
           { id: "reconciliation", label: "Reconciliation Hub", reason: "Use reconciliation after transaction extraction." },
-          { id: "data-engine", label: "Local Data Engine", reason: "Inspect extracted data locally after conversion." },
+          { id: "data-toolbox", label: "Data Toolbox", reason: "Inspect extracted data locally after conversion." },
         ],
       });
       return;
