@@ -1613,24 +1613,31 @@ async function parseCsvFile(file: File) {
   });
 }
 
+function isExcelDateFormat(format: unknown): boolean {
+  if (typeof format !== "string" || !format) return false;
+  const cleaned = format.replace(/"[^"]*"/g, "").replace(/\[[^\]]*\]/g, "").replace(/\\./g, "");
+  return /(^|[^a-z])(?:d{1,4}|m{1,4}|y{2,4})(?:[^a-z]|$)/i.test(cleaned);
+}
+
+function excelSerialToIsoDate(serial: number): string {
+  const epoch = Date.UTC(1899, 11, 30);
+  const date = new Date(epoch + Math.round(serial) * 86400000);
+  return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, "0")}-${String(date.getUTCDate()).padStart(2, "0")}`;
+}
+
 async function readWorkbookMatrix(file: File): Promise<string[][]> {
   const buffer = await file.arrayBuffer();
   const workbook = XLSX.read(buffer, {
-    type: "array",
-    dense: true,
-    cellDates: true,
-    raw: false,
-    dateNF: "yyyy-mm-dd",
+    type: "array", dense: true, cellDates: true, raw: true, dateNF: "yyyy-mm-dd",
   });
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
   if (!sheet) throw new Error("The Excel workbook does not contain a readable worksheet.");
-  const matrix = XLSX.utils.sheet_to_json<unknown[]>(sheet, { header: 1, defval: "", raw: false });
-  return matrix.map((row) => row.map((value) => {
-    if (value instanceof Date) {
-      const year = value.getFullYear();
-      const month = String(value.getMonth() + 1).padStart(2, "0");
-      const day = String(value.getDate()).padStart(2, "0");
-      return `${year}-${month}-${day}`;
+  const matrix = XLSX.utils.sheet_to_json<unknown[]>(sheet, { header: 1, defval: "", raw: true });
+  return matrix.map((row, rowIndex) => row.map((value, columnIndex) => {
+    if (value instanceof Date) return excelSerialToIsoDate(value.getTime() / 86400000 + 25569);
+    if (typeof value === "number") {
+      const cell = sheet[XLSX.utils.encode_cell({ r: rowIndex, c: columnIndex })];
+      if (cell && isExcelDateFormat(cell.z)) return excelSerialToIsoDate(value);
     }
     return sanitizeCell(value);
   }));
@@ -2023,7 +2030,7 @@ function computeAggregateValue(aggregate: AggregateType, values: number[]) {
     case "count":
       return finiteValues.length;
     case "min":
-      return Math.min(...finiteValues);
+      return finiteValues.reduce((minimum, value) => Math.min(minimum, value), Number.POSITIVE_INFINITY);
     case "max":
       return finiteValues.reduce((max, value) => Math.max(max, value), -Infinity);
     default:
