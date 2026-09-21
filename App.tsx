@@ -3289,7 +3289,7 @@ export default function App() {
           >
             {[
               { value: "63", label: "Excel function actions" },
-              { value: "33", label: "Free data & Excel tools" },
+              { value: "33+", label: "Free data & Excel tools" },
               { value: "6", label: "Core file formats" },
               { value: "0", label: "Files ever sent to a server" },
             ].map((stat) => (
