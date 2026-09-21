@@ -3012,7 +3012,7 @@ export default function App() {
         throw new Error(`This file is larger than ${MAX_FILE_SIZE_LABEL}. Try a smaller statement.`);
       }
 
-      const text = extension === "pdf" ? await extractPdfText(file) : await file.text();
+      const text = extension === "pdf" ? await extractPdfTextInWorker(file) : await file.text();
       const transactions = extractBankTransactions(text);
 
       if (!transactions.length) {
