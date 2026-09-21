@@ -480,7 +480,7 @@ textarea { min-height: 88px; resize: vertical; }
 .ws-sidebar__label,.ws-module-tabs__label { padding:0 8px 8px; color:rgb(var(--ink-3)); font-size:11px; line-height:16px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
 .ws-sidebar__item { width:100%; min-height:40px; display:flex; align-items:center; gap:9px; padding:7px 8px; border:0; border-radius:6px; background:transparent; color:rgb(var(--ink-2)); text-align:left; }
 .ws-sidebar__item:hover { background:rgb(var(--surface-2)); color:rgb(var(--ink)); }
-.ws-sidebar__item.is-active { background:rgb(var(--surface-2)); color:rgb(var(--ink)); box-shadow:inset 2px 0 0 rgb(var(--accent)); }
+.ws-sidebar__item.is-active { background:rgb(var(--surface-2)); color:rgb(var(--ink)); border-left:2px solid rgb(var(--accent)); padding-left:6px; }
 .ws-sidebar-icon { width:24px; height:24px; display:grid; place-items:center; flex:none; color:inherit; }
 .ws-sidebar-icon svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
 .ws-sidebar__item-copy { min-width:0; display:flex; flex:1; flex-direction:column; }
