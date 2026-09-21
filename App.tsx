@@ -3227,12 +3227,6 @@ export default function App() {
     );
   }
 
-  const productsMenu: Array<{ label: string; href: string; onClick: () => void }> = [
-    { label: "Quick Data & CSV Cleaner", href: "/data-cleaner", onClick: () => openWorkspaceTab("leads") },
-    { label: "Excel Automation", href: "/excel-automation", onClick: () => navigateToPage("excel-automation") },
-    { label: "Reconciliation Hub", href: "/reconciliation-hub", onClick: () => navigateToPage("reconciliation-hub") },
-    { label: "Data Toolbox", href: "/data-toolbox", onClick: () => navigateToPage("data-toolbox") },
-  ];
 
   return (
     <div className="amzigo-revamp min-h-screen bg-[rgb(var(--canvas))] text-ink">
@@ -3242,117 +3236,39 @@ export default function App() {
       >
         Skip to content
       </a>
-      <header className="mc-glass fixed left-0 right-0 top-0 z-30 border-b border-line/80 bg-canvas/95 text-ink -xl">
-        <nav className="mx-auto flex max-w-[100rem] items-center justify-between gap-4 px-5 py-3.5 lg:px-8" aria-label="Primary navigation">
-          <a
-            href="/#top"
-            className="mc-display flex items-center gap-2 text-lg font-medium tracking-tight"
-            onClick={(event) => {
-              event.preventDefault();
-              navigateToHomeSection("top");
-            }}
-          >
+      <header className="mc-glass fixed left-0 right-0 top-0 z-30 border-b border-line/80 bg-canvas/95 text-ink">
+        <nav className="mx-auto flex max-w-[100rem] items-center justify-between gap-6 px-5 py-4 lg:px-8" aria-label="Primary navigation">
+          <a href="/#top" className="flex shrink-0 items-center" onClick={(event) => { event.preventDefault(); navigateToHomeSection("top"); }}>
             <Logo className="shrink-0" />
           </a>
-          <div className="hidden items-center gap-6 text-sm font-medium text-ink-2 xl:flex">
-            <a href="/#top" className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("top"); }}>Home</a>
-            <a href="/#features" className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("features"); }}>Platform</a>
-            <a href="/#workflow" className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("workflow"); }}>How it works</a>
-            <div className="relative" ref={productsMenuRef}>
-              <button
-                type="button"
-                className="flex items-center gap-1 transition hover:text-[rgb(var(--accent))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
-                aria-haspopup="true"
-                aria-expanded={isWorkspacesOpen}
-                aria-controls="workspaces-menu"
-                onClick={() => setIsWorkspacesOpen((open) => !open)}
-              >Workspaces<svg className={`h-3.5 w-3.5 transition ${isWorkspacesOpen ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
-              </button>
-              {isWorkspacesOpen ? (
-                <div
-                  id="workspaces-menu"
-                  role="menu"
-                  aria-label="Workspaces"
-                  className="absolute left-1/2 top-full mt-3 w-72 -translate-x-1/2 rounded-lg border border-line bg-[rgb(var(--surface))] p-2 text-sm"
-                >
-                  {productsMenu.map((item) => (
-                    <a
-                      key={item.label}
-                      role="menuitem"
-                      href={item.href}
-                      className="block rounded-lg px-3 py-2.5 font-medium text-ink-2 transition hover:bg-canvas/5 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
-                      onClick={(e) => { e.preventDefault(); setIsWorkspacesOpen(false); item.onClick(); }}
-                    >
-                      {item.label}
-                    </a>
-                  ))}
-                </div>
-              ) : null}
-            </div>
-            <a href="/contact" className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); navigateToPage("contact"); }}>Contact</a>
+          <div className="hidden items-center gap-7 text-sm font-semibold text-ink-2 xl:flex">
+            <a href="/#features" className="transition hover:text-ink" onClick={(e) => { e.preventDefault(); navigateToHomeSection("features"); }}>Platform</a>
+            <a href="/#free-tools" className="transition hover:text-ink" onClick={(e) => { e.preventDefault(); navigateToHomeSection("free-tools"); }}>Tools</a>
+            <a href="/#workflow" className="transition hover:text-ink" onClick={(e) => { e.preventDefault(); navigateToHomeSection("workflow"); }}>How it works</a>
+            <a href="/excel-academy" className="transition hover:text-ink" onClick={(e) => { e.preventDefault(); navigateToPage("excel-academy"); }}>Academy</a>
+            <a href="/contact" className="transition hover:text-ink" onClick={(e) => { e.preventDefault(); navigateToPage("contact"); }}>Contact</a>
           </div>
           <div className="flex items-center gap-2">
             <ThemeToggle compact />
-            <button
-              className="mc-cta-cyan hidden rounded-md px-5 py-2 text-sm font-medium sm:inline-flex"
-              onClick={() => navigateToHomeSection("cleaner")}
-            >
-              Start Free
-            </button>
-            <button
-              type="button"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-line text-ink transition hover:border-[rgb(var(--accent))]/60 hover:text-[rgb(var(--accent))] xl:hidden"
-              aria-label={isMobileNavOpen ? "Close navigation menu" : "Open navigation menu"}
-              aria-expanded={isMobileNavOpen}
-              aria-controls="mobile-nav-panel"
-              onClick={() => setIsMobileNavOpen((open) => !open)}
-            >
+            <button className="mc-cta-cyan hidden rounded-pill px-5 py-2 text-sm font-bold sm:inline-flex" onClick={() => navigateToHomeSection("cleaner")}>Start free</button>
+            <button type="button" className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-line text-ink transition hover:border-[rgb(var(--accent))] xl:hidden" aria-label={isMobileNavOpen ? "Close navigation menu" : "Open navigation menu"} aria-expanded={isMobileNavOpen} aria-controls="mobile-nav-panel" onClick={() => setIsMobileNavOpen((open) => !open)}>
               {isMobileNavOpen ? (
-                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-                  <path d="M6 6l12 12M18 6L6 18" />
-                </svg>
+                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
               ) : (
-                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-                  <path d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
+                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
               )}
             </button>
           </div>
         </nav>
         {isMobileNavOpen ? (
           <div id="mobile-nav-panel" className="border-t border-line bg-canvas px-5 py-4 xl:hidden">
-            <div className="flex flex-col gap-1 text-base font-medium text-ink-2">
-              <a className="rounded-lg px-3 py-2.5 transition hover:bg-surface hover:text-[rgb(var(--accent))]" href="/#top" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("top"); }}>Home</a>
-              <a className="rounded-lg px-3 py-2.5 transition hover:bg-canvas/5 hover:text-[rgb(var(--accent))]" href="/#features" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("features"); }}>Platform</a>
-              <button
-                type="button"
-                className="flex items-center justify-between rounded-lg px-3 py-2.5 text-left transition hover:bg-surface hover:text-[rgb(var(--accent))]"
-                aria-expanded={isMobileWorkspacesOpen}
-                aria-controls="mobile-workspaces-menu"
-                onClick={() => setIsMobileWorkspacesOpen((open) => !open)}
-              >Workspaces<svg className={`h-4 w-4 transition ${isMobileWorkspacesOpen ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
-              </button>
-              {isMobileWorkspacesOpen ? (
-                <div id="mobile-workspaces-menu" className="ml-3 flex flex-col gap-1 border-l border-line pl-3">
-                  {productsMenu.map((item) => (
-                    <a
-                      key={item.label}
-                      href={item.href}
-                      className="rounded-lg px-3 py-2 text-sm text-ink-2 transition hover:bg-surface hover:text-[rgb(var(--accent))]"
-                      onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); item.onClick(); }}
-                    >
-                      {item.label}
-                    </a>
-                  ))}
-                </div>
-              ) : null}
-              <a className="rounded-lg px-3 py-2.5 transition hover:bg-canvas/5 hover:text-[rgb(var(--accent))]" href="/contact" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToPage("contact"); }}>Contact</a>
-              <button
-                className="mc-cta-cyan mt-2 rounded-md px-5 py-2.5 text-sm font-medium sm:hidden"
-                onClick={() => { setIsMobileNavOpen(false); navigateToHomeSection("cleaner"); }}
-              >
-                Start Free
-              </button>
+            <div className="flex flex-col gap-1 text-base font-semibold text-ink-2">
+              <a className="rounded-md px-3 py-3 transition hover:bg-surface hover:text-ink" href="/#features" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("features"); }}>Platform</a>
+              <a className="rounded-md px-3 py-3 transition hover:bg-surface hover:text-ink" href="/#free-tools" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("free-tools"); }}>Tools</a>
+              <a className="rounded-md px-3 py-3 transition hover:bg-surface hover:text-ink" href="/#workflow" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("workflow"); }}>How it works</a>
+              <a className="rounded-md px-3 py-3 transition hover:bg-surface hover:text-ink" href="/excel-academy" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToPage("excel-academy"); }}>Academy</a>
+              <a className="rounded-md px-3 py-3 transition hover:bg-surface hover:text-ink" href="/contact" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToPage("contact"); }}>Contact</a>
+              <button className="mc-cta-cyan mt-2 rounded-pill px-5 py-2.5 text-sm font-bold" onClick={() => { setIsMobileNavOpen(false); navigateToHomeSection("cleaner"); }}>Start free</button>
             </div>
           </div>
         ) : null}
