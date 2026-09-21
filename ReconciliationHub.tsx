@@ -29,7 +29,7 @@ import {
   type MailingResult,
 } from "./mailing";
 
-const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024 * 1024;
+const MAX_FILE_SIZE_BYTES = 100 * 1024 * 1024;
 
 type NavKey =
   | "dashboard"
@@ -217,7 +217,7 @@ export default function ReconciliationHub({ onExit }: { onExit: () => void }) {
     setProcessing(true);
     try {
       if (detectFileKind(file.name) === "unknown") throw new Error("Unsupported file. Upload PDF, Excel, CSV, or Word.");
-      if (file.size > MAX_FILE_SIZE_BYTES) throw new Error("File exceeds the 2 GB limit.");
+      if (file.size > MAX_FILE_SIZE_BYTES) throw new Error("File exceeds the 100 MB browser-safe limit. Split the source file before processing.");
 
       const table = await extractToTable(file);
       if (!table.headers.length) throw new Error("No readable data found in the file.");
