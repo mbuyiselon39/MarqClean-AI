@@ -14,7 +14,7 @@ import SmartDropzone, { type SmartPipelineAction, type SmartRecommendation } fro
 import Logo from "./Logo";
 import ThemeToggle from "./ThemeToggle";
 import { extractPdfTextInWorker } from "./pdfWorkerClient";
-import { GlobalHeader } from "./WorkspaceShell";
+import { GlobalHeader, PageHeader } from "./WorkspaceShell";
 
 type RawRow = Record<string, unknown>;
 type CleanRow = Record<string, string>;
@@ -2468,110 +2468,39 @@ function ToolsDirectory() {
 
 function FooterContentPage({ page }: { page: FooterPage }) {
   return (
-    <main id="main-content" className="min-h-screen bg-[rgb(var(--canvas))] px-5 pb-20 pt-32 text-ink lg:px-8">
-      <motion.article
-        className="mx-auto max-w-4xl"
-        initial={{ opacity: 0, y: 18 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-      >
-        <nav className="text-sm" aria-label="Breadcrumb">
-          <PageLink className="font-medium text-[rgb(var(--accent-hover))] transition hover:text-ink" page="home">MarqClean AI</PageLink>
-          <span className="mx-2 text-ink-3" aria-hidden="true">/</span>
-          <span className="text-ink-2">{page.title}</span>
+    <main id="main-content" className="min-h-screen bg-[rgb(var(--canvas))] px-5 pb-20 pt-24 text-ink lg:px-8">
+      <div className="mx-auto max-w-4xl">
+        <PageHeader workspace="MarqClean AI" title={page.title} description={page.description} />
+        <p className="text-sm text-ink-2">Last updated: June 29, 2026</p>
+        ${page.sections.length > 2 ? (
+        <nav className="mc-legal-toc mt-8" aria-label="On this page">
+          <h2 className="text-base font-medium text-ink">On this page</h2>
+          <div className="mt-2">{page.sections.map((section) => <a key={section.heading} href={`#legal-${section.heading.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}>{section.heading}</a>)}</div>
         </nav>
-        <p className="mt-8 text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">{COMPANY_NAME}</p>
-        <h1 className="mt-4 text-5xl font-medium tracking-[-0.05em] text-ink sm:text-6xl">{page.title}</h1>
-        <p className="mt-6 max-w-[68ch] text-lg leading-8 text-ink-2">{page.description}</p>
-        {page.sections.length > 2 ? (
-          <nav className="mc-legal-toc mt-8" aria-label="On this page">
-            <h2 className="text-base font-medium text-ink">On this page</h2>
-            <div className="mt-2">
-              {page.sections.map((section) => (
-                <a key={section.heading} href={`#legal-${section.heading.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}>
-                  {section.heading}
-                </a>
-              ))}
-            </div>
-          </nav>
         ) : null}
-        {page.title === "Contact" ? (
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a className="mc-cta-cyan rounded-md px-5 py-2.5 text-sm font-medium" href="mailto:support@vertexstreamtechnologies.com">Email support</a>
-            <span className="inline-flex min-h-10 items-center rounded-md border border-line px-4 py-2 text-sm text-ink-2">Typical response: within 2 business days</span>
-          </div>
-        ) : null}
-        <p className="mt-4 text-sm text-ink-2">Last updated: June 29, 2026</p>
-
-        <div className="mt-12 space-y-10">
-          {page.sections.map((section) => (
-            <section id={`legal-${section.heading.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`} key={section.heading} className="border-t border-line pt-8 mc-legal-copy">
-              <h2 className="text-3xl font-medium tracking-[-0.04em] text-ink">{section.heading}</h2>
-              <div className="mt-4 space-y-4">
-                {section.body.map((paragraph) => (
-                  <p className="leading-7 text-ink-2 " key={paragraph}>
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-            </section>
-          ))}
-        </div>
-      </motion.article>
+        {page.title === "Contact" ? <div className="mt-8 flex flex-wrap gap-3"><a className="mc-cta-cyan rounded-md px-5 py-2.5 text-sm font-medium" href="mailto:support@vertexstreamtechnologies.com">Email support</a><span className="inline-flex min-h-10 items-center rounded-md border border-line px-4 py-2 text-sm text-ink-2">Typical response: within 2 business days</span></div> : null}
+        <div className="mt-12 space-y-10">{page.sections.map((section) => <section id={`legal-${section.heading.toLowerCase().replace(/[^a-z0-9]+/g, "-")`} key={section.heading} className="border-t border-line pt-8 mc-legal-copy"><h2 className="text-2xl font-semibold tracking-tight text-ink">{section.heading}</h2><div className="mt-4 space-y-4">{section.body.map((paragraph) => <p className="leading-7 text-ink-2" key={paragraph}>{paragraph}</p>)}</div></section>)}</div>
+      </div>
     </main>
   );
 }
 
 function ToolContentPage({ page }: { page: SeoToolPage }) {
   return (
-    <main id="main-content" className="min-h-screen bg-[rgb(var(--canvas))] px-5 pb-20 pt-32 text-ink lg:px-8">
-      <motion.article
-        className="mx-auto max-w-5xl"
-        initial={{ opacity: 0, y: 18 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-      >
-        <PageLink className="text-sm font-medium text-[rgb(var(--accent-hover))] transition hover:text-ink" page="home">
-          Back to free CSV cleaner
-        </PageLink>
-        <p className="mt-8 text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">Free browser-based tool</p>
-        <h1 className="mt-4 max-w-4xl text-5xl font-medium tracking-[-0.05em] text-ink sm:text-6xl">{page.h1}</h1>
-        <p className="mt-6 max-w-3xl text-lg leading-8 text-ink-2">{page.description}</p>
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <a
-            className="mc-cta-cyan rounded-md px-6 py-3 text-center text-sm font-medium"
-            href="/#cleaner"
-            onClick={(event) => {
-              event.preventDefault();
-              navigateToPage("home");
-              window.setTimeout(() => document.getElementById("cleaner")?.scrollIntoView({ behavior: "smooth" }), 80);
-            }}
-          >
-            Use the free cleaner
-          </a>
-          <PageLink className="rounded-md border border-line px-6 py-3 text-center text-sm font-medium text-ink transition hover:border-line" page="lead-list-cleaner">
-            Explore lead list cleanup
-          </PageLink>
+    <main id="main-content" className="min-h-screen bg-[rgb(var(--canvas))] px-5 pb-20 pt-24 text-ink lg:px-8">
+      <div className="mx-auto max-w-5xl">
+        <PageHeader workspace="Free tools" title={page.title} description={page.description} />
+        <div className="flex flex-wrap gap-3">
+          <a className="mc-cta-cyan rounded-md px-6 py-3 text-center text-sm font-medium" href="/#cleaner" onClick={(event) => { event.preventDefault(); navigateToPage("home"); window.setTimeout(() => document.getElementById("cleaner")?.scrollIntoView({ behavior: "smooth" }), 80); }}>Use the free cleaner</a>
+          <PageLink className="rounded-md border border-line px-6 py-3 text-center text-sm font-medium text-ink" page="lead-list-cleaner">Explore lead list cleanup</PageLink>
         </div>
-
-        <section className="mt-16 border-t border-line pt-10">
-          <p className="text-sm font-medium uppercase tracking-[0.24em] text-[rgb(var(--accent))]">{page.keyword}</p>
-          <h2 className="mt-4 text-4xl font-medium tracking-[-0.04em] text-ink">{page.h2}</h2>
-          <p className="mt-5 max-w-3xl leading-7 text-ink-2 ">
-            This page is powered by the same modular MarqClean AI cleaning engine used across every free CSV cleaner,
-            Excel converter, lead list cleaner, CRM data cleanup tool, duplicate checker, and spreadsheet formatting workflow.
-          </p>
+        <section className="mt-12 border-t border-line pt-8">
+          <p className="text-sm font-medium uppercase tracking-[0.2em] text-[rgb(var(--accent))]">{page.keyword}</p>
+          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-ink">{page.h2}</h2>
+          <p className="mt-4 max-w-3xl leading-7 text-ink-2">This page is powered by the same modular MarqClean AI cleaning engine used across the free spreadsheet and data workflows.</p>
         </section>
-
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {page.sections.map((section) => (
-            <section key={section.h3} className="mc-glass rounded-lg p-6">
-              <h3 className="text-xl font-medium tracking-[-0.02em] text-ink">{section.h3}</h3>
-              <p className="mt-3 text-base leading-6 text-ink-2">{section.body}</p>
-            </section>
-          ))}
-        </div>
-      </motion.article>
+        <div className="mt-10 grid gap-4 md:grid-cols-3">{page.sections.map((section) => <section key={section.h3} className="mc-glass rounded-lg p-6"><h3 className="text-lg font-semibold text-ink">{section.h3}</h3><p className="mt-3 text-base leading-7 text-ink-2">{section.body}</p></section>)}</div>
+      </div>
     </main>
   );
 }
