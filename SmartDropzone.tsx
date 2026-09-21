@@ -200,7 +200,7 @@ export default function SmartDropzone({
                 </label>
               ))}
             </div>
-            <button type="button" disabled={fileType === "PDF"} onClick={run} className="mt-4 w-full rounded-md bg-ink px-5 py-3 text-sm font-medium text-ink disabled:cursor-not-allowed disabled:opacity-40">Run workflow locally</button>
+            <button type="button" disabled={fileType === "PDF"} onClick={run} className="mt-4 w-full rounded-md bg-inverse px-5 py-3 text-sm font-medium text-on-inverse disabled:cursor-not-allowed disabled:opacity-40">Run workflow locally</button>
             {fileType === "PDF" ? <p className="mt-2 text-xs text-ink-3">Open Bank Ledger X for PDF extraction before running a data workflow.</p> : null}
           </div>
         </div>
