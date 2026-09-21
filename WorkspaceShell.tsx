@@ -146,7 +146,7 @@ export function FormatBadge({ label }: { label: string }) { return <span classNa
 
 type WorkspaceTool<T extends string> = { key: T; label: string; blurb: string; icon: string; category?: string };
 
-function toolIcon(key: string, fallback: string) {
+function toolIcon(key: string, _fallback: string) {
   if (/formula|dax|function/i.test(key)) return "formula";
   if (/reconcil|comparison|match|verify/i.test(key)) return "reconcile";
   if (/bank|statement/i.test(key)) return "document";
@@ -248,7 +248,6 @@ export function ToolLaunchpad<T extends string>({ tools, active, onSelect }: { t
     return () => document.removeEventListener("keydown", trap);
   }, [drawerOpen]);
   const groups = workspaceGroups(tools);
-  const current = tools.find((t) => t.key === active);
   const choose = (key: T) => { onSelect(key); setDrawerOpen(false); };
   const sidebar = <aside className={`ws-sidebar ${collapsed ? "is-collapsed" : ""} ${drawerOpen ? "is-open" : ""}`} aria-label="Workspace navigation">
     <div className="ws-sidebar__scroll">
@@ -274,7 +273,7 @@ export function PageHeader({ workspace, title, description, actions, onBack }: {
   return <div className="ws-page-header"><div className="ws-page-header__back"><button type="button" onClick={goBack}><Icon name="arrow" size={17} /> Back</button><nav aria-label="Breadcrumb"><a href="/" onClick={(e) => { e.preventDefault(); go("/"); }}>Home</a><span>/</span><span>{workspace}</span><span>/</span><strong>{title}</strong></nav></div><div className="ws-page-header__row"><div><h1>{workspace}</h1><p>{description}</p></div>{actions ? <div className="ws-page-header__actions">{actions}</div> : null}</div></div>;
 }
 
-export function WorkspaceShell({ icon, title, description, engine, formats, status, children }: { icon: string; title: string; description: string; engine?: string; formats?: string[]; status?: { tone: StatusTone; label: string }; children: ReactNode }) {
+export function WorkspaceShell({ icon: _icon, title, description, engine: _engine, formats: _formats, status: _status, children }: { icon: string; title: string; description: string; engine?: string; formats?: string[]; status?: { tone: StatusTone; label: string }; children: ReactNode }) {
   return <div className="ws-root ws-scope min-h-screen"><GlobalHeader /><div className="ws-page-frame"><PageHeader workspace={title} title={title} description={description} /><div className="ws-page-body">{children}</div></div></div>;
 }
 
