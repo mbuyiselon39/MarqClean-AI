@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useMemo, useRef, useState } from "react";
-import { GlobalHeader, ToolLaunchpad } from "./WorkspaceShell";
+import { GlobalHeader, PageHeader, ToolLaunchpad } from "./WorkspaceShell";
 import SmartSheetManager from "./SmartSheetManager";
 import {
   autoDetectMapping,
@@ -45,17 +45,17 @@ type NavKey =
   | "sheet-manager";
 
 const NAV_ITEMS: Array<{ key: NavKey; label: string; blurb: string; icon: string }> = [
-  { key: "dashboard", label: "Dashboard", blurb: "Processing statistics, exception summary, and history.", icon: "📊" },
-  { key: "bank", label: "Bank Ledger X", blurb: "Bank statement and ledger reconciliation module.", icon: "🏦" },
-  { key: "mailing", label: "Data Verification", blurb: "Verify PDF client mailing data against Excel master data.", icon: "🔎" },
-  { key: "comparison", label: "File Comparison Centre", blurb: "Excel, CSV, PDF, and Word comparison in every mode.", icon: "🔁" },
-  { key: "cleansing", label: "Data Cleansing Centre", blurb: "Duplicates, names, addresses, phones, and formatting.", icon: "🧹" },
-  { key: "reconciliation", label: "Reconciliation Services", blurb: "Client, investor, account, banking, and register recon.", icon: "🔄" },
-  { key: "compliance", label: "Compliance Validation", blurb: "KYC/FICA, CRS/FATCA, PEP, trust, and director checks.", icon: "✅" },
-  { key: "documents", label: "Document Validation Centre", blurb: "Application, mandate, banking, and identity validation.", icon: "📄" },
-  { key: "reporting", label: "Reporting Centre", blurb: "Reconciliation, exception, audit, and quality reports.", icon: "📈" },
-  { key: "administration", label: "Administration", blurb: "Templates, field mapping, audit logs, and settings.", icon: "⚙️" },
-  { key: "sheet-manager", label: "Smart Sheet Manager", blurb: "Analyse, keep, delete, rename, and sort worksheets in any workbook.", icon: "📑" },
+  { key: "dashboard", label: "Dashboard", blurb: "Processing statistics, exception summary, and history.", icon: "chart" },
+  { key: "bank", label: "Bank Ledger X", blurb: "Bank statement and ledger reconciliation module.", icon: "document" },
+  { key: "mailing", label: "Data Verification", blurb: "Verify PDF client mailing data against Excel master data.", icon: "search" },
+  { key: "comparison", label: "File Comparison Centre", blurb: "Excel, CSV, PDF, and Word comparison in every mode.", icon: "reconcile" },
+  { key: "cleansing", label: "Data Cleansing Centre", blurb: "Duplicates, names, addresses, phones, and formatting.", icon: "clean" },
+  { key: "reconciliation", label: "Reconciliation Services", blurb: "Client, investor, account, banking, and register recon.", icon: "reconcile" },
+  { key: "compliance", label: "Compliance Validation", blurb: "KYC/FICA, CRS/FATCA, PEP, trust, and director checks.", icon: "document" },
+  { key: "documents", label: "Document Validation Centre", blurb: "Application, mandate, banking, and identity validation.", icon: "document" },
+  { key: "reporting", label: "Reporting Centre", blurb: "Reconciliation, exception, audit, and quality reports.", icon: "chart" },
+  { key: "administration", label: "Administration", blurb: "Templates, field mapping, audit logs, and settings.", icon: "settings" },
+  { key: "sheet-manager", label: "Smart Sheet Manager", blurb: "Analyse, keep, delete, rename, and sort worksheets in any workbook.", icon: "grid" },
 ];
 
 const STATUS_COLORS: Record<string, string> = {
@@ -321,20 +321,11 @@ export default function ReconciliationHub({ onExit }: { onExit: () => void }) {
       <GlobalHeader />
       <div className="ws-grid pointer-events-none absolute inset-x-0 top-0 h-[38rem]" aria-hidden="true" />
 
-      <div className="mc-site-container relative mb-2 flex flex-wrap items-center justify-between gap-3 pt-32">
-        <div className="flex items-center gap-3">
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-canvas /20 /20 text-xl ring-1 ring-inset ring-white/10">🔄</span>
-          <div>
-            <h2 className="mc-display text-xl font-medium text-ink">Reconciliation Hub</h2>
-            <p className="text-xs text-[rgb(var(--ink-2))]">Rule-based reconciliation, validation and record matching. Runs locally in your browser.</p>
-          </div>
-        </div>
-        <a href="/" className="ws-btn-secondary rounded-md px-4 py-2 text-sm font-medium" onClick={(event) => { event.preventDefault(); onExit(); }}>Workspace home</a>
-      </div>
-
-      <div className="mc-site-container relative pb-16 pt-4">
-        <div className="mb-2">
-          <p className="mc-mono text-xs uppercase tracking-[0.2em] text-[rgb(var(--ink-3))]">Modules Available ({NAV_ITEMS.length})</p>
+      <div className="mc-site-container relative pb-16 pt-28">
+        <PageHeader workspace="Reconciliation Hub" title="Reconciliation Hub" description="Rule-based reconciliation, validation and record matching. Runs locally in your browser." onBack={onExit} />
+        <div className="mb-5 flex items-center gap-3">
+          <h2 className="text-lg font-semibold text-ink">Verification workspace</h2>
+          <span className="ws-format-badge">NAV_ITEMS.length modules</span>
         </div>
         <ToolLaunchpad tools={NAV_ITEMS} active={nav} onSelect={setNav} />
 
