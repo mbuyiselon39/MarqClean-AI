@@ -1594,6 +1594,7 @@ async function parseCsvFile(file: File) {
       const text = decodeDelimitedText(new Uint8Array(buffer));
       Papa.parse<RawRow>(text, {
         header: true,
+        delimiter: "",
         skipEmptyLines: "greedy",
         transformHeader: (header) => sanitizeCell(header),
         complete: (result) => {
@@ -1664,7 +1665,7 @@ async function readFileMatrix(file: File): Promise<string[][]> {
   const extension = file.name.split(".").pop()?.toLowerCase();
   if (extension === "xlsx" || extension === "xls") return readWorkbookMatrix(file);
   const text = decodeDelimitedText(new Uint8Array(await file.arrayBuffer()));
-  const parsed = Papa.parse<string[]>(text, { skipEmptyLines: "greedy" });
+  const parsed = Papa.parse<string[]>(text, { delimiter: "", skipEmptyLines: "greedy" });
   return (parsed.data as string[][]).filter((row) => row.some((value) => sanitizeCell(value)));
 }
 
