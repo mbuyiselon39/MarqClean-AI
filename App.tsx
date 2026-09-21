@@ -1729,26 +1729,30 @@ function normalizeStatementAmount(raw: string): string {
   if (/-\s*$/.test(value) || /^-/.test(value) || /\bDR\b/i.test(value)) negative = true;
   if (/\bCR\b/i.test(value)) negative = false;
 
-  value = value.replace(/[^\d.,-]/g, "");
+  value = value.replace(/[^\d.,-]/g, "").replace(/(?!^)-/g, "");
+  if (!value) return "";
 
-  const lastComma = value.lastIndexOf(",");
-  const lastDot = value.lastIndexOf(".");
+  const comma = value.lastIndexOf(",");
+  const dot = value.lastIndexOf(".");
+  const hasComma = comma >= 0;
+  const hasDot = dot >= 0;
 
-  if (lastComma > lastDot) {
-    value = value.replace(/\./g, "").replace(",", ".");
-  } else {
-    value = value.replace(/,/g, "");
+  if (hasComma && hasDot) {
+    // The rightmost separator is the decimal separator.
+    if (comma > dot) value = value.replace(/\./g, "").replace(",", ".");
+    else value = value.replace(/,/g, "");
+  } else if (hasComma) {
+    const decimals = value.length - comma - 1;
+    value = decimals === 1 || decimals === 2 ? value.replace(",", ".") : value.replace(/,/g, "");
+  } else if (hasDot) {
+    const decimals = value.length - dot - 1;
+    value = decimals === 1 || decimals === 2 ? value : value.replace(/\./g, "");
   }
 
-  value = value.replace(/(?!^)-/g, "");
-
-  const number = parseFloat(value);
+  const number = Number(value);
   if (!Number.isFinite(number)) return "";
-
-  const signed = negative ? -Math.abs(number) : number;
-  return signed.toFixed(2);
+  return (negative ? -Math.abs(number) : number).toFixed(2);
 }
-
 const STATEMENT_DATE_PATTERN = /(\d{4}[-/.]\d{1,2}[-/.]\d{1,2}|\d{1,2}[-/.]\d{1,2}[-/.]\d{2,4}|\d{1,2}[\s-][A-Za-z]{3,}[\s-]\d{2,4}|[A-Za-z]{3,}[\s-]\d{1,2},?[\s-]\d{2,4})/;
 const AMOUNT_TOKEN = /-?\(?[\d.,]+\)?(?:\s?(?:CR|DR))?/gi;
 
