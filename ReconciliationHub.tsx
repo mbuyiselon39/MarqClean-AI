@@ -334,7 +334,7 @@ export default function ReconciliationHub({ onExit }: { onExit: () => void }) {
 
       <div className="mc-site-container relative pb-16 pt-4">
         <div className="mb-2">
-          <p className="mc-mono text-[11px] uppercase tracking-[0.2em] text-[rgb(var(--ink-3))]">Modules Available ({NAV_ITEMS.length})</p>
+          <p className="mc-mono text-xs uppercase tracking-[0.2em] text-[rgb(var(--ink-3))]">Modules Available ({NAV_ITEMS.length})</p>
         </div>
         <ToolLaunchpad tools={NAV_ITEMS} active={nav} onSelect={setNav} />
 
@@ -541,10 +541,10 @@ function BankLedgerView() {
         reporting.
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
-        <span className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-medium uppercase">PDF</span>
-        <span className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-medium uppercase">XLSX</span>
-        <span className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-medium uppercase">CSV</span>
-        <span className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-medium uppercase">QIF</span>
+        <span className="ws-badge rounded-md px-2 py-0.5 text-xs font-medium uppercase">PDF</span>
+        <span className="ws-badge rounded-md px-2 py-0.5 text-xs font-medium uppercase">XLSX</span>
+        <span className="ws-badge rounded-md px-2 py-0.5 text-xs font-medium uppercase">CSV</span>
+        <span className="ws-badge rounded-md px-2 py-0.5 text-xs font-medium uppercase">QIF</span>
       </div>
 
       <div className="mt-6 grid gap-4 lg:grid-cols-2">
