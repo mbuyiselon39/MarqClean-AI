@@ -6,9 +6,9 @@ Updated: 2026-09-21
 
 The requested 1440px and 390px Chrome DevTools computed-style capture was not available in the repository automation environment, so this file does **not** invent computed values. The live beehiiv page was inspected for structure/content and cross-checked against a current independent style extraction. Where a computed DevTools value could not be directly captured, the table marks it as **not captured** and records the usable reference value instead.
 
-The live page currently presents an uppercase display-led dark product-launch layout, with the hero, product areas, pricing, success story, integrations, FAQ, CTA and footer sections in that order. citehttps://www.beehiiv.com
+The live page currently presents an uppercase display-led dark product-launch layout, with the hero, product areas, pricing, success story, integrations, FAQ, CTA and footer sections in that order. https://www.beehiiv.com/
 
-A current Refero extraction reports Clash Grotesk/Satoshi, a 1200px max width, 8px base spacing, 96px section gaps, 32px card padding, 6px rectangular radii, and a 72px display scale. These are reference observations, not a substitute for a DevTools computed-style capture. See the source in the project review notes. 
+A current Refero extraction reports Clash Grotesk/Satoshi, a 1200px max width, 8px base spacing, 96px section gaps, 32px card padding, 6px rectangular radii, and a 72px display scale. These are reference observations, not a substitute for a DevTools computed-style capture. See the source: https://styles.refero.design/style/350b1557-56f0-4361-8c8b-b7a88081982b 
 
 ## Reference table
 
