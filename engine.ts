@@ -142,6 +142,8 @@ async function extractWordText(file: File): Promise<string> {
 }
 
 export async function extractToTable(file: File): Promise<DataTable> {
+  const maxBytes = 100 * 1024 * 1024;
+  if (file.size > maxBytes) throw new Error("This file is larger than the 100 MB browser-safe limit. Split the file before processing.");
   const kind = detectFileKind(file.name);
 
   if (kind === "excel") {
