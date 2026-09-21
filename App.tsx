@@ -137,7 +137,7 @@ const WORKSPACE_MODULES: Record<"leads" | "converter" | "formulas" | "bank", { i
     engine: "MarqClean AI Reconciliation Engine",
   },
 };
-const SITE_URL = "https://www.marqcleanai.vertexsg.co.za";
+const SITE_URL = "https://marqcleanai.vertexsg.co.za";
 const BASE_META_DESCRIPTION = `${PRODUCT_NAME} is an AI-powered data automation platform for cleaning, validating, transforming and reconciling Excel, CSV, PDF and financial datasets. Built for operations, compliance, finance and data teams.`;
 const MAX_FILE_SIZE_BYTES = 100 * 1024 * 1024;
 const MAX_FILE_SIZE_LABEL = "100 MB";
