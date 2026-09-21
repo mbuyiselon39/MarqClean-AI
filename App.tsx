@@ -130,7 +130,7 @@ const WORKSPACE_MODULES: Record<"leads" | "converter" | "formulas" | "bank", { i
   },
   bank: {
     icon: "bank",
-    title: "Bank Ledger X",
+    title: "Bank Ledger",
     description: "Convert PDF bank statements into clean Excel, CSV and QIF files with normalized dates and amounts, ready for ledger reconciliation.",
     formats: ["PDF", "XLSX", "CSV", "QIF"],
     engine: "MarqClean AI Reconciliation Engine",
@@ -507,7 +507,7 @@ const FOOTER_PAGES: Record<FooterPageKey, FooterPage> = {
       {
         heading: "Support",
         body: [
-          "For support, privacy requests, accessibility feedback, or business inquiries, email support@vertexstreamtechnologies.com.",
+          "For support, privacy requests, accessibility feedback, or business inquiries, use Contact Support at support@vertexstreamtechnologies.com.",
           "When reporting a file issue, include the file type, approximate row count, browser name, and a description of the workflow. Do not send sensitive lead lists, statements, or ledgers unless a secure support process has been agreed.",
         ],
       },
@@ -2313,7 +2313,7 @@ function updatePageMetadata(page: AppPageKey) {
     ? "Free Excel Academy | Learn Excel Formulas, Functions and Shortcuts"
     : toolPage?.title ?? (footerPage ? `${footerPage.title} | ${PRODUCT_NAME}` : "MarqClean AI | Browser-first data cleaning, Excel, CSV and reconciliation platform");
   const description = isHub
-    ? "Browser-first reconciliation, record matching and validation platform. Reconcile client, investor, account and banking datasets across Excel, CSV and PDF files, including the Bank Ledger X bank statement and ledger reconciliation module, with exception reporting."
+    ? "Browser-first reconciliation, record matching and validation platform. Reconcile client, investor, account and banking datasets across Excel, CSV and PDF files, including the Bank Ledger bank statement and ledger reconciliation module, with exception reporting."
     : isToolbox
     ? "Use advanced Excel, CSV and data utilities for validation, formatting, conversion, cleansing and data quality checks across structured datasets."
     : isAcademy
@@ -3230,7 +3230,7 @@ export default function App() {
                   ["leads", "Quick Data & CSV Cleaner"],
                   ["converter", "CSV to Excel Converter"],
                   ["formulas", "Excel Formulas"],
-                  ["bank", "Bank Ledger X"],
+                  ["bank", "Bank Ledger"],
                 ] as const).map(([key, label]) => (
                   <button
                     key={key}
@@ -3679,7 +3679,7 @@ export default function App() {
               transition={{ duration: 0.5, ease: "easeOut" }}
             >
               <div>
-                <p className="text-sm font-medium uppercase tracking-[0.28em] text-accent">Bank Ledger X</p>
+                <p className="text-sm font-medium uppercase tracking-[0.28em] text-accent">Bank Ledger</p>
                 <h3 className="mt-4 text-3xl font-medium tracking-[-0.03em] text-ink">
                   Turn PDF bank statements into clean Excel, CSV, and QIF files.
                 </h3>
@@ -4185,11 +4185,11 @@ export default function App() {
                 },
                 {
                   title: "AI, explained",
-                  body: "The core cleaning and reconciliation workflows use deterministic rules, validation and matching logic. AI-related tools are clearly scoped rather than presented as an autonomous decision-maker.",
+                  body: "The core cleaning and reconciliation workflows use deterministic rules, validation and matching logic. AI-related tools are clearly scoped rather than presented as autonomous decision-makers.",
                 },
                 {
                   title: "Help and support",
-                  body: "For support, privacy questions, accessibility feedback or business enquiries, email support@vertexstreamtechnologies.com. Typical response time is within 2 business days.",
+                  body: "For support, privacy questions, accessibility feedback or business enquiries, use Contact Support at support@vertexstreamtechnologies.com. Typical response time is within 2 business days.",
                 },
                 {
                   title: "Enterprise",
@@ -4228,7 +4228,7 @@ export default function App() {
               {[
                 { q: "Is MarqClean AI actually free?", a: "Yes. Every tool listed in the Free Data Tools directory, the Quick Data & CSV Cleaner, Excel Automation, Data Toolbox, and Free Excel Academy run at no cost, with no account or card required." },
                 { q: "Do my files ever leave my browser?", a: "No. Cleaning, conversion, reconciliation, and formula processing all run locally in your browser using JavaScript. Nothing is uploaded to a server, so your data never leaves your device during processing." },
-                { q: "What file types are supported?", a: "CSV, XLSX, and XLS across most tools. Reconciliation Hub and Bank Ledger X also accept PDF statements and mailing lists, which are parsed directly in the browser." },
+                { q: "What file types are supported?", a: "Supported formats include XLSX, XLS, CSV, PDF, TXT and QIF, with availability shown per workspace. Reconciliation Hub and Bank Ledger also accept PDF statements and mailing lists, which are parsed directly in the browser." },
                 { q: "How large a file can I upload?", a: "The browser-safe upload cap is 100 MB. Actual processing capacity still depends on available device memory, so very large workbooks may take longer or need to be split before processing." },
                 { q: "Does this replace Excel, Power Query, or Power BI?", a: "No. MarqClean AI automates repetitive cleaning, formatting, and reconciliation work that normally happens before or after using Excel. Its Power Query-style and Power Pivot-style tools reproduce selected workflow outcomes, not the native Microsoft engines." },
                 { q: "What does the AI in MarqClean AI do?", a: "The core cleaning and reconciliation workflows currently use deterministic rules, validation and matching logic rather than a generative model. AI-related tools are scoped and outputs remain reviewable before export." },
