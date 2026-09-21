@@ -65,7 +65,7 @@ export function installBrandSeo() {
   upsertLink("canonical", SITE_URL);
   upsertLink("icon", "/favicon.svg", "image/svg+xml");
   upsertLink("shortcut icon", "/favicon.svg", "image/svg+xml");
-  upsertLink("apple-touch-icon", "/favicon.svg", "image/svg+xml");
+  upsertLink("apple-touch-icon", "/icon-512.png", "image/png");
 
   let schema = document.getElementById("marqclean-schema") as HTMLScriptElement | null;
   if (!schema) {
