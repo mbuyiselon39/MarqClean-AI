@@ -462,7 +462,7 @@ const FOOTER_PAGES: Record<FooterPageKey, FooterPage> = {
       {
         heading: "Limitation of Liability",
         body: [
-          `To the maximum extent permitted by law, ${COMPANY_NAME} and ${GROUP_NAME} are not liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of data, revenue, or business opportunity, arising from your use of or inability to use ${PRODUCT_NAME}, even if advised of the possibility of such damages.`,
+          `To the maximum extent permitted by law, ${COMPANY_NAME} and ${COMPANY_NAME} are not liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of data, revenue, or business opportunity, arising from your use of or inability to use ${PRODUCT_NAME}, even if advised of the possibility of such damages.`,
           "Nothing in these Terms limits any liability that cannot be limited under applicable law.",
         ],
       },
@@ -2313,7 +2313,7 @@ function updatePageMetadata(page: AppPageKey) {
     ? "Free Excel Academy | Learn Excel Formulas, Functions and Shortcuts"
     : toolPage?.title ?? (footerPage ? `${footerPage.title} | ${PRODUCT_NAME}` : "MarqClean AI | AI Data, Excel, CSV and Reconciliation Automation Platform");
   const description = isHub
-    ? "AI-powered reconciliation, record matching and validation platform. Reconcile client, investor, account and banking datasets across Excel, CSV and PDF files, including the Bank Ledger X bank statement and ledger reconciliation module, with exception reporting."
+    ? "Browser-first reconciliation, record matching and validation platform. Reconcile client, investor, account and banking datasets across Excel, CSV and PDF files, including the Bank Ledger X bank statement and ledger reconciliation module, with exception reporting."
     : isToolbox
     ? "Use advanced Excel, CSV and data utilities for validation, formatting, conversion, cleansing and data quality checks across structured datasets."
     : isAcademy
