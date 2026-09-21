@@ -1934,12 +1934,63 @@ a.bg-ink.text-ink:hover {
   margin-top: auto;
 }
 
+.excel-automation-layout {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) 280px;
+  gap: var(--space-5);
+  align-items: start;
+}
+.excel-automation-main { min-width: 0; }
+.excel-automation-widget { position: sticky; top: 88px; }
+
+.mc-minimal-hero__wireframe {
+  position: absolute;
+  z-index: 0;
+  top: var(--space-2);
+  right: clamp(-90px, 2vw, 24px);
+  width: min(52vw, 760px);
+  pointer-events: none;
+  opacity: .45;
+}
+.mc-minimal-hero__wireframe svg { display:block; width:100%; height:auto; }
+
 .ws-module-header {
   margin-bottom: var(--space-5);
   border-radius: 12px;
   padding: var(--space-5);
 }
 .ws-module-header__icon { border-radius: 8px; }
+.ws-module-header__identity { min-width: 0; display:flex; align-items:center; gap:14px; }
+.ws-module-header__eyebrow,
+.ws-module-header__formats-label,
+.ws-side-widget__eyebrow,
+.ws-side-widget__section-title {
+  color: rgb(var(--ink-3));
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.ws-module-header__formats { min-width:148px; padding-left:20px; border-left:1px solid rgb(var(--line)); }
+.ws-module-header__formats-label { display:block; margin-bottom:var(--space-2); }
+.ws-side-widget__header { display:flex; align-items:center; justify-content:space-between; gap:var(--space-3); padding-bottom:var(--space-4); border-bottom:1px solid rgb(var(--line)); }
+.ws-side-widget h3 { margin-top:var(--space-4); }
+.ws-side-widget__description { margin-top:var(--space-2); }
+.ws-side-widget__section { margin-top:var(--space-5); }
+.ws-side-widget__section-title { margin-bottom:var(--space-3); }
+.ws-side-widget__steps { display:grid; gap:var(--space-2); margin:0; padding:0; list-style:none; }
+.ws-side-widget__steps li { display:grid; grid-template-columns:24px minmax(0,1fr); align-items:center; gap:var(--space-2); min-height:32px; color:rgb(var(--ink-2)); font-size:14px; line-height:22px; }
+.ws-side-widget__steps li > span { display:grid; width:24px; height:24px; place-items:center; border:1px solid rgb(var(--line)); border-radius:8px; background:rgb(var(--canvas)); color:rgb(var(--ink-2)); font-family:var(--font-mono); font-size:12px; }
+.ws-side-widget__steps li.is-current { color:rgb(var(--ink)); }
+.ws-side-widget__steps li.is-current > span { border-color:rgb(var(--accent)); background:rgb(var(--accent-tint)); color:rgb(var(--accent)); }
+.ws-side-widget__steps strong { font-weight:500; }
+.ws-side-widget__tip { padding:var(--space-3) var(--space-4); border-left:1px solid rgb(var(--accent)); background:rgb(var(--canvas)); color:rgb(var(--ink-2)); font-size:14px; line-height:22px; }
+.ws-side-widget__privacy { display:flex; gap:var(--space-3); align-items:flex-start; margin-top:var(--space-5); padding-top:var(--space-4); border-top:1px solid rgb(var(--line)); }
+.ws-side-widget__privacy > span { flex:none; color:rgb(var(--success)); font-size:14px; }
+.ws-side-widget__privacy strong { display:block; color:rgb(var(--ink)); font-size:14px; line-height:22px; font-weight:500; }
+.ws-side-widget__privacy small { display:block; margin-top:var(--space-1); color:rgb(var(--ink-2)); font-size:14px; line-height:22px; }
 
 .ws-root:has(.ws-sidebar) > .relative {
   width: min(var(--container), calc(100% - (var(--gutter) * 2)));
@@ -2121,6 +2172,9 @@ section.bg-ink :where(.text-accent) { color: rgb(var(--accent)); }
   .ws-side-widget { position: static; order: -1; }
   .mc-site-footer__top { grid-template-columns: repeat(2, minmax(0,1fr)); }
   .mc-minimal-hero h1 { font-size: 48px; line-height: 52px; }
+  .excel-automation-layout { grid-template-columns: 1fr; }
+  .excel-automation-widget { position: static; order: -1; }
+  .ws-module-header__formats { min-width:0; padding:var(--space-4) 0 0; border-top:1px solid rgb(var(--line)); border-left:0; }
 }
 @media (max-width: 767px) {
   body { font-size: 16px; line-height: 26px; }
@@ -2151,5 +2205,5 @@ section.bg-ink :where(.text-accent) { color: rgb(var(--accent)); }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  *, *::before, *::after { animation-duration: 0.01ms; animation-iteration-count: 1; transition-duration: 0.01ms; }
 }
