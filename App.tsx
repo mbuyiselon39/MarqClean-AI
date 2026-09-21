@@ -2445,6 +2445,7 @@ function ToolsDirectory() {
           </button>
         </div>
       ) : (
+        <>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {visibleTools.map((tool) => (
             <PageLink
@@ -2473,6 +2474,7 @@ function ToolsDirectory() {
             <button type="button" className="ws-btn-secondary" disabled={toolPage === pageCount} onClick={() => setToolPage((p) => Math.min(pageCount, p + 1))}>Next tools</button>
           </div>
         ) : null}
+        </>
       )}
     </div>
   );
