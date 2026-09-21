@@ -36,7 +36,7 @@
   --radius-sm: 6px;
   --radius-lg: 12px;
   --radius-pill: 999px;
-  --container: 1240px;
+  --container: 1200px;
   --gutter: 32px;
   --control-height: 44px;
 
@@ -359,7 +359,7 @@ textarea { min-height: 88px; resize: vertical; }
   text-transform:uppercase;
 }
 .mc-minimal-hero__eyebrow span { width:7px; height:7px; border-radius:50%; background:rgb(var(--magenta)); }
-.mc-minimal-hero h1 { font-size:60px; line-height:1; letter-spacing:-.03em; margin-top:16px; }
+.mc-minimal-hero h1 { font-size:72px; line-height:1; letter-spacing:-.03em; margin-top:16px; }
 .mc-minimal-hero h1 em {
   font-style:normal;
   background:linear-gradient(90deg,rgb(var(--ink)),rgb(var(--magenta)));
@@ -542,7 +542,7 @@ textarea { min-height: 88px; resize: vertical; }
 .ws-command__item-group { flex:none; color:rgb(var(--ink-3)); font-size:11px; text-transform:uppercase; }
 .ws-command__empty { padding:34px 20px; text-align:center; color:rgb(var(--ink-3)); }
 
-.mc-site-footer { border-top:1px solid rgb(var(--line)); }
+.amzigo-revamp > header > nav,\n.amzigo-revamp main > section > .mx-auto { width:min(var(--container),calc(100% - var(--gutter) * 2)); max-width:none; margin-inline:auto; }\n\n.amzigo-revamp > header > nav { padding-left:0; padding-right:0; }\n\n.mc-site-footer { border-top:1px solid rgb(var(--line)); }
 .mc-site-footer__inner { padding:64px 0 24px; }
 .mc-site-footer__top { display:grid; grid-template-columns:1.6fr repeat(4,minmax(0,1fr)); gap:48px; }
 .mc-site-footer__brand p { max-width:34ch; margin-top:16px; font-size:14px; line-height:22px; }
