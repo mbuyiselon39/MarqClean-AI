@@ -209,7 +209,7 @@ function UploadBox({ label, table, refEl, onFile }: { label: string; table: Data
       <input ref={refEl} className="sr-only" type="file" accept=".pdf,.xlsx,.xls,.csv,.txt,.docx,.doc" onChange={(e) => { const f = e.target.files?.[0]; if (f) onFile(f); if (refEl.current) refEl.current.value = ""; }} />
       <h3 className="text-sm font-medium text-ink">{label}</h3>
       <p className="mt-1 text-xs text-ink-3">{table ? `${table.sourceName} - ${table.rows.length} rows` : "Drop or choose a CSV, Excel, PDF, or Word file."}</p>
-      <button className="mt-3 rounded-md bg-ink px-4 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={() => refEl.current?.click()}>
+      <button className="mt-3 rounded-md bg-inverse px-4 py-2 text-xs font-medium text-on-inverse transition hover:bg-accent-tint" onClick={() => refEl.current?.click()}>
         {table ? "Replace" : "Choose file"}
       </button>
     </div>
@@ -367,7 +367,7 @@ function PowerQueryTool() {
           <p className="text-sm font-medium text-ink">Sources ({sources.length})</p>
           <div>
             <input ref={importRef} type="file" className="sr-only" accept=".csv,.xlsx,.xls,.pdf,.docx,.doc,.txt" onChange={(e) => { const f = e.target.files?.[0]; if (f) onImport(f); if (importRef.current) importRef.current.value = ""; }} />
-            <button className="rounded-md bg-ink px-4 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={() => importRef.current?.click()}>Import file</button>
+            <button className="rounded-md bg-inverse px-4 py-2 text-xs font-medium text-on-inverse transition hover:bg-accent-tint" onClick={() => importRef.current?.click()}>Import file</button>
           </div>
         </div>
         {sources.length > 0 ? (
@@ -630,7 +630,7 @@ function DataModelTool() {
           <p className="text-sm font-medium text-ink">Tables ({sources.length})</p>
           <div>
             <input ref={importRef} type="file" className="sr-only" accept=".csv,.xlsx,.xls" onChange={(e) => { const f = e.target.files?.[0]; if (f) onImport(f); if (importRef.current) importRef.current.value = ""; }} />
-            <button className="rounded-md bg-ink px-4 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={() => importRef.current?.click()}>Import table</button>
+            <button className="rounded-md bg-inverse px-4 py-2 text-xs font-medium text-on-inverse transition hover:bg-accent-tint" onClick={() => importRef.current?.click()}>Import table</button>
           </div>
         </div>
         {sources.length === 0 ? <p className="mt-3 text-sm text-ink-3">Import at least two tables to build relationships between them.</p> : (
@@ -751,7 +751,7 @@ function DataModelTool() {
                     {Array.from(new Set(relationships.map((r) => r.oneTable))).map((t) => <option key={t} value={t}>{t}</option>)}
                   </select>
                 </label>
-                <button className="rounded-md bg-ink px-5 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={buildModel}>Build model</button>
+                <button className="rounded-md bg-inverse px-5 py-2 text-xs font-medium text-on-inverse transition hover:bg-accent-tint" onClick={buildModel}>Build model</button>
               </div>
               {result ? (
                 <div className="mt-4">
@@ -937,7 +937,7 @@ function MergeTool() {
                 </select>
               </>
             ) : null}
-            <button className="rounded-md bg-ink px-5 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={run}>Merge</button>
+            <button className="rounded-md bg-inverse px-5 py-2 text-xs font-medium text-on-inverse transition hover:bg-accent-tint" onClick={run}>Merge</button>
           </div>
         </div>
       ) : null}
@@ -968,7 +968,7 @@ function DedupeTool() {
               <label key={i} className="flex items-center gap-1 rounded border border-line px-2 py-1"><input type="checkbox" checked={selected.has(i)} onChange={() => toggle(i)} />{h}</label>
             ))}
           </div>
-          <button className="mt-3 rounded-md bg-ink px-5 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={() => setResult(removeDuplicatesByColumns(up.table!, Array.from(selected)))}>Remove duplicates</button>
+          <button className="mt-3 rounded-md bg-inverse px-5 py-2 text-xs font-medium text-on-inverse transition hover:bg-accent-tint" onClick={() => setResult(removeDuplicatesByColumns(up.table!, Array.from(selected)))}>Remove duplicates</button>
 
           <div className="mt-6 border-t border-line pt-4">
             <h3 className="text-sm font-medium">Fuzzy duplicate finder</h3>
@@ -1019,7 +1019,7 @@ function FuzzyTool() {
             <label>Min similarity</label>
             <input type="range" min={0.4} max={0.95} step={0.01} value={threshold} onChange={(e) => setThreshold(Number(e.target.value))} />
             <span>{Math.round(threshold * 100)}%</span>
-            <button className="rounded-md bg-ink px-5 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={() => setResults(fuzzySearch(up.table!, col, query, threshold))}>Search</button>
+            <button className="rounded-md bg-inverse px-5 py-2 text-xs font-medium text-on-inverse transition hover:bg-accent-tint" onClick={() => setResults(fuzzySearch(up.table!, col, query, threshold))}>Search</button>
           </div>
           {results ? (
             <div className="mt-3 max-h-72 overflow-auto text-sm">
@@ -1050,7 +1050,7 @@ function ClarityTool() {
       {up.table ? (
         <div className="mt-4 space-y-4">
           <div className="rounded-xl border border-line bg-canvas p-5">
-            <button className="rounded-md bg-ink px-5 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={() => setReport(computeClarityScore(up.table!))}>Compute clarity score</button>
+            <button className="rounded-md bg-inverse px-5 py-2 text-xs font-medium text-on-inverse transition hover:bg-accent-tint" onClick={() => setReport(computeClarityScore(up.table!))}>Compute clarity score</button>
             {report ? (
               <div className="mt-4">
                 <div className="flex items-center gap-4">
@@ -1118,7 +1118,7 @@ function ExplorerTool() {
                 <option value="contains">contains</option><option value="equals">equals</option><option value="gt">greater than</option><option value="lt">less than</option><option value="nonempty">is not empty</option><option value="empty">is empty</option>
               </select>
               <input className="rounded border border-line px-2 py-1" value={value} onChange={(e) => setValue(e.target.value)} placeholder="value" />
-              <button className="rounded-md bg-ink px-4 py-1.5 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={() => setView(filterTable(up.table!, col, op, value))}>Apply</button>
+              <button className="rounded-md bg-inverse px-4 py-1.5 text-xs font-medium text-on-inverse transition hover:bg-accent-tint" onClick={() => setView(filterTable(up.table!, col, op, value))}>Apply</button>
             </div>
             {view ? (<><p className="mt-3 text-sm text-ink-2">{view.rows.length} matching rows</p><DownloadButtons table={view} name="filtered" /></>) : null}
           </div>
@@ -1180,7 +1180,7 @@ function PredictTool() {
               {up.table.headers.map((h, i) => <option key={i} value={i}>{h}</option>)}
             </select>
             <input className="w-28 rounded border border-line px-2 py-1" placeholder="feature value" value={input} onChange={(e) => setInput(e.target.value)} />
-            <button className="rounded-md bg-ink px-5 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={run}>Predict</button>
+            <button className="rounded-md bg-inverse px-5 py-2 text-xs font-medium text-on-inverse transition hover:bg-accent-tint" onClick={run}>Predict</button>
           </div>
           {output ? <p className="mt-4 rounded-xl bg-accent-tint px-4 py-3 text-sm font-medium text-accent">{output}</p> : null}
         </div>
@@ -1205,7 +1205,7 @@ function ExtractTool() {
     <Panel title="Web Table Extractor" description="Turn web data into structured spreadsheets. Paste the HTML of a web table or list and export it to Excel or CSV, no code required.">
       <textarea className="h-40 w-full rounded-xl border border-line bg-canvas px-4 py-3 text-sm" placeholder="Paste HTML containing a <table> or list here" value={html} onChange={(e) => setHtml(e.target.value)} />
       <div className="mt-3 flex gap-2">
-        <button className="rounded-md bg-ink px-5 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={run}>Extract table</button>
+        <button className="rounded-md bg-inverse px-5 py-2 text-xs font-medium text-on-inverse transition hover:bg-accent-tint" onClick={run}>Extract table</button>
       </div>
       {error ? <p className="mt-3 text-sm text-error">{error}</p> : null}
       {table ? (<><p className="mt-4 text-sm text-ink-2">{table.rows.length} rows, {table.headers.length} columns.</p><TablePreview table={table} /><DownloadButtons table={table} name="extracted" /></>) : null}
@@ -1420,7 +1420,7 @@ function FunctionsTool() {
             <label className="text-xs font-medium uppercase tracking-wide text-ink-3">Describe what you want (natural language)</label>
             <div className="mt-1 flex flex-wrap gap-2">
               <input className="min-w-64 flex-1 rounded border border-line px-3 py-2 text-sm" placeholder='e.g. sum all amounts where region is "A", or find unique clients, or loan payment' value={instruction} onChange={(e) => setInstruction(e.target.value)} />
-              <button className="rounded-md bg-ink px-5 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={runInterpret}>Detect function</button>
+              <button className="rounded-md bg-inverse px-5 py-2 text-xs font-medium text-on-inverse transition hover:bg-accent-tint" onClick={runInterpret}>Detect function</button>
             </div>
             {note ? <p className="mt-2 text-xs text-accent">{note}</p> : null}
           </div>
@@ -1607,7 +1607,7 @@ function FunctionsTool() {
 
             {(fnKey === "sumifs" || fnKey === "countifs" || fnKey === "averageifs" || fnKey === "filter" || fnKey === "and-or") ? <div className="mt-4">{CriteriaEditor}</div> : null}
 
-            <button className="mt-5 rounded-md bg-ink px-6 py-3 text-sm font-medium text-ink transition hover:bg-accent-tint" onClick={run}>Run function</button>
+            <button className="mt-5 rounded-md bg-inverse px-6 py-3 text-sm font-medium text-on-inverse transition hover:bg-accent-tint" onClick={run}>Run function</button>
           </div>
 
           {result ? (
