@@ -3460,11 +3460,6 @@ export default function App() {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            <WorkspaceSideWidget
-              tab="leads"
-              processing={isProcessing}
-              hasResult={Boolean(result)}
-            />
             <div>
               <p className="text-sm font-medium uppercase tracking-[0.28em] text-accent">Automated CSV cleaner</p>
               <h3 className="mt-4 text-3xl font-medium tracking-[-0.03em] text-ink">
@@ -4219,46 +4214,49 @@ export default function App() {
           <div className="mx-auto max-w-7xl px-5 lg:px-8">
             <div className="excel-automation-layout">
               <div className="excel-automation-main">
-            <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-              <div>
-                <p className="mc-mono text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">Excel automation</p>
-                <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-ink sm:text-5xl">
-                  Excel Automation for sorting, subtotals and workbooks.
-                </h2>
-                <p className="mt-5 text-lg leading-8 text-ink-2">
-                  Automate Excel sorting, subtotaling, number formatting, formula handling and workbook generation.
-                  The built-in Sort &amp; Subtotal Engine groups related records by the root SRN or reference before the
-                  first slash, subtotals each group, inserts a blank spacer row, and produces a clean workbook with a
-                  Sorted_Output sheet, a Formula_Guide, and an Error_Report when needed. The original worksheet is
-                  preserved and everything runs in your browser.
-                </p>
-                <button
-                  className="mc-cta-cyan mt-8 rounded-md px-6 py-3 text-sm font-medium"
-                  onClick={() => navigateToPage("excel-automation")}
-                >
-                  Open Excel Automation
-                </button>
-              </div>
-              <div className="grid gap-3 sm:grid-cols-2">
-                {[
-                  { h: "Group by root reference", p: "Groups rows by the SRN or reference before the first slash." },
-                  { h: "Subtotal each group", p: "Adds a bold SUM subtotal and a blank spacer row per group." },
-                  { h: "Preview and map", p: "Preview detected columns and start row, then adjust the mapping." },
-                  { h: "Preserves the original", p: "Outputs Sorted_Output, Formula_Guide, and Error_Report sheets." },
-                ].map((card) => (
-                  <div key={card.h} className="mc-glass mc-card-interactive rounded-lg p-5 hover:border-[rgb(var(--accent))]/40">
-                    <h3 className="mc-display text-lg font-medium text-ink">{card.h}</h3>
-                    <p className="mt-2 text-sm text-ink-2">{card.p}</p>
+                <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+                  <div>
+                    <p className="mc-mono text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--accent))]">Excel automation</p>
+                    <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-ink sm:text-5xl">
+                      Excel Automation for sorting, subtotals and workbooks.
+                    </h2>
+                    <p className="mt-5 text-lg leading-8 text-ink-2">
+                      Automate Excel sorting, subtotaling, number formatting, formula handling and workbook generation.
+                      The built-in Sort &amp; Subtotal Engine groups related records by the root SRN or reference before the
+                      first slash, subtotals each group, inserts a blank spacer row, and produces a clean workbook with a
+                      Sorted_Output sheet, a Formula_Guide, and an Error_Report when needed. The original worksheet is
+                      preserved and everything runs in your browser.
+                    </p>
+                    <button
+                      className="mc-cta-cyan mt-8 rounded-md px-6 py-3 text-sm font-medium"
+                      onClick={() => navigateToPage("excel-automation")}
+                    >
+                      Open Excel Automation
+                    </button>
                   </div>
-                ))}
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {[
+                      { h: "Group by root reference", p: "Groups rows by the SRN or reference before the first slash." },
+                      { h: "Subtotal each group", p: "Adds a bold SUM subtotal and a blank spacer row per group." },
+                      { h: "Preview and map", p: "Preview detected columns and start row, then adjust the mapping." },
+                      { h: "Preserves the original", p: "Outputs Sorted_Output, Formula_Guide, and Error_Report sheets." },
+                    ].map((card) => (
+                      <div key={card.h} className="mc-glass mc-card-interactive rounded-lg p-5 hover:border-[rgb(var(--accent))]/40">
+                        <h3 className="mc-display text-lg font-medium text-ink">{card.h}</h3>
+                        <p className="mt-2 text-sm text-ink-2">{card.p}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-get" aria-label="Excel Automation guidance">
+
+              <aside className="ws-side-widget excel-automation-widget" aria-label="Excel Automation guidance">
                 <div className="ws-side-widget__header">
                   <span className="ws-side-widget__eyebrow">Automation workflow</span>
                   <span className="ws-side-widget__status">Ready</span>
                 </div>
                 <h3>Prepare → automate → review</h3>
-                <p className="ws-side-widget__description">Keep the Excel automation process structured from source workbook to final output.</p>
+                <p className="ws-side-widget__description">Keep the Excel Automation process structured from source workbook to final output.</p>
                 <div className="ws-side-widget__section">
                   <div className="ws-side-widget__section-title">Workflow</div>
                   <ol className="ws-side-widget__steps">
