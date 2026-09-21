@@ -1,4 +1,4 @@
-const SITE_URL = "https://www.marqcleanai.vertexsg.co.za";
+const SITE_URL = "https://marqcleanai.vertexsg.co.za";
 const TITLE = "MarqClean AI — Clean data. Clear decisions.";
 const DESCRIPTION =
   "MarqClean AI is a browser-first data operations platform for cleaning, validating, transforming and reconciling Excel, CSV and PDF data. Built for finance, operations, compliance, marketing and data teams.";
