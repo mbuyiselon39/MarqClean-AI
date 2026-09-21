@@ -8,7 +8,6 @@ const DataToolbox = lazy(() => import("./reconciliation/DataToolbox"));
 const ClientFunds = lazy(() => import("./reconciliation/ClientFunds"));
 const AcademyHub = lazy(() => import("./academy/AcademyHub"));
 const HeroCarousel = lazy(() => import("./HeroCarousel"));
-const DataEngineStudio = lazy(() => import("./DataEngineStudio"));
 import SmartDropzone, { type SmartPipelineAction, type SmartRecommendation } from "./SmartDropzone";
 import Logo from "./Logo";
 import ThemeToggle from "./ThemeToggle";
@@ -2323,14 +2322,11 @@ function updateMetaTag(selector: string, attribute: "content" | "href", value: s
 function updatePageMetadata(page: AppPageKey) {
   const toolPage = isToolPageKey(page) ? SEO_TOOL_PAGES[page] : null;
   const footerPage = isFooterPageKey(page) ? FOOTER_PAGES[page] : null;
-  const isDataEngine = false;
   const isHub = page === "reconciliation-hub";
   const isToolbox = page === "data-toolbox";
   const isExcelAuto = page === "excel-automation";
   const isAcademy = page === "excel-academy";
-  const title = isDataEngine
-    ? "Local Data Engine | DuckDB-WASM, Validation, Phone Intelligence and Web Enrichment"
-    : isHub
+  const title = isHub
     ? "Reconciliation Hub | Data Matching, Verification and Exception Reporting"
     : isToolbox
     ? "Data Toolbox | Excel, CSV, Validation and Data Quality Tools"
@@ -2339,9 +2335,7 @@ function updatePageMetadata(page: AppPageKey) {
     : isAcademy
     ? "Free Excel Academy | Learn Excel Formulas, Functions and Shortcuts"
     : toolPage?.title ?? (footerPage ? `${footerPage.title} | ${PRODUCT_NAME}` : "MarqClean AI | AI Data, Excel, CSV and Reconciliation Automation Platform");
-  const description = isDataEngine
-    ? "Browser-native performance and enrichment tools using DuckDB-WASM, Papa Parse workers, Zod and libphonenumber-js — with no API keys or server uploads."
-    : isHub
+  const description = isHub
     ? "AI-powered reconciliation, record matching and validation platform. Reconcile client, investor, account and banking datasets across Excel, CSV and PDF files, including the Bank Ledger X bank statement and ledger reconciliation module, with exception reporting."
     : isToolbox
     ? "Use advanced Excel, CSV and data utilities for validation, formatting, conversion, cleansing and data quality checks across structured datasets."
@@ -2887,7 +2881,7 @@ export default function App() {
       window.setTimeout(() => document.getElementById("cleaner")?.scrollIntoView({ behavior: "smooth" }), 50);
       return;
     }
-    navigateToPage("data-engine");
+    navigateToPage("data-toolbox");
   }
 
   function handleFileInput(files: FileList | null, pipelineActions: SmartPipelineAction[] = []) {
@@ -3162,17 +3156,6 @@ export default function App() {
     );
   }
 
-  if (currentPage === "data-engine") {
-    return (
-      <>
-        <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-[rgb(var(--surface))] text-ink-3">Loading Local Data Engine...</div>}>
-          <DataEngineStudio onExit={() => navigateToPage("home")} />
-        </Suspense>
-        {renderBackToTop()}
-      </>
-    );
-  }
-
   if (currentPage === "reconciliation-hub") {
     return (
       <>
@@ -3221,7 +3204,6 @@ export default function App() {
     { label: "Quick Data & CSV Cleaner", href: "/data-cleaner", onClick: () => openWorkspaceTab("leads") },
     { label: "Excel Automation", href: "/excel-automation", onClick: () => navigateToPage("excel-automation") },
     { label: "Reconciliation Hub", href: "/reconciliation-hub", onClick: () => navigateToPage("reconciliation-hub") },
-    { label: "Local Data Engine", href: "/data-engine", onClick: () => navigateToPage("data-engine") },
     { label: "Data Toolbox", href: "/data-toolbox", onClick: () => navigateToPage("data-toolbox") },
   ];
 
