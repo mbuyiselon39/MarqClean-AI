@@ -149,17 +149,18 @@ export default function SmartDropzone({
           <p className="mt-4 text-xs font-medium uppercase tracking-[.2em] text-accent">Smart Drop</p>
           <h2 className="mt-2 text-2xl font-medium tracking-tight text-ink sm:text-3xl">Drop your data. MarqClean AI finds the right workflow.</h2>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-ink-2">Upload CSV, XLSX or PDF. The first scan happens locally in your browser before any workflow is started.</p>
-          <div className="mt-5 flex flex-wrap justify-center gap-2">
-            {["CSV", "XLSX", "PDF"].map((format) => <span key={format} className="rounded-md bg-surface px-3 py-1 text-xs font-medium text-ink-2">{format}</span>)}
+          <div className="mt-5 flex flex-wrap justify-center gap-2" aria-label="Supported file types">
+            {["CSV", "XLSX", "PDF"].map((format) => <span key={format} className="rounded-md bg-surface px-3 py-1 text-sm font-medium text-ink-2">{format}</span>)}
           </div>
+          <p className="mt-3 text-sm text-ink-2">Maximum file size: 100 MB.</p>
           <button type="button" className="mt-6 rounded-md bg-[rgb(var(--accent))] px-6 py-3 text-sm font-medium text-ink shadow-blue-200 transition hover:bg-[rgb(var(--accent-hover))]" onClick={() => inputRef.current?.click()}>Choose a file</button>
           <div className="mt-5 inline-flex items-center gap-2 rounded-md border border-line bg-surface px-4 py-2 text-xs font-medium text-ink-2">
-            <span aria-hidden="true">🔒</span> 100% Secure Client-Side Execution — your files never leave this browser.
+            <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /></svg> Files stay in this browser during processing.
           </div>
         </div>
       </div>
 
-      {message ? <p className="mt-4 rounded-lg bg-surface p-4 text-sm font-medium text-error">{message}</p> : null}
+      {message ? <p className="mt-4 rounded-lg border border-error bg-surface p-4 text-sm font-medium text-error" role="alert">{message}</p> : null}
 
       {diagnostics ? (
         <div className="mt-5 grid gap-4 lg:grid-cols-[1.15fr_.85fr]">
