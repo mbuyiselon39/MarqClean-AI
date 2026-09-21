@@ -2,7 +2,7 @@
 @import "tailwindcss";
 @import url("/fonts/fonts.css");
 
-/* MarqClean AI — beehiiv-inspired visual language, without beehiiv assets/copy. */
+/* MarqClean AI - beehiiv-inspired visual language, without beehiiv assets/copy. */
 
 :root {
   --canvas: 6 4 25;
@@ -226,14 +226,16 @@ textarea { min-height: 88px; resize: vertical; }
   border-radius: var(--radius-sm);
   background: rgb(var(--accent));
   color: #fff;
-  box-shadow: none;
+  box-shadow: 0 8px 20px rgb(var(--accent) / .14);
   font-weight: 700;
-  transition: background-color 180ms ease-out, border-color 180ms ease-out, transform 180ms ease-out;
+  transition: background-color 180ms ease-out, border-color 180ms ease-out, transform 180ms ease-out, box-shadow 180ms ease-out;
 }
 .ws-btn-primary:hover,.mc-cta-cyan:hover,.amzigo-btn-primary:hover {
   background: rgb(var(--accent-hover));
   border-color: rgb(var(--accent-hover));
   color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgb(var(--accent) / .2);
 }
 .ws-btn-primary:active,.mc-cta-cyan:active,.amzigo-btn-primary:active {
   background: rgb(var(--accent-pressed));
