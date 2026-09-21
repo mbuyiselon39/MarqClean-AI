@@ -394,7 +394,7 @@ textarea { min-height: 88px; resize: vertical; }
 }
 .mc-minimal-hero__actions .secondary:hover { background:rgb(var(--surface)); border-color:rgb(var(--line-strong)); }
 .mc-minimal-hero__trust { display:flex; align-items:center; flex-wrap:wrap; gap:12px; margin-top:20px; color:rgb(var(--ink-3)); font-size:14px; }
-.mc-minimal-hero__trust span { color:rgb(var(--success)); font-weight:700; }
+.mc-minimal-hero__trust span { color:rgb(var(--success)); font-weight:700; }\n.mc-status-icon { width:18px; height:18px; display:inline-grid; place-items:center; flex:none; }\n.mc-status-icon svg { width:16px; height:16px; }\n.mc-status-dot { width:7px; height:7px; display:inline-block; margin-right:7px; border-radius:50%; background:rgb(var(--magenta)); vertical-align:middle; }
 .mc-minimal-hero__trust i { width:4px; height:4px; border-radius:50%; background:rgb(var(--line-strong)); }
 
 .mc-minimal-hero__product { padding:0; }
