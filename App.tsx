@@ -2665,6 +2665,7 @@ export default function App() {
   const [isMobileWorkspacesOpen, setIsMobileWorkspacesOpen] = useState(false);
   const productsMenuRef = useRef<HTMLDivElement>(null);
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [openFaq, setOpenFaq] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const workspaceRef = useRef<HTMLElement>(null);
 
@@ -4386,49 +4387,27 @@ export default function App() {
             <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-ink sm:text-5xl">Questions, answered honestly.</h2>
             <div className="mt-10 divide-y divide-white/10 border-y border-line">
               {[
-                {
-                  q: "Is MarqClean AI actually free?",
-                  a: "Yes. Every tool listed in the Free Data Tools directory, the Quick Data & CSV Cleaner, Excel Automation, Data Toolbox, and Free Excel Academy run at no cost, with no account or card required.",
-                },
-                {
-                  q: "Do my files ever leave my browser?",
-                  a: "No. Cleaning, conversion, reconciliation, and formula processing all run locally in your browser using JavaScript. Nothing is uploaded to a server, so your data never leaves your device during processing.",
-                },
-                {
-                  q: "What file types are supported?",
-                  a: "CSV, XLSX, and XLS across most tools. Reconciliation Hub and Bank Ledger X also accept PDF statements and mailing lists, which are parsed directly in the browser.",
-                },
-                {
-                  q: "How large a file can I upload?",
-                  a: "The browser-safe upload cap is 100 MB. Actual processing capacity still depends on available device memory, so very large workbooks may take longer or need to be split before processing.",
-                },
-                {
-                  q: "Does this replace Excel, Power Query, or Power BI?",
-                  a: "No. MarqClean AI automates the repetitive cleaning, formatting, and reconciliation work that normally happens before or after using Excel. The Power Query-style workflow and Power Pivot-style data modelling tools in Data Toolbox reproduce the result of those workflows, not the native Microsoft engines — see each tool's in-product notice for exactly what is and isn't preserved.",
-                },
-                {
-                  q: "What does the AI in MarqClean AI do?",
-                  a: "The core cleaning and reconciliation workflows currently use deterministic rules, validation and matching logic rather than a generative model. The AI name reflects the product direction; outputs remain reviewable before export.",
-                },
-                {
-                  q: "How accurate is the automatic name, industry, or field detection?",
-                  a: "Detection is rule- and keyword-based (not a black-box model), which makes it predictable and reviewable. Every tool shows its output before you download, so you can check and adjust results rather than trusting an opaque process.",
-                },
-                {
-                  q: "Can I use this for client or investor reconciliation work?",
-                  a: "Yes — Reconciliation Hub is built for exactly that: matching client, investor, account, and banking records across Excel, CSV, and PDF sources, with exception reporting and a colour-coded output.",
-                },
-              ].map((item) => (
-                <details key={item.q} className="group py-5">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left text-base font-medium text-ink marker:content-none">
-                    {item.q}
-                    <svg className="h-5 w-5 shrink-0 text-ink-2 transition group-open:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d="M12 5v14M5 12h14" />
-                    </svg>
-                  </summary>
-                  <p className="mt-3 max-w-2xl text-[15px] leading-7 text-ink-2">{item.a}</p>
-                </details>
-              ))}
+                { q: "Is MarqClean AI actually free?", a: "Yes. Every tool listed in the Free Data Tools directory, the Quick Data & CSV Cleaner, Excel Automation, Data Toolbox, and Free Excel Academy run at no cost, with no account or card required." },
+                { q: "Do my files ever leave my browser?", a: "No. Cleaning, conversion, reconciliation, and formula processing all run locally in your browser using JavaScript. Nothing is uploaded to a server, so your data never leaves your device during processing." },
+                { q: "What file types are supported?", a: "CSV, XLSX, and XLS across most tools. Reconciliation Hub and Bank Ledger X also accept PDF statements and mailing lists, which are parsed directly in the browser." },
+                { q: "How large a file can I upload?", a: "The browser-safe upload cap is 100 MB. Actual processing capacity still depends on available device memory, so very large workbooks may take longer or need to be split before processing." },
+                { q: "Does this replace Excel, Power Query, or Power BI?", a: "No. MarqClean AI automates repetitive cleaning, formatting, and reconciliation work that normally happens before or after using Excel. Its Power Query-style and Power Pivot-style tools reproduce selected workflow outcomes, not the native Microsoft engines." },
+                { q: "What does the AI in MarqClean AI do?", a: "The core cleaning and reconciliation workflows currently use deterministic rules, validation and matching logic rather than a generative model. AI-related tools are scoped and outputs remain reviewable before export." },
+                { q: "How accurate is automatic field detection?", a: "Detection is rule- and keyword-based, which makes it predictable and reviewable. Every tool shows its output before download so you can check and adjust results." },
+                { q: "Can I use this for client or investor reconciliation work?", a: "Yes. Reconciliation Hub is designed for matching client, investor, account and banking records across Excel, CSV and PDF sources, with exception reporting and colour-coded output." },
+              ].map((item) => {
+                const id = `faq-${item.q.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+                const isOpen = openFaq === item.q;
+                return (
+                  <div key={item.q} className="mc-faq-row">
+                    <button type="button" className="mc-faq-trigger" aria-expanded={isOpen} aria-controls={id} onClick={() => setOpenFaq(isOpen ? null : item.q)}>
+                      <span>{item.q}</span>
+                      <svg className={`h-5 w-5 shrink-0 text-ink-2 transition ${isOpen ? "rotate-45" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+                    </button>
+                    {isOpen ? <div id={id} className="mc-faq-answer"><p>{item.a}</p></div> : null}
+                  </div>
+                );
+              })
             </div>
           </div>
         </section>
