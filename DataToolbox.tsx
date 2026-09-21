@@ -173,7 +173,7 @@ function Panel({ title, description, children, centered }: { title: string; desc
     <section>
       <div className={centered ? "mx-auto max-w-3xl text-center" : undefined}>
         <h1 className="text-3xl font-medium tracking-[-0.03em]">{title}</h1>
-        <p className={centered ? "mt-2 text-justify leading-7 text-ink-2 [hyphens:auto]" : "mt-2 max-w-3xl text-ink-2"}>{description}</p>
+        <p className={centered ? "mt-2 text-left leading-7 text-ink-2 [hyphens:none]" : "mt-2 max-w-3xl text-ink-2"}>{description}</p>
       </div>
       <div className="mt-6">{children}</div>
     </section>
