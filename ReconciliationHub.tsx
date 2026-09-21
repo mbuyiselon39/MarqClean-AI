@@ -502,7 +502,7 @@ export default function ReconciliationHub({ onExit }: { onExit: () => void }) {
                     )}
                   </div>
                   <button
-                    className="mt-5 rounded-md bg-ink px-6 py-3 text-sm font-medium text-ink transition hover:bg-accent-tint"
+                    className="mt-5 rounded-md bg-inverse px-6 py-3 text-sm font-medium text-on-inverse transition hover:bg-accent-tint"
                     onClick={runComparison}
                     disabled={processing}
                   >
@@ -617,7 +617,7 @@ function UploadCard({
       ) : (
         <p className="mt-2 text-xs text-ink-3">Drop PDF, Excel, CSV, or Word, or choose a file.</p>
       )}
-      <button className="mt-4 rounded-md bg-ink px-4 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={onPick}>
+      <button className="mt-4 rounded-md bg-inverse px-4 py-2 text-xs font-medium text-on-inverse transition hover:bg-accent-tint" onClick={onPick}>
         {table ? "Replace file" : "Choose file"}
       </button>
     </div>
@@ -807,7 +807,7 @@ function MailingUpload({
       />
       <h3 className="text-base font-medium text-ink">{title}</h3>
       <p className="mt-1 text-xs text-ink-3">{filledLabel || subtitle}</p>
-      <button className="mt-4 rounded-md bg-ink px-4 py-2 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={onPick}>
+      <button className="mt-4 rounded-md bg-inverse px-4 py-2 text-xs font-medium text-on-inverse transition hover:bg-accent-tint" onClick={onPick}>
         {filledLabel ? "Replace file" : "Choose file"}
       </button>
     </div>
@@ -935,7 +935,7 @@ function MailingView(props: {
               );
             })}
           </div>
-          <button className="mt-5 rounded-md bg-ink px-6 py-3 text-sm font-medium text-ink transition hover:bg-accent-tint" onClick={props.onRun} disabled={props.processing}>
+          <button className="mt-5 rounded-md bg-inverse px-6 py-3 text-sm font-medium text-on-inverse transition hover:bg-accent-tint" onClick={props.onRun} disabled={props.processing}>
             Run mailing verification
           </button>
         </div>
