@@ -20,13 +20,6 @@ const SIMPLE_NAV: Array<{ label: string; path: string }> = [
   { label: "How it works", path: "/#workflow" },
 ];
 
-const PRODUCTS_MENU: Array<{ label: string; path: string }> = [
-  { label: "Quick Data & CSV Cleaner", path: "/data-cleaner" },
-  { label: "Excel Automation", path: "/excel-automation" },
-  { label: "Reconciliation Hub", path: "/reconciliation-hub" },
-  { label: "Data Toolbox", path: "/data-toolbox" },
-];
-
 export function GlobalHeader() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   return (
