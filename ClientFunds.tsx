@@ -328,6 +328,28 @@ export default function ClientFunds({ onExit: _onExit }: { onExit: () => void })
             </div>
           </section>
         ) : null}
+          </div>
+          <aside className="ws-side-widget ws-surface rounded-lg" aria-label="Excel Automation guidance">
+            <div className="ws-side-widget__eyebrow">Excel Automation</div>
+            <h3>Four simple steps</h3>
+            <p className="ws-side-widget__description">Upload a workbook, preview the detected structure, run the automation, then download the validated result.</p>
+            <div className="ws-side-widget__section">
+              <div className="ws-side-widget__section-title">Workflow</div>
+              <ol className="ws-side-widget__steps">
+                <li className="is-current"><span>1</span>Upload Excel workbook</li>
+                <li><span>2</span>Configure and preview</li>
+                <li><span>3</span>Execute sorting</li>
+                <li><span>4</span>Download validated workbook</li>
+              </ol>
+            </div>
+            <div className="ws-side-widget__section">
+              <div className="ws-side-widget__section-title">Supported files</div>
+              <div className="flex flex-wrap gap-2"><span className="ws-format-badge">XLSX</span><span className="ws-format-badge">XLS</span></div>
+              <p className="mt-2 text-xs leading-5 text-ink-3">Maximum file size: 100 MB. Practical capacity also depends on available device memory.</p>
+            </div>
+            <div className="ws-side-widget__privacy"><span aria-hidden="true">✓</span><div><strong>Private by design</strong><small>Core processing stays in your browser. Files are not uploaded to a server.</small></div></div>
+          </aside>
+        </div>
       </main>
     </div>
   );
