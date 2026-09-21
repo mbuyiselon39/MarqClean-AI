@@ -3125,7 +3125,7 @@ export default function App() {
     return (
       <>
         <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-[rgb(var(--surface))] text-[rgb(var(--ink-2))]">Loading Free Excel Academy...</div>}>
-          <AcademyHub onExit={() => navigateToPage("home")} />
+          <AcademyHub />
         </Suspense>
         {renderBackToTop()}
       </>
