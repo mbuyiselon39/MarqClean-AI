@@ -195,7 +195,7 @@ export type StatusTone = "idle" | "processing" | "success" | "warning" | "error"
 const TONE_STYLES: Record<StatusTone, string> = {
   idle: "bg-canvas/5 text-[rgb(var(--ink-2))] border-line",
   processing: "bg-[rgb(var(--accent))]/10 text-[rgb(var(--accent-hover))] border-[rgb(var(--accent))]/40",
-  success: "bg-[rgb(var(--error))]/12 text-[rgb(var(--error))] border-[rgb(var(--error))]/40",
+  success: "bg-[rgb(var(--success))]/10 text-[rgb(var(--success))] border-[rgb(var(--success))]/30",
   warning: "bg-[rgb(var(--ink-3))]/12 text-[rgb(var(--ink-3))] border-[rgb(var(--ink-3))]/40",
   error: "bg-[rgb(var(--error))]/12 text-[rgb(var(--error))] border-[rgb(var(--error))]/40",
 };
@@ -203,7 +203,7 @@ const TONE_STYLES: Record<StatusTone, string> = {
 export function StatusBadge({ tone, label }: { tone: StatusTone; label: string }) {
   return (
     <span className={`inline-flex items-center gap-1.5 rounded-md border px-3 py-1 text-xs font-medium ${TONE_STYLES[tone]}`}>
-      <span className={`h-1.5 w-1.5 rounded-md ${tone === "processing" ? "animate-pulse bg-[rgb(var(--accent))]" : tone === "success" ? "bg-[rgb(var(--error))]" : tone === "warning" ? "bg-[rgb(var(--ink-3))]" : tone === "error" ? "bg-[rgb(var(--error))]" : "bg-[rgb(var(--ink-2))]"}`} />
+      <span className={`h-1.5 w-1.5 rounded-md ${tone === "processing" ? "animate-pulse bg-[rgb(var(--accent))]" : tone === "success" ? "bg-[rgb(var(--success))]" : tone === "warning" ? "bg-[rgb(var(--ink-3))]" : tone === "error" ? "bg-[rgb(var(--error))]" : "bg-[rgb(var(--ink-2))]"}`} />
       {label}
     </span>
   );
@@ -425,7 +425,7 @@ export function ToolLaunchpad<T extends string>({
 
         <div className="ws-sidebar__scroll">
           <div className="ws-sidebar__workspace">
-            <div className="ws-sidebar__workspace-mark">M</div>
+            <div className="ws-sidebar__workspace-mark"><Logo markOnly label="MarqClean AI workspace" /></div>
             <div className="ws-sidebar__workspace-copy"><strong>MarqClean AI</strong><small>Unified workspace</small></div>
           </div>
 
