@@ -641,7 +641,7 @@ section[id],main[id],article[id] { scroll-margin-top:88px; }
 .ws-search-trigger{height:40px;display:inline-flex;align-items:center;gap:7px;padding:0 10px;border:1px solid rgb(var(--line));border-radius:6px;background:rgb(var(--surface));color:rgb(var(--ink-2));font-size:13px}
 .ws-search-trigger:hover{border-color:rgb(var(--line-strong));color:rgb(var(--ink))}
 .ws-search-trigger kbd,.ws-mobile-search kbd{padding:2px 6px;border:1px solid rgb(var(--line-strong));border-radius:4px;background:rgb(var(--canvas));font:600 11px/1 var(--font-mono);color:rgb(var(--ink-3))}
-.ws-start-free{min-height:40px!important;border-radius:999px!important;padding-inline:18px!important}
+.ws-start-free{min-height:40px;border-radius:999px;padding-inline:18px}
 .ws-mobile-menu{display:none;width:40px;height:40px;place-items:center;border:1px solid rgb(var(--line));border-radius:6px;background:rgb(var(--surface));color:rgb(var(--ink))}
 .ws-nav-dropdown{position:relative}
 .ws-nav-dropdown>button{cursor:pointer}
@@ -736,7 +736,7 @@ section[id],main[id],article[id] { scroll-margin-top:88px; }
  .ws-mobile-workspaces{display:grid;gap:2px;padding:4px 0 6px 12px}
  .ws-mobile-workspaces a{display:flex;align-items:center;gap:10px;padding:9px;border-radius:8px;color:rgb(var(--ink-2))}
  .ws-mobile-workspaces a span{min-width:0}.ws-mobile-workspaces strong,.ws-mobile-workspaces small{display:block}.ws-mobile-workspaces strong{font-size:13px}.ws-mobile-workspaces small{font-size:11px;color:rgb(var(--ink-3))}
- .ws-start-free{display:none!important}
+ .ws-start-free{display:none}
  .ws-search-trigger{width:40px;justify-content:center;padding:0}.ws-search-trigger kbd{display:none}
  .ws-sidebar{transform:translateX(-100%);transition:transform 180ms ease-out}.ws-sidebar.is-open{transform:translateX(0)}
  .ws-sidebar-backdrop{position:fixed;inset:64px 0 0;z-index:65;display:block;background:rgb(0 0 0/.55);opacity:0;pointer-events:none;transition:opacity 180ms ease-out}
@@ -747,8 +747,8 @@ section[id],main[id],article[id] { scroll-margin-top:88px; }
  .ws-sidebar.is-collapsed .ws-sidebar__workspace-copy,.ws-sidebar.is-collapsed .ws-sidebar__switcher-button,.ws-sidebar.is-collapsed .ws-sidebar__label,.ws-sidebar.is-collapsed .ws-sidebar__item-copy,.ws-sidebar.is-collapsed .ws-sidebar__local span:not(.ws-local-dot),.ws-sidebar.is-collapsed .ws-sidebar__footer>a{display:block}
  .ws-sidebar.is-collapsed .ws-sidebar__switcher{display:grid}.ws-sidebar.is-collapsed .ws-sidebar__collapse-row{justify-content:flex-end}.ws-sidebar.is-collapsed .ws-sidebar__item{justify-content:flex-start;padding-inline:8px}
 }
-@media(max-width:639px){.ws-global-header__nav{gap:10px}.ws-brand svg{max-width:150px}.ws-global-header__actions{margin-left:auto}.ws-page-frame{padding-top:24px}.ws-page-header__row{display:block}.ws-page-header__actions{justify-content:flex-start;margin-top:16px}.ws-page-header__back{gap:10px}.ws-page-header__back nav{max-width:100%}.ws-sidebar{width:min(88vw,320px)}.ws-command-overlay{padding:76px 12px 12px}.ws-command__meta{display:block}.ws-command__meta>span+span{display:block;margin-top:4px}.ws-page-frame,.mc-site-container{width:calc(100% - 32px)!important}.ws-drawer-menu{top:72px}}
-@media(prefers-reduced-motion:reduce){.ws-sidebar,.ws-command-overlay,.ws-mobile-panel,.ws-skip-link{transition:none!important}}
+@media(max-width:639px){.ws-global-header__nav{gap:10px}.ws-brand svg{max-width:150px}.ws-global-header__actions{margin-left:auto}.ws-page-frame{padding-top:24px}.ws-page-header__row{display:block}.ws-page-header__actions{justify-content:flex-start;margin-top:16px}.ws-page-header__back{gap:10px}.ws-page-header__back nav{max-width:100%}.ws-sidebar{width:min(88vw,320px)}.ws-command-overlay{padding:76px 12px 12px}.ws-command__meta{display:block}.ws-command__meta>span+span{display:block;margin-top:4px}.ws-page-frame,.mc-site-container{width:calc(100% - 32px)}.ws-drawer-menu{top:72px}}
+@media(prefers-reduced-motion:reduce){.ws-sidebar,.ws-command-overlay,.ws-mobile-panel,.ws-skip-link{transition:none}}
 
 
 /* Academy: compact product information architecture */
@@ -809,7 +809,7 @@ section[id],main[id],article[id] { scroll-margin-top:88px; }
 .academy-cheat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}.academy-cheat h2{margin-top:4px;font-size:24px}
 @media(max-width:900px){.academy-lesson{grid-template-columns:1fr}.academy-outline{position:static;max-height:none}.academy-lesson__heading{display:block}.academy-lesson__progress{width:100%;margin-top:16px}.academy-cheat-grid{grid-template-columns:1fr}}
 @media(max-width:639px){.academy-progress-card{grid-template-columns:1fr}.academy-progress-ring{width:64px;height:64px}.academy-continue{grid-template-columns:1fr}.academy-track__heading{align-items:flex-start;display:block}.academy-card{min-height:220px}.academy-search-row{grid-template-columns:1fr}.academy-complete{display:block}.academy-complete .ws-btn-primary,.academy-complete .ws-btn-secondary{margin-top:14px}.academy-page .ws-page-frame{width:calc(100% - 32px)}}
-@media print{.ws-global-header,.academy-tabs,.academy-progress-card,.academy-continue,.academy-track-filter,.academy-reset,.academy-outline,.academy-next-prev,.academy-quiz{display:none!important}.academy-page{background:#fff;color:#000}.academy-page *{border-color:#bbb!important;color:#000!important}.academy-table-wrap{overflow:visible}.academy-table-wrap table{min-width:0}}
+@media print{.ws-global-header,.academy-tabs,.academy-progress-card,.academy-continue,.academy-track-filter,.academy-reset,.academy-outline,.academy-next-prev,.academy-quiz{display:none}.academy-page{background:#fff;color:#000}.academy-page *{border-color:#bbb;color:#000}.academy-table-wrap{overflow:visible}.academy-table-wrap table{min-width:0}}
 
 
 .mc-linear-preview__body aside button{display:flex;align-items:center;gap:8px;width:100%;min-height:36px;padding:0 9px;border:0;border-radius:6px;background:transparent;color:rgb(var(--ink-2));font-size:12px;text-align:left}
