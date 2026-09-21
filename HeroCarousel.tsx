@@ -73,14 +73,14 @@ export default function HeroCarousel({ onCleanFile, onOpenReconciliation, onOpen
     <section className="mc-minimal-hero" aria-label="MarqClean AI data preparation workspace">
       <div className="mc-minimal-hero__inner">
         <div className="mc-minimal-hero__copy">
-          <div className="mc-minimal-hero__eyebrow"><span /> Browser-local data workspace</div>
+          <div className="mc-minimal-hero__eyebrow"><span /> Browser-local data workspace <strong>MarqClean AI by Vertex Stream Technologies</strong></div>
           <h1>Clean data.<br /><em>Clear decisions.</em></h1>
-          <p className="mc-hero-copy">Clean, transform, reconcile and analyse CSV, Excel and PDF data without sending your files to a server.</p>
+          <p className="mc-hero-copy">Clean, transform, reconcile and analyse your data locally in the browser. Some tools use AI; core cleaning uses deterministic, auditable logic. Your files never leave your browser.</p>
           <div className="mc-minimal-hero__actions">
             <button onClick={onCleanFile}>Start free <LineIcon type="arrow" /></button>
             <a className="secondary" href="#free-tools">See the tools</a>
           </div>
-          <div className="mc-minimal-hero__trust"><span className="mc-status-icon" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="m3 8 3 3 7-7" /></svg></span> Runs locally in your browser <i /> No sign-up <i /> No credit card</div>
+          <div className="mc-minimal-hero__trust"><span className="mc-status-icon" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="m3 8 3 3 7-7" /></svg></span> Runs locally in your browser <i /> No sign-up <i /> No credit card <i /> XLSX · XLS · CSV · PDF · TXT · QIF</div>
         </div>
         <div className="mc-minimal-hero__product" aria-label="MarqClean AI workspace preview"><WorkspacePreview onCleanFile={onCleanFile} onOpenReconciliation={onOpenReconciliation} onOpenExcelAutomation={onOpenExcelAutomation} onFileDrop={onFileDrop} /></div>
       </div>
