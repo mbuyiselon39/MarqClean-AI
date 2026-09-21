@@ -2,7 +2,7 @@ const SITE_URL = "https://www.marqcleanai.vertexsg.co.za";
 const TITLE = "MarqClean AI — Clean data. Clear decisions.";
 const DESCRIPTION =
   "MarqClean AI is a browser-first data operations platform for cleaning, validating, transforming and reconciling Excel, CSV and PDF data. Built for finance, operations, compliance, marketing and data teams.";
-const OG_IMAGE = `${SITE_URL}/og-card.png`;
+const OG_IMAGE = `${SITE_URL}/icon-512.png`;
 
 function upsertMeta(name: string, content: string, property = false) {
   const attr = property ? "property" : "name";
