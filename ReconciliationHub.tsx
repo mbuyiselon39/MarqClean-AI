@@ -321,18 +321,18 @@ export default function ReconciliationHub({ onExit }: { onExit: () => void }) {
       <GlobalHeader />
       <div className="ws-grid pointer-events-none absolute inset-x-0 top-0 h-[38rem]" aria-hidden="true" />
 
-      <div className="relative mx-auto mb-2 flex max-w-[110rem] flex-wrap items-center justify-between gap-3 px-5 pt-24 lg:px-8">
+      <div className="mc-site-container relative mb-2 flex flex-wrap items-center justify-between gap-3 pt-32">
         <div className="flex items-center gap-3">
           <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-canvas /20 /20 text-xl ring-1 ring-inset ring-white/10">🔄</span>
           <div>
             <h2 className="mc-display text-xl font-medium text-ink">Reconciliation Hub</h2>
-            <p className="text-xs text-[rgb(var(--ink-2))]">AI-powered reconciliation, validation and record matching. Runs 100% in your browser.</p>
+            <p className="text-xs text-[rgb(var(--ink-2))]">Rule-based reconciliation, validation and record matching. Runs locally in your browser.</p>
           </div>
         </div>
-        <button className="ws-btn-secondary rounded-md px-4 py-2 text-sm font-medium" onClick={onExit}>Back to MarqClean AI</button>
+        <a href="/" className="ws-btn-secondary rounded-md px-4 py-2 text-sm font-medium" onClick={(event) => { event.preventDefault(); onExit(); }}>Workspace home</a>
       </div>
 
-      <div className="relative mx-auto max-w-[110rem] px-5 pb-16 pt-4 lg:px-8">
+      <div className="mc-site-container relative pb-16 pt-4">
         <div className="mb-2">
           <p className="mc-mono text-[11px] uppercase tracking-[0.2em] text-[rgb(var(--ink-3))]">Modules Available ({NAV_ITEMS.length})</p>
         </div>
