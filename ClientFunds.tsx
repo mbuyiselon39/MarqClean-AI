@@ -5,7 +5,6 @@ import {
   buildPreview,
   formatAmount,
   generateAndValidateWorkbook,
-  generateTestWorkbook,
   readWorkbook,
   validateProcessing,
   type ColumnMap,
@@ -37,7 +36,6 @@ export default function ClientFunds({ onExit }: { onExit: () => void }) {
   const [showErrors, setShowErrors] = useState(false);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
-  const [testResult, setTestResult] = useState<{ workbook: { bytes: Uint8Array; fileName: string }; validation: WorkbookValidation } | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const activeSheet: RawSheet | null = workbook && sheetName ? workbook.sheets[sheetName] ?? null : null;
@@ -133,19 +131,6 @@ export default function ClientFunds({ onExit }: { onExit: () => void }) {
   function download() {
     if (!downloadInfo || !validation?.ok) return;
     downloadBytes(downloadInfo.bytes, downloadInfo.fileName);
-  }
-
-  async function runTestWorkbook() {
-    setError("");
-    setBusy(true);
-    try {
-      const result = await generateTestWorkbook();
-      setTestResult(result);
-    } catch (caught) {
-      setError(caught instanceof Error ? caught.message : "Test workbook failed.");
-    } finally {
-      setBusy(false);
-    }
   }
 
   function reset() {
@@ -283,21 +268,6 @@ export default function ClientFunds({ onExit }: { onExit: () => void }) {
             ) : null}
           </section>
         ) : null}
-
-        {/* Diagnostics: Test Workbook */}
-        <section className="mt-6 rounded-xl border border-line bg-canvas p-5">
-          <h2 className="text-lg font-medium">Diagnostics</h2>
-          <p className="mt-1 text-sm text-ink-2">Generate a minimal test workbook to confirm the Excel export mechanism produces valid files that open in Microsoft Excel.</p>
-          <button className="mt-3 rounded-md border border-line px-5 py-2.5 text-sm font-medium text-ink-2 transition hover:border-ink" onClick={runTestWorkbook} disabled={busy}>Generate Test Workbook</button>
-          {testResult ? (
-            <div className={`mt-3 rounded-xl p-3 text-sm ${testResult.validation.ok ? "bg-surface text-ink-2" : "bg-surface text-error"}`}>
-              <p className="font-medium">{testResult.validation.ok ? "Test workbook is valid and reopened successfully." : "Test workbook failed validation."}</p>
-              <p className="mt-1 text-xs">Size: {testResult.validation.size} bytes | Sheets: {testResult.validation.sheetSummaries.map((s) => s.name).join(", ") || "none"}</p>
-              {testResult.validation.issues.length ? <p className="mt-1 text-xs">{testResult.validation.issues.join(" ")}</p> : null}
-              {testResult.validation.ok ? <button className="mt-2 rounded-md bg-ink px-4 py-1.5 text-xs font-medium text-ink transition hover:bg-accent-tint" onClick={() => downloadBytes(testResult.workbook.bytes, testResult.workbook.fileName)}>Download Test Workbook</button> : null}
-            </div>
-          ) : null}
-        </section>
 
         {/* Step 3: Execute */}
         {preview ? (
