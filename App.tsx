@@ -2601,7 +2601,6 @@ export default function App() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [currentPage, setCurrentPage] = useState<AppPageKey>("home");
   const [workspaceTab, setWorkspaceTab] = useState<"leads" | "converter" | "formulas" | "bank">("leads");
-  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [openFaq, setOpenFaq] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
