@@ -3288,9 +3288,9 @@ export default function App() {
             variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1 } } }}
           >
             {[
-              { value: "40+", label: "Excel functions built in" },
+              { value: "63", label: "Excel function actions" },
               { value: "33", label: "Free data & Excel tools" },
-              { value: "100%", label: "Runs in your browser" },
+              { value: "6", label: "Core file formats" },
               { value: "0", label: "Files ever sent to a server" },
             ].map((stat) => (
               <motion.div
@@ -4203,6 +4203,35 @@ export default function App() {
           </div>
         </section>
 
+        <section id="included" className="bg-[rgb(var(--surface))] py-20 text-ink">
+          <div className="mx-auto max-w-7xl px-5 lg:px-8">
+            <div className="grid gap-10 lg:grid-cols-[.9fr_1.1fr] lg:items-start">
+              <div>
+                <p className="mc-mono text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--magenta))]">Access</p>
+                <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-ink sm:text-5xl">Free. Local. No sign-up.</h2>
+                <p className="mc-prose mt-5 text-lg text-ink-2">The current browser-safe file limit is {MAX_FILE_SIZE_LABEL}. Core workflows process supported files on your device and let you review results before export.</p>
+              </div>
+              <div className="grid gap-3 sm:grid-cols-2">
+                {[
+                  "No account required",
+                  "Browser-local processing",
+                  "CSV, XLSX, XLS, PDF, TXT and QIF support across workspaces",
+                  "Review output before download",
+                  "33 free data and Excel tools",
+                  "63 Excel function actions",
+                ].map((item) => (
+                  <div key={item} className="rounded-lg border border-line bg-canvas p-5">
+                    <div className="flex items-start gap-3">
+                      <span className="mt-1 grid h-5 w-5 shrink-0 place-items-center rounded-full border border-[rgb(var(--accent))] text-[rgb(var(--accent))]" aria-hidden="true"><svg className="h-3 w-3" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><path d="m3 8 3 3 7-7" /></svg></span>
+                      <span className="text-sm leading-6 text-ink-2">{item}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section id="workflow" className="relative overflow-hidden bg-[rgb(var(--canvas))] py-20 text-ink">
           <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
             <div className="mx-auto max-w-3xl text-center">
@@ -4282,6 +4311,21 @@ export default function App() {
                   <p className="mt-3 text-base leading-6 text-ink-2">{item.body}</p>
                 </article>
               ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="formats" className="border-y border-line bg-[rgb(var(--surface))] py-16 text-ink">
+          <div className="mx-auto max-w-7xl px-5 lg:px-8">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="mc-mono text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--magenta))]">Formats</p>
+                <h2 className="mc-display mt-3 text-3xl font-medium text-ink sm:text-4xl">Bring the files you already use.</h2>
+              </div>
+              <p className="max-w-xl text-sm leading-6 text-ink-2">Format availability varies by workspace. The interface shows accepted formats before processing.</p>
+            </div>
+            <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+              {["Excel XLSX","Excel XLS","CSV","PDF","TXT","QIF"].map((format) => <div key={format} className="grid min-h-16 place-items-center rounded-lg border border-line bg-canvas px-4 text-sm font-bold text-ink">{format}</div>)}
             </div>
           </div>
         </section>
