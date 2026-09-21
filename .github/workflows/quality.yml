@@ -27,3 +27,48 @@ jobs:
         run: npx tsc -p tsconfig.json --noEmit
       - name: Production build
         run: npm run build
+      - name: Runtime routing and deployment smoke checks
+        run: |
+          node <<'NODE'
+          const fs = require("node:fs");
+          const app = fs.readFileSync("App.tsx", "utf8");
+          const index = fs.readFileSync("index.html", "utf8");
+          const seo = fs.readFileSync("seo.ts", "utf8");
+          const redirects = fs.readFileSync("public/_redirects", "utf8");
+          const sitemap = fs.readFileSync("public/sitemap.xml", "utf8");
+          const robots = fs.readFileSync("public/robots.txt", "utf8");
+
+          const checks = [
+            [app.includes('if (!route) return "home";'), "root route guard"],
+            [app.includes("const route = hashRoute || (pathRoute !== \"index.html\" ? pathRoute : \"\");"), "index.html route normalization"],
+            [index.includes("https://marqcleanai.vertexsg.co.za/"), "index production hostname"],
+            [seo.includes('const SITE_URL = "https://marqcleanai.vertexsg.co.za";'), "runtime SEO hostname"],
+            [redirects.includes("/*                          /index.html           200"), "SPA fallback rewrite"],
+            [sitemap.includes("https://marqcleanai.vertexsg.co.za/"), "sitemap hostname"],
+            [robots.includes("https://marqcleanai.vertexsg.co.za/sitemap.xml"), "robots sitemap"],
+          ];
+
+          const failures = checks.filter(([ok]) => !ok).map(([, name]) => name);
+          if (failures.length) {
+            console.error("Smoke checks failed:", failures.join(", "));
+            process.exit(1);
+          }
+          if (app.includes("https://www.marqcleanai.vertexsg.co.za") ||
+              index.includes("https://www.marqcleanai.vertexsg.co.za") ||
+              seo.includes("https://www.marqcleanai.vertexsg.co.za") ||
+              sitemap.includes("https://www.marqcleanai.vertexsg.co.za") ||
+              robots.includes("https://www.marqcleanai.vertexsg.co.za")) {
+            console.error("Mixed www/non-www production hostnames detected.");
+            process.exit(1);
+          }
+          console.log("Routing, SPA fallback, and production hostname checks passed.");
+          NODE
+      - name: Cloudflare Pages asset-size guard
+        run: |
+          oversized="$(find dist -type f -size +24M -print)"
+          if [ -n "$oversized" ]; then
+            echo "Assets above the 24 MiB safety threshold were found:"
+            echo "$oversized"
+            exit 1
+          fi
+          echo "Cloudflare Pages asset-size guard passed."
