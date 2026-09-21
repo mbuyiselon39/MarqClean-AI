@@ -1665,70 +1665,6 @@ function createConvertedFileName(fileName: string, extension: string) {
   return `${baseName}-marqclean.${extension}`;
 }
 
-async function readWorkbookMatrix(file: File): Promise<string[][]> {
-  const buffer = await file.arrayBuffer();
-  const files = unzipSync(new Uint8Array(buffer));
-  const worksheetPath = files["xl/worksheets/sheet1.xml"]
-    ? "xl/worksheets/sheet1.xml"
-    : Object.keys(files).find((path) => path.startsWith("xl/worksheets/sheet"));
-
-  if (!worksheetPath) {
-    throw new Error("The Excel workbook does not contain a readable worksheet. Save it as a standard XLSX file and try again.");
-  }
-
-  const sharedStrings = parseSharedStrings(files["xl/sharedStrings.xml"] ? strFromU8(files["xl/sharedStrings.xml"]) : "");
-  const worksheetXml = strFromU8(files[worksheetPath]);
-  const worksheet = new DOMParser().parseFromString(worksheetXml, "application/xml");
-  const rowElements = Array.from(worksheet.getElementsByTagName("row"));
-
-  return rowElements.map((rowElement) => {
-    const values: string[] = [];
-
-    Array.from(rowElement.getElementsByTagName("c")).forEach((cellElement) => {
-      const reference = cellElement.getAttribute("r") ?? "A1";
-      const columnIndex = columnReferenceToIndex(reference);
-      values[columnIndex] = readExcelCellValue(cellElement, sharedStrings);
-    });
-
-    return values;
-  });
-}
-
-async function parseExcelFile(file: File) {
-  const table = await readWorkbookMatrix(file);
-  const headerRowIndex = table.findIndex((row) => row.some((value) => sanitizeCell(value)));
-
-  if (headerRowIndex === -1) {
-    throw new Error("The Excel worksheet is empty.");
-  }
-
-  const maxColumns = table.reduce((max, row) => Math.max(max, row.length), 0);
-  const headers = Array.from({ length: maxColumns }, (_, index) => sanitizeCell(table[headerRowIndex][index]) || `Column ${index + 1}`);
-
-  return table.slice(headerRowIndex + 1).map((row) =>
-    headers.reduce<RawRow>((record, header, index) => {
-      record[header] = sanitizeCell(row[index]);
-      return record;
-    }, {})
-  );
-}
-
-async function readFileMatrix(file: File): Promise<string[][]> {
-  const extension = file.name.split(".").pop()?.toLowerCase();
-
-  if (extension === "xlsx") return readWorkbookMatrix(file);
-
-  const text = await file.text();
-  const parsed = Papa.parse<string[]>(text, { skipEmptyLines: "greedy" });
-
-  return (parsed.data as string[][]).filter((row) => row.some((value) => sanitizeCell(value)));
-}
-
-function createConvertedFileName(fileName: string, extension: string) {
-  const baseName = fileName.replace(/\.[^.]+$/, "") || "converted-data";
-  return `${baseName}-marqclean.${extension}`;
-}
-
 // Bank statement conversion (BankPDF style): PDF, scan text, or pasted text into clean transactions
 type BankTransaction = {
   date: string;
@@ -1820,37 +1756,46 @@ function extractBankTransactions(text: string): BankTransaction[] {
     .split(/\r?\n/)
     .map((line) => line.replace(/\s+/g, " ").trim())
     .filter(Boolean);
-
   const transactions: BankTransaction[] = [];
 
-  lines.forEach((line) => {
+  for (const line of lines) {
     const dateMatch = line.match(STATEMENT_DATE_PATTERN);
-    if (!dateMatch) return;
+    if (!dateMatch) continue;
 
     const date = normalizeStatementDate(dateMatch[0]);
-    let remainder = line.slice((dateMatch.index ?? 0) + dateMatch[0].length).trim();
+    const remainder = line.slice((dateMatch.index ?? 0) + dateMatch[0].length).trim();
+    const tokenMatches = [...remainder.matchAll(AMOUNT_TOKEN)].map((match) => ({
+      token: match[0],
+      index: match.index ?? 0,
+      end: (match.index ?? 0) + match[0].length,
+    }));
+    if (!tokenMatches.length) continue;
 
-    const amountTokens = remainder.match(AMOUNT_TOKEN)?.filter((token) => /\d/.test(token) && token.replace(/[^\d]/g, "").length >= 1) ?? [];
+    const lastToken = tokenMatches[tokenMatches.length - 1];
+    const trailing = remainder.slice(lastToken.end).trim();
+    // Amounts/balances must be in the trailing numeric portion of the statement.
+    // A number embedded in a description (e.g. "POS PURCHASE 1234 WOOLWORTHS")
+    // is therefore not treated as a transaction amount.
+    if (trailing && !/^(?:CR|DR)$/i.test(trailing)) continue;
 
-    if (!amountTokens.length) return;
+    const candidates = tokenMatches.slice(-2);
+    const firstCandidate = candidates[0];
+    const amountToken = candidates.length > 1 ? firstCandidate : lastToken;
+    const balanceToken = candidates.length > 1 ? candidates[1] : undefined;
 
-    // Description is the text before the first amount token
-    const firstAmount = amountTokens[0];
-    const firstAmountIndex = remainder.indexOf(firstAmount);
-    const description = remainder.slice(0, firstAmountIndex).replace(/[.\-\s]+$/, "").trim();
+    const descriptionEnd = amountToken.index;
+    const description = remainder.slice(0, descriptionEnd).replace(/[.\-\s]+$/, "").trim();
+    const amount = normalizeStatementAmount(amountToken.token);
+    const balance = balanceToken ? normalizeStatementAmount(balanceToken.token) : "";
 
-    const amount = normalizeStatementAmount(amountTokens[0]);
-    const balance = amountTokens.length > 1 ? normalizeStatementAmount(amountTokens[amountTokens.length - 1]) : "";
-
-    if (!amount && !balance) return;
-
+    if (!amount && !balance) continue;
     transactions.push({
       date,
       description: description || "Transaction",
       amount,
       balance,
     });
-  });
+  }
 
   return transactions;
 }
@@ -1907,54 +1852,6 @@ async function extractPdfText(file: File): Promise<string> {
   }
 
   return pages.join("\n");
-}
-
-function parseSharedStrings(xml: string) {
-  if (!xml) return [];
-
-  const documentXml = new DOMParser().parseFromString(xml, "application/xml");
-
-  return Array.from(documentXml.getElementsByTagName("si")).map((item) =>
-    Array.from(item.getElementsByTagName("t"))
-      .map((textNode) => textNode.textContent ?? "")
-      .join("")
-  );
-}
-
-function columnReferenceToIndex(reference: string) {
-  const letters = reference.replace(/[^A-Z]/gi, "").toUpperCase();
-
-  return letters.split("").reduce((index, letter) => index * 26 + letter.charCodeAt(0) - 64, 0) - 1;
-}
-
-function columnIndexToReference(index: number) {
-  let dividend = index + 1;
-  let reference = "";
-
-  while (dividend > 0) {
-    const modulo = (dividend - 1) % 26;
-    reference = String.fromCharCode(65 + modulo) + reference;
-    dividend = Math.floor((dividend - modulo) / 26);
-  }
-
-  return reference;
-}
-
-function readExcelCellValue(cellElement: Element, sharedStrings: string[]) {
-  const type = cellElement.getAttribute("t");
-
-  if (type === "inlineStr") {
-    return Array.from(cellElement.getElementsByTagName("t"))
-      .map((textNode) => textNode.textContent ?? "")
-      .join("");
-  }
-
-  const rawValue = cellElement.getElementsByTagName("v")[0]?.textContent ?? "";
-
-  if (type === "s") return sharedStrings[Number(rawValue)] ?? "";
-  if (type === "b") return rawValue === "1" ? "TRUE" : "FALSE";
-
-  return rawValue;
 }
 
 function escapeXml(value: string) {
