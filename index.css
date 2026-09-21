@@ -1080,7 +1080,7 @@ textarea {
   align-items: center;
   max-width: 1240px;
   margin: 0 auto;
-  padding: 112px 32px 80px;
+  padding: 72px 32px 56px;
 }
 
 .mc-minimal-hero__copy {
@@ -1394,7 +1394,7 @@ footer,
 
   .mc-minimal-hero__inner {
     grid-template-columns: 1fr;
-    padding: 96px 24px 64px;
+    padding: 64px 24px 48px;
   }
 
   .mc-linear-preview__body {
@@ -1425,7 +1425,7 @@ footer,
   }
 
   .mc-minimal-hero__inner {
-    padding: 80px 16px 48px;
+    padding: 56px 16px 40px;
   }
 
   .mc-minimal-hero__actions {
