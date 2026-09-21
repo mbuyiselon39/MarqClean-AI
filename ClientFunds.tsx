@@ -193,7 +193,7 @@ export default function ClientFunds({ onExit }: { onExit: () => void }) {
               </div>
             )}
             <div className="mt-4 flex flex-wrap justify-center gap-2">
-              <button className="rounded-md bg-ink px-5 py-2.5 text-sm font-medium text-ink transition hover:bg-accent-tint" onClick={() => inputRef.current?.click()} disabled={busy}>
+              <button className="rounded-md bg-inverse px-5 py-2.5 text-sm font-medium text-on-inverse transition hover:bg-accent-tint" onClick={() => inputRef.current?.click()} disabled={busy}>
                 {busy ? "Reading..." : workbook ? "Replace file" : "Upload Excel File"}
               </button>
               {workbook ? <button className="rounded-md border border-line px-5 py-2.5 text-sm font-medium text-ink-2 transition hover:border-ink" onClick={reset}>Reset Upload</button> : null}
@@ -243,7 +243,7 @@ export default function ClientFunds({ onExit }: { onExit: () => void }) {
               <label className="flex items-center gap-2"><input type="checkbox" checked={createErrorReport} onChange={(e) => setCreateErrorReport(e.target.checked)} />Create Error_Report sheet</label>
             </div>
 
-            <button className="mt-5 rounded-md bg-ink px-5 py-2.5 text-sm font-medium text-ink transition hover:bg-accent-tint" onClick={runPreview}>Preview Data</button>
+            <button className="mt-5 rounded-md bg-inverse px-5 py-2.5 text-sm font-medium text-on-inverse transition hover:bg-accent-tint" onClick={runPreview}>Preview Data</button>
 
             {preview ? (
               <div className="mt-5">
@@ -301,7 +301,7 @@ export default function ClientFunds({ onExit }: { onExit: () => void }) {
               <Stat label="Rows flagged" value={processed.errors.length} />
             </div>
             <div className="mt-4 flex flex-wrap gap-2">
-              <button className="rounded-md bg-ink px-6 py-3 text-sm font-medium text-ink transition hover:bg-accent-tint" onClick={download}>Download Sorted Workbook</button>
+              <button className="rounded-md bg-inverse px-6 py-3 text-sm font-medium text-on-inverse transition hover:bg-accent-tint" onClick={download}>Download Sorted Workbook</button>
               {processed.errors.length ? <button className="rounded-md border border-line px-5 py-3 text-sm font-medium text-ink-2 transition hover:border-ink" onClick={() => setShowErrors((s) => !s)}>{showErrors ? "Hide" : "View"} Error Report ({processed.errors.length})</button> : null}
             </div>
             <p className="mt-2 text-xs text-ink-2">Validated: the generated .xlsx was re-opened successfully ({validation.size} bytes, sheets: {validation.sheetSummaries.map((s) => s.name).join(", ")}). Safe to download.</p>
