@@ -2655,7 +2655,7 @@ function WorkspaceSideWidget({ tab, processing = false, hasResult = false }: Wor
       </div>
 
       <div className="ws-side-widget__privacy">
-        <span aria-hidden="true">✓</span>
+        <span className="mc-status-icon" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="m3 8 3 3 7-7" /></svg></span>
         <div>
           <strong>Browser-local processing</strong>
           <small>Your files stay on this device while the workspace runs.</small>
@@ -4380,7 +4380,7 @@ export default function App() {
                 <Logo className="shrink-0" />
               </a>
               <p>Browser-local tools for cleaning, validating, transforming and reconciling Excel, CSV and PDF data.</p>
-              <div className="mc-site-footer__trust"><span aria-hidden="true">●</span> Files stay in your browser during processing</div>
+              <div className="mc-site-footer__trust"><span className="mc-status-dot" aria-hidden="true"></span> Files stay in your browser during processing</div>
             </div>
 
             <div className="mc-site-footer__column">
