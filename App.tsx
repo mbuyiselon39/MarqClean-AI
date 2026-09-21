@@ -1407,8 +1407,9 @@ function cleanWebsite(value: string) {
   if (!candidate) return "";
   try {
     const url = new URL(/^https?:\/\//i.test(candidate) ? candidate : `https://${candidate}`);
-    url.hash = url.hash;
-    return url.toString().replace(/\/$/, "");
+    // URL normalisation lowercases only the hostname; pathname/query casing is
+    // preserved because many web servers treat paths as case-sensitive.
+    return url.toString();
   } catch {
     return candidate;
   }
