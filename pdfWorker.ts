@@ -27,10 +27,18 @@ self.onmessage = async (event: MessageEvent<RequestMessage>) => {
         const y = Number(transform[5]);
         if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
 
-        const line = lines.find((candidate) => Math.abs(candidate.y - y) <= 3);
-        if (line) {
-          line.parts.push({ x, str });
-          line.y = (line.y + y) / 2;
+        // PDF text fragments rarely share exactly the same baseline. Match the
+        // nearest existing line instead of the first one, with a small tolerance.
+        // Keeping the original baseline avoids cumulative drift as fragments arrive.
+        let nearest: { line: { y: number; parts: Array<{ x: number; str: string }> }; distance: number } | null = null;
+        for (const candidate of lines) {
+          const distance = Math.abs(candidate.y - y);
+          if (distance <= 4.5 && (!nearest || distance < nearest.distance)) {
+            nearest = { line: candidate, distance };
+          }
+        }
+        if (nearest) {
+          nearest.line.parts.push({ x, str });
         } else {
           lines.push({ y, parts: [{ x, str }] });
         }
