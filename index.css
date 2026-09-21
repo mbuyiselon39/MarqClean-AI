@@ -824,3 +824,10 @@ section[id],main[id],article[id] { scroll-margin-top:88px; }
 .mc-linear-preview__search{display:flex;align-items:center;gap:8px;width:auto;flex:1;min-width:0;cursor:pointer;text-align:left}
 .mc-linear-preview__search svg{width:14px;height:14px;color:rgb(var(--ink-3))}
 @media(max-width:640px){.mc-linear-preview__body{grid-template-columns:128px minmax(0,1fr)}.mc-linear-preview__body aside{padding:14px 8px}.mc-linear-preview__body aside button{font-size:11px}.mc-linear-preview__body main{padding:16px}.mc-linear-preview__chrome{gap:8px}.mc-linear-preview__avatar{display:none}}
+
+
+/* Consistent workspace heading hierarchy */
+.ws-scope h1 { font-size:clamp(1.75rem,1.35rem + 1vw,2.35rem); line-height:1.15; letter-spacing:-.025em; }
+.ws-scope h2 { font-size:clamp(1.35rem,1.15rem + .55vw,1.7rem); line-height:1.25; letter-spacing:-.02em; }
+.ws-scope h3 { font-size:clamp(1.05rem,1rem + .3vw,1.3rem); line-height:1.35; letter-spacing:-.01em; }
+.ws-scope .ws-btn-primary, .ws-scope .ws-btn-secondary, .ws-scope .mc-cta-cyan { border-radius:10px; }
