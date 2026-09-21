@@ -2,8 +2,8 @@ import { useState } from "react";
 
 type HeroActions = {
   onCleanFile: () => void;
-  onSampleLeads: () => void;
   onOpenReconciliation: () => void;
+  onViewTools: () => void;
 };
 
 function WorkspacePreview() {
@@ -44,10 +44,14 @@ function WorkspacePreview() {
   );
 }
 
-export default function HeroCarousel({ onCleanFile, onSampleLeads, onOpenReconciliation }: HeroActions) {
+export default function HeroCarousel({ onCleanFile, onOpenReconciliation, onViewTools }: HeroActions) {
   const [active, setActive] = useState(0);
-  const tabs = ["Data Cleaning", "Excel Automation", "Reconciliation", "Data Toolbox"];
-  const actions = [onCleanFile, onCleanFile, onOpenReconciliation, onSampleLeads];
+  const tabs = [
+    { label: "Data Cleaning", href: "#cleaner", action: onCleanFile },
+    { label: "Excel Automation", href: "/excel-automation", action: undefined },
+    { label: "Reconciliation", href: "/reconciliation-hub", action: onOpenReconciliation },
+    { label: "Data Toolbox", href: "/data-toolbox", action: undefined },
+  ];
 
   return (
     <section className="mc-minimal-hero" aria-label="MarqClean AI data preparation workspace">
@@ -67,15 +71,31 @@ export default function HeroCarousel({ onCleanFile, onSampleLeads, onOpenReconci
           <p className="mc-hero-copy">Clean, transform, reconcile and analyse CSV, Excel and PDF data without sending your files to a server.</p>
           <div className="mc-minimal-hero__actions">
             <button onClick={onCleanFile}>Launch Workspace <span>↗</span></button>
-            <button className="secondary" onClick={onSampleLeads}>33+ free tools</button>
+            <a className="secondary" href="#free-tools" onClick={(event) => { event.preventDefault(); onViewTools(); }}>33 free tools</a>
           </div>
           <div className="mc-minimal-hero__trust"><span>✓</span> Processed locally in your browser <i /> No upload required</div>
         </div>
         <div className="mc-minimal-hero__product"><WorkspacePreview /></div>
       </div>
-      <div className="mc-minimal-hero__tabs" role="tablist">
-        {tabs.map((tab, i) => <button key={tab} className={active === i ? "is-active" : ""} onClick={() => { setActive(i); actions[i](); }} role="tab" aria-selected={active === i}>{tab}</button>)}
-      </div>
+      <nav className="mc-minimal-hero__tabs" aria-label="Product workspaces">
+        {tabs.map((tab, i) => (
+          <a
+            key={tab.label}
+            className={active === i ? "is-active" : ""}
+            href={tab.href}
+            aria-current={active === i ? "page" : undefined}
+            onClick={(event) => {
+              setActive(i);
+              if (tab.action) {
+                event.preventDefault();
+                tab.action();
+              }
+            }}
+          >
+            {tab.label}
+          </a>
+        ))}
+      </nav>
     </section>
   );
 }
