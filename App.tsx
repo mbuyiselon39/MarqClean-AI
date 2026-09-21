@@ -2371,11 +2371,14 @@ const TOOL_CATEGORY_ORDER = ["All", "Cleaners", "Formatters", "Converters", "Exc
 function ToolsDirectory() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
+  const [toolPage, setToolPage] = useState(1);
   const allTools = useMemo(() => Object.values(SEO_TOOL_PAGES), []);
   const categories = useMemo(() => {
     const used = new Set(allTools.map((t) => t.category));
     return TOOL_CATEGORY_ORDER.filter((c) => c === "All" || used.has(c));
   }, [allTools]);
+
+  useEffect(() => { setToolPage(1); }, [query, category]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -2389,6 +2392,9 @@ function ToolsDirectory() {
       );
     });
   }, [allTools, query, category]);
+  const pageSize = 9;
+  const pageCount = Math.max(1, Math.ceil(filtered.length / pageSize));
+  const visibleTools = filtered.slice((toolPage - 1) * pageSize, toolPage * pageSize);
 
   return (
     <div>
@@ -2406,7 +2412,7 @@ function ToolsDirectory() {
             className="w-full rounded-md border border-line bg-canvas py-2.5 pl-10 pr-4 text-sm text-ink placeholder:text-ink-2 outline-none transition focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent/40"
           />
         </div>
-        <p className="text-xs text-ink-2">{filtered.length} of {allTools.length} tools</p>
+        <p className="text-xs text-ink-2">{filtered.length} matching tools · Page {toolPage} of {pageCount}</p>
       </div>
 
       <div className="mt-4 flex flex-wrap gap-2" role="group" aria-label="Filter tools by category">
@@ -2440,7 +2446,7 @@ function ToolsDirectory() {
         </div>
       ) : (
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((tool) => (
+          {visibleTools.map((tool) => (
             <PageLink
               key={tool.slug}
               page={tool.slug}
@@ -2454,12 +2460,19 @@ function ToolsDirectory() {
               <span className="mt-1.5 block text-lg font-medium leading-snug tracking-[-0.01em] text-ink">{tool.cardTitle}</span>
               <span className="mt-2 flex-1 text-ink-3">{tool.description.replace(/^Free /, "").slice(0, 96)}...</span>
               <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[rgb(var(--accent-hover))] transition group-hover:gap-2.5 group-hover:text-ink">
-                Open Tool
+                View {tool.cardTitle}
                 <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </span>
             </PageLink>
           ))}
         </div>
+        {filtered.length > pageSize ? (
+          <div className="mt-6 flex items-center justify-between gap-3" aria-label="Tool list pagination">
+            <button type="button" className="ws-btn-secondary" disabled={toolPage === 1} onClick={() => setToolPage((p) => Math.max(1, p - 1))}>Previous tools</button>
+            <span className="text-xs text-ink-3">Page {toolPage} of {pageCount}</span>
+            <button type="button" className="ws-btn-secondary" disabled={toolPage === pageCount} onClick={() => setToolPage((p) => Math.min(pageCount, p + 1))}>Next tools</button>
+          </div>
+        ) : null}
       )}
     </div>
   );
