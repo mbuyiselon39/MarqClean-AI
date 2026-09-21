@@ -153,7 +153,7 @@ export default function SmartDropzone({
             {["CSV", "XLSX", "PDF"].map((format) => <span key={format} className="rounded-md bg-surface px-3 py-1 text-sm font-medium text-ink-2">{format}</span>)}
           </div>
           <p className="mt-3 text-sm text-ink-2">Maximum file size: 100 MB.</p>
-          <button type="button" className="mt-6 rounded-md bg-[rgb(var(--accent))] px-6 py-3 text-sm font-medium text-ink shadow-blue-200 transition hover:bg-[rgb(var(--accent-hover))]" onClick={() => inputRef.current?.click()}>Choose a file</button>
+          <button type="button" className="ws-btn-primary mt-6" onClick={() => inputRef.current?.click()}>Choose a file</button>
           <div className="mt-5 inline-flex items-center gap-2 rounded-md border border-line bg-surface px-4 py-2 text-xs font-medium text-ink-2">
             <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /></svg> Files stay in this browser during processing.
           </div>
@@ -200,7 +200,7 @@ export default function SmartDropzone({
                 </label>
               ))}
             </div>
-            <button type="button" disabled={fileType === "PDF"} onClick={run} className="mt-4 w-full rounded-md bg-inverse px-5 py-3 text-sm font-medium text-on-inverse disabled:cursor-not-allowed disabled:opacity-40">Run workflow locally</button>
+            <button type="button" disabled={fileType === "PDF"} onClick={run} className="ws-btn-primary mt-4 w-full disabled:opacity-40">Run workflow locally</button>
             {fileType === "PDF" ? <p className="mt-2 text-xs text-ink-3">Open Bank Ledger for PDF extraction before running a data workflow.</p> : null}
           </div>
         </div>
