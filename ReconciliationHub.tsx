@@ -322,10 +322,10 @@ export default function ReconciliationHub({ onExit }: { onExit: () => void }) {
       <div className="ws-grid pointer-events-none absolute inset-x-0 top-0 h-[38rem]" aria-hidden="true" />
 
       <div className="mc-site-container relative pb-16 pt-28">
-        <PageHeader workspace="Reconciliation Hub" title="Reconciliation Hub" description="Rule-based reconciliation, validation and record matching. Runs locally in your browser." onBack={onExit} />
+        <PageHeader workspace="Reconciliation Hub" title="Reconciliation Hub" description="Rule-based reconciliation, validation and record matching. Runs locally in your browser." />
         <div className="mb-5 flex items-center gap-3">
           <h2 className="text-lg font-semibold text-ink">Verification workspace</h2>
-          <span className="ws-format-badge">NAV_ITEMS.length modules</span>
+          <span className="ws-format-badge">{NAV_ITEMS.length} modules</span>
         </div>
         <ToolLaunchpad tools={NAV_ITEMS} active={nav} onSelect={setNav} />
 
