@@ -4208,7 +4208,7 @@ export default function App() {
                 },
                 {
                   title: "Enterprise",
-                  body: "For team onboarding, workflow design or enterprise discussions, contact support@vertexstreamtechnologies.com with “Enterprise enquiry” in the subject.",
+                  body: "For team onboarding, workflow design or enterprise discussions, use Contact Support at support@vertexstreamtechnologies.com with "Enterprise enquiry" in the subject.",
                 },
               ].map((item) => (
                 <article key={item.title} className="mc-glass mc-card-interactive rounded-lg p-6">
@@ -4243,7 +4243,7 @@ export default function App() {
               {[
                 { q: "Is MarqClean AI actually free?", a: "Yes. Every tool listed in the Free Data Tools directory, the Quick Data & CSV Cleaner, Excel Automation, Data Toolbox, and Free Excel Academy run at no cost, with no account or card required." },
                 { q: "Do my files ever leave my browser?", a: "No. Cleaning, conversion, reconciliation, and formula processing all run locally in your browser using JavaScript. Nothing is uploaded to a server, so your data never leaves your device during processing." },
-                { q: "What file types are supported?", a: "Supported formats include XLSX, XLS, CSV, PDF, TXT and QIF, with availability shown per workspace. Reconciliation Hub and Bank Ledger also accept PDF statements and mailing lists, which are parsed directly in the browser." },
+                { q: "What file types are supported?", a: "Core formats include XLSX, XLS, CSV, PDF, TXT and QIF. Each workspace shows the formats it accepts before processing, because not every module supports every format." },
                 { q: "How large a file can I upload?", a: "The browser-safe upload cap is 100 MB. Actual processing capacity still depends on available device memory, so very large workbooks may take longer or need to be split before processing." },
                 { q: "Does this replace Excel, Power Query, or Power BI?", a: "No. MarqClean AI automates repetitive cleaning, formatting, and reconciliation work that normally happens before or after using Excel. Its Power Query-style and Power Pivot-style tools reproduce selected workflow outcomes, not the native Microsoft engines." },
                 { q: "What does the AI in MarqClean AI do?", a: "The core cleaning and reconciliation workflows currently use deterministic rules, validation and matching logic rather than a generative model. AI-related tools are scoped and outputs remain reviewable before export." },
