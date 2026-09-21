@@ -2672,9 +2672,6 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState<AppPageKey>("home");
   const [workspaceTab, setWorkspaceTab] = useState<"leads" | "converter" | "formulas" | "bank">("leads");
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
-  const [isWorkspacesOpen, setIsWorkspacesOpen] = useState(false);
-  const [isMobileWorkspacesOpen, setIsMobileWorkspacesOpen] = useState(false);
-  const productsMenuRef = useRef<HTMLDivElement>(null);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [openFaq, setOpenFaq] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -2749,12 +2746,10 @@ export default function App() {
     if (!isWorkspacesOpen) return;
     function handleOutside(event: MouseEvent) {
       if (productsMenuRef.current && !productsMenuRef.current.contains(event.target as Node)) {
-        setIsWorkspacesOpen(false);
-      }
+              }
     }
     function handleKey(event: KeyboardEvent) {
-      if (event.key === "Escape") setIsWorkspacesOpen(false);
-    }
+      if (event.key === "Escape")     }
     document.addEventListener("mousedown", handleOutside);
     document.addEventListener("keydown", handleKey);
     return () => {
@@ -2781,8 +2776,7 @@ export default function App() {
   useEffect(() => {
     updatePageMetadata(currentPage);
     setIsMobileNavOpen(false);
-    setIsWorkspacesOpen(false);
-    
+        
   }, [currentPage]);
 
   useEffect(() => {
