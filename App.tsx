@@ -1333,7 +1333,6 @@ const SEO_TOOL_PAGES: Record<ToolPageKey, SeoToolPage> = {
 };
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const urlPattern = /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(\/\S*)?$/i;
 
 function sanitizeCell(value: unknown) {
   return String(value ?? "")
