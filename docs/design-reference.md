@@ -45,7 +45,7 @@ No beehiiv copy, logos, customer names, statistics, testimonials, avatars or ima
 
 ## Font licensing note
 
-Clash Grotesk and Satoshi are distributed by Fontshare / Indian Type Foundry under the ITF Free Font License. Current third-party license references describe commercial use as permitted while warning that the font software must not be modified or redistributed without regard to the license terms. The build therefore fetches the unmodified WOFF2 web assets from Fontshare at build time and self-hosts the resulting files in the deployed MarqClean site. License terms should be rechecked before future font-file changes.
+Fontshare states that its fonts are free for personal and commercial use, and its license page distinguishes open-source fonts from closed-source fonts governed by the ITF Free Font License. Satoshi is currently listed by Fontshare as a closed-source font. The implementation downloads the unmodified WOFF2 web assets from Fontshare during the build and serves those files from MarqClean AI; no font files are modified or subsetted. Review the current ITF license terms before any future font-file redistribution or packaging change: https://fontshare.com/licenses/sil-ofl and https://www.fontshare.com/?q=Satoshi
 
 ## Verification still requiring a real browser
 
