@@ -2472,7 +2472,7 @@ function FooterContentPage({ page }: { page: FooterPage }) {
       <div className="mx-auto max-w-4xl">
         <PageHeader workspace="MarqClean AI" title={page.title} description={page.description} />
         <p className="text-sm text-ink-2">Last updated: June 29, 2026</p>
-        ${page.sections.length > 2 ? (
+        {page.sections.length > 2 ? (
         <nav className="mc-legal-toc mt-8" aria-label="On this page">
           <h2 className="text-base font-medium text-ink">On this page</h2>
           <div className="mt-2">{page.sections.map((section) => <a key={section.heading} href={`#legal-${section.heading.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}>{section.heading}</a>)}</div>
