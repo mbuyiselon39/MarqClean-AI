@@ -145,7 +145,7 @@ export default function DataToolbox({ onExit }: { onExit: () => void }) {
 
       <div className="mc-site-container relative pb-16 pt-4">
         <div className="mb-2 flex items-center justify-between">
-          <p className="mc-mono text-[11px] uppercase tracking-[0.2em] text-[rgb(var(--ink-3))]">Tools Available ({TOOLS.length})</p>
+          <p className="mc-mono text-xs uppercase tracking-[0.2em] text-[rgb(var(--ink-3))]">Tools Available ({TOOLS.length})</p>
         </div>
         <ToolLaunchpad tools={TOOLS} active={tool} onSelect={setTool} />
 
@@ -874,7 +874,7 @@ function DaxReferenceTool() {
           <div key={p.name} className="rounded-xl border border-line bg-canvas p-4">
             <div className="flex items-center justify-between gap-2">
               <span className="font-mono text-sm font-medium text-ink">{p.name}</span>
-              <span className="rounded-md border border-line px-2 py-0.5 text-[10px] text-ink-3">{p.category}</span>
+              <span className="rounded-md border border-line px-2 py-0.5 text-xs text-ink-3">{p.category}</span>
             </div>
             <pre className="mt-2 overflow-x-auto rounded bg-surface px-2 py-1.5 font-mono text-xs text-ink-2">{p.daxSyntax}</pre>
             <p className="mt-1 font-mono text-xs text-ink-2">{p.daxExample}</p>
