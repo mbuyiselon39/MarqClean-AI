@@ -3314,14 +3314,14 @@ export default function App() {
                 </p>
                 <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
                   <button
-                    className="rounded-md bg-accent px-5 py-3 text-sm font-medium text-[rgb(var(--accent-ink))] transition hover:bg-accent-hover"
+                    className="ws-btn-primary"
                     onClick={() => fileInputRef.current?.click()}
                     disabled={isProcessing}
                   >
                     {isProcessing ? "Processing" : "Choose File"}
                   </button>
                   <button
-                    className="rounded-md border border-line px-5 py-3 text-sm font-medium text-ink transition hover:border-ink"
+                    className="ws-btn-secondary"
                     onClick={loadSampleData}
                     disabled={isProcessing}
                   >
