@@ -1,125 +1,133 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import Logo from "./Logo";
 import ThemeToggle from "./ThemeToggle";
-
-// ---------------------------------------------------------------------------
-// Shared enterprise workspace shell: unified dark theme, homepage global
-// header, spreadsheet grid background, and a standardized module page header.
-// Used by every internal tool so the platform feels like one product.
-// ---------------------------------------------------------------------------
 
 function go(path: string) {
   window.history.pushState({}, "", path);
   window.dispatchEvent(new PopStateEvent("popstate"));
 }
 
-const SIMPLE_NAV: Array<{ label: string; path: string }> = [
-  { label: "Home", path: "/#top" },
-  { label: "Platform", path: "/#features" },
-  { label: "How it works", path: "/#workflow" },
+function Icon({ name, size = 20 }: { name: string; size?: number }) {
+  const common = { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.8, strokeLinecap: "round" as const, strokeLinejoin: "round" as const, "aria-hidden": true };
+  const paths: Record<string, ReactNode> = {
+    search: <><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></>,
+    chevron: <path d="m9 18 6-6-6-6" />,
+    down: <path d="m6 9 6 6 6-6" />,
+    grid: <><rect x="4" y="4" width="6" height="6" rx="1" /><rect x="14" y="4" width="6" height="6" rx="1" /><rect x="4" y="14" width="6" height="6" rx="1" /><rect x="14" y="14" width="6" height="6" rx="1" /></>,
+    clean: <><path d="M4 7h16M7 4v16M4 17h16" /><path d="m15 15 5 5" /></>,
+    formula: <><path d="M5 5h14v14H5z" /><path d="m8 9 3 3-3 3M13 15h3" /></>,
+    reconcile: <><path d="M7 7h10l-2.5-2.5M17 17H7l2.5 2.5" /><path d="M17 7a5 5 0 0 1 0 10M7 17A5 5 0 0 1 7 7" /></>,
+    toolbox: <><path d="M4 8h16v12H4z" /><path d="M8 8V5h8v3M9 13h6" /></>,
+    academy: <><path d="m4 7 8-4 8 4-8 4-8-4Z" /><path d="M6 9v6c3 3 9 3 12 0V9M20 8v6" /></>,
+    chart: <><path d="M4 19V5M4 19h16" /><path d="m7 15 4-4 3 2 5-7" /></>,
+    document: <><path d="M6 3h8l4 4v14H6z" /><path d="M14 3v5h5M9 13h6M9 17h6" /></>,
+    settings: <><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z" /><path d="M4 12H2m20 0h-2M12 4V2m0 20v-2m5.7-14.3 1.4-1.4M4.9 19.1l1.4-1.4m11.4 0 1.4 1.4M4.9 4.9l1.4 1.4" /></>,
+    arrow: <><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></>,
+    close: <><path d="m6 6 12 12M18 6 6 18" /></>,
+    menu: <><path d="M4 6h16M4 12h16M4 18h16" /></>,
+    book: <><path d="M4 5a3 3 0 0 1 3-3h13v18H7a3 3 0 0 0-3 3V5Z" /><path d="M7 20h13" /></>,
+  };
+  return <svg {...common}>{paths[name] ?? paths.grid}</svg>;
+}
+
+const SHORTCUT = typeof navigator !== "undefined" && /Mac|iPhone|iPad/i.test(navigator.platform) ? "⌘ K" : "Ctrl K";
+
+const WORKSPACES = [
+  { label: "Data Cleaning", path: "/#cleaner", icon: "clean", description: "Clean, standardise and validate spreadsheet data." },
+  { label: "Excel Automation", path: "/excel-automation", icon: "formula", description: "Automate workbook formatting and formulas." },
+  { label: "Reconciliation Hub", path: "/reconciliation-hub", icon: "reconcile", description: "Compare records and review exceptions." },
+  { label: "Data Toolbox", path: "/data-toolbox", icon: "toolbox", description: "Advanced analysis and data preparation tools." },
+  { label: "Excel Academy", path: "/excel-academy", icon: "academy", description: "Learn Excel with lessons and references." },
 ];
 
+const NAV = [
+  { label: "Platform", path: "/#features" },
+  { label: "Tools", path: "/#free-tools" },
+  { label: "How it works", path: "/#workflow" },
+  { label: "Academy", path: "/excel-academy" },
+  { label: "Contact", path: "/contact" },
+];
+
+type SearchResult = { group: string; label: string; description: string; path: string; icon: string };
+
+const TOOL_RESULTS: SearchResult[] = [
+  { group: "Tools", label: "Advanced Excel Functions", description: "Functions, formulas and workbook analysis.", path: "/data-toolbox", icon: "formula" },
+  { group: "Tools", label: "Data Explorer", description: "Filter and inspect structured data.", path: "/data-toolbox", icon: "chart" },
+  { group: "Tools", label: "Remove Duplicates", description: "Detect and remove duplicate records.", path: "/data-toolbox", icon: "clean" },
+  { group: "Tools", label: "File Comparison Centre", description: "Compare Excel, CSV, PDF and Word files.", path: "/reconciliation-hub", icon: "reconcile" },
+];
+
+function isCurrent(path: string) {
+  const pathname = window.location.pathname;
+  if (path.startsWith("/#")) return pathname === "/";
+  return pathname === path;
+}
+
 export function GlobalHeader() {
-  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [workspacesOpen, setWorkspacesOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [workspaceAccordion, setWorkspaceAccordion] = useState(false);
+  const workspaceTimer = useRef<number | null>(null);
+
+  useEffect(() => {
+    const shortcut = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        setSearchOpen(true);
+      }
+      if (!event.metaKey && !event.ctrlKey && event.key === "/" && !["INPUT","TEXTAREA","SELECT"].includes((event.target as HTMLElement)?.tagName ?? "")) {
+        event.preventDefault();
+        setSearchOpen(true);
+      }
+      if (event.key === "Escape") {
+        setWorkspacesOpen(false);
+        setWorkspaceAccordion(false);
+        setMobileOpen(false);
+      }
+    };
+    document.addEventListener("keydown", shortcut);
+    return () => document.removeEventListener("keydown", shortcut);
+  }, []);
+
+  useEffect(() => () => { if (workspaceTimer.current) window.clearTimeout(workspaceTimer.current); }, []);
+
+  const closeAll = () => { setMobileOpen(false); setWorkspacesOpen(false); setWorkspaceAccordion(false); };
+
   return (
     <>
-      <a
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-canvas focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-ink"
-        href="#main-content"
-      >
-        Skip to content
-      </a>
-      <header className="ws-surface ws-global-header fixed inset-x-0 top-0 z-40 border-b">
-      <nav className="mx-auto flex max-w-[100rem] items-center justify-between gap-4 px-5 py-3.5 lg:px-8" aria-label="Primary navigation">
-        <a
-          href="/"
-          className="mc-display flex items-center gap-2 text-lg font-medium tracking-tight text-ink"
-          onClick={(e) => { e.preventDefault(); go("/"); }}
-        >
-          <Logo className="shrink-0" />
-        </a>
-        <div className="hidden items-center gap-6 text-sm font-medium text-[rgb(var(--ink-2))] xl:flex">
-          <a href={SIMPLE_NAV[0].path} className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); go(SIMPLE_NAV[0].path); }}>{SIMPLE_NAV[0].label}</a>
-          <a href={SIMPLE_NAV[1].path} className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); go(SIMPLE_NAV[1].path); }}>{SIMPLE_NAV[1].label}</a>
-          <a href={SIMPLE_NAV[2].path} className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); go(SIMPLE_NAV[2].path); }}>{SIMPLE_NAV[2].label}</a>
-          <button
-            type="button"
-            className="ws-global-search hidden xl:inline-flex items-center gap-2 rounded-md border border-line bg-canvas px-3 py-2 text-sm font-medium text-ink-2 transition hover:border-[rgb(var(--accent))]/60 hover:text-[rgb(var(--accent))]"
-            onClick={() => window.dispatchEvent(new CustomEvent("marqclean:open-command-palette"))}
-            aria-label="Open command palette"
-          >
-            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></svg>
-            Search workspace <kbd>⌘K</kbd>
-          </button>
-          <a href="/contact" className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); go("/contact"); }}>Contact</a>
-        </div>
-        <div className="flex items-center gap-2">
-          <ThemeToggle compact />
-          <button
-            className="ws-btn-primary hidden rounded-md px-5 py-2 text-sm font-medium sm:inline-flex"
-            onClick={() => go("/#cleaner")}
-          >
-            Start Free
-          </button>
-          <button
-            type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-line text-ink-2 transition hover:border-[rgb(var(--accent))]/60 hover:text-[rgb(var(--accent))] xl:hidden"
-            aria-label={isMobileNavOpen ? "Close navigation menu" : "Open navigation menu"}
-            aria-expanded={isMobileNavOpen}
-            aria-controls="ws-mobile-nav-panel"
-            onClick={() => setIsMobileNavOpen((open) => !open)}
-          >
-            {isMobileNavOpen ? (
-              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-                <path d="M6 6l12 12M18 6L6 18" />
-              </svg>
-            ) : (
-              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-                <path d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            )}
-          </button>
-        </div>
-      </nav>
-      {isMobileNavOpen ? (
-        <div id="ws-mobile-nav-panel" className="border-t border-line bg-canvas px-5 py-4 xl:hidden">
-          <div className="flex flex-col gap-1 text-base font-medium text-ink-2">
-            {SIMPLE_NAV.map((item) => (
-              <a
-                key={item.label}
-                href={item.path}
-                className="rounded-lg px-3 py-2.5 transition hover:bg-surface hover:text-[rgb(var(--accent))]"
-                onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); go(item.path); }}
-              >
-                {item.label}
-              </a>
-            ))}
-            <button
-              type="button"
-              className="flex items-center justify-between rounded-lg px-3 py-2.5 text-left transition hover:bg-canvas/5 hover:text-[rgb(var(--accent))]"
-              onClick={() => { setIsMobileNavOpen(false); window.dispatchEvent(new CustomEvent("marqclean:open-command-palette")); }}
-              aria-label="Open command palette"
-            >
-              <span>Search workspace</span><kbd>⌘K</kbd>
-            </button>
-            <a
-              className="rounded-lg px-3 py-2.5 transition hover:bg-canvas/5 hover:text-[rgb(var(--accent))]"
-              href="/contact"
-              onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); go("/contact"); }}
-            >
-              Contact
-            </a>
-            <button
-              className="ws-btn-primary mt-2 rounded-md px-5 py-2.5 text-sm font-medium sm:hidden"
-              onClick={() => { setIsMobileNavOpen(false); go("/#cleaner"); }}
-            >
-              Start Free
-            </button>
+      <a className="ws-skip-link" href="#main-content">Skip to content</a>
+      <header className="ws-global-header" aria-label="MarqClean AI site header">
+        <nav className="ws-global-header__nav" aria-label="Primary navigation">
+          <a href="/" className="ws-brand" onClick={(e) => { e.preventDefault(); go("/"); closeAll(); }} aria-label="MarqClean AI home"><Logo className="shrink-0" /></a>
+          <div className="ws-global-header__links">
+            {NAV.slice(0, 1).map((item) => <a key={item.label} href={item.path} aria-current={isCurrent(item.path) ? "page" : undefined} onClick={(e) => { e.preventDefault(); go(item.path); }}>{item.label}</a>)}
+            <div className="ws-nav-dropdown" onMouseEnter={() => { if (workspaceTimer.current) clearTimeout(workspaceTimer.current); setWorkspacesOpen(true); }} onMouseLeave={() => { workspaceTimer.current = window.setTimeout(() => setWorkspacesOpen(false), 160); }}>
+              <button type="button" aria-haspopup="menu" aria-expanded={workspacesOpen} onClick={() => setWorkspacesOpen((v) => !v)}>Workspaces <Icon name="down" size={16} /></button>
+              {workspacesOpen ? <div className="ws-workspace-menu" role="menu" aria-label="Workspaces">
+                {WORKSPACES.map((workspace) => <a role="menuitem" key={workspace.label} href={workspace.path} aria-current={isCurrent(workspace.path) ? "page" : undefined} onClick={(e) => { e.preventDefault(); go(workspace.path); closeAll(); }}><span className="ws-menu-icon"><Icon name={workspace.icon} size={19} /></span><span><strong>{workspace.label}</strong><small>{workspace.description}</small></span></a>)}
+              </div> : null}
+            </div>
+            {NAV.slice(1).map((item) => <a key={item.label} href={item.path} aria-current={isCurrent(item.path) ? "page" : undefined} onClick={(e) => { e.preventDefault(); go(item.path); }}>{item.label}</a>)}
           </div>
-        </div>
-      ) : null}
-    </header>
+          <div className="ws-global-header__actions">
+            <button type="button" className="ws-search-trigger" onClick={() => setSearchOpen(true)} aria-label={`Open search (${SHORTCUT})`}><Icon name="search" size={18} /><span>Search</span><kbd>{SHORTCUT}</kbd></button>
+            <ThemeToggle compact />
+            <button type="button" className="ws-btn-primary ws-start-free" onClick={() => go("/#cleaner")}>Start free</button>
+            <button type="button" className="ws-mobile-menu" aria-label={mobileOpen ? "Close navigation" : "Open navigation"} aria-expanded={mobileOpen} aria-controls="ws-mobile-panel" onClick={() => setMobileOpen((v) => !v)}><Icon name={mobileOpen ? "close" : "menu"} size={20} /></button>
+          </div>
+        </nav>
+        {mobileOpen ? <div id="ws-mobile-panel" className="ws-mobile-panel">
+          {NAV.slice(0, 1).map((item) => <a key={item.label} href={item.path} onClick={(e) => { e.preventDefault(); go(item.path); closeAll(); }}>{item.label}</a>)}
+          <button type="button" className="ws-mobile-accordion" aria-expanded={workspaceAccordion} onClick={() => setWorkspaceAccordion((v) => !v)}>Workspaces <Icon name={workspaceAccordion ? "down" : "chevron"} size={16} /></button>
+          {workspaceAccordion ? <div className="ws-mobile-workspaces">{WORKSPACES.map((w) => <a key={w.label} href={w.path} onClick={(e) => { e.preventDefault(); go(w.path); closeAll(); }}><Icon name={w.icon} size={18} /><span><strong>{w.label}</strong><small>{w.description}</small></span></a>)}</div> : null}
+          {NAV.slice(1).map((item) => <a key={item.label} href={item.path} onClick={(e) => { e.preventDefault(); go(item.path); closeAll(); }}>{item.label}</a>)}
+          <button type="button" className="ws-mobile-search" onClick={() => { setMobileOpen(false); setSearchOpen(true); }}><Icon name="search" size={18} />Search <kbd>{SHORTCUT}</kbd></button>
+          <button type="button" className="ws-btn-primary" onClick={() => { closeAll(); go("/#cleaner"); }}>Start free</button>
+        </div> : null}
+      </header>
+      <CommandPalette open={searchOpen} onClose={() => setSearchOpen(false)} />
     </>
   );
 }
@@ -127,297 +135,118 @@ export function GlobalHeader() {
 export type StatusTone = "idle" | "processing" | "success" | "warning" | "error";
 
 const TONE_STYLES: Record<StatusTone, string> = {
-  idle: "bg-canvas/5 text-[rgb(var(--ink-2))] border-line",
-  processing: "bg-[rgb(var(--accent))]/10 text-[rgb(var(--accent-hover))] border-[rgb(var(--accent))]/40",
-  success: "bg-[rgb(var(--success))]/10 text-[rgb(var(--success))] border-[rgb(var(--success))]/30",
-  warning: "bg-[rgb(var(--ink-3))]/12 text-[rgb(var(--ink-3))] border-[rgb(var(--ink-3))]/40",
-  error: "bg-[rgb(var(--error))]/12 text-[rgb(var(--error))] border-[rgb(var(--error))]/40",
+  idle: "ws-tone-idle", processing: "ws-tone-processing", success: "ws-tone-success", warning: "ws-tone-warning", error: "ws-tone-error",
 };
 
 export function StatusBadge({ tone, label }: { tone: StatusTone; label: string }) {
-  return (
-    <span className={`inline-flex items-center gap-1.5 rounded-md border px-3 py-1 text-xs font-medium ${TONE_STYLES[tone]}`}>
-      <span className={`h-1.5 w-1.5 rounded-md ${tone === "processing" ? "animate-pulse bg-[rgb(var(--accent))]" : tone === "success" ? "bg-[rgb(var(--success))]" : tone === "warning" ? "bg-[rgb(var(--ink-3))]" : tone === "error" ? "bg-[rgb(var(--error))]" : "bg-[rgb(var(--ink-2))]"}`} />
-      {label}
-    </span>
-  );
+  return <span className={`ws-status-badge ${TONE_STYLES[tone]}`}><span className="ws-status-dot" />{label}</span>;
+}
+export function FormatBadge({ label }: { label: string }) { return <span className="ws-format-badge">{label}</span>; }
+
+type WorkspaceTool<T extends string> = { key: T; label: string; blurb: string; icon: string; category?: string };
+
+function toolIcon(key: string, fallback: string) {
+  if (/formula|dax|function/i.test(key)) return "formula";
+  if (/reconcil|comparison|match|verify/i.test(key)) return "reconcile";
+  if (/bank|statement/i.test(key)) return "document";
+  if (/extract|web/i.test(key)) return "document";
+  if (/chart|explorer|predict|clarity|model|analysis/i.test(key)) return "chart";
+  if (/academy|lesson/i.test(key)) return "academy";
+  if (/setting|admin/i.test(key)) return "settings";
+  return "clean";
 }
 
-export function FormatBadge({ label }: { label: string }) {
-  return <span className="ws-badge inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-xs font-medium uppercase tracking-wide">{label}</span>;
+function workspaceGroups(tools: Array<WorkspaceTool<string>>) {
+  const keys = tools.map((t) => t.key).join(" ");
+  const academy = /curriculum|functions|cheat-sheet/.test(keys);
+  if (academy) return [{ name: "Learn", items: tools }];
+  if (/power-query|data-model|dax-reference|timesheet|extract/.test(keys)) {
+    const dataPreparation = tools.filter((t) => /functions|power-query|data-model|dax-reference|merge|dedupe|fuzzy|clarity/.test(t.key));
+    const analysis = tools.filter((t) => /explorer|predict/.test(t.key));
+    const extraction = tools.filter((t) => /extract|timesheet/.test(t.key));
+    return [
+      { name: "Data preparation", items: dataPreparation },
+      { name: "Analysis", items: analysis },
+      { name: "Extraction", items: extraction },
+    ].filter((g) => g.items.length);
+  }
+  const verification = tools.filter((t) => !/compliance|reporting|administration/.test(t.key));
+  const compliance = tools.filter((t) => /compliance|documents/.test(t.key));
+  const reporting = tools.filter((t) => /dashboard|reporting/.test(t.key));
+  const administration = tools.filter((t) => /administration|sheet-manager/.test(t.key));
+  return [
+    { name: "Verification", items: verification },
+    { name: "Compliance", items: compliance },
+    { name: "Reporting", items: reporting },
+    { name: "Administration", items: administration },
+  ].filter((g) => g.items.length);
 }
 
-export function WorkspaceShell({
-  icon,
-  title,
-  description,
-  engine,
-  formats,
-  status,
-  children,
-}: {
-  icon: string;
-  title: string;
-  description: string;
-  engine?: string;
-  formats?: string[];
-  status?: { tone: StatusTone; label: string };
-  children: ReactNode;
-}) {
-  return (
-    <div className="ws-root ws-scope min-h-screen">
-      <GlobalHeader />
-      <div className="ws-grid pointer-events-none absolute inset-x-0 top-0 h-[38rem]" aria-hidden="true" />
+function SidebarIcon({ name }: { name: string }) { return <span className="ws-sidebar-icon"><Icon name={name} size={20} /></span>; }
 
-      <div className="relative mx-auto max-w-[110rem] px-5 pb-20 pt-24 lg:px-8">
-        {/* Module page header */}
-        <div className="ws-surface ws-module-header flex flex-wrap items-start justify-between gap-4 rounded-lg p-6">
-          <div className="flex items-start gap-4">
-            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-canvas /20 /20 text-2xl ring-1 ring-inset ring-white/10">{icon}</span>
-            <div>
-              <h1 className="mc-display text-2xl font-medium tracking-tight text-ink sm:text-3xl">{title}</h1>
-              <p className="mt-1 max-w-3xl text-left text-sm leading-6 text-[rgb(var(--ink-2))] [hyphens:none]">{description}</p>
-              <div className="mt-3 flex flex-wrap items-center gap-2">
-                {formats?.map((f) => <FormatBadge key={f} label={f} />)}
-                {engine ? <span className="ws-badge rounded-md px-2 py-0.5 text-xs font-medium text-[rgb(var(--accent-hover))]">Engine: {engine}</span> : null}
-              </div>
-            </div>
-          </div>
-          {status ? <StatusBadge tone={status.tone} label={status.label} /> : null}
-        </div>
-
-        <div className="mt-6">{children}</div>
-      </div>
-    </div>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Unified workspace navigation: the former launchpad is now a real product
-// sidebar with persistent collapse state, grouped tools and a global command
-// palette. The existing tool contract remains compatible with every module.
-// ---------------------------------------------------------------------------
-
-type WorkspaceTool<T extends string> = {
-  key: T;
-  label: string;
-  blurb: string;
-  icon: string;
-  category?: string;
-};
-
-function toolGroup(tool: WorkspaceTool<string>) {
-  if (tool.category) return tool.category;
-  const value = tool.key + " " + tool.label;
-  if (/(bank|reconcil|statement|fund|verify|comparison)/i.test(value)) return "Control";
-  if (/(formula|excel|xlookup|sumifs|gpt|automation)/i.test(value)) return "Automation";
-  if (/(chart|statistic|analyst|analysis|toolbox)/i.test(value)) return "Intelligence";
-  return "Data preparation";
-}
-
-function SidebarIcon({ children }: { children: ReactNode }) {
-  return <span className="ws-sidebar-icon" aria-hidden="true">{children}</span>;
-}
-
-export function CommandPalette<T extends string>({
-  tools,
-  active,
-  onSelect,
-  open,
-  onClose,
-}: {
-  tools: Array<WorkspaceTool<T>>;
-  active: T;
-  onSelect: (key: T) => void;
-  open: boolean;
-  onClose: () => void;
-}) {
+export function CommandPalette({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [query, setQuery] = useState("");
   const [cursor, setCursor] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const results = tools.filter((tool) => {
-    const haystack = (tool.label + " " + tool.blurb + " " + tool.key + " " + (tool.category ?? "")).toLowerCase();
-    return haystack.includes(query.trim().toLowerCase());
-  });
-
-  useEffect(() => {
-    if (!open) return;
-    setQuery("");
-    setCursor(0);
-    requestAnimationFrame(() => inputRef.current?.focus());
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return;
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        onClose();
-      } else if (event.key === "ArrowDown") {
-        event.preventDefault();
-        setCursor((value) => Math.min(value + 1, Math.max(results.length - 1, 0)));
-      } else if (event.key === "ArrowUp") {
-        event.preventDefault();
-        setCursor((value) => Math.max(value - 1, 0));
-      } else if (event.key === "Enter" && results[cursor]) {
-        event.preventDefault();
-        onSelect(results[cursor].key);
-        onClose();
-      }
-    }
-    document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, [open, onClose, onSelect, results, cursor]);
-
-  useEffect(() => {
-    if (cursor >= results.length) setCursor(Math.max(results.length - 1, 0));
-  }, [cursor, results.length]);
-
+  const results = useMemo(() => {
+    const all = [
+      ...WORKSPACES.map((w) => ({ group: "Workspaces", label: w.label, description: w.description, path: w.path, icon: w.icon })),
+      ...TOOL_RESULTS,
+      { group: "Lessons", label: "Excel Academy curriculum", description: "Guided lessons and progress.", path: "/excel-academy", icon: "academy" },
+      { group: "Lessons", label: "Excel cheat sheet", description: "Shortcuts, patterns and error decoder.", path: "/excel-academy", icon: "book" },
+      { group: "Functions", label: "Excel function reference", description: "Search functions and examples.", path: "/excel-academy", icon: "formula" },
+    ];
+    const q = query.trim().toLowerCase();
+    return q ? all.filter((r) => (r.label + " " + r.description + " " + r.group).toLowerCase().includes(q)) : all;
+  }, [query]);
+  useEffect(() => { if (!open) return; setQuery(""); setCursor(0); requestAnimationFrame(() => inputRef.current?.focus()); }, [open]);
+  useEffect(() => { if (!open) return; const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") { e.preventDefault(); onClose(); } if (e.key === "ArrowDown") { e.preventDefault(); setCursor((c) => Math.min(c + 1, results.length - 1)); } if (e.key === "ArrowUp") { e.preventDefault(); setCursor((c) => Math.max(c - 1, 0)); } if (e.key === "Enter" && results[cursor]) { e.preventDefault(); go(results[cursor].path); onClose(); } }; document.addEventListener("keydown", onKey); return () => document.removeEventListener("keydown", onKey); }, [open, onClose, results, cursor]);
+  useEffect(() => { if (cursor >= results.length) setCursor(Math.max(results.length - 1, 0)); }, [cursor, results.length]);
   if (!open) return null;
-
-  return (
-    <div className="ws-command-overlay" role="presentation" onMouseDown={onClose}>
-      <div className="ws-command" role="dialog" aria-modal="true" aria-label="Search workspace" onMouseDown={(event) => event.stopPropagation()}>
-        <div className="ws-command__search">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></svg>
-          <input ref={inputRef} value={query} onChange={(event) => { setQuery(event.target.value); setCursor(0); }} placeholder="Search tools, workflows and capabilities…" aria-label="Search tools" />
-          <kbd>ESC</kbd>
-        </div>
-        <div className="ws-command__meta"><span>{results.length} workspace tools</span><span>↑ ↓ navigate · Enter open</span></div>
-        <div className="ws-command__results" role="listbox" aria-label="Workspace tools">
-          {results.map((tool, index) => (
-            <button
-              key={tool.key}
-              type="button"
-              role="option"
-              aria-selected={active === tool.key}
-              className={"ws-command__item " + (index === cursor ? "is-highlighted " : "") + (active === tool.key ? "is-active" : "")}
-              onMouseEnter={() => setCursor(index)}
-              onClick={() => { onSelect(tool.key); onClose(); }}
-            >
-              <span className="ws-command__item-icon">{tool.icon}</span>
-              <span className="ws-command__item-copy"><strong>{tool.label}</strong><small>{tool.blurb}</small></span>
-              <span className="ws-command__item-group">{toolGroup(tool)}</span>
-            </button>
-          ))}
-          {!results.length ? <div className="ws-command__empty">No matching workspace tools. Try “clean”, “reconcile”, “formula” or “analysis”.</div> : null}
-        </div>
-      </div>
-    </div>
-  );
+  const grouped = results.reduce<Record<string, SearchResult[]>>((acc, item) => { (acc[item.group] ||= []).push(item); return acc; }, {});
+  return <div className="ws-command-overlay" onMouseDown={onClose}><div className="ws-command" role="dialog" aria-modal="true" aria-label="Search MarqClean AI" onMouseDown={(e) => e.stopPropagation()}>
+    <div className="ws-command__search"><Icon name="search" size={18} /><input ref={inputRef} value={query} onChange={(e) => { setQuery(e.target.value); setCursor(0); }} placeholder="Search workspaces, tools, lessons and functions…" aria-label="Search MarqClean AI" /><kbd>ESC</kbd></div>
+    <div className="ws-command__meta"><span>{results.length} results</span><span><kbd>↑</kbd> <kbd>↓</kbd> navigate · <kbd>Enter</kbd> open</span></div>
+    <div className="ws-command__results">{Object.entries(grouped).map(([group, items]) => <section key={group}><h3>{group}</h3>{items.map((item) => { const index = results.indexOf(item); return <button type="button" key={item.group + item.label} className={index === cursor ? "is-highlighted" : ""} onMouseEnter={() => setCursor(index)} onClick={() => { go(item.path); onClose(); }}><span className="ws-command__item-icon"><Icon name={item.icon} size={19} /></span><span className="ws-command__item-copy"><strong>{item.label}</strong><small>{item.description}</small></span><Icon name="arrow" size={17} /></button>; })}</section>)}</div>
+  </div></div>;
 }
 
-export function ToolLaunchpad<T extends string>({
-  tools,
-  active,
-  onSelect,
-}: {
-  tools: Array<WorkspaceTool<T>>;
-  active: T;
-  onSelect: (key: T) => void;
-}) {
-  const [collapsed, setCollapsed] = useState(() => {
-    try { return window.localStorage.getItem("marqclean:workspace-sidebar") === "collapsed"; } catch { return false; }
-  });
-  const [paletteOpen, setPaletteOpen] = useState(false);
-
-  useEffect(() => {
-    try { window.localStorage.setItem("marqclean:workspace-sidebar", collapsed ? "collapsed" : "expanded"); } catch {}
-    document.body.dataset.mcWorkspaceSidebar = collapsed ? "collapsed" : "expanded";
-    return () => { delete document.body.dataset.mcWorkspaceSidebar; };
-  }, [collapsed]);
-
-  useEffect(() => {
-    const openFromHeader = () => setPaletteOpen(true);
-    window.addEventListener("marqclean:open-command-palette", openFromHeader);
-    return () => window.removeEventListener("marqclean:open-command-palette", openFromHeader);
-  }, []);
-
-  useEffect(() => {
-    function handleShortcut(event: KeyboardEvent) {
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
-        event.preventDefault();
-        setPaletteOpen((open) => !open);
-      }
-    }
-    document.addEventListener("keydown", handleShortcut);
-    return () => document.removeEventListener("keydown", handleShortcut);
-  }, []);
-
-  const groups = ["Data preparation", "Automation", "Control", "Intelligence"].map((name) => ({
-    name,
-    items: tools.filter((tool) => toolGroup(tool) === name),
-  })).filter((group) => group.items.length);
-
-  return (
-    <>
-      <aside className={"ws-sidebar " + (collapsed ? "is-collapsed" : "")} aria-label="MarqClean workspace">
-        <div className="ws-sidebar__top">
-          <div className="ws-sidebar__search-hint" aria-hidden="true">
-            <SidebarIcon><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></svg></SidebarIcon>
-            <span>Command palette</span><kbd>⌘K</kbd>
-          </div>
-          <button type="button" className="ws-sidebar__collapse" onClick={() => setCollapsed((value) => !value)} aria-label={collapsed ? "Expand workspace sidebar" : "Collapse workspace sidebar"} title={collapsed ? "Expand sidebar" : "Collapse sidebar"}>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d={collapsed ? "m9 18 6-6-6-6" : "m15 18-6-6 6-6"} /></svg>
-          </button>
-        </div>
-
-        <div className="ws-sidebar__scroll">
-          <div className="ws-sidebar__workspace">
-            <div className="ws-sidebar__workspace-mark"><Logo markOnly label="MarqClean AI workspace" /></div>
-            <div className="ws-sidebar__workspace-copy"><strong>MarqClean AI</strong><small>Unified workspace</small></div>
-          </div>
-
-          {groups.map((group) => (
-            <section className="ws-sidebar__group" key={group.name}>
-              <div className="ws-sidebar__label">{group.name}</div>
-              {group.items.map((tool) => (
-                <button
-                  type="button"
-                  key={tool.key}
-                  className={"ws-sidebar__item " + (active === tool.key ? "is-active" : "")}
-                  onClick={() => onSelect(tool.key)}
-                  title={collapsed ? tool.label : undefined}
-                  aria-current={active === tool.key ? "page" : undefined}
-                >
-                  <SidebarIcon>{tool.icon}</SidebarIcon>
-                  <span className="ws-sidebar__item-copy"><strong>{tool.label}</strong><small>{tool.blurb}</small></span>
-                </button>
-              ))}
-            </section>
-          ))}
-        </div>
-
-        <div className="ws-sidebar__footer">
-          <div className="ws-sidebar__local"><span className="ws-local-dot" /><span><strong>Processed locally</strong><small>Your files stay in this browser</small></span></div>
-          <button type="button" className="ws-sidebar__shortcut" onClick={() => setPaletteOpen(true)}>
-            <span>Command palette</span><kbd>⌘K</kbd>
-          </button>
-        </div>
-      </aside>
-
-      <div className="ws-sidebar-mobile-bar">
-        <button type="button" onClick={() => setPaletteOpen(true)} aria-label="Open command palette"><SidebarIcon><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></svg></SidebarIcon><span>Search workspace</span><kbd>⌘K</kbd></button>
+export function ToolLaunchpad<T extends string>({ tools, active, onSelect }: { tools: Array<WorkspaceTool<T>>; active: T; onSelect: (key: T) => void }) {
+  const [collapsed, setCollapsed] = useState(() => { try { return window.localStorage.getItem("marqclean:workspace-sidebar") === "collapsed"; } catch { return false; } });
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  useEffect(() => { try { window.localStorage.setItem("marqclean:workspace-sidebar", collapsed ? "collapsed" : "expanded"); } catch {} }, [collapsed]);
+  useEffect(() => { document.body.classList.toggle("ws-drawer-open", drawerOpen); return () => document.body.classList.remove("ws-drawer-open"); }, [drawerOpen]);
+  const groups = workspaceGroups(tools);
+  const current = tools.find((t) => t.key === active);
+  const choose = (key: T) => { onSelect(key); setDrawerOpen(false); };
+  const sidebar = <aside className={`ws-sidebar ${collapsed ? "is-collapsed" : ""} ${drawerOpen ? "is-open" : ""}`} aria-label="Workspace navigation">
+    <div className="ws-sidebar__scroll">
+      <div className="ws-sidebar__switcher">
+        <div className="ws-sidebar__workspace-mark"><Logo markOnly label="MarqClean AI" /></div>
+        <div className="ws-sidebar__workspace-copy"><strong>{/functions|power-query|data-model|extract|timesheet/.test(String(active)) ? "Data Toolbox" : /dashboard|bank|mailing|comparison|cleansing|reconciliation|compliance|documents|reporting|administration|sheet-manager/.test(String(active)) ? "Reconciliation Hub" : "Workspace"}</strong><small>Current workspace</small></div>
+        <button type="button" className="ws-sidebar__switcher-button" aria-label="Open workspaces" onClick={() => window.dispatchEvent(new CustomEvent("marqclean:open-workspaces"))}><Icon name="down" size={16} /></button>
       </div>
+      <div className="ws-sidebar__collapse-row"><button type="button" className="ws-sidebar__collapse" aria-expanded={!collapsed} aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"} title={collapsed ? "Expand sidebar" : "Collapse sidebar"} onClick={() => setCollapsed((v) => !v)}><Icon name="chevron" size={18} /></button></div>
+      {groups.map((group) => <section className="ws-sidebar__group" key={group.name}><div className="ws-sidebar__label">{group.name}</div>{group.items.map((tool) => <button type="button" key={tool.key} className={`ws-sidebar__item ${active === tool.key ? "is-active" : ""}`} onClick={() => choose(tool.key)} aria-current={active === tool.key ? "page" : undefined} title={collapsed ? tool.label : undefined}><SidebarIcon name={toolIcon(tool.key, tool.icon)} /><span className="ws-sidebar__item-copy"><strong>{tool.label}</strong><small>{tool.blurb}</small></span></button>)}</section>)}
+    </div>
+    <div className="ws-sidebar__footer"><div className="ws-sidebar__local"><span className="ws-local-dot" /><span><strong>Runs locally</strong><small>Files never leave your browser</small></span></div><a href="/contact" onClick={(e) => { e.preventDefault(); go("/contact"); setDrawerOpen(false); }}>Help & feedback</a></div>
+  </aside>;
+  return <><button type="button" className="ws-drawer-menu" aria-label="Open workspace menu" onClick={() => setDrawerOpen(true)}><Icon name="menu" size={18} /> <span>Menu</span></button><div className="ws-sidebar-backdrop" aria-hidden={!drawerOpen} onClick={() => setDrawerOpen(false)} />{sidebar}</>;
+}
 
-      <CommandPalette tools={tools} active={active} onSelect={onSelect} open={paletteOpen} onClose={() => setPaletteOpen(false)} />
-    </>
-  );
+export function PageHeader({ workspace, title, description, actions, onBack }: { workspace: string; title: string; description: string; actions?: ReactNode; onBack?: () => void }) {
+  const goBack = () => {
+    if (onBack) return onBack();
+    if (window.history.length > 1 && document.referrer.includes(window.location.host)) window.history.back();
+    else go("/");
+  };
+  return <div className="ws-page-header"><div className="ws-page-header__back"><button type="button" onClick={goBack}><Icon name="arrow" size={17} /> Back</button><nav aria-label="Breadcrumb"><a href="/" onClick={(e) => { e.preventDefault(); go("/"); }}>Home</a><span>/</span><span>{workspace}</span><span>/</span><strong>{title}</strong></nav></div><div className="ws-page-header__row"><div><h1>{workspace}</h1><p>{description}</p></div>{actions ? <div className="ws-page-header__actions">{actions}</div> : null}</div></div>;
+}
+
+export function WorkspaceShell({ icon, title, description, engine, formats, status, children }: { icon: string; title: string; description: string; engine?: string; formats?: string[]; status?: { tone: StatusTone; label: string }; children: ReactNode }) {
+  return <div className="ws-root ws-scope min-h-screen"><GlobalHeader /><div className="ws-page-frame"><PageHeader workspace={title} title={title} description={description} /><div className="ws-page-body">{children}</div></div></div>;
 }
 
 export function EmptyState({ title, note }: { title: string; note?: string }) {
-  return (
-    <div className="ws-surface rounded-lg border-dashed p-10 text-center">
-      <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-canvas/5 text-2xl ring-1 ring-inset ring-white/10">🗂️</div>
-      <h3 className="mc-display text-lg font-medium text-ink">{title}</h3>
-      {note ? <p className="mx-auto mt-2 max-w-md text-sm text-[rgb(var(--ink-2))]">{note}</p> : null}
-      <div className="mt-4 flex flex-wrap justify-center gap-2 text-xs text-[rgb(var(--ink-2))]">
-        <span>✓ Data Validation</span>
-        <span>✓ Reconciliation</span>
-        <span>✓ Cleansing</span>
-        <span>✓ Analysis</span>
-      </div>
-    </div>
-  );
+  return <div className="ws-surface rounded-lg border-dashed p-10 text-center"><div className="mx-auto mb-4 grid h-12 w-12 place-items-center rounded-lg border border-line bg-surface text-ink-2"><Icon name="document" size={22} /></div><h3 className="text-lg font-semibold text-ink">{title}</h3>{note ? <p className="mx-auto mt-2 max-w-md text-sm text-ink-2">{note}</p> : null}<div className="mt-4 flex flex-wrap justify-center gap-2 text-xs text-ink-2"><span>Data validation</span><span>Reconciliation</span><span>Cleansing</span><span>Analysis</span></div></div>;
 }
