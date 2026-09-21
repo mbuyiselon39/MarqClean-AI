@@ -2448,9 +2448,9 @@ function ToolsDirectory() {
             >
               <div className="flex items-center justify-between gap-2">
                 <span className="text-2xl" aria-hidden="true">{tool.icon}</span>
-                <span className="rounded-md border border-line bg-surface px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-ink-2">Free Tool</span>
+                <span className="rounded-md border border-line bg-surface px-2 py-0.5 text-xs font-medium uppercase tracking-wide text-ink-2">Free Tool</span>
               </div>
-              <span className="mc-mono mt-3 block text-[10px] uppercase tracking-[0.18em] text-[rgb(var(--accent))]/80">{tool.category}</span>
+              <span className="mc-mono mt-3 block text-xs uppercase tracking-[0.18em] text-[rgb(var(--accent))]/80">{tool.category}</span>
               <span className="mt-1.5 block text-lg font-medium leading-snug tracking-[-0.01em] text-ink">{tool.cardTitle}</span>
               <span className="mt-2 flex-1 text-ink-3">{tool.description.replace(/^Free /, "").slice(0, 96)}...</span>
               <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[rgb(var(--accent-hover))] transition group-hover:gap-2.5 group-hover:text-ink">
@@ -2566,7 +2566,7 @@ function ToolContentPage({ page }: { page: SeoToolPage }) {
           {page.sections.map((section) => (
             <section key={section.h3} className="mc-glass rounded-lg p-6">
               <h3 className="text-xl font-medium tracking-[-0.02em] text-ink">{section.h3}</h3>
-              <p className="mt-3 text-[15px] leading-6 text-ink-2">{section.body}</p>
+              <p className="mt-3 text-base leading-6 text-ink-2">{section.body}</p>
             </section>
           ))}
         </div>
@@ -3243,7 +3243,7 @@ export default function App() {
           >
             <Logo className="shrink-0" />
           </a>
-          <div className="hidden items-center gap-6 text-[13px] font-medium text-ink-2 xl:flex">
+          <div className="hidden items-center gap-6 text-sm font-medium text-ink-2 xl:flex">
             <a href="/#top" className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("top"); }}>Home</a>
             <a href="/#features" className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("features"); }}>Platform</a>
             <a href="/#workflow" className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); navigateToHomeSection("workflow"); }}>How it works</a>
@@ -3310,7 +3310,7 @@ export default function App() {
         </nav>
         {isMobileNavOpen ? (
           <div id="mobile-nav-panel" className="border-t border-line bg-canvas px-5 py-4 xl:hidden">
-            <div className="flex flex-col gap-1 text-[15px] font-medium text-ink-2">
+            <div className="flex flex-col gap-1 text-base font-medium text-ink-2">
               <a className="rounded-lg px-3 py-2.5 transition hover:bg-surface hover:text-[rgb(var(--accent))]" href="/#top" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("top"); }}>Home</a>
               <a className="rounded-lg px-3 py-2.5 transition hover:bg-canvas/5 hover:text-[rgb(var(--accent))]" href="/#features" onClick={(e) => { e.preventDefault(); setIsMobileNavOpen(false); navigateToHomeSection("features"); }}>Platform</a>
               <button
@@ -3422,7 +3422,7 @@ export default function App() {
                 <span className="ws-module-header__formats-label">Supports</span>
                 <div className="flex flex-wrap gap-2">
                   {WORKSPACE_MODULES[workspaceTab].formats.map((f) => (
-                    <span key={f} className="ws-badge rounded-md px-2.5 py-1 text-[11px] font-medium uppercase tracking-wide">{f}</span>
+                    <span key={f} className="ws-badge rounded-md px-2.5 py-1 text-xs font-medium uppercase tracking-wide">{f}</span>
                   ))}
                 </div>
               </div>
@@ -3466,7 +3466,7 @@ export default function App() {
               <h3 className="mt-3 text-[2rem] font-medium leading-tight tracking-[-0.03em] text-ink">
                 Upload messy marketing data for free. Download a clean Excel workbook.
               </h3>
-              <p className="mt-4 max-w-xl text-[15px] leading-6 text-ink-2">
+              <p className="mt-4 max-w-xl text-base leading-6 text-ink-2">
                 {PRODUCT_NAME} runs local browser-based cleaning for CSV and XLSX lead lists, giving marketing teams a
                 fast way to standardize outreach data without payment, signup, or repetitive spreadsheet edits.
               </p>
@@ -4045,9 +4045,9 @@ export default function App() {
                 className="mc-glass mc-card-interactive group relative overflow-hidden rounded-lg p-7 hover:border-accent  lg:col-span-2 lg:row-span-2"
               >
                 <div className=" pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-md bg-[rgb(var(--accent))]/20  transition group-hover:bg-[rgb(var(--accent))]/30" aria-hidden="true" />
-                <span className="mc-mono relative inline-flex rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-3 py-1 text-[11px] font-medium text-[rgb(var(--accent-hover))]">DATA CLEANING</span>
+                <span className="mc-mono relative inline-flex rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-3 py-1 text-xs font-medium text-[rgb(var(--accent-hover))]">DATA CLEANING</span>
                 <h3 className="mc-display relative mt-5 text-2xl font-medium tracking-[-0.02em] text-ink lg:text-3xl">Name formatting and capitalization</h3>
-                <p className="relative mt-4 max-w-md text-[15px] leading-6 text-ink-2">
+                <p className="relative mt-4 max-w-md text-base leading-6 text-ink-2">
                   Converts inconsistent contact names, job titles, company names, cities, states, and countries into clean,
                   readable values for CRM imports and email personalization.
                 </p>
@@ -4063,9 +4063,9 @@ export default function App() {
                 transition={{ duration: 0.5, ease: "easeOut" }}
                 className="mc-glass mc-card-interactive group rounded-lg p-6 hover:border-[rgb(var(--accent))]/40 lg:col-span-2"
               >
-                <span className="mc-mono inline-flex rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-3 py-1 text-[11px] font-medium text-[rgb(var(--accent-hover))]">DATA CLEANING</span>
+                <span className="mc-mono inline-flex rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-3 py-1 text-xs font-medium text-[rgb(var(--accent-hover))]">DATA CLEANING</span>
                 <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-ink">Column repair and field detection</h3>
-                <p className="mt-3 text-[15px] leading-6 text-ink-2">
+                <p className="mt-3 text-base leading-6 text-ink-2">
                   Detects emails, phone numbers, websites, and common CRM field aliases even when marketers receive exports
                   with mixed-up or poorly named columns.
                 </p>
@@ -4076,9 +4076,9 @@ export default function App() {
                 transition={{ duration: 0.5, ease: "easeOut" }}
                 className="mc-glass mc-card-interactive group rounded-lg p-6 hover:border-[rgb(var(--accent))]/40"
               >
-                <span className="mc-mono inline-flex rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-3 py-1 text-[11px] font-medium text-[rgb(var(--accent-hover))]">DATA CLEANING</span>
+                <span className="mc-mono inline-flex rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-3 py-1 text-xs font-medium text-[rgb(var(--accent-hover))]">DATA CLEANING</span>
                 <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-ink">Industry categorization</h3>
-                <p className="mt-3 text-[15px] leading-6 text-ink-2">
+                <p className="mt-3 text-base leading-6 text-ink-2">
                   Enriches company records with campaign-friendly industries such as SaaS, healthcare, ecommerce, and finance.
                 </p>
               </motion.div>
@@ -4088,9 +4088,9 @@ export default function App() {
                 transition={{ duration: 0.5, ease: "easeOut" }}
                 className="mc-glass mc-card-interactive group rounded-lg p-6 hover:border-[rgb(var(--accent))]/40"
               >
-                <span className="mc-mono inline-flex rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-3 py-1 text-[11px] font-medium text-[rgb(var(--accent-hover))]">EXCEL AUTOMATION</span>
+                <span className="mc-mono inline-flex rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-3 py-1 text-xs font-medium text-[rgb(var(--accent-hover))]">EXCEL AUTOMATION</span>
                 <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-ink">CSV to Excel conversion</h3>
-                <p className="mt-3 text-[15px] leading-6 text-ink-2">
+                <p className="mt-3 text-base leading-6 text-ink-2">
                   Splits delimited text into columns using Excel's Text to Columns logic, then exports a clean XLSX workbook.
                 </p>
               </motion.div>
@@ -4100,9 +4100,9 @@ export default function App() {
                 transition={{ duration: 0.5, ease: "easeOut" }}
                 className="mc-glass mc-card-interactive group rounded-lg p-6 hover:border-[rgb(var(--accent))]/40 lg:col-span-2"
               >
-                <span className="mc-mono inline-flex rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-3 py-1 text-[11px] font-medium text-[rgb(var(--accent-hover))]">EXCEL AUTOMATION</span>
+                <span className="mc-mono inline-flex rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-3 py-1 text-xs font-medium text-[rgb(var(--accent-hover))]">EXCEL AUTOMATION</span>
                 <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-ink">Excel formulas and number formatting</h3>
-                <p className="mt-3 text-[15px] leading-6 text-ink-2">
+                <p className="mt-3 text-base leading-6 text-ink-2">
                   Detects numeric, currency, percentage, and date columns, then generates a formatted Excel workbook with
                   a frozen header row, autofilter, banded rows, and a totals row powered by real Excel formulas.
                 </p>
@@ -4113,9 +4113,9 @@ export default function App() {
                 transition={{ duration: 0.5, ease: "easeOut" }}
                 className="mc-glass mc-card-interactive group rounded-lg p-6 hover:border-[rgb(var(--accent))]/40 lg:col-span-2"
               >
-                <span className="mc-mono inline-flex rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-3 py-1 text-[11px] font-medium text-[rgb(var(--accent-hover))]">EXCEL AUTOMATION</span>
+                <span className="mc-mono inline-flex rounded-md border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-3 py-1 text-xs font-medium text-[rgb(var(--accent-hover))]">EXCEL AUTOMATION</span>
                 <h3 className="mc-display mt-4 text-xl font-medium tracking-[-0.02em] text-ink">Advanced Excel functions engine</h3>
-                <p className="mt-3 text-[15px] leading-6 text-ink-2">
+                <p className="mt-3 text-base leading-6 text-ink-2">
                   Run 40+ Excel functions without writing formulas, including IF, XLOOKUP, INDEX/MATCH, SUMIFS, COUNTIFS,
                   and text functions like TEXTJOIN and SUBSTITUTE, in Data Toolbox.
                 </p>
@@ -4314,7 +4314,7 @@ export default function App() {
                 <article key={step.number} className="mc-glass rounded-lg p-6">
                   <span className="mc-mono inline-flex h-8 w-8 items-center justify-center rounded-md border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/10 text-xs font-medium text-[rgb(var(--accent-hover))]">{step.number}</span>
                   <h3 className="mc-display mt-5 text-xl font-medium tracking-[-0.02em] text-ink">{step.title}</h3>
-                  <p className="mt-3 text-[15px] leading-7 text-ink-2">{step.text}</p>
+                  <p className="mt-3 text-base leading-7 text-ink-2">{step.text}</p>
                 </article>
               ))}
             </div>
@@ -4322,12 +4322,12 @@ export default function App() {
               <div className="rounded-lg border border-line bg-surface p-6">
                 <p className="mc-mono text-xs uppercase tracking-[0.18em] text-[rgb(var(--accent))]">Workspace principle</p>
                 <h3 className="mc-display mt-3 text-xl font-medium text-ink">One task, one focused workspace.</h3>
-                <p className="mt-3 text-[15px] leading-7 text-ink-2">Each workspace is organized around a specific business outcome, with contextual guidance beside the working area so users always know what to do next.</p>
+                <p className="mt-3 text-base leading-7 text-ink-2">Each workspace is organized around a specific business outcome, with contextual guidance beside the working area so users always know what to do next.</p>
               </div>
               <div className="rounded-lg border border-line bg-surface p-6">
                 <p className="mc-mono text-xs uppercase tracking-[0.18em] text-[rgb(var(--accent))]">Review principle</p>
                 <h3 className="mc-display mt-3 text-xl font-medium text-ink">Inspect before you rely on the output.</h3>
-                <p className="mt-3 text-[15px] leading-7 text-ink-2">Results remain reviewable before export, helping teams catch exceptions and confirm that the generated workbook or dataset matches the intended workflow.</p>
+                <p className="mt-3 text-base leading-7 text-ink-2">Results remain reviewable before export, helping teams catch exceptions and confirm that the generated workbook or dataset matches the intended workflow.</p>
               </div>
             </div>
           </div>
@@ -4374,7 +4374,7 @@ export default function App() {
               ].map((item) => (
                 <article key={item.title} className="mc-glass mc-card-interactive rounded-lg p-6">
                   <h3 className="mc-display text-xl font-medium text-ink">{item.title}</h3>
-                  <p className="mt-3 text-[15px] leading-6 text-ink-2">{item.body}</p>
+                  <p className="mt-3 text-base leading-6 text-ink-2">{item.body}</p>
                 </article>
               ))}
             </div>
