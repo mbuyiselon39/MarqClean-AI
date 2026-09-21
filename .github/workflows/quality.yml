@@ -61,7 +61,7 @@ jobs:
             [css.includes("--surface-inverse") && css.includes("--on-inverse"), "inverse surface tokens"],
             [css.includes(".mc-faq-trigger") && faqApp.includes('aria-expanded={isOpen}'), "accessible FAQ disclosures"],
             [!clientFunds.includes(">Diagnostics<") && !clientFunds.includes("Diagnostics: Test Workbook"), "customer diagnostics removed"],
-            [hero.includes('href: "/excel-automation"') && !hero.includes('role="tab"'), "hero navigation links"],
+            [hero.includes('href: "/excel-automation"') && hero.includes('href: "/data-toolbox"'), "hero navigation links"],
             [og.slice(0, 8).equals(Buffer.from([137,80,78,71,13,10,26,10])) && ogWidth === 1200 && ogHeight === 630, "1200x630 PNG OG image"],
             [!css.includes("text-align: justify") && !css.includes("hyphens: auto") && !css.includes("!important"), "no legacy text/important overrides"],
             [css.includes("Clash Grotesk") && css.includes("Satoshi"), "brand font families"],
