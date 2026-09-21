@@ -2914,7 +2914,7 @@ export default function App() {
     );
   }
 
-  function navigateToHomeSection(sectionId: "top" | "cleaner" | "features" | "workflow") {
+  function navigateToHomeSection(sectionId: "top" | "cleaner" | "features" | "workflow" | "free-tools" | "trust" | "faq") {
     navigateToPage("home");
     window.setTimeout(() => document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" }), 80);
   }
