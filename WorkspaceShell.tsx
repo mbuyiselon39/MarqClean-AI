@@ -91,6 +91,7 @@ export function GlobalHeader() {
     return () => document.removeEventListener("keydown", shortcut);
   }, []);
 
+  useEffect(() => { const openSearch = () => setSearchOpen(true); window.addEventListener("marqclean:open-command-palette", openSearch); return () => window.removeEventListener("marqclean:open-command-palette", openSearch); }, []);
   useEffect(() => () => { if (workspaceTimer.current) window.clearTimeout(workspaceTimer.current); }, []);
 
   const closeAll = () => { setMobileOpen(false); setWorkspacesOpen(false); setWorkspaceAccordion(false); };
