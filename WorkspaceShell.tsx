@@ -42,6 +42,8 @@ const WORKSPACES = [
 ];
 
 const NAV = [
+  { label: "Home", path: "/" },
+  { label: "About", path: "/about" },
   { label: "Platform", path: "/#features" },
   { label: "Tools", path: "/#free-tools" },
   { label: "How it works", path: "/#workflow" },
