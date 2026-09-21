@@ -181,51 +181,40 @@ export const AMOUNT_NUMBER_FORMAT = "#,##0.00_);(#,##0.00)";
  */
 export function parseAmount(raw: string | number | null | undefined): number | null {
   if (raw === null || raw === undefined) return null;
-  if (typeof raw === "number") return Number.isFinite(raw) ? raw : null;
+  if (typeof raw === "number") return Number.isFinite(raw) ? Math.round(raw * 100) / 100 : null;
 
-  let s = String(raw).trim();
-  if (!s) return null;
+  let source = String(raw).trim();
+  if (!source) return null;
 
-  // Detect negativity via parentheses or minus signs, then strip them.
-  let negative = false;
-  if (/^\(.*\)$/.test(s)) { negative = true; s = s.slice(1, -1); }
-  if (/-\s*$/.test(s)) { negative = true; }
-  if (/^\s*-/.test(s)) { negative = true; }
+  const negative = /^\s*\(.*\)\s*$/.test(source)
+    || /^\s*-/.test(source)
+    || /-\s*$/.test(source)
+    || /\bDR\b/i.test(source);
+  const credit = /\bCR\b/i.test(source);
+  source = source.replace(/^\s*\((.*)\)\s*$/, "$1");
+  source = source.replace(/[^\d.,-]/g, "").replace(/-/g, "");
+  if (!source || !/\d/.test(source)) return null;
 
-  // Remove currency symbols, letters (currency codes like R, ZAR, USD), spaces.
-  s = s.replace(/[^\d.,-]/g, "");
-  // Remove stray minus signs now that negativity is captured.
-  s = s.replace(/-/g, "");
+  const comma = source.lastIndexOf(",");
+  const dot = source.lastIndexOf(".");
+  let normalized = source;
 
-  if (!s || !/\d/.test(s)) return null;
-
-  const lastComma = s.lastIndexOf(",");
-  const lastDot = s.lastIndexOf(".");
-
-  let normalized: string;
-  if (lastComma === -1 && lastDot === -1) {
-    normalized = s;
-  } else if (lastComma > lastDot) {
-    // Comma is the decimal separator (European). Dots are thousands separators.
-    normalized = s.replace(/\./g, "").replace(",", ".");
-    // any remaining commas were grouping in malformed input like 5.265,242,36
-    normalized = normalized.replace(/,/g, "");
-  } else {
-    // Dot is the decimal separator (US/UK). Commas are thousands separators.
-    normalized = s.replace(/,/g, "");
+  if (comma >= 0 && dot >= 0) {
+    normalized = comma > dot
+      ? source.replace(/\./g, "").replace(",", ".")
+      : source.replace(/,/g, "");
+  } else if (comma >= 0) {
+    const decimals = source.length - comma - 1;
+    normalized = decimals === 1 || decimals === 2 ? source.replace(",", ".") : source.replace(/,/g, "");
+  } else if (dot >= 0) {
+    const decimals = source.length - dot - 1;
+    normalized = decimals === 1 || decimals === 2 ? source : source.replace(/\./g, "");
   }
 
-  // Collapse accidental multiple dots, keep the last as the decimal point.
-  const dotCount = (normalized.match(/\./g) ?? []).length;
-  if (dotCount > 1) {
-    const idx = normalized.lastIndexOf(".");
-    normalized = normalized.slice(0, idx).replace(/\./g, "") + normalized.slice(idx);
-  }
-
-  const value = parseFloat(normalized);
+  const value = Number(normalized);
   if (!Number.isFinite(value)) return null;
-  const rounded = Math.round((negative ? -Math.abs(value) : value) * 100) / 100;
-  return rounded;
+  const signed = negative && !credit ? -Math.abs(value) : Math.abs(value);
+  return Math.round(signed * 100) / 100;
 }
 
 /**
