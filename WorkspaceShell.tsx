@@ -217,6 +217,22 @@ export function ToolLaunchpad<T extends string>({ tools, active, onSelect }: { t
   const [drawerOpen, setDrawerOpen] = useState(false);
   useEffect(() => { try { window.localStorage.setItem("marqclean:workspace-sidebar", collapsed ? "collapsed" : "expanded"); } catch {} }, [collapsed]);
   useEffect(() => { document.body.classList.toggle("ws-drawer-open", drawerOpen); return () => document.body.classList.remove("ws-drawer-open"); }, [drawerOpen]);
+  useEffect(() => {
+    if (!drawerOpen) return;
+    const sidebar = document.querySelector<HTMLElement>(".ws-sidebar.is-open");
+    requestAnimationFrame(() => sidebar?.querySelector<HTMLElement>("button, a")?.focus());
+    const trap = (event: KeyboardEvent) => {
+      if (event.key === "Escape") { event.preventDefault(); setDrawerOpen(false); return; }
+      if (event.key !== "Tab" || !sidebar) return;
+      const focusables = Array.from(sidebar.querySelectorAll<HTMLElement>('button:not([disabled]), a[href], input:not([disabled])'));
+      if (!focusables.length) return;
+      const first = focusables[0], last = focusables[focusables.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    };
+    document.addEventListener("keydown", trap);
+    return () => document.removeEventListener("keydown", trap);
+  }, [drawerOpen]);
   const groups = workspaceGroups(tools);
   const current = tools.find((t) => t.key === active);
   const choose = (key: T) => { onSelect(key); setDrawerOpen(false); };
