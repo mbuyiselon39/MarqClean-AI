@@ -68,7 +68,7 @@ export function GlobalHeader() {
         >
           <Logo className="shrink-0" />
         </a>
-        <div className="hidden items-center gap-6 text-[13px] font-medium text-[rgb(var(--ink-2))] xl:flex">
+        <div className="hidden items-center gap-6 text-sm font-medium text-[rgb(var(--ink-2))] xl:flex">
           <a href={SIMPLE_NAV[0].path} className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); go(SIMPLE_NAV[0].path); }}>{SIMPLE_NAV[0].label}</a>
           <a href={SIMPLE_NAV[1].path} className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); go(SIMPLE_NAV[1].path); }}>{SIMPLE_NAV[1].label}</a>
           <a href={SIMPLE_NAV[2].path} className="transition hover:text-[rgb(var(--accent))]" onClick={(e) => { e.preventDefault(); go(SIMPLE_NAV[2].path); }}>{SIMPLE_NAV[2].label}</a>
@@ -135,7 +135,7 @@ export function GlobalHeader() {
       </nav>
       {isMobileNavOpen ? (
         <div id="ws-mobile-nav-panel" className="border-t border-line bg-canvas px-5 py-4 xl:hidden">
-          <div className="flex flex-col gap-1 text-[15px] font-medium text-ink-2">
+          <div className="flex flex-col gap-1 text-base font-medium text-ink-2">
             {SIMPLE_NAV.map((item) => (
               <a
                 key={item.label}
@@ -209,7 +209,7 @@ export function StatusBadge({ tone, label }: { tone: StatusTone; label: string }
 }
 
 export function FormatBadge({ label }: { label: string }) {
-  return <span className="ws-badge inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide">{label}</span>;
+  return <span className="ws-badge inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-xs font-medium uppercase tracking-wide">{label}</span>;
 }
 
 export function WorkspaceShell({
@@ -244,7 +244,7 @@ export function WorkspaceShell({
               <p className="mt-1 max-w-3xl text-left text-sm leading-6 text-[rgb(var(--ink-2))] [hyphens:none]">{description}</p>
               <div className="mt-3 flex flex-wrap items-center gap-2">
                 {formats?.map((f) => <FormatBadge key={f} label={f} />)}
-                {engine ? <span className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-medium text-[rgb(var(--accent-hover))]">Engine: {engine}</span> : null}
+                {engine ? <span className="ws-badge rounded-md px-2 py-0.5 text-xs font-medium text-[rgb(var(--accent-hover))]">Engine: {engine}</span> : null}
               </div>
             </div>
           </div>
