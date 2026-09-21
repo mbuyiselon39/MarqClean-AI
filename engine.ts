@@ -429,11 +429,30 @@ export function runReconciliation(
     targetIndex.set(key, bucket);
   });
 
-  // Track source duplicate keys
+  // Track duplicate keys in both source and target. Target-side duplicates
+  // must be surfaced as data-quality exceptions instead of silently being
+  // consumed by the matching index.
   const sourceKeySeen = new Map<string, number>();
+  const targetKeySeen = new Map<string, number>();
   const records: ReconRecord[] = [];
   const quality: DataQualityIssue[] = [];
   const matchedTargetRows = new Set<number>();
+
+  target.rows.forEach((targetRow, targetRowIndex) => {
+    const key = buildRowKey(targetRow, keyConfig.targetColumn, keyKind);
+    if (!key) return;
+    const seen = targetKeySeen.get(key) ?? 0;
+    targetKeySeen.set(key, seen + 1);
+    if (seen >= 1) {
+      summary.duplicates += 1;
+      quality.push({
+        source: target.sourceName,
+        rowRef: `Row ${targetRowIndex + 2}`,
+        field: keyField?.label ?? "Key",
+        issue: "Duplicate key in target file",
+      });
+    }
+  });
 
   const summary: ReconSummary = {
     totalRecords: 0, matched: 0, partial: 0, mismatched: 0, missing: 0,
