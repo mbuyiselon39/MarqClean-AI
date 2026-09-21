@@ -3550,7 +3550,7 @@ export default function App() {
                     transition={{ duration: 0.45 }}
                   >
                     <div className="grid gap-3 sm:grid-cols-3">
-                      <div className="rounded-lg bg-ink p-4 text-ink">
+                      <div className="rounded-lg bg-inverse p-4 text-on-inverse">
                         <p className="text-3xl font-medium">{result.stats.cleanedRows}</p>
                         <p className="mt-1 text-xs uppercase tracking-[0.18em] text-ink-2">Rows cleaned</p>
                       </div>
@@ -3670,7 +3670,7 @@ export default function App() {
                   </p>
                   <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
                     <button
-                      className="rounded-md bg-ink px-5 py-3 text-sm font-medium text-ink transition hover:bg-accent"
+                      className="rounded-md bg-inverse px-5 py-3 text-sm font-medium text-on-inverse transition hover:bg-accent"
                       onClick={() => converterInputRef.current?.click()}
                       disabled={converterProcessing}
                     >
@@ -3817,7 +3817,7 @@ export default function App() {
                   </p>
                   <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
                     <button
-                      className="rounded-md bg-ink px-5 py-3 text-sm font-medium text-ink transition hover:bg-accent"
+                      className="rounded-md bg-inverse px-5 py-3 text-sm font-medium text-on-inverse transition hover:bg-accent"
                       onClick={() => formulaInputRef.current?.click()}
                       disabled={formulaProcessing}
                     >
@@ -3924,7 +3924,7 @@ export default function App() {
                     text below.
                   </p>
                   <button
-                    className="mt-6 rounded-md bg-ink px-5 py-3 text-sm font-medium text-ink transition hover:bg-accent"
+                    className="mt-6 rounded-md bg-inverse px-5 py-3 text-sm font-medium text-on-inverse transition hover:bg-accent"
                     onClick={() => bankInputRef.current?.click()}
                     disabled={bankProcessing}
                   >
@@ -3955,7 +3955,7 @@ export default function App() {
 
                 {bankTransactions ? (
                   <div className="mt-6">
-                    <div className="rounded-lg bg-ink p-4 text-ink">
+                    <div className="rounded-lg bg-inverse p-4 text-on-inverse">
                       <p className="text-3xl font-medium">{bankTransactions.length}</p>
                       <p className="mt-1 text-xs uppercase tracking-[0.18em] text-ink-2">Transactions extracted</p>
                     </div>
