@@ -4360,6 +4360,15 @@ export default function App() {
             </div>
           </div>
         </section>
+
+        <section id="closing-cta" className="relative overflow-hidden border-t border-line bg-[rgb(var(--canvas))] py-24 text-ink">
+          <div className="mx-auto max-w-4xl px-5 text-center lg:px-8">
+            <p className="mc-mono text-sm font-medium uppercase tracking-[0.28em] text-[rgb(var(--magenta))]">Ready when your data is</p>
+            <h2 className="mc-display mt-4 text-4xl font-medium tracking-[-0.04em] text-ink sm:text-5xl">Clean data. Clear decisions.</h2>
+            <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-ink-2">Start with a supported file, review the output in your browser, and export when it is ready.</p>
+            <button className="mc-cta-cyan mt-8 rounded-pill px-7 py-3 text-sm font-bold" onClick={() => navigateToHomeSection("cleaner")}>Start free</button>
+          </div>
+        </section>
       </main>
       )}
 
