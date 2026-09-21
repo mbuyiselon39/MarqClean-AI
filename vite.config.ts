@@ -10,11 +10,7 @@ const __dirname = path.dirname(__filename);
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "src"),
-    },
-  },
+  worker: { format: "es" },
   build: {
     target: "es2020",
     cssCodeSplit: true,
