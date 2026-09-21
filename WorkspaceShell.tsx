@@ -241,7 +241,7 @@ export function WorkspaceShell({
             <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-canvas /20 /20 text-2xl ring-1 ring-inset ring-white/10">{icon}</span>
             <div>
               <h1 className="mc-display text-2xl font-medium tracking-tight text-ink sm:text-3xl">{title}</h1>
-              <p className="mt-1 max-w-3xl text-justify text-sm leading-6 text-[rgb(var(--ink-2))] [hyphens:auto]">{description}</p>
+              <p className="mt-1 max-w-3xl text-left text-sm leading-6 text-[rgb(var(--ink-2))] [hyphens:none]">{description}</p>
               <div className="mt-3 flex flex-wrap items-center gap-2">
                 {formats?.map((f) => <FormatBadge key={f} label={f} />)}
                 {engine ? <span className="ws-badge rounded-md px-2 py-0.5 text-[11px] font-medium text-[rgb(var(--accent-hover))]">Engine: {engine}</span> : null}
