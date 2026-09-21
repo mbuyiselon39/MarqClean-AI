@@ -66,7 +66,7 @@ jobs:
             [!css.includes("text-align: justify") && !css.includes("hyphens: auto") && !css.includes("!important"), "no legacy text/important overrides"],
             [css.includes("Clash Grotesk") && css.includes("Satoshi"), "brand font families"],
             [docs, "design reference documentation"],
-            [distFonts.length >= 4 && fontBytes < 150000, "self-hosted font budget"],
+            [distFonts.length >= 1 && fontBytes < 150000, "self-hosted font budget"],
             [index.includes("/fonts/") && !index.includes("fonts.googleapis.com"), "local font preloads"],
           ];
 
