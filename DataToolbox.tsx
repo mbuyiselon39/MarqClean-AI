@@ -133,10 +133,10 @@ export default function DataToolbox({ onExit }: { onExit: () => void }) {
       <div className="ws-grid pointer-events-none absolute inset-x-0 top-0 h-[38rem]" aria-hidden="true" />
 
       <div className="mc-site-container relative pb-16 pt-28">
-        <PageHeader workspace="Data Toolbox" title="Data Toolbox" description="Advanced Excel functions, cleansing, matching and transformation. All tools run in your browser." onBack={onExit} />
+        <PageHeader workspace="Data Toolbox" title="Data Toolbox" description="Advanced Excel functions, cleansing, matching and transformation. All tools run in your browser." />
         <div className="mb-5 flex items-center gap-3">
           <h2 className="text-lg font-semibold text-ink">Available tools</h2>
-          <span className="ws-format-badge">TOOLS.length tools</span>
+          <span className="ws-format-badge">{TOOLS.length} tools</span>
         </div>
         <ToolLaunchpad tools={TOOLS} active={tool} onSelect={setTool} />
 
