@@ -853,7 +853,7 @@ function MailingView(props: {
     <section>
       <div className="mx-auto max-w-3xl text-center">
         <h1 className="text-3xl font-medium tracking-[-0.03em]">Data Verification</h1>
-        <p className="mt-2 text-justify leading-7 text-ink-2 [hyphens:auto]">
+        <p className="mt-2 text-left leading-7 text-ink-2 [hyphens:none]">
           Upload an unstructured PDF client mailing list and a structured Excel master file. The platform extracts and
           structures the PDF into Full Name, Title, Address Lines, and Postal Code, maps them to the Excel columns, then
           verifies each record and produces a colour-coded report.
