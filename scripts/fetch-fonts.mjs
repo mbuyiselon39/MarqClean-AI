@@ -16,7 +16,7 @@ const urls = [
       .filter((url) => url.endsWith(".woff2"))
   ),
 ];
-if (!urls.length) throw new Error("Fontshare returned no WOFF2 assets.");
+if (!urls.length) { console.log("FONTshare CSS:", sourceCss.slice(0, 5000)); throw new Error("Fontshare returned no WOFF2 assets."); }
 
 await mkdir(fontDir, { recursive: true });
 const localNames = [];
