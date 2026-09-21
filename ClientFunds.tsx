@@ -15,7 +15,7 @@ import {
   type WorkbookData,
   type WorkbookValidation,
 } from "./client-funds";
-import { GlobalHeader } from "./WorkspaceShell";
+import { GlobalHeader, PageHeader } from "./WorkspaceShell";
 
 export default function ClientFunds({ onExit }: { onExit: () => void }) {
   const [workbook, setWorkbook] = useState<WorkbookData | null>(null);
