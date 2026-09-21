@@ -46,7 +46,7 @@ type NavKey =
 
 const NAV_ITEMS: Array<{ key: NavKey; label: string; blurb: string; icon: string }> = [
   { key: "dashboard", label: "Dashboard", blurb: "Processing statistics, exception summary, and history.", icon: "chart" },
-  { key: "bank", label: "Bank Ledger X", blurb: "Bank statement and ledger reconciliation module.", icon: "document" },
+  { key: "bank", label: "Bank Ledger", blurb: "Bank statement and ledger reconciliation module.", icon: "document" },
   { key: "mailing", label: "Data Verification", blurb: "Verify PDF client mailing data against Excel master data.", icon: "search" },
   { key: "comparison", label: "File Comparison Centre", blurb: "Excel, CSV, PDF, and Word comparison in every mode.", icon: "reconcile" },
   { key: "cleansing", label: "Data Cleansing Centre", blurb: "Duplicates, names, addresses, phones, and formatting.", icon: "clean" },
@@ -527,7 +527,7 @@ function BankLedgerView() {
   }
   return (
     <section>
-      <h1 className="text-3xl font-medium tracking-[-0.03em]">Bank Ledger X</h1>
+      <h1 className="text-2xl font-semibold tracking-[-0.02em]">Bank Ledger</h1>
       <p className="mt-2 max-w-3xl text-[rgb(var(--ink-2))]">
         Bank statement and ledger reconciliation module within Reconciliation Hub. Convert PDF bank statements into clean
         Excel, CSV and QIF, then reconcile transactions against ledger records with AI-powered matching and exception
