@@ -11,12 +11,12 @@ const sourceCss = await response.text();
 
 const urls = [
   ...new Set(
-    [...sourceCss.matchAll(/url\\((['"]?)([^'")]+)\\1\\)/g)]
+    [...sourceCss.matchAll(/url\((['"]?)([^'")]+)\\1\)/g)]
       .map((match) => new URL(match[2], cssUrl).href)
       .filter((url) => url.endsWith(".woff2"))
   ),
 ];
-if (!urls.length) { console.log("FONTshare CSS:", sourceCss.slice(0, 5000)); throw new Error("Fontshare returned no WOFF2 assets."); }
+if (!urls.length) throw new Error("Fontshare returned no WOFF2 assets.");
 
 await mkdir(fontDir, { recursive: true });
 const localNames = [];
@@ -29,7 +29,7 @@ for (const url of urls) {
   localNames.push(name);
 }
 
-const localCss = sourceCss.replace(/url\\((['"]?)([^'")]+)\\1\\)/g, (_, quote, rawUrl) => {
+const localCss = sourceCss.replace(/url\((['"]?)([^'")]+)\\1\)/g, (_, quote, rawUrl) => {
   const url = new URL(rawUrl, cssUrl);
   const name = basename(url.pathname);
   return `url("/fonts/${name}")`;
