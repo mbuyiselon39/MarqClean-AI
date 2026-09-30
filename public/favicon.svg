@@ -1,10 +1,1 @@
-<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <style>
-    :root { --mark-ink:#09090B; --mark-accent:#5B21B6; }
-    @media (prefers-color-scheme: dark) {
-      :root { --mark-ink:#FAFAFA; --mark-accent:#A78BFA; }
-    }
-  </style>
-  <path d="M20 5H11a6 6 0 0 0-6 6v10a6 6 0 0 0 6 6h10a6 6 0 0 0 6-6v-5" stroke="var(--mark-ink)" stroke-width="2.5" stroke-linecap="butt"/>
-  <rect x="15" y="11" width="8" height="8" rx="1.5" fill="var(--mark-accent)"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"><rect width="36" height="36" rx="10" fill="#097064"/><path d="M8 24.5V11.5L18 21.5L28 11.5V24.5" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8" cy="11.5" r="2" fill="#fff"/><circle cx="28" cy="11.5" r="2" fill="#fff"/></svg>

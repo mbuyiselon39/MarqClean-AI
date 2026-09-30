@@ -62,13 +62,10 @@ const WORKSPACES = [
 ];
 
 const NAV = [
-  { label: "Home", path: "/" },
-  { label: "About", path: "/about" },
   { label: "Platform", path: "/#features" },
   { label: "Tools", path: "/#free-tools" },
   { label: "How it works", path: "/#workflow" },
   { label: "Academy", path: "/excel-academy" },
-  { label: "Contact", path: "/contact" },
 ];
 
 type SearchResult = { group: string; label: string; description: string; path: string; icon: string };
@@ -145,7 +142,7 @@ export function GlobalHeader() {
           <div className="ws-global-header__actions">
             <button type="button" className="ws-search-trigger" onClick={() => setSearchOpen(true)} aria-label={`Open search (${SHORTCUT})`}><Icon name="search" size={18} /><span>Search</span><kbd>{SHORTCUT}</kbd></button>
             <ThemeToggle compact />
-            <button type="button" className="ws-btn-primary ws-start-free" onClick={() => go("/#cleaner")}>Start free</button>
+            <button type="button" className="ws-btn-primary ws-start-free" onClick={() => go("/#cleaner")}>Open workspace</button>
             <button type="button" className="ws-mobile-menu" aria-label={mobileOpen ? "Close navigation" : "Open navigation"} aria-expanded={mobileOpen} aria-controls="ws-mobile-panel" onClick={() => setMobileOpen((v) => !v)}><Icon name={mobileOpen ? "close" : "menu"} size={20} /></button>
           </div>
         </nav>
@@ -155,7 +152,7 @@ export function GlobalHeader() {
           {workspaceAccordion ? <div className="ws-mobile-workspaces">{WORKSPACES.map((w) => <a key={w.label} href={w.path} onClick={(e) => { e.preventDefault(); go(w.path); closeAll(); }}><Icon name={w.icon} size={18} /><span><strong>{w.label}</strong><small>{w.description}</small></span></a>)}</div> : null}
           {NAV.slice(1).map((item) => <a key={item.label} href={item.path} onClick={(e) => { e.preventDefault(); go(item.path); closeAll(); }}>{item.label}</a>)}
           <button type="button" className="ws-mobile-search" onClick={() => { setMobileOpen(false); setSearchOpen(true); }}><Icon name="search" size={18} />Search <kbd>{SHORTCUT}</kbd></button>
-          <button type="button" className="ws-btn-primary" onClick={() => { closeAll(); go("/#cleaner"); }}>Start free</button>
+          <button type="button" className="ws-btn-primary" onClick={() => { closeAll(); go("/#cleaner"); }}>Open workspace</button>
         </div> : null}
       </header>
       <CommandPalette open={searchOpen} onClose={() => setSearchOpen(false)} />

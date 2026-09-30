@@ -3178,38 +3178,18 @@ export default function App() {
           />
         </Suspense>
 
-        <section className="border-y border-line bg-[rgb(var(--canvas))] py-10 text-ink">
-          <div className="mx-auto flex max-w-6xl items-center justify-center gap-2 px-5 pb-6 text-xs text-ink-2 lg:px-8">
-            <span className="relative flex h-2 w-2">
-              <span className="mc-anim-glow-pulse absolute inline-flex h-full w-full rounded-md bg-[rgb(var(--accent))]" />
-              <span className="relative inline-flex h-2 w-2 rounded-md bg-[rgb(var(--accent))]" />
-            </span>
-            Browser-local processing · No server upload required
+        <section className="mc-proof-strip" aria-label="Platform at a glance">
+          <div className="mc-proof-strip__inner">
+            <div className="mc-proof-strip__intro"><span className="mc-proof-strip__line" /><p>POWERFUL TOOLS.<br /><strong>SIMPLER WORK.</strong></p></div>
+            <div className="mc-proof-strip__stats">
+              {[
+                { value: "33+", label: "Free data & Excel tools" },
+                { value: "63", label: "Excel function actions" },
+                { value: "6", label: "Core file formats" },
+                { value: "100%", label: "Browser-local core workflows" },
+              ].map((stat) => <div key={stat.label} className="mc-proof-strip__stat"><strong>{stat.value}</strong><span>{stat.label}</span></div>)}
+            </div>
           </div>
-          <motion.div
-            className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-5 sm:grid-cols-4 lg:px-8"
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-40px" }}
-            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1 } } }}
-          >
-            {[
-              { value: "63", label: "Excel function actions" },
-              { value: "33+", label: "Free data & Excel tools" },
-              { value: "6", label: "Core file formats" },
-              { value: "0", label: "Files ever sent to a server" },
-            ].map((stat) => (
-              <motion.div
-                key={stat.label}
-                variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0 } }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-                className="text-center"
-              >
-                <p className="mc-display text-accent text-3xl font-medium tracking-tight sm:text-4xl">{stat.value}</p>
-                <p className="mt-1 text-sm text-ink-3">{stat.label}</p>
-              </motion.div>
-            ))}
-          </motion.div>
         </section>
 
         <section className="bg-canvas px-5 py-14 lg:px-8" aria-labelledby="smart-drop-heading">

@@ -28,8 +28,8 @@ export default {
         error: "rgb(var(--error) / <alpha-value>)",
       },
       fontFamily: {
-        sans: ["Satoshi", "system-ui", "Arial", "sans-serif"],
-        display: ["Clash Grotesk", "system-ui", "Arial", "sans-serif"],
+        sans: ["DM Sans", "Satoshi", "system-ui", "Arial", "sans-serif"],
+        display: ["Manrope", "Clash Grotesk", "system-ui", "Arial", "sans-serif"],
         mono: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       fontWeight: {

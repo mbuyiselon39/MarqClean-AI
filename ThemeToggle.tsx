@@ -16,12 +16,10 @@ function readPreference(): ThemePreference {
 }
 
 function applyTheme(preference: ThemePreference) {
-  const root = document.documentElement;
-  if (preference === "system") {
-    root.removeAttribute("data-theme");
-  } else {
-    root.setAttribute("data-theme", preference);
-  }
+  const resolved = preference === "system"
+    ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+    : preference;
+  document.documentElement.setAttribute("data-theme", resolved);
 }
 
 export function initialiseTheme() {
@@ -39,6 +37,14 @@ export default function ThemeToggle({ compact = false }: { compact?: boolean }) 
     } catch {
       // Storage may be blocked; keep the current preference in memory.
     }
+  }, [preference]);
+
+  useEffect(() => {
+    if (preference !== "system") return;
+    const query = window.matchMedia("(prefers-color-scheme: dark)");
+    const sync = () => applyTheme("system");
+    query.addEventListener("change", sync);
+    return () => query.removeEventListener("change", sync);
   }, [preference]);
 
   const next: Record<ThemePreference, ThemePreference> = {
