@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#060419" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#0B171F" media="(prefers-color-scheme: dark)" />
     <meta name="color-scheme" content="light dark" />
     <meta name="robots" content="index, follow" />
     <meta name="author" content="Vertex Stream Technologies" />
@@ -14,6 +14,8 @@
     <title>MarqClean AI — Clean data. Clear decisions.</title>
     <link rel="canonical" href="https://marqcleanai.vertexsg.co.za/" />
     <!-- FONT_PRELOADS_START -->
+    <link rel="preload" href="/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/dm-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
     <!-- FONT_PRELOADS_END -->
     <link rel="stylesheet" href="/fonts/fonts.css" />
     <link rel="manifest" href="/site.webmanifest" />
@@ -40,9 +42,10 @@
         try {
           const key = "marqclean:theme";
           const stored = localStorage.getItem(key);
-          if (stored === "light" || stored === "dark") {
-            document.documentElement.setAttribute("data-theme", stored);
-          }
+          const resolved = stored === "light" || stored === "dark"
+            ? stored
+            : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+          document.documentElement.setAttribute("data-theme", resolved);
         } catch {}
       })();
     </script>
