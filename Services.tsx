@@ -59,7 +59,7 @@ function ServiceVisual() {
     <div className="mc-service-visual__grid" />
     <div className="mc-service-visual__sheet">
       <div className="mc-service-visual__sheet-head"><span /><span /><span /></div>
-      <div className="mc-service-visual__sheet-title">MODEL OVERVIEW <i>LIVE PREVIEW</i></div>
+      <div className="mc-service-visual__sheet-title">MODEL OVERVIEW <i>ILLUSTRATIVE</i></div>
       <div className="mc-service-visual__cells"><b>Driver</b><b>Base</b><b>Case</b><span>Revenue</span><span>1.24m</span><span className="up">+8.4%</span><span>Operating cost</span><span>0.76m</span><span className="down">−2.1%</span><span>Net cash flow</span><span>0.48m</span><span className="up">+12.6%</span></div>
       <div className="mc-service-visual__chart"><span style={{height:"34%"}}/><span style={{height:"52%"}}/><span style={{height:"45%"}}/><span style={{height:"69%"}}/><span style={{height:"58%"}}/><span style={{height:"88%"}}/><span style={{height:"76%"}}/></div>
     </div>
