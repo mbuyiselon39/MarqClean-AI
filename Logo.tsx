@@ -1,16 +1,13 @@
-type LogoProps = {
-  markOnly?: boolean;
-  className?: string;
-  label?: string;
-};
+type LogoProps = { markOnly?: boolean; className?: string; label?: string };
 
 function Mark({ className }: { className?: string }) {
   return (
-    <svg className={className} width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-      <rect width="36" height="36" rx="10" fill="rgb(var(--accent))" />
-      <path d="M8 24.5V11.5L18 21.5L28 11.5V24.5" stroke="rgb(var(--accent-ink))" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="8" cy="11.5" r="2" fill="rgb(var(--accent-ink))" />
-      <circle cx="28" cy="11.5" r="2" fill="rgb(var(--accent-ink))" />
+    <svg className={className} width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+      <rect x="1" y="1" width="38" height="38" rx="11" fill="#173D32" />
+      <path d="M9 27V13.5L19.5 23.2L30 13.5V27" stroke="#F5FBF6" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M19.5 23.2V29" stroke="#A9D96D" strokeWidth="2.6" strokeLinecap="round" />
+      <circle cx="9" cy="12" r="2.1" fill="#A9D96D" />
+      <circle cx="30" cy="12" r="2.1" fill="#A9D96D" />
     </svg>
   );
 }
