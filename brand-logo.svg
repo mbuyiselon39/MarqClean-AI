@@ -1,5 +1,0 @@
-<svg width="240" height="40" viewBox="0 0 240 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M20 5H11a6 6 0 0 0-6 6v10a6 6 0 0 0 6 6h10a6 6 0 0 0 6-6v-5" stroke="#09090B" stroke-width="2.25" stroke-linecap="butt"/>
-  <rect x="15" y="11" width="8" height="8" rx="1.5" fill="#5B21B6"/>
-  <text x="52" y="25" font-family="Geist, Inter, Arial, sans-serif" font-size="15" letter-spacing="-0.3"><tspan font-weight="500" fill="#09090B">Marq</tspan><tspan font-weight="400" fill="#52525B">Clean AI</tspan></text>
-</svg>

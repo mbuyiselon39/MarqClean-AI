@@ -1,7 +1,7 @@
 const SITE_URL = "https://marqcleanai.vertexsg.co.za";
 const TITLE = "MarqClean AI — Clean data. Clear decisions.";
 const DESCRIPTION =
-  "MarqClean AI is a browser-first data automation platform for cleaning, validating, transforming and reconciling Excel, CSV and PDF data. Core workflows use deterministic rules and local browser processing.";
+  "MarqClean AI delivers Excel automation, financial modelling, data cleaning, reconciliation, advanced reporting and browser-based data tools for modern business teams.";
 const OG_IMAGE = `${SITE_URL}/og-card.png`;
 
 function upsertMeta(name: string, content: string, property = false) {
@@ -83,7 +83,7 @@ export function installBrandSeo() {
         "@id": `${SITE_URL}/#organization`,
         name: "Vertex Stream Technologies",
         url: SITE_URL,
-        logo: OG_IMAGE,
+        logo: `${SITE_URL}/brand-logo.svg`,
       },
       {
         "@type": "WebSite",
@@ -109,6 +109,13 @@ export function installBrandSeo() {
           "PDF statement conversion",
           "Duplicate detection",
           "Data transformation",
+          "Excel VBA macro development",
+          "Financial modelling and sensitivity analysis",
+          "Cash flow and real estate models",
+          "Advanced reporting and dashboard development",
+          "Data automation and database development",
+          "Regression analysis and time series forecasting",
+          "Word document and PDF report generation",
         ],
       },
     ],

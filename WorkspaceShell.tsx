@@ -63,6 +63,7 @@ const WORKSPACES = [
 
 const NAV = [
   { label: "Platform", path: "/#features" },
+  { label: "Services", path: "/services" },
   { label: "Tools", path: "/#free-tools" },
   { label: "How it works", path: "/#workflow" },
   { label: "Academy", path: "/excel-academy" },
@@ -75,6 +76,11 @@ const TOOL_RESULTS: SearchResult[] = [
   { group: "Tools", label: "Data Explorer", description: "Filter and inspect structured data.", path: "/data-toolbox", icon: "chart" },
   { group: "Tools", label: "Remove Duplicates", description: "Detect and remove duplicate records.", path: "/data-toolbox", icon: "clean" },
   { group: "Tools", label: "File Comparison Centre", description: "Compare Excel, CSV, PDF and Word files.", path: "/reconciliation-hub", icon: "reconcile" },
+  { group: "Services", label: "Excel Macros & VBA", description: "Build repeatable spreadsheet automation.", path: "/excel-macros-vba", icon: "formula" },
+  { group: "Services", label: "Financial Modelling", description: "Cash flow, sensitivity and scenario models.", path: "/cash-flow-models", icon: "chart" },
+  { group: "Services", label: "Data Automation", description: "Connect recurring data workflows.", path: "/data-automation", icon: "clean" },
+  { group: "Services", label: "Advanced Reporting", description: "Build repeatable reporting systems.", path: "/advanced-reporting", icon: "document" },
+  { group: "Services", label: "All Professional Services", description: "Explore all 16 specialist services.", path: "/services", icon: "grid" },
 ];
 
 function isCurrent(path: string) {

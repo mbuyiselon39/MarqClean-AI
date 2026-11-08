@@ -98,8 +98,8 @@ export default function HeroCarousel(props: HeroActions) {
       <div className="mc-next-hero__copy">
         <div className="mc-next-hero__eyebrow"><span className="mc-next-hero__pulse" /> THE DATA OPERATIONS PLATFORM <span className="mc-next-hero__eyebrow-rule" /></div>
         <h1>Better data.<br /><span>Brighter decisions.</span></h1>
-        <p>Bring clarity to complex data. Clean spreadsheets, automate Excel workflows, and reconcile records in one powerful, browser-first workspace.</p>
-        <div className="mc-next-hero__actions"><button type="button" onClick={props.onCleanFile}>Start cleaning for free <Icon name="arrow" size={19} /></button><a href="#free-tools">Explore the platform <Icon name="arrow" size={17} /></a></div>
+        <p>Bring clarity to complex data. Clean spreadsheets, automate Excel workflows, build financial models and reconcile records in one browser-first workspace.</p>
+        <div className="mc-next-hero__actions"><button type="button" onClick={props.onCleanFile}>Start cleaning for free <Icon name="arrow" size={19} /></button><a href="#free-tools">Explore the platform <Icon name="arrow" size={17} /></a><a href="/services">Professional services <Icon name="arrow" size={17} /></a></div>
         <div className="mc-next-hero__proof"><span><Icon name="shield" size={17} /> Processed in your browser</span><span>No sign-up required</span><span>Free to get started</span></div>
       </div>
       <div className="mc-next-hero__visual"><div className="mc-next-hero__orbit orbit-one" aria-hidden="true" /><div className="mc-next-hero__orbit orbit-two" aria-hidden="true" /><WorkspacePreview {...props} /><div className="mc-next-hero__float"><span className="mc-next-hero__float-icon"><Icon name="clean" size={18} /></span><span><strong>Data, made dependable</strong><small>Clean · Validate · Reconcile</small></span><span className="mc-next-hero__float-check">✓</span></div></div>
