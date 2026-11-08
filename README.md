@@ -22,6 +22,19 @@ It is designed for finance, operations, compliance, marketing and data teams tha
 - **Local-first processing** — keep supported data processing in the browser rather than depending on an application server.
 - **Export-ready workflows** — prepare cleaned and reconciled results for operational use.
 
+## Professional services
+
+MarqClean AI also provides scoped project services for organisations that need tailored spreadsheet, modelling, reporting and data solutions. These engagements are separate from the free browser-local tools in the application.
+
+The service catalogue includes:
+
+- **Automation & engineering:** Excel Macros (VBA), data automation, database development.
+- **Financial modelling:** sensitivity analysis, decision modelling, cash flow models, capital asset management, real estate models, custom scenarios.
+- **Analytics & reporting:** advanced reporting, regression analysis, advanced charting, dashboarding, time series forecasting.
+- **Documents & reporting:** Word document generation and PDF reporting.
+
+Each service has a dedicated landing page describing its scope, typical deliverables and use cases. Project scope, integrations, hosting, security controls and handover requirements are agreed before implementation. The site does not imply that every professional service is already an automated feature of the free browser application.
+
 ## Architecture
 
 MarqClean AI is built as a static/serverless web application:
