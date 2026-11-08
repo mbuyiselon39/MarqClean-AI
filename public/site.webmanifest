@@ -1,12 +1,12 @@
 {
   "name": "MarqClean AI",
   "short_name": "MarqClean",
-  "description": "Free browser-based data cleaning, conversion, reconciliation, and reporting platform by Vertex Stream Group.",
+  "description": "Free Excel automation, financial modelling, data automation, reconciliation and reporting platform by Vertex Stream Group.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "background_color": "#FFFFFF",
-  "theme_color": "#0C1F29",
+  "theme_color": "#173D32",
   "lang": "en",
   "icons": [
     { "src": "/favicon.svg", "type": "image/svg+xml", "sizes": "any", "purpose": "any" },
