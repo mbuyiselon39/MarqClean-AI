@@ -12,6 +12,7 @@ const AcademyHub = lazy(() => import("./academy/AcademyHub"));
 const HeroCarousel = lazy(() => import("./HeroCarousel"));
 import SmartDropzone, { type SmartPipelineAction, type SmartRecommendation } from "./SmartDropzone";
 import Logo from "./Logo";
+import ServicesPage, { SERVICE_SLUGS, ServicesTeaser, getServicePageData } from "./Services";
 import { extractPdfTextInWorker } from "./pdfWorkerClient";
 import { GlobalHeader, PageHeader } from "./WorkspaceShell";
 
@@ -76,7 +77,8 @@ type ToolPageKey =
   | "advanced-excel-functions"
   | "xlookup-online"
   | "sumifs-countifs-tool";
-type AppPageKey = "home" | "not-found" | "reconciliation-hub" | "data-toolbox" | "excel-automation" | "excel-academy" | FooterPageKey | ToolPageKey;
+type ServicePageKey = "services" | (typeof SERVICE_SLUGS)[number];
+type AppPageKey = "home" | "not-found" | "reconciliation-hub" | "data-toolbox" | "excel-automation" | "excel-academy" | FooterPageKey | ToolPageKey | ServicePageKey;
 
 type FooterPage = {
   title: string;
@@ -2228,6 +2230,10 @@ function isToolPageKey(value: string): value is ToolPageKey {
   return value in SEO_TOOL_PAGES;
 }
 
+function isServicePageKey(value: string): value is ServicePageKey {
+  return value === "services" || SERVICE_SLUGS.includes(value as (typeof SERVICE_SLUGS)[number]);
+}
+
 let pendingWorkspaceTab: "leads" | null = null;
 
 function normalizeRoute(value: string) {
@@ -2286,7 +2292,7 @@ function getCurrentPage(): AppPageKey {
   if (route === "data-toolbox") return "data-toolbox";
   if (route === "excel-automation") return "excel-automation";
   if (route === "excel-academy" || route === "free-excel-academy") return "excel-academy";
-  if (isFooterPageKey(route) || isToolPageKey(route)) return route;
+  if (isFooterPageKey(route) || isToolPageKey(route) || isServicePageKey(route)) return route;
 
   return "not-found";
 }
@@ -2299,6 +2305,7 @@ function updateMetaTag(selector: string, attribute: "content" | "href", value: s
 
 function updatePageMetadata(page: AppPageKey) {
   const toolPage = isToolPageKey(page) ? SEO_TOOL_PAGES[page] : null;
+  const servicePage = isServicePageKey(page) ? getServicePageData(page) : null;
   const footerPage = isFooterPageKey(page) ? FOOTER_PAGES[page] : null;
   const isHub = page === "reconciliation-hub";
   const isToolbox = page === "data-toolbox";
@@ -2312,7 +2319,7 @@ function updatePageMetadata(page: AppPageKey) {
     ? "Excel Automation | Sorting, Subtotals, Formulas and Spreadsheet Processing"
     : isAcademy
     ? "Free Excel Academy | Learn Excel Formulas, Functions and Shortcuts"
-    : toolPage?.title ?? (footerPage ? `${footerPage.title} | ${PRODUCT_NAME}` : "MarqClean AI | Browser-first data cleaning, Excel, CSV and reconciliation platform");
+    : toolPage?.title ?? servicePage?.title ?? (footerPage ? `${footerPage.title} | ${PRODUCT_NAME}` : "MarqClean AI | Excel, financial modelling, data automation and reporting");
   const description = isHub
     ? "Browser-first reconciliation, record matching and validation platform. Reconcile client, investor, account and banking datasets across Excel, CSV and PDF files, including the Bank Ledger bank statement and ledger reconciliation module, with exception reporting."
     : isToolbox
@@ -2321,7 +2328,7 @@ function updatePageMetadata(page: AppPageKey) {
     ? "A free, structured Excel course built into MarqClean AI: guided lessons across every major topic, a searchable A-Z function reference, and a printable cheat sheet."
     : isExcelAuto
     ? "Automate Excel sorting, subtotaling, number formatting, formula handling and workbook generation for cleaner spreadsheet workflows."
-    : toolPage?.description ?? footerPage?.description ?? BASE_META_DESCRIPTION;
+    : toolPage?.description ?? servicePage?.description ?? footerPage?.description ?? BASE_META_DESCRIPTION;
   const keywords = isHub
     ? "reconciliation hub, data reconciliation, client reconciliation, investor reconciliation, account matching, record matching, Excel reconciliation, CSV reconciliation, exception reporting, data verification"
     : isToolbox
@@ -2332,7 +2339,7 @@ function updatePageMetadata(page: AppPageKey) {
     ? "learn Excel, free Excel course, Excel tutorial, Excel functions, Excel formulas, Excel shortcuts, Excel training, VLOOKUP tutorial, XLOOKUP tutorial, Excel for beginners, Excel cheat sheet"
     : toolPage?.keyword
     ? `${toolPage.keyword}, AI data automation, Excel automation, CSV processing, data reconciliation, data validation, data quality`
-    : "AI data automation, data cleaning software, Excel automation, CSV processing, data reconciliation, spreadsheet automation, data validation, data quality, financial reconciliation, Excel data cleaning, CSV to Excel conversion, data transformation, record matching, exception reporting, PDF to Excel, bank statement reconciliation";
+    : servicePage?.keyword ?? "AI data automation, data cleaning software, Excel automation, CSV processing, data reconciliation, spreadsheet automation, data validation, data quality, financial reconciliation, Excel data cleaning, CSV to Excel conversion, data transformation, record matching, exception reporting, PDF to Excel, bank statement reconciliation";
   const canonicalUrl = page === "home" ? `${SITE_URL}/` : `${SITE_URL}/${page}`;
   const robots = page === "not-found" ? "noindex, nofollow" : "index, follow";
 
@@ -2649,6 +2656,7 @@ export default function App() {
   const visibleHeaders = useMemo(() => result?.headers.slice(0, 9) ?? [], [result]);
   const activeFooterPage = isFooterPageKey(currentPage) ? FOOTER_PAGES[currentPage] : null;
   const activeToolPage = isToolPageKey(currentPage) ? SEO_TOOL_PAGES[currentPage] : null;
+  const activeServicePage = isServicePageKey(currentPage) ? currentPage : null;
 
   const converterPreviewMatrix = useMemo(() => {
     if (converterMode === "text-to-columns") return parseWithWizardSettings(converterRawText, wizardSettings);
@@ -3163,6 +3171,8 @@ export default function App() {
         <FooterContentPage page={activeFooterPage} />
       ) : activeToolPage ? (
         <ToolContentPage page={activeToolPage} />
+      ) : activeServicePage ? (
+        <ServicesPage slug={activeServicePage} />
       ) : (
       <main id="main-content">
         <span id="top" className="sr-only">Top</span>
@@ -3191,6 +3201,8 @@ export default function App() {
             </div>
           </div>
         </section>
+
+        <ServicesTeaser />
 
         <section className="bg-canvas px-5 py-14 lg:px-8" aria-labelledby="smart-drop-heading">
           <div id="smart-drop-heading" className="sr-only">Smart Drop data ingestion</div>
