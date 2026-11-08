@@ -1,5 +1,3 @@
-import React from "react";
-
 type Service = {
   slug: string;
   title: string;
