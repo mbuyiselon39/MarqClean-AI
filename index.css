@@ -1181,3 +1181,15 @@ h2 { font-size: clamp(2rem, 3.4vw, 3.5rem); line-height: 1.09; }
 @media(max-width:900px){.mc-services-teaser__inner,.mc-services-hero,.mc-service-detail__hero{grid-template-columns:1fr}.mc-services-teaser__cards{grid-template-columns:repeat(2,minmax(0,1fr))}.mc-service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.mc-services-process__grid{grid-template-columns:repeat(2,minmax(0,1fr))}.mc-services-section-heading{display:block}.mc-services-section-heading>p{margin-top:16px}.mc-service-detail__body{grid-template-columns:1fr}.mc-service-usecases>div{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.mc-services-teaser{padding-inline:20px}.mc-services-teaser__inner{gap:30px}.mc-services-teaser__cards,.mc-service-grid{grid-template-columns:1fr}.mc-services-hero,.mc-service-detail__hero{width:calc(100% - 40px);padding-top:52px}.mc-service-visual{min-height:320px}.mc-service-visual__sheet{width:88%;padding:12px}.mc-service-visual__note{right:2%;bottom:4%;padding:9px}.mc-services-catalogue,.mc-service-detail__body,.mc-service-usecases{width:calc(100% - 40px)}.mc-services-process{padding:55px 20px}.mc-services-process__grid{grid-template-columns:1fr 1fr}.mc-services-cta,.mc-service-next{width:calc(100% - 40px);margin:45px auto;padding:22px;align-items:flex-start;flex-direction:column}.mc-service-usecases>div{grid-template-columns:1fr 1fr}}
 @media(prefers-reduced-motion:reduce){.mc-service-visual__sheet,.mc-service-visual__orbit,.mc-service-visual__chart span{animation:none}.mc-service-card,.mc-service-button{transition:none}}
+
+
+/* Maintain readable action contrast when the dark theme is active. */
+[data-theme="dark"] .ws-btn-primary,
+[data-theme="dark"] .mc-cta-cyan,
+[data-theme="dark"] .amzigo-btn-primary,
+[data-theme="dark"] .mc-service-button {
+  color: rgb(var(--accent-ink));
+}
+[data-theme="dark"] .mc-service-button:hover { color: rgb(var(--accent-ink)); }
+[data-theme="dark"] .mc-service-visual__cells .up { color: #a9d98d; }
+[data-theme="dark"] .mc-service-visual__cells .down { color: #f1a28f; }
