@@ -2351,6 +2351,28 @@ function updatePageMetadata(page: AppPageKey) {
   updateMetaTag('meta[property="og:description"]', "content", description);
   updateMetaTag('meta[property="og:url"]', "content", canonicalUrl);
   updateMetaTag('link[rel="canonical"]', "href", canonicalUrl);
+
+  const serviceSchemaId = "marqclean-service-schema";
+  let serviceSchema = document.getElementById(serviceSchemaId) as HTMLScriptElement | null;
+  if (servicePage) {
+    if (!serviceSchema) {
+      serviceSchema = document.createElement("script");
+      serviceSchema.id = serviceSchemaId;
+      serviceSchema.type = "application/ld+json";
+      document.head.appendChild(serviceSchema);
+    }
+    serviceSchema.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": page === "services" ? "CollectionPage" : "Service",
+      name: title.replace(" | MarqClean AI", ""),
+      description,
+      url: canonicalUrl,
+      provider: { "@type": "Organization", name: COMPANY_NAME, url: SITE_URL },
+      areaServed: "Worldwide",
+    });
+  } else {
+    serviceSchema?.remove();
+  }
 }
 
 function navigateToPage(page: AppPageKey) {
