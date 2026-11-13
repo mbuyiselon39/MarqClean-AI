@@ -38,16 +38,49 @@ export default {
         semibold: "600",
         bold: "700",
       },
+      // Type, radius and easing are defined ONCE, in the :root token block of
+      // index.css. These entries point at those custom properties instead of
+      // hardcoding values, so a Tailwind utility class in the JSX and a rule in
+      // the stylesheet can never disagree. Previously this config pinned
+      // lg/xl to 12px while the stylesheet used 20px, and Tailwind's own
+      // --text-*--line-height values overrode the design system's line
+      // heights for 691 utility usages.
+      fontSize: {
+        "2xs": ["var(--text-2xs)", { lineHeight: "var(--leading-2xs)" }],
+        xs: ["var(--text-xs)", { lineHeight: "var(--leading-xs)" }],
+        sm: ["var(--text-sm)", { lineHeight: "var(--leading-sm)" }],
+        base: ["var(--text-base)", { lineHeight: "var(--leading-base)" }],
+        md: ["var(--text-md)", { lineHeight: "var(--leading-md)" }],
+        lg: ["var(--text-lg)", { lineHeight: "var(--leading-lg)" }],
+        xl: ["var(--text-xl)", { lineHeight: "var(--leading-xl)" }],
+        "2xl": ["var(--text-2xl)", { lineHeight: "var(--leading-2xl)" }],
+        "3xl": ["var(--text-3xl)", { lineHeight: "var(--leading-3xl)" }],
+        "4xl": ["var(--text-4xl)", { lineHeight: "var(--leading-4xl)" }],
+        "5xl": ["var(--text-5xl)", { lineHeight: "var(--leading-5xl)" }],
+      },
       borderRadius: {
-        DEFAULT: "6px",
-        lg: "12px",
-        xl: "12px",
-        pill: "999px",
+        DEFAULT: "var(--radius-xs)",
+        sm: "var(--radius-sm)",
+        md: "var(--radius-md)",
+        lg: "var(--radius-lg)",
+        xl: "var(--radius-lg)",
+        "2xl": "var(--radius-lg)",
+        "3xl": "var(--radius-lg)",
+        full: "var(--radius-pill)",
+        pill: "var(--radius-pill)",
+      },
+      transitionTimingFunction: {
+        out: "var(--ease-out)",
+        "in-out": "var(--ease-in-out)",
       },
       boxShadow: {
         none: "none",
-        hairline: "none",
-        popover: "none",
+        1: "var(--shadow-1)",
+        2: "var(--shadow-2)",
+        3: "var(--shadow-3)",
+        4: "var(--shadow-4)",
+        hairline: "var(--shadow-1)",
+        popover: "var(--shadow-3)",
       },
     },
   },
