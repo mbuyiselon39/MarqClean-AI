@@ -93,9 +93,29 @@ jobs:
             console.error("Mixed www/non-www production hostnames detected.");
             process.exit(1);
           }
-          const shadows = [...css.matchAll(/box-shadow:\s*([^;}]*)/g)].map((match) => match[1].trim()).filter((value) => value && value !== "none");
+          // Elevation is a closed scale. A shadow may be `none` or one of the
+          // four --shadow-* tokens defined in index.css; anything hand-written
+          // (raw px/blur/colour) reintroduces the ad-hoc depth this gate exists
+          // to prevent. See docs/design-reference.md#elevation.
+          const shadowScale = ["var(--shadow-1)", "var(--shadow-2)", "var(--shadow-3)", "var(--shadow-4)"];
+          const shadows = [...css.matchAll(/box-shadow:\s*([^;}]*)/g)]
+            .map((match) => match[1].trim())
+            .filter((value) => value && value !== "none" && !shadowScale.includes(value));
           if (shadows.length) {
-            console.error("Non-zero CSS shadows remain.");
+            console.error("Shadows outside the --shadow-1..4 scale: " + JSON.stringify(shadows.slice(0, 8)));
+            process.exit(1);
+          }
+          const missingShadowTokens = shadowScale.filter((token) => !css.includes(`  ${token.slice(4, -1)}:`));
+          if (missingShadowTokens.length) {
+            console.error("Shadow tokens referenced but not defined: " + JSON.stringify(missingShadowTokens));
+            process.exit(1);
+          }
+          // Typography floor: nothing may be set below --text-floor (11px).
+          const subFloor = [...css.matchAll(/font-size:\s*(\d+(?:\.\d+)?)px/g)]
+            .map((match) => Number.parseFloat(match[1]))
+            .filter((size) => size < 11);
+          if (subFloor.length) {
+            console.error("Font sizes below the 11px floor: " + JSON.stringify(subFloor.slice(0, 12)));
             process.exit(1);
           }
           console.log("Routing, visual-system, font, and production hostname checks passed.");

@@ -3205,12 +3205,6 @@ export default function App() {
 
   return (
     <div className="amzigo-revamp min-h-screen bg-[rgb(var(--canvas))] text-ink">
-      <a
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-canvas focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-ink"
-        href="#main-content"
-      >
-        Skip to content
-      </a>
       <GlobalHeader />
 
       {activeFooterPage ? (
