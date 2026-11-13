@@ -1033,11 +1033,11 @@ h2 { font-size: clamp(30px,3.4vw,56px); line-height: 1.09; }
 .mc-next-hero__orbit.orbit-one { width: 790px; height: 790px; top: -150px; left: -50px; }
 .mc-next-hero__orbit.orbit-two { width: 590px; height: 590px; top: -53px; left: 50px; }
 .mc-next-hero__float { position: absolute; right: -20px; bottom: -30px; display: flex; align-items: center; gap: 11px; padding: 12px 16px; border: 1px solid #e9eaf3; border-radius: 12px; color: #26306c; background: #fff; transform: rotate(2deg); }
-.mc-next-hero__float-icon { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 9px; background: #f0f2fc; color: #5468e8; }
+.mc-next-hero__float-icon { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 9px; background: #f0f2fc; color: #4b60e7; }
 .mc-next-hero__float strong,.mc-next-hero__float small { display: block; }
 .mc-next-hero__float strong { font-size: 11px; line-height: 1.4; }
 .mc-next-hero__float small { color: #848698; font-size: 11px; }
-.mc-next-hero__float-check { display: grid; place-items: center; width: 19px; height: 19px; margin-left: 12px; border-radius: 50%; background: #f0f2fc; color: #5568e5; font-size: 11px; font-weight: 800; }
+.mc-next-hero__float-check { display: grid; place-items: center; width: 19px; height: 19px; margin-left: 12px; border-radius: 50%; background: #f0f2fc; color: #4c60e4; font-size: 11px; font-weight: 800; }
 
 /* A working, interactive preview rather than a static product image */
 .mc-preview { width: 100%; overflow: hidden; border: 1px solid rgb(208 212 235/ .35); border-radius: 15px; background: #fff; color: #272f61; transform: rotate(-1.5deg); transition: transform .35s ease; }
