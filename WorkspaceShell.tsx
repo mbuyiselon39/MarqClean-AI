@@ -58,6 +58,7 @@ const WORKSPACES = [
   { label: "Excel Automation", path: "/excel-automation", icon: "formula", description: "Automate workbook formatting and formulas." },
   { label: "Reconciliation Hub", path: "/reconciliation-hub", icon: "reconcile", description: "Compare records and review exceptions." },
   { label: "Data Toolbox", path: "/data-toolbox", icon: "toolbox", description: "Advanced analysis and data preparation tools." },
+  { label: "Excel Learning", path: "/excel-learning", icon: "book", description: "Excel for Data Analysis: a 10-lesson course with practice workbooks." },
   { label: "Excel Academy", path: "/excel-academy", icon: "academy", description: "Learn Excel with lessons and references." },
 ];
 
@@ -66,12 +67,18 @@ const NAV = [
   { label: "Services", path: "/services" },
   { label: "Tools", path: "/#free-tools" },
   { label: "How it works", path: "/#workflow" },
+  { label: "Excel Learning", path: "/excel-learning" },
   { label: "Academy", path: "/excel-academy" },
 ];
 
 type SearchResult = { group: string; label: string; description: string; path: string; icon: string };
 
 const TOOL_RESULTS: SearchResult[] = [
+  { group: "Learn", label: "Excel for Data Analysis", description: "A 10-lesson course from basics to Power Query.", path: "/excel-learning", icon: "book" },
+  { group: "Learn", label: "Excel Formula Cheat Sheet", description: "Every function from the course, searchable.", path: "/excel-learning/formula-cheat-sheet", icon: "formula" },
+  { group: "Learn", label: "Lookup Functions", description: "VLOOKUP, XLOOKUP, INDEX and MATCH.", path: "/excel-learning/lookup-functions", icon: "formula" },
+  { group: "Learn", label: "Data Cleaning in Excel", description: "Duplicates, blanks, TRIM and validation.", path: "/excel-learning/data-cleaning", icon: "clean" },
+  { group: "Learn", label: "Excel Interview Questions", description: "Six questions with model answers.", path: "/excel-learning/interview-questions", icon: "book" },
   { group: "Tools", label: "Advanced Excel Functions", description: "Functions, formulas and workbook analysis.", path: "/data-toolbox", icon: "formula" },
   { group: "Tools", label: "Data Explorer", description: "Filter and inspect structured data.", path: "/data-toolbox", icon: "chart" },
   { group: "Tools", label: "Remove Duplicates", description: "Detect and remove duplicate records.", path: "/data-toolbox", icon: "clean" },
@@ -86,7 +93,9 @@ const TOOL_RESULTS: SearchResult[] = [
 function isCurrent(path: string) {
   const pathname = window.location.pathname;
   if (path.startsWith("/#")) return pathname === "/";
-  return pathname === path;
+  // Interior pages of a section (for example /excel-learning/lookup-functions)
+  // should keep their section highlighted in the header.
+  return pathname === path || pathname.startsWith(`${path}/`);
 }
 
 function handleWorkspaceMenuKey(event: ReactKeyboardEvent<HTMLAnchorElement>, close: () => void) {

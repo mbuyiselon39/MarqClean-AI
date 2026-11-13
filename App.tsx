@@ -9,6 +9,7 @@ const ReconciliationHub = lazy(() => import("./reconciliation/ReconciliationHub"
 const DataToolbox = lazy(() => import("./reconciliation/DataToolbox"));
 const ClientFunds = lazy(() => import("./reconciliation/ClientFunds"));
 const AcademyHub = lazy(() => import("./academy/AcademyHub"));
+const ExcelLearning = lazy(() => import("./learning/ExcelLearning"));
 const HeroCarousel = lazy(() => import("./HeroCarousel"));
 import SmartDropzone, { type SmartPipelineAction, type SmartRecommendation } from "./SmartDropzone";
 import Logo from "./Logo";
@@ -78,7 +79,7 @@ type ToolPageKey =
   | "xlookup-online"
   | "sumifs-countifs-tool";
 type ServicePageKey = "services" | (typeof SERVICE_SLUGS)[number];
-type AppPageKey = "home" | "not-found" | "reconciliation-hub" | "data-toolbox" | "excel-automation" | "excel-academy" | FooterPageKey | ToolPageKey | ServicePageKey;
+type AppPageKey = "home" | "not-found" | "reconciliation-hub" | "data-toolbox" | "excel-automation" | "excel-academy" | "excel-learning" | FooterPageKey | ToolPageKey | ServicePageKey;
 
 type FooterPage = {
   title: string;
@@ -2287,6 +2288,11 @@ function getCurrentPage(): AppPageKey {
     return target;
   }
 
+  // "Excel for Data Analysis" owns its whole subtree: the landing page, every
+  // lesson and the formula cheat sheet are real, indexable paths such as
+  // /excel-learning/lookup-functions. The component resolves the sub-path.
+  if (route === "excel-learning" || route.startsWith("excel-learning/")) return "excel-learning";
+
   if (route === "data-engine") return "not-found";
   if (route === "reconciliation-hub") return "reconciliation-hub";
   if (route === "data-toolbox") return "data-toolbox";
@@ -2304,6 +2310,10 @@ function updateMetaTag(selector: string, attribute: "content" | "href", value: s
 }
 
 function updatePageMetadata(page: AppPageKey) {
+  // The learning hub sets its own per-lesson titles, canonicals and schema,
+  // so the generic writer must not overwrite them.
+  if (page === "excel-learning") return;
+
   const toolPage = isToolPageKey(page) ? SEO_TOOL_PAGES[page] : null;
   const servicePage = isServicePageKey(page) ? getServicePageData(page) : null;
   const footerPage = isFooterPageKey(page) ? FOOTER_PAGES[page] : null;
@@ -2375,10 +2385,13 @@ function updatePageMetadata(page: AppPageKey) {
   }
 }
 
-function navigateToPage(page: AppPageKey) {
-  const path = page === "home" ? "/" : `/${page}`;
+function navigateToPath(path: string) {
   window.history.pushState({}, "", path);
   window.dispatchEvent(new PopStateEvent("popstate"));
+}
+
+function navigateToPage(page: AppPageKey) {
+  navigateToPath(page === "home" ? "/" : `/${page}`);
 }
 
 function PageLink({ page, children, className }: { page: AppPageKey; children: React.ReactNode; className?: string }) {
@@ -3172,6 +3185,17 @@ export default function App() {
       <>
         <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-[rgb(var(--surface))] text-[rgb(var(--ink-2))]">Loading Free Excel Academy...</div>}>
           <AcademyHub />
+        </Suspense>
+        {renderBackToTop()}
+      </>
+    );
+  }
+
+  if (currentPage === "excel-learning") {
+    return (
+      <>
+        <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-[rgb(var(--surface))] text-[rgb(var(--ink-2))]">Loading Excel for Data Analysis...</div>}>
+          <ExcelLearning />
         </Suspense>
         {renderBackToTop()}
       </>
@@ -4320,6 +4344,18 @@ export default function App() {
               <PageLink page="remove-duplicates-excel">Duplicate Removal</PageLink>
               <PageLink page="document-validation-tool">Data Validation</PageLink>
               <PageLink page="advanced-excel-functions">Advanced Excel Functions</PageLink>
+            </div>
+
+            <div className="mc-site-footer__column">
+              <h3>Excel Learning</h3>
+              <a href="/excel-learning" onClick={(event)=>{event.preventDefault();navigateToPath("/excel-learning");}}>Excel for Data Analysis</a>
+              <a href="/excel-learning/excel-basics" onClick={(event)=>{event.preventDefault();navigateToPath("/excel-learning/excel-basics");}}>Excel Basics</a>
+              <a href="/excel-learning/lookup-functions" onClick={(event)=>{event.preventDefault();navigateToPath("/excel-learning/lookup-functions");}}>Lookup Functions</a>
+              <a href="/excel-learning/data-cleaning" onClick={(event)=>{event.preventDefault();navigateToPath("/excel-learning/data-cleaning");}}>Data Cleaning</a>
+              <a href="/excel-learning/pivot-tables" onClick={(event)=>{event.preventDefault();navigateToPath("/excel-learning/pivot-tables");}}>Pivot Tables</a>
+              <a href="/excel-learning/interview-questions" onClick={(event)=>{event.preventDefault();navigateToPath("/excel-learning/interview-questions");}}>Interview Questions</a>
+              <a href="/excel-learning/formula-cheat-sheet" onClick={(event)=>{event.preventDefault();navigateToPath("/excel-learning/formula-cheat-sheet");}}>Formula Cheat Sheet</a>
+              <PageLink page="excel-academy">Excel Academy</PageLink>
             </div>
 
             <div className="mc-site-footer__column">
